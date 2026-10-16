@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>VoI Diffusion Lab</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header class="masthead"><div class="brand"><span class="brand-mark">V</span><div><h1>VoI Diffusion Lab</h1><p>INFORMATIVE PATH PLANNING / RESEARCH WORKBENCH</p></div></div><div class="host"><span class="dot"></span> JAX · CPU <span class="divider">/</span> Local experiment</div></header>
+<main>
+<section class="intro"><div><p class="eyebrow">LEARN THE DISTURBANCE. IMPROVE THE MISSION.</p><h2>See what the planner learns to do.</h2><p>Trace real model-based diffusion updates, then follow the safety-filtered robot and its changing wind belief.</p></div><div class="run-state"><span id="status-dot" class="dot"></span><span id="status" role="status">Loading recorded experiments…</span></div></section>
+<div class="workspace">
+<section class="visual-panel panel">
+ <div class="panel-top"><div class="tabs" role="tablist" aria-label="Playback mode"><button id="diffusion-tab" class="tab active" role="tab" aria-selected="true">Diffusion</button><button id="mission-tab" class="tab" role="tab" aria-selected="false">Mission</button></div><div class="scene-label"><span id="scene-label">Localized wind · corridor</span><span class="tag" id="variant-tag">Two-stage</span></div></div>
+ <div class="map-wrap"><canvas id="map" aria-label="Robot, obstacles, monitoring clarity and sampled diffusion trajectories"></canvas><div class="map-caption"><strong id="map-title">Denoising the policy</strong><span id="map-subtitle">Loading telemetry</span></div><div class="map-scale">WORLD COORDINATES · METRES</div></div>
+ <div class="legend" id="legend"><span><i class="line teal"></i>Best evaluated</span><span><i class="line purple dashed"></i>Denoised mean</span><span><i class="line gray"></i>Sampled policies</span><span><i class="square"></i>Monitoring clarity</span></div>
+ <div class="transport"><button id="play" class="icon-button" aria-label="Play playback" title="Play / pause (Space)">▶</button><button id="reset" class="icon-button secondary" aria-label="Reset playback" title="Reset playback">↺</button><div class="scrubber"><div class="slider-label"><label for="timeline" id="timeline-label">Reverse diffusion level</label><output id="timeline-value">—</output></div><input id="timeline" type="range" min="0" max="3" value="0" step="1"></div><select id="speed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></div>
+ <div class="playback-options"><label><input id="sequence" type="checkbox" checked> Follow planning → execution</label><span id="period-status">Period 1 of 5</span><button id="previous-period" class="small-button" aria-label="Previous planning period">←</button><button id="next-period" class="small-button" aria-label="Next planning period">→</button></div>
+</section>
+<aside class="panel controls">
+ <div class="section-title"><span>EXPERIMENT</span><span class="small-muted" id="record-type">Recorded</span></div>
+ <label class="field">Recorded run<select id="recording" aria-label="Recorded run"><option>Loading…</option></select></label>
+ <div id="comparison-summary" class="comparison-summary">Paired experiments share the same physical wind.</div>
+ <p id="run-diagnostics" class="help">Loading mission diagnostics</p>
+ <label class="toggle-row"><span>Show paired comparator</span><input id="compare" type="checkbox" checked></label>
+ <div class="control-divider"></div>
+ <div class="section-title"><span>LAYERS</span></div>
+ <label class="toggle-row"><span>Wind uncertainty</span><input id="uncertainty" type="checkbox" checked></label>
+ <label class="toggle-row"><span>Wind estimate</span><input id="wind" type="checkbox" checked></label>
+ <label class="toggle-row"><span>Measurement positions</span><input id="observations" type="checkbox"></label>
+ <label class="toggle-row"><span>Physical wind <small>diagnostic only</small></span><input id="truth" type="checkbox"></label>
+ <div class="control-divider"></div>
+ <details id="experiment-settings"><summary>Run a new experiment <span>+</span></summary>
+ <p class="help">Runs the full JAX planner locally. A five-period mission takes roughly a minute or more; the interface stays responsive.</p>
+ <label class="field">Method<select id="method" aria-label="Method"><option value="proposed">Proposed · MBD + learning</option><option value="current_belief">MBD · frozen future belief</option><option value="cem">CEM · same learning objective</option><option value="mppi">MPPI · same learning objective</option></select></label>
+ <label class="field">Continuation<select id="variant" aria-label="Continuation"><option value="two_stage">Two-stage · validated example</option><option value="multistage">Repeated updates · experimental</option></select></label>
+ <div class="field-pair"><label class="field">World seed<input id="seed" type="number" min="0" max="1000000" value="102"></label><label class="field">Wind prior σ<input id="wind-std" type="number" min="0.05" max="1.5" step="0.05" value="0.8"></label></div>
+ <div class="field-pair"><label class="field">Diffusion levels<select id="levels" aria-label="Diffusion levels"><option>2</option><option selected>4</option><option>6</option><option>8</option></select></label><label class="field">Proposals / level<select id="proposals" aria-label="Proposals per level"><option>8</option><option selected>12</option><option>24</option></select></label></div>
+ <label class="field">Measurement noise σ<input id="observation-std" type="number" min="0.03" max="2" step="0.01" value="0.1"></label>
+ <label class="toggle-row"><span>Assimilate measurements</span><input id="measurements" type="checkbox" checked></label>
+ <button id="run" class="primary-button">Run JAX experiment <span>↗</span></button>
+ </details>
+ <p class="help bottom-note">Actual MBD and spline RPCBF. Recorded animation speed is independent of planning runtime. Finite-sample safety is empirical.</p>
+</aside>
+</div>
+<section class="metrics" aria-label="Current diagnostics"><div><span id="metric-label-1">Best predicted cost</span><strong id="metric-1">—</strong><small id="metric-detail-1">Integrated clarity deficit</small></div><div><span id="metric-label-2">Proposal noise σ</span><strong id="metric-2">—</strong><small id="metric-detail-2">Normalized policy space</small></div><div><span id="metric-label-3">Effective samples</span><strong id="metric-3">—</strong><small id="metric-detail-3">Weight concentration</small></div><div><span id="metric-label-4">Invalid proposals</span><strong id="metric-4">—</strong><small id="metric-detail-4">Rejected by the objective</small></div></section>
+<section class="charts"><article class="panel chart-card"><div class="chart-heading"><h3 id="chart-title-1">Optimization progress</h3><span id="chart-note-1">Lower cost is better</span></div><canvas id="cost-chart" aria-label="Diffusion objective history or mission clarity deficit"></canvas></article><article class="panel chart-card"><div class="chart-heading"><h3 id="chart-title-2">Candidate weights</h3><span id="chart-note-2">Hover to inspect a policy</span></div><canvas id="weights-chart" aria-label="Candidate importance weights or safety diagnostics"></canvas><div id="candidate-detail" class="chart-foot">Weights use the complete stochastic objective.</div></article><article class="panel explanation"><p class="eyebrow" id="explanation-kicker">HOW TO READ THIS</p><h3 id="explanation-title">From noisy policies to useful motion</h3><p id="explanation-text">Each line is an actual safety-filtered rollout of a sampled policy. Lower predicted monitoring cost gives a sample more weight in the score update.</p><div class="formula" id="formula">sample → simulate → weight → reverse update</div><p class="small-muted" id="forecast-note">Paths show one planning world. Costs use every outer world. Forecasts are not the executed mission.</p></article></section>
+<footer><span>VOI DIFFUSION IPP · LOCAL RESEARCH DEMO</span><span id="provenance">Loading provenance</span></footer>
+</main><script type="module" src="/app.js"></script>
+</body></html>

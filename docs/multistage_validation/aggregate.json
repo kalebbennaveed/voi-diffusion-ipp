@@ -1,0 +1,122 @@
+[
+  {
+    "suite": "multistage_corrected",
+    "method": "current_belief",
+    "n": 3,
+    "mean_cost": 4.815809801220894,
+    "cost_sd": 0.7414430913320958,
+    "access": 2,
+    "collisions": 0,
+    "infeasible_steps": 0,
+    "fallbacks": 0,
+    "mean_plan_seconds": 4.557428377734808
+  },
+  {
+    "suite": "multistage_corrected",
+    "method": "proposed",
+    "n": 3,
+    "mean_cost": 3.836330976958076,
+    "cost_sd": 0.5497838068674434,
+    "access": 3,
+    "collisions": 0,
+    "infeasible_steps": 0,
+    "fallbacks": 0,
+    "mean_plan_seconds": 5.200354927917942
+  },
+  {
+    "suite": "multistage_dev",
+    "method": "current_belief",
+    "n": 3,
+    "mean_cost": 3.6887252570595592,
+    "cost_sd": 0.704322055097841,
+    "access": 3,
+    "collisions": 0,
+    "infeasible_steps": 0,
+    "fallbacks": 0,
+    "mean_plan_seconds": 4.319044183186876
+  },
+  {
+    "suite": "multistage_dev",
+    "method": "proposed",
+    "n": 3,
+    "mean_cost": 3.836330976958076,
+    "cost_sd": 0.5497838068674434,
+    "access": 3,
+    "collisions": 0,
+    "infeasible_steps": 0,
+    "fallbacks": 0,
+    "mean_plan_seconds": 4.2331628583837295
+  },
+  {
+    "suite": "multistage_failure_controls",
+    "method": "proposed",
+    "n": 1,
+    "mean_cost": 3.20727252215147,
+    "cost_sd": null,
+    "access": 1,
+    "collisions": 0,
+    "infeasible_steps": 0,
+    "fallbacks": 0,
+    "mean_plan_seconds": 7.460288100177422
+  },
+  {
+    "suite": "multistage_validation/frozen_belief",
+    "method": "current_belief",
+    "n": 10,
+    "mean_cost": 4.380346288847432,
+    "cost_sd": 0.9692412928133048,
+    "access": 8,
+    "collisions": 0,
+    "infeasible_steps": 1,
+    "fallbacks": 1,
+    "mean_plan_seconds": 4.722833477444947
+  },
+  {
+    "suite": "multistage_validation/repeated_updates",
+    "method": "proposed",
+    "n": 10,
+    "mean_cost": 3.1506569089367984,
+    "cost_sd": 0.24532420256909113,
+    "access": 10,
+    "collisions": 0,
+    "infeasible_steps": 9,
+    "fallbacks": 0,
+    "mean_plan_seconds": 4.526309019955806
+  },
+  {
+    "suite": "multistage_validation/two_stage",
+    "method": "proposed",
+    "n": 10,
+    "mean_cost": 3.372160168644041,
+    "cost_sd": 0.4629974468924451,
+    "access": 10,
+    "collisions": 0,
+    "infeasible_steps": 2,
+    "fallbacks": 0,
+    "mean_plan_seconds": 5.331853287522682
+  },
+  {
+    "suite": "strict_qp_dev",
+    "method": "proposed",
+    "n": 4,
+    "mean_cost": 4.034542263485491,
+    "cost_sd": 1.0707482261683512,
+    "access": 4,
+    "collisions": 0,
+    "infeasible_steps": 0,
+    "fallbacks": 0,
+    "mean_plan_seconds": 5.372295027191285
+  },
+  {
+    "suite": "strict_qp_failure_followup",
+    "method": "proposed",
+    "n": 2,
+    "mean_cost": 3.162969244644046,
+    "cost_sd": 0.2683495034019346,
+    "access": 2,
+    "collisions": 0,
+    "infeasible_steps": 8,
+    "fallbacks": 0,
+    "mean_plan_seconds": 5.943327796028461
+  }
+]

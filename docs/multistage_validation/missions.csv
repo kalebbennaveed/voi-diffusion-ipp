@@ -1,0 +1,50 @@
+suite,status,method,seed,integrated_deficit,roi_a_access,roi_a_time,collision,infeasible_qp_steps,minimum_clearance,max_qp_slack,optimizer_failure_count,mean_plan_seconds
+multistage_dev,superseded comparator warm-start bug,current_belief,20,4.149227276444435,True,8.7,False,0,0.07259202003479004,0.0,0,4.230779583193362
+multistage_dev,superseded comparator warm-start bug,current_belief,21,2.877937448443845,True,6.0,False,0,0.12243145704269409,0.0,0,4.500449366564863
+multistage_dev,superseded comparator warm-start bug,current_belief,22,4.039011046290398,True,8.549999999999999,False,0,0.2307930588722229,0.0,0,4.225903599802405
+multistage_dev,superseded comparator warm-start bug,proposed,20,3.202358018606901,True,6.6,False,0,0.24054938554763794,0.0,0,4.199054166977294
+multistage_dev,superseded comparator warm-start bug,proposed,21,4.124665224924684,True,8.7,False,0,0.11808580160140991,0.0,0,4.284380050003529
+multistage_dev,superseded comparator warm-start bug,proposed,22,4.181969687342644,True,6.3,False,0,0.21715253591537476,0.0,0,4.216054358170368
+multistage_corrected,complete,current_belief,20,5.515939235687256,False,,False,0,0.08685523271560669,0.0,0,4.1898901832057165
+multistage_corrected,complete,current_belief,21,4.892479121685028,True,10.5,False,0,0.07118993997573853,0.0,0,4.363879749784246
+multistage_corrected,complete,current_belief,22,4.039011046290398,True,8.549999999999999,False,0,0.2307930588722229,0.0,0,5.1185152002144605
+multistage_corrected,complete,proposed,20,3.202358018606901,True,6.6,False,0,0.24054938554763794,0.0,0,5.209685050160624
+multistage_corrected,complete,proposed,21,4.124665224924684,True,8.7,False,0,0.11808580160140991,0.0,0,5.964283233392052
+multistage_corrected,complete,proposed,22,4.181969687342644,True,6.3,False,0,0.21715253591537476,0.0,0,4.42709650020115
+strict_qp_dev,complete,proposed,101,3.2042589224874973,True,6.3,False,0,0.10689276456832886,0.0,0,5.722766858409159
+strict_qp_dev,complete,proposed,20,3.258998081088066,True,6.75,False,0,0.256450355052948,0.0,0,4.656709133181721
+strict_qp_dev,complete,proposed,21,5.49294251203537,True,10.95,False,0,0.11596393585205078,0.0,0,5.6205281087895855
+strict_qp_dev,complete,proposed,22,4.181969538331032,True,6.3,False,0,0.2171526551246643,0.0,0,5.489176008384675
+multistage_failure_controls,complete,proposed,101,3.20727252215147,True,6.45,False,0,0.10709935426712036,0.0,0,7.460288100177422
+strict_qp_failure_followup,complete,proposed,204,3.3527209982275963,True,6.75,False,8,0.1543063521385193,0.4569893479347229,0,6.919573650229722
+strict_qp_failure_followup,complete,proposed,206,2.9732174910604954,True,6.0,False,0,0.028300821781158447,0.0,0,4.9670819418272005
+multistage_validation/repeated_updates,complete,proposed,200,3.377723954617977,True,6.8999999999999995,False,0,0.23289650678634644,0.0,0,4.259896949795075
+multistage_validation/repeated_updates,complete,proposed,201,3.3429886028170586,True,6.45,False,0,0.11849218606948853,0.0,0,4.422441883175634
+multistage_validation/repeated_updates,complete,proposed,202,2.8995704874396324,True,4.6499999999999995,False,0,0.14723926782608032,0.0,0,4.809012324991636
+multistage_validation/repeated_updates,complete,proposed,203,2.748124286532402,True,4.95,False,0,0.09049010276794434,0.0,0,4.564651725022122
+multistage_validation/repeated_updates,complete,proposed,204,3.3392960280179977,True,6.75,False,8,0.12582433223724365,0.893474817276001,0,4.874627408175729
+multistage_validation/repeated_updates,complete,proposed,205,2.968207322061062,True,4.6499999999999995,False,0,0.24321335554122925,0.0,0,4.613455408415757
+multistage_validation/repeated_updates,complete,proposed,206,2.9428964890539646,True,6.0,False,1,0.02918219566345215,0.013458818197250366,0,4.2697233415907245
+multistage_validation/repeated_updates,complete,proposed,207,3.1581232752650976,True,4.8,False,0,0.2055748701095581,0.0,0,4.3096021833829585
+multistage_validation/repeated_updates,complete,proposed,208,3.254810079932213,True,5.7,False,0,0.13673901557922363,0.0,0,4.346113508217968
+multistage_validation/repeated_updates,complete,proposed,209,3.474828563630581,True,6.1499999999999995,False,0,0.1946837306022644,0.0,0,4.79356546679046
+multistage_validation/two_stage,complete,proposed,200,3.6950699612498283,True,7.199999999999999,False,0,0.22632616758346558,0.0,0,5.607086316612549
+multistage_validation/two_stage,complete,proposed,201,3.3915907815098763,True,6.45,False,0,0.1045691967010498,0.0,0,5.5380143916001545
+multistage_validation/two_stage,complete,proposed,202,2.915963336825371,True,4.6499999999999995,False,0,0.18684148788452148,0.0,0,5.463314474816434
+multistage_validation/two_stage,complete,proposed,203,2.6201738622039557,True,4.2,False,0,0.14492207765579224,0.0,0,4.2467867084080355
+multistage_validation/two_stage,complete,proposed,204,3.657429128885269,True,5.1,False,2,0.09390789270401001,0.4766705632209778,0,4.2417541415896265
+multistage_validation/two_stage,complete,proposed,205,4.124972750432789,True,8.85,False,0,0.2055233120918274,0.0,0,4.436615750403144
+multistage_validation/two_stage,complete,proposed,206,2.863733433187008,True,5.25,False,0,0.11379486322402954,0.0,0,4.656312033417635
+multistage_validation/two_stage,complete,proposed,207,3.227417003363371,True,6.75,False,0,0.24036747217178345,0.0,0,4.662528524966911
+multistage_validation/two_stage,complete,proposed,208,3.549969367682934,True,6.0,False,0,0.2176530957221985,0.0,0,6.405096450005658
+multistage_validation/two_stage,complete,proposed,209,3.675282061100006,True,7.8,False,0,0.1322418451309204,0.0,0,8.061024083406664
+multistage_validation/frozen_belief,complete,current_belief,200,5.422417998313904,True,11.7,False,0,0.23470455408096313,0.0,0,5.880083516985178
+multistage_validation/frozen_belief,complete,current_belief,201,4.303189601749182,True,9.15,False,0,0.06114226579666138,0.0,1,4.522155974619091
+multistage_validation/frozen_belief,complete,current_belief,202,3.2718277350068092,True,6.8999999999999995,False,0,0.23565667867660522,0.0,0,4.248725200002082
+multistage_validation/frozen_belief,complete,current_belief,203,5.517658829689026,False,,False,0,0.22952169179916382,0.0,0,5.745597358397208
+multistage_validation/frozen_belief,complete,current_belief,204,3.5030453944455076,True,7.35,False,1,0.18176484107971191,0.006106426008045673,0,4.875881300028413
+multistage_validation/frozen_belief,complete,current_belief,205,5.106609582901001,True,10.95,False,0,0.19688630104064941,0.0,0,4.396588058234192
+multistage_validation/frozen_belief,complete,current_belief,206,3.3390872180461884,True,7.05,False,0,0.17389404773712158,0.0,0,4.3511771663557735
+multistage_validation/frozen_belief,complete,current_belief,207,3.3108372539281845,True,7.05,False,0,0.195273756980896,0.0,0,4.52546167478431
+multistage_validation/frozen_belief,complete,current_belief,208,4.50868796557188,True,9.6,False,0,0.20628154277801514,0.0,0,4.235978458239697
+multistage_validation/frozen_belief,complete,current_belief,209,5.520101308822632,False,,False,0,0.07740181684494019,0.0,0,4.446686066803522

@@ -5,6 +5,13 @@ the original approximation. The original implementation and its 120-run evidence
 remain a reproducible reference. New variants have explicit configuration fields
 and separate outputs. Reference repositories remain read-only.
 
+**Current checkpoint:** iterations 1 and 2 are complete for the controlled
+localized-wind family. The [repeated-update study](multistage_findings.md) and
+[interactive demo](interactive_demo.md) provide new evidence and inspection tools.
+The decision gates below preserve the original plan; next work should prioritize
+the operating region and QP feasibility rather than treating the successful
+cost comparison as general validation.
+
 ## Working hypothesis
 
 Information is valuable when it changes a consequential future action. The first
@@ -94,7 +101,7 @@ sampling errors must be checked before claiming robust performance.
 5. **Optimizer and formulation study.** Compare MBD with CEM/MPPI using the same
    improved objective and policy class, matched total rollout work and wall time.
    Then investigate multimodal MBD particles/warm starts and recourse with several
-   belief-update boundaries. The current second period freezes its posterior for
+   belief-update boundaries. The original second period freezes its posterior for
    the entire future window, which can underestimate the benefit of continued
    sensing. Preserve genuine diffusion updates and the actual RPCBF.
 6. **Research-scale report.** Freeze the best defensible variant, reserve a new

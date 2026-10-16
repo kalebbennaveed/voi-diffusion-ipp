@@ -1,0 +1,12 @@
+✔ the displayed belief changes only at observation boundaries (0.375875ms)
+✔ the displayed task metric is trapezoidal executed clarity deficit (0.409917ms)
+✔ comparisons require the same experiment group and physical-world seed (0.073292ms)
+✔ all bundled replays have coherent telemetry and displayed actual costs (54.470917ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.357167

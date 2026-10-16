@@ -1,7 +1,9 @@
 # Implementation checkpoints
 
-Current validation: 23 passing CPU tests, 120 original archived missions and
-37 additional feedback/recourse missions. See [new findings](recourse_findings.md)
+Current validation: 30 passing CPU tests, 4 passing frontend tests, 120 original
+archived missions, 37 feedback/recourse missions, and 49 repeated-update refinement
+missions (including six explicitly superseded development runs).
+See [latest findings](multistage_findings.md), [recourse findings](recourse_findings.md)
 and [original measured findings](experimental_findings.md); the
 entries below preserve the sequence of implementation checkpoints.
 
@@ -79,3 +81,22 @@ No-measurement execution arrays match exactly. All 37 new missions, tests,
 the pre-run protocol, hashes, paired bootstrap intervals and every loss/failure
 are archived separately. The result supports a controlled example, not a general
 method or solver-superiority claim. See the research workflow for decision gates.
+
+## Research iteration 2 — repeated belief updates and interactive inspection
+
+Repeated causal conditioning inside the continuation improves mean actual cost
+by 28.07% versus frozen future belief on predeclared seeds 200–209 (10/10 wins),
+and 6.57% versus the preceding two-stage variant (8/10 wins). All 30 fresh-seed
+missions have no collisions, but the repeated-update arm has nine infeasible
+executed QPs versus one frozen-belief and two two-stage events. Independent LP
+reconstruction confirms the failures; stricter simulated-candidate feasibility
+did not fix seed 204. All 49 attempts and the superseded comparator warm-start
+bug are retained. Numerical source hashes remained frozen during validation.
+
+The local interactive demo records genuine MBD telemetry and separately replays
+sampled policies through the full causal evaluator. It displays diffusion,
+executed trajectories, beliefs, clarity, comparisons and failure events, and
+launches new serialized JAX runs. Eight bundled recordings include losses and
+QP failures. Browser verification included a completed live experiment; 30
+Python tests and four frontend tests pass. Source and dependencies remain
+inside this repository; all five reference repositories remain read-only.

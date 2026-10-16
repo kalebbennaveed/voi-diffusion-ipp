@@ -1,0 +1,515 @@
+[
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 23,
+    "step_end_seconds": 3.5999999999999996,
+    "saved_slack": 0.2997910976409912,
+    "independent_minimum_common_slack": 0.2998572043461213,
+    "independent_slack_with_projection_tolerance": 0.29976141592688293,
+    "saved_vs_tolerant_lp_error": 2.968311309814453e-05,
+    "clearance": 0.3869195580482483,
+    "control": [
+      -1.6000096797943115,
+      -0.8045545816421509
+    ],
+    "A": [
+      [
+        7.380657196044922,
+        0.6207672953605652
+      ],
+      [
+        -0.6206233501434326,
+        -0.7617805004119873
+      ],
+      [
+        -0.5753134489059448,
+        0.00012535492714960128
+      ],
+      [
+        0.1758117526769638,
+        -0.35951054096221924
+      ],
+      [
+        6.5453901290893555,
+        0.11836814135313034
+      ],
+      [
+        0.4049232304096222,
+        0.37016162276268005
+      ]
+    ],
+    "b": [
+      -12.608384132385254,
+      1.306076169013977,
+      2.4882166385650635,
+      1.3097643852233887,
+      -9.156354904174805,
+      0.8214853405952454
+    ],
+    "barrier_values": [
+      -0.38571256399154663,
+      -0.2654738426208496,
+      -1.6645468473434448,
+      -1.562430500984192,
+      -2.285128116607666,
+      -1.6776196956634521
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 24,
+    "step_end_seconds": 3.75,
+    "saved_slack": 0.279744029045105,
+    "independent_minimum_common_slack": 0.27976944706550055,
+    "independent_slack_with_projection_tolerance": 0.27967827598510436,
+    "saved_vs_tolerant_lp_error": 6.574392318725586e-05,
+    "clearance": 0.37237149477005005,
+    "control": [
+      -1.600000023841858,
+      -0.5234243273735046
+    ],
+    "A": [
+      [
+        7.5538177490234375,
+        0.7403852939605713
+      ],
+      [
+        -0.4586656391620636,
+        -0.7439495325088501
+      ],
+      [
+        -0.5751928687095642,
+        0.0012984341010451317
+      ],
+      [
+        0.1733294576406479,
+        -0.35452473163604736
+      ],
+      [
+        6.541948318481445,
+        0.22429746389389038
+      ],
+      [
+        0.4090113043785095,
+        0.37712734937667847
+      ]
+    ],
+    "b": [
+      -12.75341796875,
+      0.8435013294219971,
+      2.479203939437866,
+      1.2194932699203491,
+      -9.114052772521973,
+      0.9117822647094727
+    ],
+    "barrier_values": [
+      -0.44528764486312866,
+      -0.2071295976638794,
+      -1.665264368057251,
+      -1.5322890281677246,
+      -2.297900915145874,
+      -1.704862117767334
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 26,
+    "step_end_seconds": 4.05,
+    "saved_slack": 0.3072323501110077,
+    "independent_minimum_common_slack": 0.3072642227717318,
+    "independent_slack_with_projection_tolerance": 0.30718973637333213,
+    "saved_vs_tolerant_lp_error": 4.26173210144043e-05,
+    "clearance": 0.3462981581687927,
+    "control": [
+      -1.600000023841858,
+      -0.48932307958602905
+    ],
+    "A": [
+      [
+        4.615865707397461,
+        0.7728331685066223
+      ],
+      [
+        1.4703681468963623,
+        -0.5114079117774963
+      ],
+      [
+        -0.575432538986206,
+        0.0021228541154414415
+      ],
+      [
+        0.23512788116931915,
+        -0.34837642312049866
+      ],
+      [
+        5.705704212188721,
+        0.2835608422756195
+      ],
+      [
+        0.3740965723991394,
+        0.38041967153549194
+      ]
+    ],
+    "b": [
+      -8.070816993713379,
+      -2.4096078872680664,
+      2.5157015323638916,
+      1.098024606704712,
+      -8.134528160095215,
+      0.9422584176063538
+    ],
+    "barrier_values": [
+      -0.2954474091529846,
+      -0.16501128673553467,
+      -1.684403657913208,
+      -1.507779598236084,
+      -2.119753837585449,
+      -1.7060948610305786
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 27,
+    "step_end_seconds": 4.2,
+    "saved_slack": 0.2977771759033203,
+    "independent_minimum_common_slack": 0.2978097388354377,
+    "independent_slack_with_projection_tolerance": 0.2977402684632178,
+    "saved_vs_tolerant_lp_error": 3.68952751159668e-05,
+    "clearance": 0.3329811692237854,
+    "control": [
+      -1.600000023841858,
+      -0.35340240597724915
+    ],
+    "A": [
+      [
+        4.192531108856201,
+        0.8212481737136841
+      ],
+      [
+        1.4442614316940308,
+        -0.4906851649284363
+      ],
+      [
+        -0.5755561590194702,
+        0.002945659216493368
+      ],
+      [
+        0.23195837438106537,
+        -0.34470483660697937
+      ],
+      [
+        5.561064720153809,
+        0.34690672159194946
+      ],
+      [
+        0.36623093485832214,
+        0.3849778175354004
+      ]
+    ],
+    "b": [
+      -7.2960944175720215,
+      -2.4352164268493652,
+      2.519580364227295,
+      1.0645549297332764,
+      -7.9201788902282715,
+      0.9880462288856506
+    ],
+    "barrier_values": [
+      -0.306521475315094,
+      -0.13178128004074097,
+      -1.6885442733764648,
+      -1.4895391464233398,
+      -2.10142183303833,
+      -1.7199736833572388
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 28,
+    "step_end_seconds": 4.35,
+    "saved_slack": 0.28982803225517273,
+    "independent_minimum_common_slack": 0.2898409110580936,
+    "independent_slack_with_projection_tolerance": 0.28977613157734666,
+    "saved_vs_tolerant_lp_error": 5.188584327697754e-05,
+    "clearance": 0.32075661420822144,
+    "control": [
+      -1.600000023841858,
+      -0.27649977803230286
+    ],
+    "A": [
+      [
+        3.6883883476257324,
+        0.8450319170951843
+      ],
+      [
+        1.420400857925415,
+        -0.47600361704826355
+      ],
+      [
+        -0.5757229924201965,
+        0.0035408863332122564
+      ],
+      [
+        0.22938798367977142,
+        -0.34195128083229065
+      ],
+      [
+        5.396856784820557,
+        0.3895660638809204
+      ],
+      [
+        0.3552440106868744,
+        0.3880563974380493
+      ]
+    ],
+    "b": [
+      -6.424931526184082,
+      -2.4308571815490723,
+      2.5253162384033203,
+      1.0540072917938232,
+      -7.696964263916016,
+      1.012028455734253
+    ],
+    "barrier_values": [
+      -0.30545514822006226,
+      -0.1066468358039856,
+      -1.6930867433547974,
+      -1.4770469665527344,
+      -2.0772335529327393,
+      -1.7278679609298706
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 29,
+    "step_end_seconds": 4.5,
+    "saved_slack": 0.3595103919506073,
+    "independent_minimum_common_slack": 0.3595385480294713,
+    "independent_slack_with_projection_tolerance": 0.3594713245377611,
+    "saved_vs_tolerant_lp_error": 3.9070844650268555e-05,
+    "clearance": 0.3117285370826721,
+    "control": [
+      -1.600000023841858,
+      -0.12702643871307373
+    ],
+    "A": [
+      [
+        3.0632989406585693,
+        0.8450368642807007
+      ],
+      [
+        2.0034992694854736,
+        -0.4280153214931488
+      ],
+      [
+        -0.5759117603302002,
+        0.003914854489266872
+      ],
+      [
+        0.2894936501979828,
+        -0.33605271577835083
+      ],
+      [
+        5.199944019317627,
+        0.41175606846809387
+      ],
+      [
+        0.3399174213409424,
+        0.3895891010761261
+      ]
+    ],
+    "b": [
+      -5.368154525756836,
+      -3.510770320892334,
+      2.5332658290863037,
+      0.9593092799186707,
+      -7.445514678955078,
+      1.02528977394104
+    ],
+    "barrier_values": [
+      -0.29304689168930054,
+      -0.08467698097229004,
+      -1.698183298110962,
+      -1.4689176082611084,
+      -2.0443027019500732,
+      -1.7304390668869019
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 30,
+    "step_end_seconds": 4.6499999999999995,
+    "saved_slack": 0.47074878215789795,
+    "independent_minimum_common_slack": 0.47079159692133316,
+    "independent_slack_with_projection_tolerance": 0.47072005778930887,
+    "saved_vs_tolerant_lp_error": 2.872943878173828e-05,
+    "clearance": 0.3089982867240906,
+    "control": [
+      -1.600000023841858,
+      0.05524390935897827
+    ],
+    "A": [
+      [
+        2.21760630607605,
+        0.8045885562896729
+      ],
+      [
+        2.738290309906006,
+        -0.36565011739730835
+      ],
+      [
+        -0.5760918855667114,
+        0.0037315727677196264
+      ],
+      [
+        0.343979150056839,
+        -0.3313455879688263
+      ],
+      [
+        4.932808876037598,
+        0.38732489943504333
+      ],
+      [
+        0.3163098394870758,
+        0.38744667172431946
+      ]
+    ],
+    "b": [
+      -3.9744999408721924,
+      -4.872262001037598,
+      2.544316291809082,
+      0.8991100788116455,
+      -7.128843784332275,
+      1.0162200927734375
+    ],
+    "barrier_values": [
+      -0.25531840324401855,
+      -0.07255685329437256,
+      -1.7040224075317383,
+      -1.470825433731079,
+      -1.9918417930603027,
+      -1.720555067062378
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_204.json",
+    "step": 31,
+    "step_end_seconds": 4.8,
+    "saved_slack": 0.893474817276001,
+    "independent_minimum_common_slack": 0.8935395762143706,
+    "independent_slack_with_projection_tolerance": 0.8934431203190788,
+    "saved_vs_tolerant_lp_error": 3.170967102050781e-05,
+    "clearance": 0.31014949083328247,
+    "control": [
+      -1.6000093221664429,
+      0.7045956254005432
+    ],
+    "A": [
+      [
+        1.1268914937973022,
+        0.7321662306785583
+      ],
+      [
+        4.608443260192871,
+        -0.21384669840335846
+      ],
+      [
+        -0.8953729867935181,
+        -0.006204095669090748
+      ],
+      [
+        0.4072103202342987,
+        -0.3294519782066345
+      ],
+      [
+        4.563786506652832,
+        0.295928955078125
+      ],
+      [
+        0.2798795998096466,
+        0.3801059424877167
+      ]
+    ],
+    "b": [
+      -2.1806607246398926,
+      -8.417731285095215,
+      3.0317630767822266,
+      0.8427427411079407,
+      -6.6778564453125,
+      0.9840916991233826
+    ],
+    "barrier_values": [
+      -0.1872902512550354,
+      -0.05783259868621826,
+      -1.714094638824463,
+      -1.486333966255188,
+      -1.913874626159668,
+      -1.6925344467163086
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/multistage_validation/repeated_updates/localized_corridor_proposed_206.json",
+    "step": 33,
+    "step_end_seconds": 5.1,
+    "saved_slack": 0.013458818197250366,
+    "independent_minimum_common_slack": 0.013474077075110592,
+    "independent_slack_with_projection_tolerance": 0.013453989813289083,
+    "saved_vs_tolerant_lp_error": 4.827976226806641e-06,
+    "clearance": 0.029751598834991455,
+    "control": [
+      1.596537470817566,
+      -0.7052894830703735
+    ],
+    "A": [
+      [
+        0.00023231763043440878,
+        0.04092411696910858
+      ],
+      [
+        -0.11195993423461914,
+        -0.9818670153617859
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.007110411301255226,
+        -0.38937652111053467
+      ],
+      [
+        0.37254598736763,
+        -0.01026814617216587
+      ],
+      [
+        0.0024072795640677214,
+        0.3839268386363983
+      ]
+    ],
+    "b": [
+      -0.04198126494884491,
+      0.500263512134552,
+      2.7269086837768555,
+      1.8115017414093018,
+      1.7750318050384521,
+      1.7284787893295288
+    ],
+    "barrier_values": [
+      0.05151687189936638,
+      -0.8838781714439392,
+      -2.3001303672790527,
+      -1.999078631401062,
+      -2.154911518096924,
+      -1.552679181098938
+    ],
+    "interpretation": "Independently reconstructed bounded halfspaces require positive slack. Projection tolerances and the saved-versus-recomputed numerical discrepancy are reported explicitly; exact equality of separately compiled float32 spline gradients is not claimed. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  }
+]

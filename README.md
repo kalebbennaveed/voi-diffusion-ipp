@@ -8,13 +8,33 @@ paired experiments, plots, and offline HTML replays.
 
 **Research status:** the software and component mechanisms are tested on the M3
 CPU. The original formulation did not establish a reliable mission-level advantage.
-A revised feedback/recourse variant reduced mean cost by 20.9% on ten fresh paired
-seeds in a controlled localized-wind scenario (eight wins, two losses, no collisions,
-one infeasible executed QP). Read the [new findings](docs/recourse_findings.md),
+A revised feedback/recourse variant reduced mean cost by 20.9% on its first ten
+validation seeds. Repeated future belief updates subsequently reduced mean cost
+by **28.1% versus frozen future belief** and **6.6% versus the two-stage variant**
+on ten new paired seeds. No collisions occurred, but repeated updates required
+9 infeasible-QP relaxations across 800 steps, versus 1 and 2 respectively.
+Read the [latest findings](docs/multistage_findings.md),
+[earlier recourse findings](docs/recourse_findings.md),
 [research workflow](docs/research_workflow.md), and
 [original measured findings](docs/experimental_findings.md) for the scope of this
 evidence. Generality and diffusion superiority remain unestablished. Sampled RPCBF is approximate;
 no formal safety or optimality guarantee is claimed.
+
+## Interactive research demo
+
+```sh
+JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.viz.demo_server --port 8765
+```
+
+Open <http://127.0.0.1:8765>. Inspect the actual diffusion proposals, weights,
+score updates and selected trajectories, then play the executed mission with
+clarity, wind belief, safety diagnostics and a paired comparator. The included
+eight recordings cover useful learning, a cost regression, repeated updates,
+QP relaxation events, and a no-measurement control.
+The interface can launch new JAX runs with different seeds and settings. It has
+no frontend dependencies or external assets. See [demo instructions and
+provenance](docs/interactive_demo.md). The original MBD playground was used only
+as an interaction reference; numerical planning remains in this repository.
 
 ## Setup on Apple Silicon
 
@@ -111,6 +131,7 @@ concise reviewable evidence is also saved under `docs/`.
 
 - [Mathematical formulation](docs/method.md)
 - [Research workflow and literature-informed revisions](docs/research_workflow.md)
+- [Repeated belief updates, 49 refinement missions and demo validation](docs/multistage_findings.md)
 - [Feedback/recourse findings and all 37 new missions](docs/recourse_findings.md)
 - [Measured findings and remaining research limitations](docs/experimental_findings.md)
 - [Complete archived result table](docs/validation/summary.md)

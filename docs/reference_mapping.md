@@ -38,3 +38,11 @@ restriction; kernel NN and amplitude adapt between planning calls. Full sparse
 posterior retains conditional residual covariance. Finite-anchor planning
 snapshots omit the residual between anchors and log the variance discrepancy.
 Do not describe the default feature-GP missions as POAM missions.
+# Interactive demo reference
+
+The added read-only `mbd-playground` checkout was inspected via its README,
+`web/safe-mbd/solver-core.js` history/summary routines, and
+`web/dmbd/playback.js`. It informs the UI separation between denoising and
+execution. Its browser Safe-MPD solver/shield is not substituted for this
+repository's MBD or RPCBF. No code or assets were copied. See
+[interactive demo provenance](interactive_demo.md).

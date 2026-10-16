@@ -170,6 +170,30 @@ measurements near the passage are more informative than remote measurements.
 It is a rank-one spatial GP per component and does not establish generality to
 unknown spatial structures. See [research workflow](research_workflow.md).
 
+## Optional repeated belief updates within the continuation
+
+`future_updates: true` partitions the continuation into complete `stage_steps`
+periods. During each period the controller and RPCBF use a frozen available
+belief. At its end, observations from executed positions condition the belief
+used in the next period. Outer physical fields remain unchanged. Future
+measurement noise has a separate PRNG namespace, shared across candidate policies
+as common random numbers. Predictive routing uses its own independent observation
+noise and posterior-predictive fields.
+
+The same waypoint-policy parameters remain shared across worlds. This is a
+closed-loop policy evaluation with repeated inference; it is not a full recursive
+scenario-tree optimization or a new MBD solve at every hypothetical boundary.
+It removes the previous freeze of all future information for 7.2 seconds while
+preserving causal access to measurements. The frozen-belief comparator disables
+anticipated updates in both its objective and warm-start routing. It still
+receives actual measurements between real MPC periods.
+
+`require_feasible_candidates: true` optionally gives zero feasibility density
+to candidate rollouts with any infeasible QP, in addition to the existing
+collision rejection. It does not add a tuned task penalty or replace RPCBF.
+Independent execution samples can still differ from those checked in planning,
+so this option cannot guarantee that the executed QPs remain feasible.
+
 ## Diagnostics and interpretation
 
 A matched no-information continuation starts at exactly the same first-period

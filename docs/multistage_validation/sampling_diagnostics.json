@@ -1,0 +1,78 @@
+[
+  {
+    "seed": 204,
+    "period": 1,
+    "truth_coefficients": [
+      2.38704252243042,
+      0.514316976070404
+    ],
+    "posterior_mean": [
+      2.388510227203369,
+      0.5015933513641357
+    ],
+    "posterior_std": 0.20313026010990143,
+    "standardized_truth": [
+      -0.00722543615847826,
+      0.06263776123523712
+    ],
+    "inner_standardized_draws": [
+      [
+        1.2260255813598633,
+        -0.5293225049972534
+      ],
+      [
+        -1.6174910068511963,
+        -0.9712556600570679
+      ],
+      [
+        -0.52312833070755,
+        -2.3919270038604736
+      ],
+      [
+        0.1327250897884369,
+        1.194401502609253
+      ]
+    ],
+    "truth_inside_inner_convex_hull": true,
+    "convex_hull_residual": -0.6025349168786145,
+    "interpretation": "Post-hoc diagnostic only. Coverage by four posterior draws is limited; this does not identify the sole cause of QP infeasibility."
+  },
+  {
+    "seed": 206,
+    "period": 2,
+    "truth_coefficients": [
+      -0.21337422728538513,
+      -0.551464319229126
+    ],
+    "posterior_mean": [
+      -0.2274446040391922,
+      -0.49895426630973816
+    ],
+    "posterior_std": 0.03458339720964432,
+    "standardized_truth": [
+      0.4068535268306732,
+      -1.5183601379394531
+    ],
+    "inner_standardized_draws": [
+      [
+        0.34131690859794617,
+        -0.7233392000198364
+      ],
+      [
+        -1.4265730381011963,
+        -0.06299436092376709
+      ],
+      [
+        2.6401615142822266,
+        -0.817979633808136
+      ],
+      [
+        -0.4314607083797455,
+        0.36746206879615784
+      ]
+    ],
+    "truth_inside_inner_convex_hull": false,
+    "convex_hull_residual": 0.7916522943545649,
+    "interpretation": "Post-hoc diagnostic only. Coverage by four posterior draws is limited; this does not identify the sole cause of QP infeasibility."
+  }
+]
