@@ -31,6 +31,12 @@ def clarity_controller(x, q, belief, env, cfg):
     return jnp.clip(1.3 * (goal - x[:2]) - 1.8 * x[2:] - mean, -cfg.umax, cfg.umax)
 
 
+def waypoint_controller(x, waypoint, belief, cfg):
+    """Shared state-feedback policy; only the available wind mean compensates drift."""
+    mean = belief.predict(x[:2])[0][0]
+    return jnp.clip(1.2 * (waypoint - x[:2]) - 1.8 * x[2:] - mean, -cfg.umax, cfg.umax)
+
+
 def rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, feedback=False):
     """Belief and inner fields remain fixed for this entire horizon."""
     wind = lambda p: world.at(p)[0]
@@ -40,6 +46,8 @@ def rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, feedback=Fa
         u, eps = inputs
         if feedback:
             u = clarity_controller(x, q, belief, env, cfg)
+        elif cfg.control_representation == "waypoint":
+            u = waypoint_controller(x, u, belief, cfg)
         safe, info = filter_control(x, u, belief, inner, env, cfg)
         xn = step(x, safe, wind, cfg.dt)
         qn = clarity.step(

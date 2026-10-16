@@ -4,6 +4,7 @@ import jax.numpy as jnp
 
 from ..environment import Environment
 from ..wind import prior
+from ..wind.gp import LocalizedBasis
 
 
 def make_scenario(cfg):
@@ -31,7 +32,7 @@ def make_scenario(cfg):
         # Useful monitoring is entirely on the left; uncertainty to the right has no task value.
         cells = cells.at[:9].set(jnp.array([-1.35, 0.5]) + offsets)
         a = jnp.array([-1.35, 0.5])
-    elif cfg.scenario not in ("corridor", "no_worthwhile_learning"):
+    elif cfg.scenario not in ("corridor", "no_worthwhile_learning", "localized_corridor"):
         raise ValueError(f"Unknown scenario {cfg.scenario}")
     env = Environment(cells, targets, obstacles, bounds, a, b, probe)
     cx, cy = jnp.meshgrid(jnp.linspace(-2, 2, 5), jnp.linspace(-1.5, 1.5, 3))
@@ -42,6 +43,12 @@ def make_scenario(cfg):
         # Low uncertainty on useful left routes, large uncertainty beyond the passage.
         std = jnp.where(centers[:, 0] < 0, 0.08, 0.9)
         belief = belief._replace(covariance=jnp.diag(std**2))
+    if cfg.scenario == "localized_corridor":
+        centers = jnp.array([[0.0, 0.0]])
+        belief = prior(centers, cfg.wind_length, cfg.wind_std, noise)
+        belief = belief._replace(
+            basis=LocalizedBasis(centers, jnp.array(cfg.wind_length), jnp.array(False))
+        )
     x = jnp.array([-1.45, -0.15, 0.0, 0.0])
     q = jnp.full(cells.shape[0], 0.15)
     return env, belief, x, q

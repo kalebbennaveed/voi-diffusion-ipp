@@ -6,7 +6,7 @@ import jax.numpy as jnp
 
 from ..dynamics import step
 from .mbd import optimize
-from .two_stage import make_buffers, objective, route
+from .two_stage import decode, make_buffers, objective, route
 
 METHODS = (
     "proposed",
@@ -68,6 +68,12 @@ def _planner(cfg, method):
 
 def initial_policy(x, q, belief, env, cfg, first_goal=None):
     """Task-only seed for every solver. No posterior outcomes or truths are used."""
+    if cfg.control_representation == "waypoint":
+        first = env.roi_b if first_goal is None else first_goal
+        goals = jnp.stack((first, env.roi_a, env.roi_b))[: 1 + cfg.branches]
+        scale = jnp.array([cfg.waypoint_x_limit, cfg.waypoint_y_limit])
+        latent = jnp.arctanh(jnp.clip(goals / scale, -0.95, 0.95))
+        return jnp.tile(latent[:, None], (1, cfg.knots, 1)).ravel()
     wind = lambda p: (belief.basis.features(p) @ belief.mean)[0]
 
     def toward(x, goal, n):
@@ -94,7 +100,7 @@ def next_initial(previous, x, q, belief, env, cfg):
     # branches are task-only seeds; the whole vector is optimized again.
     base = initial_policy(x, q, belief, env, cfg).reshape((1 + cfg.branches, cfg.knots, 2))
     prior = previous.reshape(base.shape)
-    b = route(x, q, belief, env, cfg)
+    b = route(x, q, belief, env, cfg, decode(previous, cfg)[1])
     # First period only covers the first TL/TF of previous future.
     times = jnp.linspace(0, min(1, cfg.stage_steps / cfg.future_steps), cfg.knots)
     knots = jax.vmap(

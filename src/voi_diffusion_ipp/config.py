@@ -44,6 +44,11 @@ class Config:
     reject_collisions: bool = True
     warm_starts: int = 1
     obstacle_radius: float = 0.79
+    control_representation: str = "acceleration"
+    branch_rule: str = "crosswind"
+    recourse_samples: int = 3
+    waypoint_x_limit: float = 2.25
+    waypoint_y_limit: float = 1.65
     seeds: tuple = (0, 1, 2)
     methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
@@ -60,6 +65,7 @@ class Config:
             "proposals",
             "candidate_chunk",
             "mission_horizons",
+            "recourse_samples",
         ):
             if getattr(self, name) < 1:
                 raise ValueError(f"{name} must be positive")
@@ -75,6 +81,10 @@ class Config:
             raise ValueError("Unknown spline implementation")
         if self.wind_backend not in ("feature", "poam"):
             raise ValueError("Unknown wind backend")
+        if self.control_representation not in ("acceleration", "waypoint"):
+            raise ValueError("Unknown control representation")
+        if self.branch_rule not in ("crosswind", "task"):
+            raise ValueError("Unknown branch rule")
 
 
 def load_config(path):

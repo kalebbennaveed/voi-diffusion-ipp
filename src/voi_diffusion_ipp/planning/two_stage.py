@@ -37,18 +37,65 @@ def make_buffers(belief, key, cfg):
     )
 
 
-def route(x, q, belief, env, cfg):
+def route(x, q, belief, env, cfg, futures=None, inner_eps=None):
     """Only observable state and posterior enter this API. No field or scenario ID."""
     if cfg.shared_future or cfg.branches == 1:
         return jnp.array(0, jnp.int32)
+    if cfg.branch_rule == "task":
+        if futures is None:
+            raise ValueError(
+                "Task-conditioned recourse requires the candidate future policy library"
+            )
+        costs = recourse_costs(x, q, belief, futures, env, cfg, inner_eps)
+        return jnp.argmin(costs).astype(jnp.int32)
     mean, cov = belief.predict(jnp.array([[0.0, 0.0]]))
     crosswind = jnp.abs(mean[0, 1]) + 1.5 * jnp.sqrt(cov[0, 1, 1])
     # Fixed physical crosswind threshold; not trained on outer truths.
     return (crosswind > 0.45).astype(jnp.int32)
 
 
+def recourse_costs(x, q, belief, futures, env, cfg, inner_eps=None):
+    """Posterior predictive action values, with no outer-world argument.
+
+    These independent, fixed standardized draws are common random numbers across
+    candidates. They are transformed by the available posterior, never the true
+    outer coefficient. No future observation or hidden scenario ID is available.
+    """
+    coefficients = belief.sample_field(jax.random.PRNGKey(910031), cfg.recourse_samples)
+    if inner_eps is None:
+        inner_eps = jax.random.normal(
+            jax.random.PRNGKey(910032), (cfg.inner_samples, *belief.mean.shape)
+        )
+    inner = belief.inner_fields(inner_eps)
+
+    def policy_cost(controls):
+        def world_cost(coeff):
+            out = rollout(
+                x,
+                q,
+                controls,
+                belief,
+                inner,
+                WorldField(belief.basis, coeff),
+                jnp.zeros((cfg.future_steps, 2)),
+                env,
+                cfg,
+            )
+            cost = out.cost + cfg.terminal_seconds * deficit(out.q[-1], env.targets)
+            return jnp.where(cfg.reject_collisions & (jnp.min(out.clearance) < 0), jnp.inf, cost)
+
+        return jnp.mean(jax.lax.map(world_cost, coefficients))
+
+    return jax.lax.map(policy_cost, futures)
+
+
 def decode(vector, cfg):
-    knots = cfg.umax * jnp.tanh(vector.reshape((1 + cfg.branches, cfg.knots, 2)))
+    scale = (
+        jnp.array([cfg.waypoint_x_limit, cfg.waypoint_y_limit])
+        if cfg.control_representation == "waypoint"
+        else cfg.umax
+    )
+    knots = scale * jnp.tanh(vector.reshape((1 + cfg.branches, cfg.knots, 2)))
 
     def interpolate(k, n):
         t = jnp.linspace(0, 1, n)
@@ -71,7 +118,7 @@ def evaluate_one(
         belief.condition(first.x[1:, :2], first.observations) if cfg.measurements else belief
     )
     stage_belief = posterior if mode in ("proposed", "fixed") else belief
-    branch = route(first.x[-1], first.q[-1], stage_belief, env, cfg)
+    branch = route(first.x[-1], first.q[-1], stage_belief, env, cfg, futures, future_eps)
     future = rollout(
         first.x[-1],
         first.q[-1],
@@ -143,7 +190,7 @@ def matched_no_information(result, vector, old_belief, coeff, future_eps, env, c
     _, futures = decode(vector, cfg)
     x = result.first.x[-1]
     q = result.first.q[-1]
-    b = route(x, q, old_belief, env, cfg)
+    b = route(x, q, old_belief, env, cfg, futures, future_eps)
     return rollout(
         x,
         q,

@@ -1,0 +1,21 @@
+profile: smoke
+scenario: localized_corridor
+control_representation: waypoint
+branch_rule: task
+recourse_samples: 2
+wind_length: 0.55
+wind_std: 0.8
+stage_steps: 16
+future_steps: 48
+knots: 2
+worlds: 6
+inner_samples: 4
+backup_steps: 8
+backup_dt: 0.24
+diffusion_steps: 4
+proposals: 12
+candidate_chunk: 1
+warm_starts: 3
+mission_horizons: 5
+seeds: [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]
+methods: [proposed, current_belief]

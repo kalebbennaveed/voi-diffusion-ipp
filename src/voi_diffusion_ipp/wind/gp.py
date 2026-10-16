@@ -36,6 +36,25 @@ class WorldField(NamedTuple):
         return self.basis.features(positions) @ self.coefficients
 
 
+class LocalizedBasis(NamedTuple):
+    """Unnormalized Gaussian features: known plume geometry, uncertain strength.
+
+    This finite-rank, nonstationary GP intentionally makes remote measurements
+    weakly informative. Both physics and inference use the identical basis.
+    """
+
+    centers: jax.Array
+    length: jax.Array
+    independent: jax.Array
+
+    def features(self, locations):
+        r = jnp.atleast_2d(locations)
+        distance = jnp.sum(((r[:, None] - self.centers[None]) / self.length) ** 2, axis=-1)
+        phi = jnp.exp(-0.5 * distance)
+        nearest = jax.nn.one_hot(jnp.argmin(distance, axis=1), len(self.centers))
+        return jnp.where(self.independent, phi * nearest, phi)
+
+
 class InnerFields(NamedTuple):
     """Controller disturbance samples, constructed exclusively from its belief."""
 

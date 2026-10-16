@@ -72,6 +72,8 @@ def mission(cfg, method, seed, out, progress=True):
             feedback=(method == "fixed"),
         )
     )
+    choose = jax.jit(lambda x, q, b, fu, eps: route(x, q, b, env, cfg, fu, eps))
+    warm_next = jax.jit(lambda previous, x, q, b: next_initial(previous, x, q, b, env, cfg))
     nominal_step = jax.jit(
         lambda x, u, b: step(x, u, lambda p: (b.basis.features(p) @ b.mean)[0], cfg.dt)
     )
@@ -132,12 +134,12 @@ def mission(cfg, method, seed, out, progress=True):
                     train_steps=cfg.poam_train_steps,
                 )
                 belief = poam.planning_belief(anchors)
-        branch = route(result.x[-1], result.q[-1], belief, env, cfg)
         future_eps = jax.random.normal(
             jax.random.fold_in(root, 500000 + h), (cfg.inner_samples, *belief.mean.shape)
         )
+        branch = choose(result.x[-1], result.q[-1], belief, fu, future_eps)
         learned = future_exec(result.x[-1], result.q[-1], fu[branch], belief, future_eps)
-        old_branch = route(result.x[-1], result.q[-1], old, env, cfg)
+        old_branch = choose(result.x[-1], result.q[-1], old, fu, future_eps)
         noinfo = future_exec(result.x[-1], result.q[-1], fu[old_branch], old, future_eps)
         diag.append(
             {
@@ -160,7 +162,7 @@ def mission(cfg, method, seed, out, progress=True):
             nominal.append(np.asarray(nx))
         nom_paths.append(np.array(nominal))
         x, q = result.x[-1], result.q[-1]
-        initial = next_initial(opt.vector, x, q, belief, env, cfg)
+        initial = warm_next(opt.vector, x, q, belief)
         xs.append(np.asarray(result.x[1:]))
         qs.append(np.asarray(result.q[1:]))
         for dest, value in [
