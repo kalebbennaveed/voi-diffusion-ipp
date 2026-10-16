@@ -218,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local research environments, data, and caches
+.uv-cache/
+.python/
+.venv-metal/
+.venv-metaljax/
+.mplconfig/
+results/
+tmp/
