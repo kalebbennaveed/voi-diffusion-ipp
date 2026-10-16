@@ -1,0 +1,14 @@
+profile: smoke
+wind_backend: poam
+poam_train_steps: 3
+stage_steps: 3
+future_steps: 4
+backup_steps: 4
+inner_samples: 2
+worlds: 2
+diffusion_steps: 2
+proposals: 4
+candidate_chunk: 1
+mission_horizons: 2
+seeds: [0]
+methods: [proposed]

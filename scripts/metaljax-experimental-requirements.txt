@@ -1,0 +1,13 @@
+iniconfig==2.3.1
+jax==0.11.2
+jaxlib==0.11.2
+metaljax==0.11.9
+ml-dtypes==0.6.0
+numpy==2.5.4
+opt-einsum==3.4.0
+packaging==26.3
+pluggy==1.7.0
+pygments==2.21.0
+pytest==9.1.1
+pyyaml==6.0.3
+scipy==1.18.1

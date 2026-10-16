@@ -1,1 +1,3 @@
-from .gp import Basis, WindBelief, WorldField, InnerFields, prior, information_gain
+from .gp import Basis, InnerFields, WindBelief, WorldField, information_gain, prior
+
+__all__ = ["Basis", "InnerFields", "WindBelief", "WorldField", "information_gain", "prior"]

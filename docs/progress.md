@@ -27,3 +27,18 @@ rejection of truth-field objects at the RPCBF interface. Full sequential scoring
 fixed clarity continuation, passive, IG, reset/replay heuristic, oracle, CEM and
 MPPI share the same rollout. First coupled mission is running; behavioral success
 has not yet been established.
+
+## Phase 5 and ongoing Phase 6
+
+Sixteen CPU tests pass, including learned-belief RPCBF admissibility, empirical
+wall-collision prevention, no-truth-leakage first-action comparison, finite-field
+consistency, one/two-dimensional MBD and POAM variational statistics. Full MBD
+missions and POAM integration smoke runs execute. Both Metal options fail on
+this host's required workload; CPU remains the validated backend.
+
+The posterior-to-filter mechanism is demonstrated at matched states. A robust
+mission-level benefit from deliberate sensing is NOT yet established. Small-budget
+paired trials and a higher-budget initialization/horizon diagnostic are running.
+An equal-budget nonconvex trajectory benchmark favors MPPI over MBD on ten seeds;
+this negative solver result is retained. All-invalid optimization is now an
+explicit fallback event, not a discarded mission.

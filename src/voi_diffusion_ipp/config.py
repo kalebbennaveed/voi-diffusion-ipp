@@ -1,11 +1,12 @@
-from dataclasses import dataclass, replace, asdict
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
+
 import yaml
 
 
 @dataclass(frozen=True)
 class Config:
-    scenario: str = 'corridor'
+    scenario: str = "corridor"
     dt: float = 0.15
     stage_steps: int = 12
     future_steps: int = 32
@@ -37,40 +38,72 @@ class Config:
     measurements: bool = True
     shared_future: bool = False
     independent_cells: bool = False
-    spline: str = 'full'
+    spline: str = "full"
+    wind_backend: str = "feature"
+    poam_train_steps: int = 3
+    reject_collisions: bool = True
+    warm_starts: int = 1
+    obstacle_radius: float = 0.79
     seeds: tuple = (0, 1, 2)
-    methods: tuple = ('proposed', 'passive', 'weighted_ig', 'heuristic', 'cem', 'mppi', 'oracle')
+    methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
     def __post_init__(self):
-        for name in ('stage_steps', 'future_steps', 'knots', 'branches', 'worlds',
-                     'inner_samples', 'backup_steps', 'diffusion_steps', 'proposals',
-                     'candidate_chunk', 'mission_horizons'):
+        for name in (
+            "stage_steps",
+            "future_steps",
+            "knots",
+            "branches",
+            "worlds",
+            "inner_samples",
+            "backup_steps",
+            "diffusion_steps",
+            "proposals",
+            "candidate_chunk",
+            "mission_horizons",
+        ):
             if getattr(self, name) < 1:
-                raise ValueError(f'{name} must be positive')
+                raise ValueError(f"{name} must be positive")
         if self.backup_steps < 3 or self.knots < 2:
-            raise ValueError('Cubic spline requires >=3 backup steps; interpolation >=2 knots')
+            raise ValueError("Cubic spline requires >=3 backup steps; interpolation >=2 knots")
         if not 0 < self.beta_min <= self.beta_max < 1 or self.temperature <= 0:
-            raise ValueError('Invalid diffusion schedule/temperature')
+            raise ValueError("Invalid diffusion schedule/temperature")
         if self.observation_std <= 0 or self.dt <= 0:
-            raise ValueError('Positive observation noise and timestep required')
+            raise ValueError("Positive observation noise and timestep required")
         if self.branches not in (1, 2):
-            raise ValueError('Current observation router supports one or two branches')
-        if self.spline not in ('full', 'fast', 'discrete'):
-            raise ValueError('Unknown spline implementation')
+            raise ValueError("Current observation router supports one or two branches")
+        if self.spline not in ("full", "fast", "discrete"):
+            raise ValueError("Unknown spline implementation")
+        if self.wind_backend not in ("feature", "poam"):
+            raise ValueError("Unknown wind backend")
 
 
 def load_config(path):
     data = yaml.safe_load(Path(path).read_text()) or {}
-    profile = data.pop('profile', 'smoke')
-    for key in ('methods', 'seeds'):
+    profile = data.pop("profile", "smoke")
+    for key in ("methods", "seeds"):
         if key in data:
             data[key] = tuple(data[key])
-    presets = {'smoke': {}, 'dev': dict(diffusion_steps=10, proposals=32, worlds=6,
-               inner_samples=10, mission_horizons=8),
-               'research': dict(diffusion_steps=24, proposals=96, worlds=12,
-               inner_samples=24, backup_steps=24, mission_horizons=12, seeds=tuple(range(20)))}
+    presets = {
+        "smoke": {},
+        "dev": {
+            "diffusion_steps": 10,
+            "proposals": 32,
+            "worlds": 6,
+            "inner_samples": 10,
+            "mission_horizons": 8,
+        },
+        "research": {
+            "diffusion_steps": 24,
+            "proposals": 96,
+            "worlds": 12,
+            "inner_samples": 24,
+            "backup_steps": 24,
+            "mission_horizons": 12,
+            "seeds": tuple(range(20)),
+        },
+    }
     if profile not in presets:
-        raise ValueError(f'Unknown profile {profile}')
+        raise ValueError(f"Unknown profile {profile}")
     return replace(Config(), **(presets[profile] | data))
 
 

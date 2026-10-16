@@ -1,4 +1,5 @@
 """Double integrator with a fixed, spatial acceleration disturbance."""
+
 import jax.numpy as jnp
 
 
