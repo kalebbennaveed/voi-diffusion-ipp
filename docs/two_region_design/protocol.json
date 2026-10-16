@@ -1,0 +1,70 @@
+{
+  "status": "development task calibrated; planner and wind claims unvalidated",
+  "declared_utc": "2026-10-16T22:57:27Z",
+  "user_intent": "Two large regions repeatedly monitored through an uncertain windy passage or around either obstacle; no prescribed winning route.",
+  "direction_assumption": "Wind helps A to B; B to A may prefer an outer route. Verify physically; mirror labels if the intended direction is reversed.",
+  "selected_task": {
+    "sigma": 0.5,
+    "Q": 0.16,
+    "costs": {
+      "A_hover": 33.508853912353516,
+      "A_sweep": 33.651336669921875,
+      "B_hover": 32.971046447753906,
+      "B_sweep": 33.110328674316406,
+      "shuttle_2": 11.24809455871582,
+      "shuttle_4": 13.072202682495117,
+      "shuttle_6": 14.678094863891602
+    },
+    "best_single": "B_hover",
+    "best_shuttle": "shuttle_2",
+    "shuttle_reduction": 0.6588493308351735,
+    "optimistic_confined_region_bound": 31.48472804773918,
+    "bound_quadrature_error": 1.0594906285632533e-08,
+    "shuttle_reduction_vs_bound": 0.6427444270231354,
+    "unsensed_08_to_06_seconds": 2.604166666666667,
+    "unsensed_08_to_04_seconds": 7.8125
+  },
+  "region_cells": [
+    90,
+    90
+  ],
+  "task_scope": "All 1353 field cells have actual clarity dynamics. The 180 cells in A and B have positive target; background target is zero. Equal-area ROI deficit is reported (constant rescaling of the same whole-grid deficit).",
+  "task_calibration": "The 120-second prescribed reference shuttle beats an optimistic analytic bound on any policy confined to either ROI after the first four seconds. The bound grants perfect initial clarity, perfect service in the visited region, and maximum possible cross-region Gaussian sensing simultaneously for every neglected cell.",
+  "not_demonstrated": [
+    "learning advantage",
+    "wind-dependent direction-specific route choice",
+    "physical collisions in wind-ignored safety",
+    "one-second 10-second-horizon planner"
+  ],
+  "physics_gate": "Before comparing learning planners, verify under known wind that middle/outer route rankings change with direction. Use the same bounded dynamics and physical wind for all methods. Do not encode route-specific bonuses or force a collision. If aerodynamic drag or airspeed constraints are needed, implement and validate them consistently in both dynamics and RPCBF drift; do not call the existing acceleration-disturbance model a helicopter aerodynamic model.",
+  "two_information_processes": "Fast Q decay applies to the monitored QoI. Wind is initially a fixed unknown spatial field, learned by full POAM; QoI Q must not erase wind knowledge. Time-varying wind is a later separately declared model.",
+  "methods": [
+    "Proposed causal belief-contingent MBD",
+    "Wind-aware MBD with real POAM updates but no anticipated learning",
+    "Known-wind reference",
+    "Matched wind-ignored RPCBF ablation",
+    "Separate no-safety-filter ablation"
+  ],
+  "fairness": "Same start, clarity, wind realization, observation noise namespace, actuator bounds, task, geometry and nominal planning budget. Both learning methods assimilate actual observations. Any route warm-start bank is shared. Fixed-policy safety ablations remain separate from fully replanned comparisons.",
+  "objective": "Expected future executed clarity deficit. No generic information bonus, positive-clipped improvement, hidden true-wind routing, forced alternation, or prescribed outbound/return topology.",
+  "negative_control": "Keep the same geometry and QoI decay; weaken wind, make relevant wind already well known, or make extra observations uninformative. Small excess task cost is acceptable; use a declared 5% noninferiority margin rather than requiring two-sided equivalence.",
+  "eventual_statistical_gate": {
+    "positive": "At least eight fresh paired seeds; mean improvement >=10% and paired 95% interval excluding zero.",
+    "low_value": "At least eight fresh paired seeds; upper one-sided 95% interval on relative excess cost <=5%; report individual regressions and collisions."
+  },
+  "runtime_gate": "10-second trajectory in about one second on the M3 CPU after startup compilation, including required belief/cache refresh and verification. Measure p50/p95 and missed fresh-plan deadlines on varying inputs before long studies.",
+  "sources": {
+    "causal_dual_control": "https://jmlr.org/papers/v17/15-162.html",
+    "MBD": "https://proceedings.neurips.cc/paper_files/paper/2024/file/6a5c38a730b17f3827c09cf6b192be04-Paper-Conference.pdf",
+    "RPCBF": "https://autonomousrobots.nl/assets/files/publications/25-knoedler-ral.pdf",
+    "possible_drag_extension": "https://arxiv.org/abs/1712.02402"
+  },
+  "limits": "Task-selection outcomes are development evidence only and cannot establish the proposed method. The tested vehicle is a planar abstraction, not a validated helicopter flight model.",
+  "numerical_verification": {
+    "screen_dt_seconds": 0.05,
+    "refinement_dt_seconds": 0.0125,
+    "cost_difference_tolerance": 0.002,
+    "tests_passed": 3,
+    "initial_failure": "The 0.1-second screen differed from 0.025-second integration by 0.0057583 cost units, failing the declared 0.002 tolerance. The screen step was reduced to 0.05 seconds and compared against 0.0125 seconds; the same tolerance passed. Original outputs are preserved in screen_dt_0p1.json."
+  }
+}

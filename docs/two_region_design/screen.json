@@ -1,0 +1,283 @@
+{
+  "label": "Task-design diagnostic only: prescribed sensing paths, no planner or wind",
+  "grid_cells": 1353,
+  "region_cells": [
+    90,
+    90
+  ],
+  "spec": {
+    "bounds": [
+      [
+        -2.7,
+        -2.1
+      ],
+      [
+        2.7,
+        2.1
+      ]
+    ],
+    "region_a": [
+      1.5,
+      0.9
+    ],
+    "region_b": [
+      -1.5,
+      -0.9
+    ],
+    "region_size": [
+      1.4,
+      1.2
+    ],
+    "obstacle_normal_offset": 0.72,
+    "obstacle_radius": 0.5,
+    "grid_shape": [
+      41,
+      33
+    ],
+    "target": 0.7,
+    "sensor_R": 0.1,
+    "sensor_sigmas": [
+      0.5,
+      0.65
+    ],
+    "process_noise_values": [
+      0.04,
+      0.08,
+      0.12,
+      0.16
+    ],
+    "dwell_seconds": [
+      2.0,
+      4.0,
+      6.0
+    ],
+    "transfer_seconds": 4.0,
+    "mission_seconds": 120.0,
+    "dt": 0.05,
+    "initial_clarity": 0.74,
+    "maximum_control_acceleration": 1.6,
+    "selection_rule": "Prefer the fastest decay that gives at least 10 percent less integrated ROI clarity deficit for a symmetric shuttle than an optimistic analytical lower bound for every policy confined to one region after the first transfer; reject paths whose prescribed acceleration exceeds the declared zero-wind actuator bound. Retain every tested case. This selects the task, not evidence for a learning advantage."
+  },
+  "geometry_and_acceleration": {
+    "A_hover": {
+      "max_axis_acceleration": 0.0,
+      "minimum_geometric_clearance": 1.3916659324521334
+    },
+    "A_sweep": {
+      "max_axis_acceleration": 0.7512935337444571,
+      "minimum_geometric_clearance": 1.0170628994274726
+    },
+    "B_hover": {
+      "max_axis_acceleration": 1.080483398437515,
+      "minimum_geometric_clearance": 0.22000000000000008
+    },
+    "B_sweep": {
+      "max_axis_acceleration": 1.080483398437515,
+      "minimum_geometric_clearance": 0.22000000000000008
+    },
+    "shuttle_2": {
+      "max_axis_acceleration": 1.0804833984384477,
+      "minimum_geometric_clearance": 0.22000000000000008
+    },
+    "shuttle_4": {
+      "max_axis_acceleration": 1.0804833984384477,
+      "minimum_geometric_clearance": 0.22000000000000008
+    },
+    "shuttle_6": {
+      "max_axis_acceleration": 1.0804833984384477,
+      "minimum_geometric_clearance": 0.22000000000000008
+    }
+  },
+  "rows": [
+    {
+      "sigma": 0.5,
+      "Q": 0.04,
+      "costs": {
+        "A_hover": 23.074352264404297,
+        "A_sweep": 23.074352264404297,
+        "B_hover": 21.505298614501953,
+        "B_sweep": 21.505298614501953,
+        "shuttle_2": 0.17340907454490662,
+        "shuttle_4": 0.41285502910614014,
+        "shuttle_6": 0.9638909101486206
+      },
+      "best_single": "B_hover",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.9919364488885558,
+      "optimistic_confined_region_bound": 19.684732055766904,
+      "bound_quadrature_error": 1.8023179393367172e-08,
+      "shuttle_reduction_vs_bound": 0.9911906814858522,
+      "unsensed_08_to_06_seconds": 10.416666666666668,
+      "unsensed_08_to_04_seconds": 31.25
+    },
+    {
+      "sigma": 0.5,
+      "Q": 0.08,
+      "costs": {
+        "A_hover": 28.932241439819336,
+        "A_sweep": 28.932497024536133,
+        "B_hover": 27.974267959594727,
+        "B_sweep": 27.97475814819336,
+        "shuttle_2": 3.364126443862915,
+        "shuttle_4": 4.854198455810547,
+        "shuttle_6": 6.301095962524414
+      },
+      "best_single": "B_hover",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.8797421098302923,
+      "optimistic_confined_region_bound": 26.390265531165657,
+      "bound_quadrature_error": 2.1158953700251004e-08,
+      "shuttle_reduction_vs_bound": 0.8725239638119578,
+      "unsensed_08_to_06_seconds": 5.208333333333334,
+      "unsensed_08_to_04_seconds": 15.625
+    },
+    {
+      "sigma": 0.5,
+      "Q": 0.12,
+      "costs": {
+        "A_hover": 31.773727416992188,
+        "A_sweep": 31.804161071777344,
+        "B_hover": 31.08023452758789,
+        "B_sweep": 31.111047744750977,
+        "shuttle_2": 7.5655107498168945,
+        "shuttle_4": 9.355549812316895,
+        "shuttle_6": 10.973209381103516
+      },
+      "best_single": "B_hover",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.7565812850253274,
+      "optimistic_confined_region_bound": 29.574661922380415,
+      "bound_quadrature_error": 3.2159460019035045e-09,
+      "shuttle_reduction_vs_bound": 0.7441894426494948,
+      "unsensed_08_to_06_seconds": 3.4722222222222228,
+      "unsensed_08_to_04_seconds": 10.416666666666668
+    },
+    {
+      "sigma": 0.5,
+      "Q": 0.16,
+      "costs": {
+        "A_hover": 33.508853912353516,
+        "A_sweep": 33.651336669921875,
+        "B_hover": 32.971046447753906,
+        "B_sweep": 33.110328674316406,
+        "shuttle_2": 11.24809455871582,
+        "shuttle_4": 13.072202682495117,
+        "shuttle_6": 14.678094863891602
+      },
+      "best_single": "B_hover",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.6588493308351735,
+      "optimistic_confined_region_bound": 31.48472804773918,
+      "bound_quadrature_error": 1.0594906285632533e-08,
+      "shuttle_reduction_vs_bound": 0.6427444270231354,
+      "unsensed_08_to_06_seconds": 2.604166666666667,
+      "unsensed_08_to_04_seconds": 7.8125
+    },
+    {
+      "sigma": 0.65,
+      "Q": 0.04,
+      "costs": {
+        "A_hover": 23.074344635009766,
+        "A_sweep": 23.074308395385742,
+        "B_hover": 21.23527717590332,
+        "B_sweep": 21.235244750976562,
+        "shuttle_2": 0.03663277253508568,
+        "shuttle_4": 0.17315460741519928,
+        "shuttle_6": 0.615294337272644
+      },
+      "best_single": "B_sweep",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.9982749069782489,
+      "optimistic_confined_region_bound": 19.617792751688782,
+      "bound_quadrature_error": 1.7230299679343666e-08,
+      "shuttle_reduction_vs_bound": 0.9981326761374858,
+      "unsensed_08_to_06_seconds": 10.416666666666668,
+      "unsensed_08_to_04_seconds": 31.25
+    },
+    {
+      "sigma": 0.65,
+      "Q": 0.08,
+      "costs": {
+        "A_hover": 28.932233810424805,
+        "A_sweep": 28.93218994140625,
+        "B_hover": 27.791072845458984,
+        "B_sweep": 27.791034698486328,
+        "shuttle_2": 2.299783706665039,
+        "shuttle_4": 3.881230354309082,
+        "shuttle_6": 5.387135028839111
+      },
+      "best_single": "B_sweep",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.9172472802248597,
+      "optimistic_confined_region_bound": 26.304869783603795,
+      "bound_quadrature_error": 1.736744081881625e-08,
+      "shuttle_reduction_vs_bound": 0.9125719410290133,
+      "unsensed_08_to_06_seconds": 5.208333333333334,
+      "unsensed_08_to_04_seconds": 15.625
+    },
+    {
+      "sigma": 0.65,
+      "Q": 0.12,
+      "costs": {
+        "A_hover": 31.773723602294922,
+        "A_sweep": 31.773672103881836,
+        "B_hover": 30.92727279663086,
+        "B_sweep": 30.927223205566406,
+        "shuttle_2": 6.016539573669434,
+        "shuttle_4": 8.026115417480469,
+        "shuttle_6": 9.784773826599121
+      },
+      "best_single": "B_sweep",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.8054613718897805,
+      "optimistic_confined_region_bound": 29.48200840652278,
+      "bound_quadrature_error": 4.939424423363867e-10,
+      "shuttle_reduction_vs_bound": 0.795925043819664,
+      "unsensed_08_to_06_seconds": 3.4722222222222228,
+      "unsensed_08_to_04_seconds": 10.416666666666668
+    },
+    {
+      "sigma": 0.65,
+      "Q": 0.16,
+      "costs": {
+        "A_hover": 33.4990348815918,
+        "A_sweep": 33.499088287353516,
+        "B_hover": 32.82120895385742,
+        "B_sweep": 32.821441650390625,
+        "shuttle_2": 9.391496658325195,
+        "shuttle_4": 11.511127471923828,
+        "shuttle_6": 13.312372207641602
+      },
+      "best_single": "B_hover",
+      "best_shuttle": "shuttle_2",
+      "shuttle_reduction": 0.7138589053337894,
+      "optimistic_confined_region_bound": 31.388671271352365,
+      "bound_quadrature_error": 8.352859737215113e-09,
+      "shuttle_reduction_vs_bound": 0.7007998020325068,
+      "unsensed_08_to_06_seconds": 2.604166666666667,
+      "unsensed_08_to_04_seconds": 7.8125
+    }
+  ],
+  "selected": {
+    "sigma": 0.5,
+    "Q": 0.16,
+    "costs": {
+      "A_hover": 33.508853912353516,
+      "A_sweep": 33.651336669921875,
+      "B_hover": 32.971046447753906,
+      "B_sweep": 33.110328674316406,
+      "shuttle_2": 11.24809455871582,
+      "shuttle_4": 13.072202682495117,
+      "shuttle_6": 14.678094863891602
+    },
+    "best_single": "B_hover",
+    "best_shuttle": "shuttle_2",
+    "shuttle_reduction": 0.6588493308351735,
+    "optimistic_confined_region_bound": 31.48472804773918,
+    "bound_quadrature_error": 1.0594906285632533e-08,
+    "shuttle_reduction_vs_bound": 0.6427444270231354,
+    "unsensed_08_to_06_seconds": 2.604166666666667,
+    "unsensed_08_to_04_seconds": 7.8125
+  },
+  "warning": "The analytic lower bound applies to policies confined to one ROI after the initial transfer; it is not the global monitoring optimum. No learning advantage, wind safety or one-second planner is established."
+}

@@ -1,3 +1,68 @@
+# Two-region shuttle — latest user steering, 2026-10-16
+
+The user has clarified the scientific scenario and authorized grounded method
+changes: two LARGE regions A and B, rapid QoI clarity decay, repeated transfers,
+two obstacles with a short windy passage and outer bypasses. Assume wind assists
+A→B, with B→A possibly choosing a bypass; this is a hypothesis to verify, never
+an imposed route. The earlier generic island scenarios are secondary diagnostics.
+The one-second/10-second-trajectory requirement below remains in force.
+
+Task feasibility is now established separately from any proposed-method outcome.
+Read `configs/two_region_design.yaml`, `scripts/design_two_region_task.py`, and
+`docs/two_region_design/{screen,protocol}.json`. The actual clarity ODE runs on
+1353 cells, with 90 cells in each 1.4×1.2 m ROI. Positive targets are confined to
+A/B; all cells still evolve. The selected development case uses target 0.70,
+sigma 0.50, R=0.10, Q=0.16. Unsensed q=0.8 reaches 0.6 in 2.60 seconds and 0.4
+in 7.81 seconds. No clarity resets or alternation rewards are applied to paths.
+
+Over 120 seconds a prescribed symmetric shuttle (2-second service, 4-second
+rest-to-rest transfer) costs 11.2481. The best of four tested one-region
+hover/sweep policies costs 32.9710. More strongly, an independent analytical
+covariance calculation gives an optimistic lower bound 31.4847 for ANY policy
+confined to one ROI after the initial four seconds. That bound grants zero
+initial cost, perfect clarity at four seconds, perfect visited-ROI service and
+simultaneously maximal Gaussian cross-sensing of every neglected cell. The
+shuttle is 64.27% below that bound. This establishes that returning to both
+regions is beneficial for this task; it is NOT a learning benefit or MBD result.
+All eight Q/footprint combinations and all dwell/reference outcomes are retained,
+including the initial screen before the stronger bound was introduced.
+
+The prescribed central transfer is geometrically collision free in zero wind
+(clearance 0.22 m); its analytic peak axis acceleration is 1.083 < 1.6 m/s².
+This does not establish wind feasibility or safety-filter behavior. The screen
+uses sensor reference paths and does not pretend to run POAM or a planner.
+Tests check the whole-region geometry, analytic acceleration bound, convergence
+under a fourfold refined integration step, the cross-sensing bound, and zero-Q
+limit. Task-design figures are labeled explicitly; do not publish them as a
+proposed-method demo. Three targeted tests pass. The initial 0.1-second screen
+failed the declared 0.002 cost convergence tolerance against 0.025 seconds
+(difference 0.0057583). Reducing the screen step to 0.05 seconds and comparing
+against 0.0125 seconds passes the unchanged tolerance; the original screen is
+retained as `screen_dt_0p1.json`.
+
+Next establish the directional route-choice physics with a known-wind reference,
+then implement the budgeted planner using this task. Inspect whether bounded
+acceleration alone captures the intended sustained headwind/tailwind effect;
+if an air-relative drag or airspeed model is needed, justify it and update the
+RPCBF drift and backup dynamics consistently. Never fabricate direction-specific
+route costs. Keep wind inference as full POAM and QoI Q distinct from wind
+uncertainty (wind initially remains a fixed unknown spatial field).
+
+The key comparison remains proposed vs a wind-aware comparator that ALSO updates
+POAM during actual execution. Do not freeze that comparator to create a benefit.
+Use a shared bank of middle/outer route initializations if needed for optimization,
+with MBD choosing/refining motion. No forced shuttling or route. The user accepts
+small regressions in low-value cases: the declared target is now one-sided 5%
+noninferiority, replacing the old symmetric ±5% equivalence test. Eight fresh
+paired seeds per regime remain necessary once development stabilizes. The
+current expected-cost method is not mathematically an optimism/UCB objective;
+do not add a clipped positive VoI term based on that conversational description.
+
+Do not resume expensive old sweeps. Preserve frozen checkpoints; proceed with
+bounded single-worker component/short-transfer tests and the runtime gate.
+
+---
+
 # Runtime redesign — latest user steering, 2026-10-16
 
 The user now requires **a 10-second trajectory in approximately 1 second on the
