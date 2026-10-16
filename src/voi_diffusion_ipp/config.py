@@ -62,6 +62,9 @@ class Config:
 def load_config(path):
     data = yaml.safe_load(Path(path).read_text()) or {}
     profile = data.pop('profile', 'smoke')
+    for key in ('methods', 'seeds'):
+        if key in data:
+            data[key] = tuple(data[key])
     presets = {'smoke': {}, 'dev': dict(diffusion_steps=10, proposals=32, worlds=6,
                inner_samples=10, mission_horizons=8),
                'research': dict(diffusion_steps=24, proposals=96, worlds=12,

@@ -18,3 +18,12 @@ SLSQP, explicit infeasibility, MBD's analytic Gaussian-convolution score (with
 Monte Carlo standard-error tolerance), multi-level optimization and equal budgets.
 Full and local-window spline variants retain policy-value and QP logic. No safety
 guarantee is inferred. Next: causal two-stage rollout and held-out missions.
+
+## Phase 4
+
+Ten CPU tests pass, including sequential terminal-state continuity, conditioning
+on executed-position measurement values, unused-branch invariance, and explicit
+rejection of truth-field objects at the RPCBF interface. Full sequential scoring,
+fixed clarity continuation, passive, IG, reset/replay heuristic, oracle, CEM and
+MPPI share the same rollout. First coupled mission is running; behavioral success
+has not yet been established.

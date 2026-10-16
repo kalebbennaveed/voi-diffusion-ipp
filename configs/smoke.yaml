@@ -1,0 +1,5 @@
+profile: smoke
+scenario: corridor
+seeds: [0]
+methods: [proposed]
+mission_horizons: 2
