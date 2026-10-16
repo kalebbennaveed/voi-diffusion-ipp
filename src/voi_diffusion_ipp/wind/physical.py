@@ -36,5 +36,15 @@ def physical_wind(seed, scenario, std):
     widths = jax.random.uniform(k2, (5,), minval=0.35, maxval=1.05)
     strengths = std * jax.random.normal(k3, (5,))
     bias = std * 0.25 * jax.random.normal(k4, (2,))
-    shear = std * {"field_vortices": 0.15, "field_shear": 0.8, "field_mixed": 0.45}[scenario]
+    shear = (
+        std
+        * {
+            "field_vortices": 0.15,
+            "field_shear": 0.8,
+            "field_mixed": 0.45,
+            "persistent_archipelago": 0.15,
+            "persistent_channels": 0.8,
+            "persistent_mosaic": 0.45,
+        }[scenario]
+    )
     return PhysicalWind(centers, widths, strengths, bias, jnp.array(shear))

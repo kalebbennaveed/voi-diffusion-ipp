@@ -75,7 +75,10 @@ def _planner(cfg, method):
 
 def task_goals(x, q, env, cfg):
     """Data-dependent warm starts from distributed sensing benefit, no fixed ROI."""
-    need = jnp.maximum(env.targets - q, 0.0)
+    process = cfg.clarity_decay if env.process_noise is None else env.process_noise
+    horizon = (cfg.stage_steps + cfg.future_steps) * cfg.dt
+    unobserved = q / (1 + process * q * horizon)
+    need = jnp.maximum(env.targets - unobserved, 0.0)
     dist2 = jnp.sum((env.cells[:, None] - env.cells[None]) ** 2, axis=-1)
     benefit = jnp.exp(-dist2 / cfg.sensor_sigma**2) @ need
     distance = jnp.linalg.norm(env.cells - x[:2], axis=1)

@@ -19,10 +19,17 @@ from ..dynamics import step
 from ..planning.mpc import initial_policy, next_initial, planner
 from ..planning.rollout import continuation, rollout
 from ..planning.two_stage import decode, route
+from .checkpoint import PlanCache
 from .scenarios import make_scenario, make_truth, new_poam
 
 
-def mission(cfg, method, seed, out, progress=True, observer=None):
+def mission(cfg, method, seed, out, progress=True, observer=None, checkpoint=False):
+    cache = (
+        PlanCache(Path(out) / f"{cfg.scenario}_{method}_{seed}.checkpoints", cfg, method, seed)
+        if checkpoint
+        else None
+    )
+    resumed_plans = 0
     env, belief, x, q = make_scenario(cfg)
     # World key namespace differs from optimization/observation/filter namespaces.
     root = jax.random.PRNGKey(seed)
@@ -119,9 +126,17 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
         if observer:
             observer("planning", {"horizon": h, "compile_seconds": compile_s})
         t = time.perf_counter()
-        opt = compiled(x, q, belief, kp, initial, env)
-        opt.cost.block_until_ready()
-        timings.append(time.perf_counter() - t)
+        previous = cache.load(h) if cache else None
+        if previous is None:
+            opt = compiled(x, q, belief, kp, initial, env)
+            opt.cost.block_until_ready()
+            seconds = time.perf_counter() - t
+            if cache:
+                cache.save(h, opt, seconds)
+        else:
+            opt, seconds = previous
+            resumed_plans += 1
+        timings.append(seconds)
         history.append(jax.tree.map(np.asarray, opt.history))
         policies.append(np.asarray(opt.vector))
         if observer:
@@ -281,6 +296,7 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
         "compile_seconds": compile_s,
         "planning_seconds": timings,
         "mean_plan_seconds": float(np.mean(timings)),
+        "resumed_plan_count": resumed_plans,
         "objective_evaluations_per_plan": int(opt.evaluations),
         "optimizer_failure_count": sum(optimizer_failures),
         "seconds_per_objective": float(np.mean(timings) / int(opt.evaluations)),
@@ -311,6 +327,11 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
     if cfg.whole_field:
         for key in ("roi_a_access", "roi_a_time", "probe_seconds"):
             metrics.pop(key)
+        from .persistence import summarize
+
+        metrics["persistence"] = summarize(
+            X, Q, env.cells, env.targets, env.process_noise, cfg.sensor_sigma, cfg.dt
+        )
     truth_grid = np.asarray(truth.at(query))
     metrics["wind_history"] = [
         {

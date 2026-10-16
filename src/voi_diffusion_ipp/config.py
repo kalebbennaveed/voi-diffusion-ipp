@@ -31,6 +31,8 @@ class Config:
     sensor_sigma: float = 0.38
     sensor_R: float = 0.18
     clarity_decay: float = 0.035
+    clarity_decay_pattern: str = "uniform"
+    initial_clarity: str = "cold"
     wind_std: float = 0.55
     wind_length: float = 1.1
     observation_std: float = 0.10
@@ -44,6 +46,8 @@ class Config:
     poam_inducing_x: int = 6
     poam_inducing_y: int = 4
     poam_spectral_nodes: int = 32
+    poam_support_x: int = 0
+    poam_support_y: int = 0
     grid_nx: int = 25
     grid_ny: int = 19
     whole_field: bool = False
@@ -89,6 +93,22 @@ class Config:
             raise ValueError("Unknown spline implementation")
         if self.whole_field and self.wind_backend != "poam":
             raise ValueError("Whole-field experiments require the full POAM backend")
+        if self.clarity_decay < 0 or self.clarity_decay_pattern not in (
+            "uniform",
+            "patchy",
+            "striped",
+        ):
+            raise ValueError(
+                "Nonnegative clarity process noise and a supported spatial pattern required"
+            )
+        if self.initial_clarity not in ("cold", "maintained"):
+            raise ValueError("Unknown initial clarity condition")
+        if (self.poam_support_x or self.poam_support_y) and min(
+            self.poam_support_x, self.poam_support_y
+        ) < 2:
+            raise ValueError(
+                "Both POAM support dimensions must be >=2, or both zero for automatic support"
+            )
         if self.grid_nx < 2 or self.grid_ny < 2:
             raise ValueError("Monitoring grid dimensions must be >= 2")
         if self.wind_backend not in ("feature", "poam"):

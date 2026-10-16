@@ -1,7 +1,6 @@
 """Export genuine JAX mission and diffusion telemetry for the local research demo."""
 
 import argparse
-import hashlib
 import json
 from dataclasses import replace
 from pathlib import Path
@@ -11,6 +10,7 @@ import jax.numpy as jnp
 import numpy as np
 
 from ..config import config_dict, load_config
+from ..experiments.checkpoint import source_hashes
 from ..experiments.run import mission
 from ..experiments.scenarios import make_scenario, make_truth
 from ..planning.two_stage import evaluate_one, make_buffers
@@ -57,6 +57,20 @@ def export_demo(cfg, method, seed, output, status=None):
 
     mode = "proposed" if method in ("proposed", "cem", "mppi") else method
     captured = []
+    execution = []
+    hashes = source_hashes()
+    metadata = serializable(
+        {"config": config_dict(cfg), "method": method, "seed": seed, "source_sha256": hashes}
+    )
+    partial = output / f"{cfg.scenario}_{method}_{seed}.partial.json"
+    if partial.exists():
+        saved = json.loads(partial.read_text())
+        if saved["metadata"] != metadata:
+            raise ValueError(
+                "Replay checkpoint configuration or source changed; use a new output directory"
+            )
+        captured, beliefs = saved["planning"], saved["beliefs"]
+        execution = saved["execution"]
 
     @jax.jit
     def forecast(vectors, x, q, belief, buffers):
@@ -90,6 +104,15 @@ def export_demo(cfg, method, seed, output, status=None):
             )
         if event == "planned":
             h, opt, belief = payload["horizon"], payload["opt"], payload["belief"]
+            if h < len(captured):
+                np.testing.assert_array_equal(
+                    captured[h]["selected_vector"], np.asarray(opt.vector)
+                )
+                if status:
+                    status(
+                        f"Period {h + 1}/{cfg.mission_horizons}: recovered recorded plan; replaying physical execution and POAM updates"
+                    )
+                return
             if not beliefs:
                 beliefs.append(capture_belief(belief))
             if status:
@@ -146,13 +169,38 @@ def export_demo(cfg, method, seed, output, status=None):
                 }
             )
         elif event == "executed":
-            beliefs.append(capture_belief(payload["belief"]))
+            index = payload["horizon"] + 1
+            snapshot = capture_belief(payload["belief"])
+            if index < len(beliefs):
+                np.testing.assert_allclose(beliefs[index]["mean"], snapshot["mean"], atol=1e-5)
+            else:
+                beliefs.append(snapshot)
+                execution.append(payload["result"]._asdict())
+                temporary = partial.with_suffix(".tmp")
+                temporary.write_text(
+                    json.dumps(
+                        serializable(
+                            {
+                                "metadata": metadata,
+                                "planning": captured,
+                                "beliefs": beliefs,
+                                "execution": execution,
+                                "environment": env._asdict(),
+                                "physical_wind": truth.at(grid),
+                                "wind_grid": grid,
+                            }
+                        ),
+                        separators=(",", ":"),
+                        allow_nan=False,
+                    )
+                )
+                temporary.replace(partial)
             if status:
                 status(
                     f"Period {payload['horizon'] + 1}/{cfg.mission_horizons}: executed and updated belief"
                 )
 
-    metrics = mission(cfg, method, seed, output, observer=observer)
+    metrics = mission(cfg, method, seed, output, observer=observer, checkpoint=True)
     stem = f"{cfg.scenario}_{method}_{seed}"
     with np.load(output / f"{stem}.npz") as a:
         arrays = {
@@ -172,10 +220,6 @@ def export_demo(cfg, method, seed, output, status=None):
                 "branches",
             )
         }
-    source_hashes = {
-        str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-        for p in sorted((ROOT / "src").rglob("*.py"))
-    }
     data = serializable(
         {
             "schema": 2,
@@ -188,7 +232,7 @@ def export_demo(cfg, method, seed, output, status=None):
             "beliefs": beliefs,
             "physical_wind": truth.at(grid),
             "planning": captured,
-            "source_sha256": source_hashes,
+            "source_sha256": hashes,
             "wind_model": "Full POAM predictive covariance; decoupled posterior samples with tested spectral quadrature"
             if cfg.wind_backend == "poam"
             else "Legacy finite-feature GP",

@@ -61,9 +61,20 @@ def validate_request(data):
         raise ValueError("measurements must be boolean")
     seed = values.pop("seed", 102)
     scenario = data.get("scenario", "field_vortices")
-    if scenario not in ("field_vortices", "field_shear", "field_mixed"):
+    if scenario not in (
+        "field_vortices",
+        "field_shear",
+        "field_mixed",
+        "persistent_archipelago",
+        "persistent_channels",
+        "persistent_mosaic",
+    ):
         raise ValueError("Select a whole-field POAM scenario")
-    cfg = load_config(ROOT / "configs/field_poam.yaml")
+    cfg = load_config(
+        ROOT
+        / "configs"
+        / (f"{scenario}.yaml" if scenario.startswith("persistent_") else "field_poam.yaml")
+    )
     cfg = replace(
         cfg,
         **values,
@@ -160,6 +171,11 @@ def handler(state):
             path = urlparse(self.path).path
             if path == "/api/catalog":
                 return self.send_json(state.catalog())
+            if path == "/api/persistent-status":
+                progress = ROOT / "results/persistent_poam/recordings/status.json"
+                return self.send_json(
+                    json.loads(progress.read_text()) if progress.exists() else {"jobs": []}
+                )
             if path.startswith("/api/job/"):
                 with state.lock:
                     job = state.jobs.get(path.rsplit("/", 1)[-1])

@@ -1,4 +1,4 @@
-"""Three fixed-physics scenarios. Truth uses the same correlated basis in all ablations."""
+"""Legacy controls and whole-field persistent monitoring with held-out physical wind."""
 
 import jax
 import jax.numpy as jnp
@@ -68,6 +68,12 @@ def new_poam(cfg, centers):
             jnp.linspace(-1.85 - 1.5 * dy, 1.85 + 1.5 * dy, cfg.grid_ny + 4),
         )
         support = jnp.stack((sx.ravel(), sy.ravel()), axis=-1)
+        if cfg.poam_support_x:
+            sx, sy = jnp.meshgrid(
+                jnp.linspace(-2.7, 2.7, cfg.poam_support_x),
+                jnp.linspace(-2.15, 2.15, cfg.poam_support_y),
+            )
+            support = jnp.stack((sx.ravel(), sy.ravel()), axis=-1)
     return POAM(
         centers,
         jax.random.PRNGKey(600000),
@@ -108,12 +114,48 @@ def field_scenario(cfg):
         "field_vortices": [[-0.55, -0.65, 0.32], [0.35, 0.65, 0.40], [1.1, -0.7, 0.30]],
         "field_shear": [[-0.8, 0.55, 0.38], [0.2, -0.55, 0.38], [1.15, 0.65, 0.33]],
         "field_mixed": [[-1.0, -0.7, 0.30], [-0.2, 0.65, 0.38], [0.9, -0.5, 0.42]],
+        "persistent_archipelago": [
+            [-1.2, -0.65, 0.30],
+            [-0.7, 0.65, 0.32],
+            [0.05, -0.35, 0.31],
+            [0.65, 0.85, 0.32],
+            [1.25, -0.75, 0.35],
+            [1.65, 0.55, 0.24],
+        ],
+        "persistent_channels": [
+            [-0.9, 0.9, 0.39],
+            [-0.9, -0.55, 0.39],
+            [0.7, 0.5, 0.40],
+            [0.7, -1.0, 0.38],
+            [1.7, 1.05, 0.25],
+        ],
+        "persistent_mosaic": [
+            [-1.2, -0.8, 0.28],
+            [-0.5, 0.55, 0.35],
+            [0.4, -0.55, 0.33],
+            [1.35, 0.75, 0.34],
+            [1.6, -0.9, 0.25],
+        ],
     }
     if cfg.scenario not in layouts:
         raise ValueError(f"Unknown whole-field scenario {cfg.scenario}")
     obstacles = jnp.array(layouts[cfg.scenario])
     # These legacy landmarks are unused by whole-field policies and evaluation.
-    env = Environment(cells, targets, obstacles, bounds, hotspots[0], hotspots[1], jnp.zeros(2))
+    if cfg.scenario == "persistent_channels":
+        targets = 0.45 + 0.25 * jnp.exp(-(((jnp.abs(cells[:, 1]) - 0.95) / 0.48) ** 2))
+    elif cfg.scenario == "persistent_mosaic":
+        targets = 0.45 + 0.27 * (
+            0.5 + 0.5 * jnp.sin(1.4 * cells[:, 0]) * jnp.cos(2.0 * cells[:, 1])
+        )
+    if cfg.clarity_decay_pattern == "patchy":
+        process = cfg.clarity_decay * (0.5 + jnp.max(need, axis=1))
+    elif cfg.clarity_decay_pattern == "striped":
+        process = cfg.clarity_decay * (0.5 + jnp.sin(1.8 * cells[:, 0] + 0.7 * cells[:, 1]) ** 2)
+    else:
+        process = jnp.full(len(cells), cfg.clarity_decay)
+    env = Environment(
+        cells, targets, obstacles, bounds, hotspots[0], hotspots[1], jnp.zeros(2), process
+    )
     zx, zy = jnp.meshgrid(
         jnp.linspace(-2.2, 2.2, cfg.poam_inducing_x), jnp.linspace(-1.65, 1.65, cfg.poam_inducing_y)
     )
@@ -122,6 +164,8 @@ def field_scenario(cfg):
     x = jnp.array([-1.85, -0.05, 0.0, 0.0])
     # Spatially varying initial certainty, identical across methods and seeds.
     q = 0.12 + 0.20 * jnp.exp(-jnp.sum((cells - x[:2]) ** 2, axis=1) / (2 * 0.6**2))
+    if cfg.initial_clarity == "maintained":
+        q = jnp.minimum(targets + 0.04, 0.95)
     return env, belief, x, q
 
 

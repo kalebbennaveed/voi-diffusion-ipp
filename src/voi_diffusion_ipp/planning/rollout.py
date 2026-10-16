@@ -91,7 +91,14 @@ def rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, feedback=Fa
         safe, info = filter_control(x, u, belief, inner, env, cfg)
         xn = step(x, safe, wind, cfg.dt)
         qn = clarity.step(
-            q, x[:2], xn[:2], env.cells, cfg.sensor_sigma, cfg.sensor_R, cfg.clarity_decay, cfg.dt
+            q,
+            x[:2],
+            xn[:2],
+            env.cells,
+            cfg.sensor_sigma,
+            cfg.sensor_R,
+            cfg.clarity_decay if env.process_noise is None else env.process_noise,
+            cfg.dt,
         )
         cost = 0.5 * cfg.dt * (clarity.deficit(q, env.targets) + clarity.deficit(qn, env.targets))
         obs = world.at(xn[:2])[0] + belief.noise_std * eps

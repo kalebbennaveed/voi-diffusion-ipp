@@ -12,6 +12,7 @@ class Environment(NamedTuple):
     roi_a: jax.Array
     roi_b: jax.Array
     probe: jax.Array
+    process_noise: jax.Array | None = None  # diagonal of the QoI process-noise matrix Q
 
     def violations(self, x, margin=0.0):
         p = x[:2]
