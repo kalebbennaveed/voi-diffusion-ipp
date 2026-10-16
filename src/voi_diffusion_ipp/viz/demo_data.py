@@ -12,7 +12,7 @@ import numpy as np
 
 from ..config import config_dict, load_config
 from ..experiments.run import mission
-from ..experiments.scenarios import make_scenario
+from ..experiments.scenarios import make_scenario, make_truth
 from ..planning.two_stage import evaluate_one, make_buffers
 from ..wind import WorldField
 
@@ -40,10 +40,21 @@ def export_demo(cfg, method, seed, output, status=None):
     output.mkdir(parents=True, exist_ok=True)
     env, prior, _, _ = make_scenario(cfg)
     xx, yy = np.meshgrid(np.linspace(-2.35, 2.35, 25), np.linspace(-1.8, 1.8, 19))
-    grid = jnp.asarray(np.stack((xx.ravel(), yy.ravel()), axis=1))
-    truth = WorldField(
-        prior.basis, prior.sample_field(jax.random.fold_in(jax.random.PRNGKey(seed), 100000), 1)[0]
-    )
+    grid = env.cells if cfg.whole_field else jnp.asarray(np.stack((xx.ravel(), yy.ravel()), axis=1))
+    truth = make_truth(cfg, prior, seed)
+    beliefs = []
+
+    def capture_belief(belief):
+        mean, covariance = belief.predict(grid)
+        error = mean - truth.at(grid)
+        return {
+            "mean": mean,
+            "std": jnp.sqrt(covariance[:, 0, 0]),
+            "error": jnp.linalg.norm(error, axis=1),
+            "rmse": jnp.sqrt(jnp.mean(error**2)),
+            "inducing": belief.basis.centers if cfg.wind_backend == "poam" else [],
+        }
+
     mode = "proposed" if method in ("proposed", "cem", "mppi") else method
     captured = []
 
@@ -73,8 +84,14 @@ def export_demo(cfg, method, seed, output, status=None):
             if status:
                 status("Compiling the JAX planner")
             return
+        if event == "planning" and status:
+            status(
+                f"Period {payload['horizon'] + 1}/{cfg.mission_horizons}: optimizing full-field clarity cost"
+            )
         if event == "planned":
             h, opt, belief = payload["horizon"], payload["opt"], payload["belief"]
+            if not beliefs:
+                beliefs.append(capture_belief(belief))
             if status:
                 status(f"Period {h + 1}/{cfg.mission_horizons}: recording diffusion forecasts")
             ks, _ = jax.random.split(payload["key"])
@@ -128,10 +145,12 @@ def export_demo(cfg, method, seed, output, status=None):
                     "selected_vector": opt.vector,
                 }
             )
-        elif event == "executed" and status:
-            status(
-                f"Period {payload['horizon'] + 1}/{cfg.mission_horizons}: executed and updated belief"
-            )
+        elif event == "executed":
+            beliefs.append(capture_belief(payload["belief"]))
+            if status:
+                status(
+                    f"Period {payload['horizon'] + 1}/{cfg.mission_horizons}: executed and updated belief"
+                )
 
     metrics = mission(cfg, method, seed, output, observer=observer)
     stem = f"{cfg.scenario}_{method}_{seed}"
@@ -153,18 +172,13 @@ def export_demo(cfg, method, seed, output, status=None):
                 "branches",
             )
         }
-        beliefs = []
-        for mean, covariance in zip(a["belief_coefficients"], a["belief_covariances"]):
-            b = prior._replace(mean=jnp.asarray(mean), covariance=jnp.asarray(covariance))
-            m, c = b.predict(grid)
-            beliefs.append({"mean": m, "std": jnp.sqrt(c[:, 0, 0])})
     source_hashes = {
         str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in sorted((ROOT / "src").rglob("*.py"))
     }
     data = serializable(
         {
-            "schema": 1,
+            "schema": 2,
             "title": "VoI diffusion · research replay",
             "metrics": metrics,
             "config": config_dict(cfg),
@@ -175,6 +189,9 @@ def export_demo(cfg, method, seed, output, status=None):
             "physical_wind": truth.at(grid),
             "planning": captured,
             "source_sha256": source_hashes,
+            "wind_model": "Full POAM predictive covariance; decoupled posterior samples with tested spectral quadrature"
+            if cfg.wind_backend == "poam"
+            else "Legacy finite-feature GP",
             "forecast_note": "Paths show outer planning world 1. Candidate costs and weights use all outer worlds. Forecasts are safety-filtered simulations, not executed trajectories. The denoised mean is not guaranteed feasible; execution uses the best evaluated policy.",
         }
     )
@@ -187,7 +204,7 @@ def export_demo(cfg, method, seed, output, status=None):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--config", default="configs/recourse_dev.yaml")
+    p.add_argument("--config", default="configs/field_poam.yaml")
     p.add_argument("--seed", type=int, default=102)
     p.add_argument("--method", default="proposed")
     p.add_argument("--output", default="results/demo")

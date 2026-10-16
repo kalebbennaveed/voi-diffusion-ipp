@@ -29,7 +29,7 @@ class TwoStageResult(NamedTuple):
 
 def make_buffers(belief, key, cfg):
     kw, ko, ki, kf = jax.random.split(key, 4)
-    shape = (cfg.inner_samples, *belief.mean.shape)
+    shape = (cfg.inner_samples, *belief.sample_shape)
     return ScenarioBuffers(
         belief.sample_field(kw, cfg.worlds),
         jax.random.normal(ko, (cfg.worlds, cfg.stage_steps, 2)),
@@ -66,7 +66,7 @@ def recourse_costs(x, q, belief, futures, env, cfg, inner_eps=None, updates=None
     coefficients = belief.sample_field(jax.random.PRNGKey(910031), cfg.recourse_samples)
     if inner_eps is None:
         inner_eps = jax.random.normal(
-            jax.random.PRNGKey(910032), (cfg.inner_samples, *belief.mean.shape)
+            jax.random.PRNGKey(910032), (cfg.inner_samples, *belief.sample_shape)
         )
     updates = cfg.future_updates if updates is None else updates
     noises = jax.random.normal(

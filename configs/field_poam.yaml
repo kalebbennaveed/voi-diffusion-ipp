@@ -1,0 +1,30 @@
+profile: smoke
+scenario: field_vortices
+whole_field: true
+wind_backend: poam
+poam_inducing_x: 6
+poam_inducing_y: 4
+poam_spectral_nodes: 16
+poam_train_steps: 10
+grid_nx: 25
+grid_ny: 19
+control_representation: waypoint
+branch_rule: task
+recourse_samples: 2
+future_updates: true
+wind_std: 0.55
+stage_steps: 12
+future_steps: 24
+knots: 3
+worlds: 4
+inner_samples: 4
+backup_steps: 8
+backup_dt: 0.24
+diffusion_steps: 4
+proposals: 12
+candidate_chunk: 1
+warm_starts: 3
+mission_horizons: 10
+sensor_sigma: 0.48
+seeds: [300, 301, 302]
+methods: [proposed, current_belief]

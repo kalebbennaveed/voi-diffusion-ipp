@@ -27,7 +27,7 @@ class FilterInfo(NamedTuple):
 
 
 def design_policy(x, belief, cfg):
-    mean = (belief.basis.features(x[:2]) @ belief.mean)[0]
+    mean = belief.mean_at(x[:2])[0]
     return jnp.clip(-cfg.backup_gain * x[2:] - mean, -cfg.umax, cfg.umax)
 
 
@@ -36,7 +36,7 @@ def values(x, belief, inner, env, cfg):
         raise TypeError("RPCBF requires belief-derived InnerFields, never WorldField")
 
     def one(coeff):
-        wind = lambda p: (inner.basis.features(p) @ coeff)[0]
+        wind = lambda p: inner.basis.evaluate(p, coeff)[0]
 
         def body(x, _):
             u = design_policy(x, belief, cfg)
@@ -52,10 +52,14 @@ def values(x, belief, inner, env, cfg):
 
 def constraints(x, belief, inner, env, cfg):
     f = lambda z: values(z, belief, inner, env, cfg)
-    B = f(x)
-    grad = jax.jacfwd(f)(x)
+
+    def value_with_aux(z):
+        value = f(z)
+        return value, value
+
+    grad, B = jax.jacfwd(value_with_aux, has_aux=True)(x)
     # All sampled instantaneous winds, not just the value-maximizing field.
-    winds = jnp.einsum("m,nmc->nc", inner.basis.features(x[:2])[0], inner.coefficients)
+    winds = inner.at(x[:2])[:, 0]
     worst_drift = grad[:, :2] @ x[2:] + jnp.max(grad[:, 2:] @ winds.T, axis=1)
     return grad[:, 2:], -worst_drift - cfg.cbf_alpha * B, B, grad
 

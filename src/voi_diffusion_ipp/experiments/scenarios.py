@@ -1,5 +1,6 @@
 """Three fixed-physics scenarios. Truth uses the same correlated basis in all ablations."""
 
+import jax
 import jax.numpy as jnp
 
 from ..environment import Environment
@@ -8,6 +9,8 @@ from ..wind.gp import LocalizedBasis
 
 
 def make_scenario(cfg):
+    if cfg.whole_field:
+        return field_scenario(cfg)
     a = jnp.array([1.15, 0.0])
     b = jnp.array([-1.45, -0.6])
     offsets = jnp.array(
@@ -52,3 +55,87 @@ def make_scenario(cfg):
     x = jnp.array([-1.45, -0.15, 0.0, 0.0])
     q = jnp.full(cells.shape[0], 0.15)
     return env, belief, x, q
+
+
+def new_poam(cfg, centers):
+    from ..wind.poam import POAM
+
+    support = None
+    if cfg.whole_field:
+        dx, dy = 4.8 / cfg.grid_nx, 3.7 / cfg.grid_ny
+        sx, sy = jnp.meshgrid(
+            jnp.linspace(-2.4 - 1.5 * dx, 2.4 + 1.5 * dx, cfg.grid_nx + 4),
+            jnp.linspace(-1.85 - 1.5 * dy, 1.85 + 1.5 * dy, cfg.grid_ny + 4),
+        )
+        support = jnp.stack((sx.ravel(), sy.ravel()), axis=-1)
+    return POAM(
+        centers,
+        jax.random.PRNGKey(600000),
+        noise_std=cfg.observation_std,
+        prior_std=cfg.wind_std,
+        spectral_count=cfg.poam_spectral_nodes,
+        prior_support=support,
+    )
+
+
+def field_scenario(cfg):
+    """Uniform-area grid over the WHOLE rectangular monitoring field.
+
+    Flight obstacles do not delete ground cells: they remain remotely observable
+    through the sensing footprint. Every cell contributes equally to mean deficit.
+    """
+    bounds = jnp.array([[-2.4, -1.85], [2.4, 1.85]])
+    dx, dy = 4.8 / cfg.grid_nx, 3.7 / cfg.grid_ny
+    xx, yy = jnp.meshgrid(
+        jnp.linspace(-2.4 + dx / 2, 2.4 - dx / 2, cfg.grid_nx),
+        jnp.linspace(-1.85 + dy / 2, 1.85 - dy / 2, cfg.grid_ny),
+    )
+    cells = jnp.stack((xx.ravel(), yy.ravel()), axis=-1)
+    hotspots = jnp.array(
+        [
+            [-1.65, -0.95],
+            [-1.6, 1.0],
+            [-0.5, 0.1],
+            [0.1, -1.2],
+            [0.5, 1.15],
+            [1.55, -0.6],
+            [1.65, 0.95],
+        ]
+    )
+    need = jnp.exp(-jnp.sum((cells[:, None] - hotspots[None]) ** 2, axis=-1) / (2 * 0.42**2))
+    targets = 0.45 + 0.35 * jnp.max(need, axis=1)
+    layouts = {
+        "field_vortices": [[-0.55, -0.65, 0.32], [0.35, 0.65, 0.40], [1.1, -0.7, 0.30]],
+        "field_shear": [[-0.8, 0.55, 0.38], [0.2, -0.55, 0.38], [1.15, 0.65, 0.33]],
+        "field_mixed": [[-1.0, -0.7, 0.30], [-0.2, 0.65, 0.38], [0.9, -0.5, 0.42]],
+    }
+    if cfg.scenario not in layouts:
+        raise ValueError(f"Unknown whole-field scenario {cfg.scenario}")
+    obstacles = jnp.array(layouts[cfg.scenario])
+    # These legacy landmarks are unused by whole-field policies and evaluation.
+    env = Environment(cells, targets, obstacles, bounds, hotspots[0], hotspots[1], jnp.zeros(2))
+    zx, zy = jnp.meshgrid(
+        jnp.linspace(-2.2, 2.2, cfg.poam_inducing_x), jnp.linspace(-1.65, 1.65, cfg.poam_inducing_y)
+    )
+    z = jnp.stack((zx.ravel(), zy.ravel()), axis=-1)
+    belief = new_poam(cfg, z).planning_belief()
+    x = jnp.array([-1.85, -0.05, 0.0, 0.0])
+    # Spatially varying initial certainty, identical across methods and seeds.
+    q = 0.12 + 0.20 * jnp.exp(-jnp.sum((cells - x[:2]) ** 2, axis=1) / (2 * 0.6**2))
+    return env, belief, x, q
+
+
+def make_truth(cfg, prior_belief, seed):
+    from ..wind import WorldField
+
+    if cfg.whole_field:
+        from ..wind.physical import physical_wind
+
+        return physical_wind(seed, cfg.scenario, cfg.wind_std)
+    truth_belief = prior_belief._replace(
+        basis=prior_belief.basis._replace(independent=jnp.array(False))
+    )
+    return WorldField(
+        truth_belief.basis,
+        truth_belief.sample_field(jax.random.fold_in(jax.random.PRNGKey(seed), 100000), 1)[0],
+    )

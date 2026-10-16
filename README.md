@@ -1,5 +1,12 @@
 # Value of Information Informative path planning using model based diffusion
 
+
+The current whole-field implementation is described in [docs/field_poam_method.md](docs/field_poam_method.md).
+Use `configs/field_poam.yaml` for **475 monitoring cells and full POAM predictive covariance**.
+The previous ROI/finite-feature experiments are historical controls; their percentage
+improvements do not establish performance for the new model. The local demo is
+available at `http://127.0.0.1:8765/` while `demo_server` is running.
+
 A self-contained JAX research implementation of causal two-stage value-of-information
 planning for persistent monitoring under a fixed unknown spatial wind field.
 It includes paper-equation model-based diffusion (MBD), sampled spline RPCBF with

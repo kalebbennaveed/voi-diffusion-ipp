@@ -18,6 +18,7 @@ WEB = ROOT / "demo"
 
 def validate_request(data):
     allowed = {
+        "scenario",
         "seed",
         "method",
         "variant",
@@ -59,10 +60,14 @@ def validate_request(data):
     if "measurements" in data and not isinstance(data["measurements"], bool):
         raise ValueError("measurements must be boolean")
     seed = values.pop("seed", 102)
-    cfg = load_config(ROOT / "configs/recourse_dev.yaml")
+    scenario = data.get("scenario", "field_vortices")
+    if scenario not in ("field_vortices", "field_shear", "field_mixed"):
+        raise ValueError("Select a whole-field POAM scenario")
+    cfg = load_config(ROOT / "configs/field_poam.yaml")
     cfg = replace(
         cfg,
         **values,
+        scenario=scenario,
         future_updates=(variant == "multistage"),
         measurements=data.get("measurements", True),
     )

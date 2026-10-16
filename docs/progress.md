@@ -128,3 +128,24 @@ results and denoising remain separate views. New recordings scroll to the player
 Interpolation is visual only, bounded by actual recorded samples; clock/loop and
 interpolation tests raise the frontend total to nine. Numerical source and all
 experimental results are unchanged.
+
+## Whole-field POAM revision — implementation checkpoint
+
+Replaced the new-experiment ROI objective with 475 cells covering the full field.
+Default demo requests and CLI configuration use full POAM predictive covariance,
+including residual uncertainty, online inducing selection/statistics transport,
+variational updates, and kernel training. The new physical winds contain unknown
+vortices and shear, independent of the estimator. Mean clarity deficit and its
+integral are the main metrics; fixed ROI arrival is removed from the new reports.
+
+Added paired full-field clarity/deficit/target maps, explicit POAM estimate,
+uncertainty and error maps, hidden physical-wind reference, full-field RMSE/variance
+histories, and side-by-side denoising. Historical recordings remain labeled legacy.
+
+The standalone survey reduced wind RMSE in all three fields. A covariance check
+rejected the first spectral-only sampler (12–17% relative error after learning).
+The accepted sampler retains the residual and corrects a joint draw on 667 support
+points; measured post-survey covariance error is 0.22–0.27%. These diagnostics
+validate estimator integration, not planner superiority. See
+`docs/field_poam_method.md`, `docs/field_poam_validation/protocol.json` and the
+retained diagnostic artifacts. The paired missions are evaluated separately.

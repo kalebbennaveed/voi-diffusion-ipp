@@ -67,7 +67,7 @@ def clarity_controller(x, q, belief, env, cfg):
     need = jnp.maximum(env.targets - q, 0)
     attractiveness = need / (0.25 + jnp.sum((env.cells - x[:2]) ** 2, axis=1))
     goal = env.cells[jnp.argmax(attractiveness)]
-    mean = (belief.basis.features(x[:2]) @ belief.mean)[0]
+    mean = belief.mean_at(x[:2])[0]
     return jnp.clip(1.3 * (goal - x[:2]) - 1.8 * x[2:] - mean, -cfg.umax, cfg.umax)
 
 

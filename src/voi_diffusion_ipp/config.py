@@ -40,7 +40,13 @@ class Config:
     independent_cells: bool = False
     spline: str = "full"
     wind_backend: str = "feature"
-    poam_train_steps: int = 3
+    poam_train_steps: int = 10
+    poam_inducing_x: int = 6
+    poam_inducing_y: int = 4
+    poam_spectral_nodes: int = 32
+    grid_nx: int = 25
+    grid_ny: int = 19
+    whole_field: bool = False
     reject_collisions: bool = True
     warm_starts: int = 1
     obstacle_radius: float = 0.79
@@ -81,6 +87,10 @@ class Config:
             raise ValueError("Current observation router supports one or two branches")
         if self.spline not in ("full", "fast", "discrete"):
             raise ValueError("Unknown spline implementation")
+        if self.whole_field and self.wind_backend != "poam":
+            raise ValueError("Whole-field experiments require the full POAM backend")
+        if self.grid_nx < 2 or self.grid_ny < 2:
+            raise ValueError("Monitoring grid dimensions must be >= 2")
         if self.wind_backend not in ("feature", "poam"):
             raise ValueError("Unknown wind backend")
         if self.control_representation not in ("acceleration", "waypoint"):

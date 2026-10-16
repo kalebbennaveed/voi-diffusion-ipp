@@ -1,5 +1,9 @@
 # Sequential VoI diffusion IPP
 
+The whole-field POAM profile supersedes the legacy finite-feature/ROI setup below;
+see [field_poam_method.md](field_poam_method.md) for its inference, sampling,
+whole-domain monitoring objective, and validation limits.
+
 ## Physical state and information
 
 The state is `x=(p_x,p_y,v_x,v_y)`, with `p_dot=v`, `v_dot=u+d(p)`.

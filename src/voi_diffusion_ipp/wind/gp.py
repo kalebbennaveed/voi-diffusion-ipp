@@ -25,6 +25,9 @@ class Basis(NamedTuple):
         wrong = jax.nn.one_hot(jnp.argmin(dist, axis=1), self.centers.shape[0])
         return jnp.where(self.independent, wrong, phi)
 
+    def evaluate(self, locations, coefficients):
+        return self.features(locations) @ coefficients
+
 
 class WorldField(NamedTuple):
     """Hidden physics only. Never accepted by RPCBF or branch-router APIs."""
@@ -33,7 +36,7 @@ class WorldField(NamedTuple):
     coefficients: jax.Array
 
     def at(self, positions):
-        return self.basis.features(positions) @ self.coefficients
+        return self.basis.evaluate(positions, self.coefficients)
 
 
 class LocalizedBasis(NamedTuple):
@@ -54,6 +57,9 @@ class LocalizedBasis(NamedTuple):
         nearest = jax.nn.one_hot(jnp.argmin(distance, axis=1), len(self.centers))
         return jnp.where(self.independent, phi * nearest, phi)
 
+    def evaluate(self, locations, coefficients):
+        return self.features(locations) @ coefficients
+
 
 class InnerFields(NamedTuple):
     """Controller disturbance samples, constructed exclusively from its belief."""
@@ -61,12 +67,22 @@ class InnerFields(NamedTuple):
     basis: Basis
     coefficients: jax.Array  # N x M x 2
 
+    def at(self, positions):
+        return jax.vmap(lambda c: self.basis.evaluate(positions, c))(self.coefficients)
+
 
 class WindBelief(NamedTuple):
     basis: Basis
     mean: jax.Array  # M x 2
     covariance: jax.Array  # M x M
     noise_std: jax.Array
+
+    @property
+    def sample_shape(self):
+        return self.mean.shape
+
+    def mean_at(self, locations):
+        return self.basis.features(locations) @ self.mean
 
     def joint(self, locations):
         phi = self.basis.features(locations)

@@ -291,10 +291,10 @@ function drawMap() {
     const a = xy([b[0][0], y]);
     label(g, y.toFixed(0), a[0] - 12, a[1] + 3, '#8898a1', 9, 'right');
   }
-  for (const [name, key, dy] of [
+  for (const [name, key, dy] of(d.config.whole_field ? [] : [
       ['ROI A', 'roi_a', -.35],
       ['ROI B', 'roi_b', -.34]
-    ]) {
+    ])) {
     const a = xy(e[key]);
     label(g, name, a[0], a[1] + dy * scale, colors.ink, 10, 'center');
   }
@@ -463,14 +463,24 @@ function drawResultMap(id, d, color, seconds = null) {
     g.lineWidth = 1;
     g.stroke();
   });
+  const layer = $('field-layer').value;
   e.cells.forEach((c, i) => {
     const a = xy(c),
-      v = clamp(frame.q[i] / e.targets[i], 0, 1);
-    g.fillStyle =
-      `rgb(${Math.round(228-202*v)},${Math.round(235-96*v)},${Math.round(233-97*v)})`;
-    g.fillRect(a[0] - 3.5, a[1] - 3.5, 7, 7);
-    g.strokeStyle = '#fff';
-    g.strokeRect(a[0] - 3.5, a[1] - 3.5, 7, 7);
+      value = layer === 'clarity' ? frame.q[i] : layer === 'target' ? e.targets[i] : Math.max(e
+        .targets[i] - frame.q[i], 0);
+    const v = clamp(value / (layer === 'deficit' ? .8 : 1), 0, 1);
+    const cw = d.config.whole_field ? scale * (b[1][0] - b[0][0]) / d.config.grid_nx : 7;
+    const ch = d.config.whole_field ? scale * (b[1][1] - b[0][1]) / d.config.grid_ny : 7;
+    g.fillStyle = heatColor(v);
+    g.fillRect(a[0] - cw / 2, a[1] - ch / 2, cw + .4, ch + .4);
+  });
+  e.obstacles.forEach(o => {
+    g.beginPath();
+    g.arc(...xy(o), o[2] * scale, 0, Math.PI * 2);
+    g.fillStyle = '#d9dfe3';
+    g.fill();
+    g.strokeStyle = '#81909a';
+    g.stroke();
   });
   const visiblePath = d.mission.x.slice(0, frame.index + 1);
   visiblePath.push(frame.x);
@@ -514,10 +524,10 @@ function drawResultMap(id, d, color, seconds = null) {
     label(g, 'End', end[0], end[1] + 17, color, 10, 'center');
     label(g, 'Start', start[0], start[1] - 10, '#40545f', 10, 'center');
   }
-  for (const [name, roi] of [
+  for (const [name, roi] of(d.config.whole_field ? [] : [
       ['A', e.roi_a],
       ['B', e.roi_b]
-    ]) {
+    ])) {
     const a = xy(roi);
     label(g, `ROI ${name}`, a[0], a[1] + (name === 'B' ? 20 : -20), '#40545f', 10, 'center');
   }
@@ -540,7 +550,6 @@ function renderComparison() {
     .teal;
   $('result-name-b').style.color = colors.amber;
   $('inspect-b').disabled = !b;
-  const arrived = d => d && summary(d).accessTime !== null && time >= summary(d).accessTime;
   for (const [d, side, color] of [
       [a, 'a', a.metrics.method === 'current_belief' ? colors.amber : colors.teal],
       [b, 'b', colors.amber]
@@ -550,8 +559,8 @@ function renderComparison() {
         cost = summary(d).costHistory;
       const currentCost = cost[f.index] + f.mix * (cost[f.next] - cost[f.index]);
       $(`result-cost-${side}`).textContent = `Cost so far ${currentCost.toFixed(3)}`;
-      $(`result-note-${side}`).textContent = arrived(d) ?
-        `Reached ROI A at ${summary(d).accessTime.toFixed(2)} s` : 'Has not reached ROI A yet';
+      $(`result-note-${side}`).textContent =
+        `Mean deficit ${deficit(f.q, d.environment.targets).toFixed(3)} · ${f.q.length} monitored cells`;
       $(`result-map-${side}`).setAttribute('aria-label',
         `Animated executed trajectory: ${methodLabel(d)}`);
     } else {
@@ -563,15 +572,12 @@ function renderComparison() {
   let message = b ?
     'Both robots execute on the same clock. Watch their routes and accumulated cost.' :
     'Unpaired recording: watch the robot and its accumulated task cost.';
-  if (b && arrived(a) && !arrived(b)) message =
-    'Teal has reached ROI A. Amber is still approaching.';
-  else if (b && arrived(b) && !arrived(a)) message = 'Amber has reached ROI A first in this run.';
-  else if (b && arrived(a) && arrived(b)) message =
-    'Both reached ROI A. Compare the task cost accumulated along each route.';
+  message = 'Every cell contributes to the task cost. Compare the maps and deficit curves below.';
   if (time >= duration) message = $('comparison-loop').checked && state.playing ?
     'Replay complete. Restarting automatically…' :
     'Replay complete. Open Final result for the full comparison.';
   if ($('comparison-event').textContent !== message) $('comparison-event').textContent = message;
+  drawFieldDiagnostics(a, b, time);
 }
 
 function renderResults() {
@@ -624,9 +630,6 @@ function renderResults() {
     ['Total monitoring cost ↓', s => s.cost.toFixed(3)],
     [`First ${(a.config.stage_steps*a.config.dt).toFixed(1)} s cost`, s => s.first.toFixed(3)],
     ['Remaining mission cost', s => s.later.toFixed(3)],
-    ['First arrival at ROI A', s => s.accessTime === null ? 'Not reached' :
-      `${s.accessTime.toFixed(2)} s`
-    ],
     ['Final clarity deficit ↓', s => s.finalDeficit.toFixed(3)],
     ['Minimum obstacle clearance', s => `${s.clearance.toFixed(3)} m`],
     ['Peak allowed barrier slack', s => s.peakSlack.toFixed(4)],
@@ -648,6 +651,7 @@ function renderResults() {
   }));
   drawResultMap('result-map-a', a, colorA);
   drawResultMap('result-map-b', b, colors.amber);
+  drawFieldDiagnostics(a, b, sa.duration);
 }
 
 function update() {
@@ -705,6 +709,9 @@ function update() {
   $('period-status').textContent = `Period ${state.period+1} of ${d.planning.length}`;
   $('previous-period').disabled = state.period === 0;
   $('next-period').disabled = state.period === d.planning.length - 1;
+  $('scene-label').textContent = d.config.whole_field ?
+    `${d.config.scenario.replaceAll('_', ' ')} · ${d.environment.cells.length} cells` :
+    'Legacy ROI experiment · feature GP';
   $('variant-tag').textContent = d.metrics.method === 'current_belief' ? 'No anticipated learning' :
     d.config.future_updates ? 'Repeated belief updates' : 'Two-stage';
   $('provenance').textContent =
@@ -798,6 +805,8 @@ function update() {
       '<span><i class="line gray"></i>Nominal prediction</span><span><i class="square"></i>Selected planner’s clarity</span>';
   }
   if (isDiff) $('metric-4').style.color = colors.ink;
+  $('paired-denoising').classList.toggle('hidden', !isDiff);
+  if (isDiff) drawPairedDenoising();
   drawMap();
   drawCharts();
 }
@@ -876,9 +885,14 @@ async function replay(id) {
     $('run-diagnostics').style.color = data.metrics.collision || data.metrics
       .optimizer_failure_count ? colors.red : '';
     $('compare').disabled = !state.comparison;
-    $('record-type').textContent = record.live ? 'New local run' : 'Recorded';
+    $('record-type').textContent = data.config.whole_field ? 'Full-field POAM' :
+      'Legacy ROI model';
+    document.querySelector('.intro > div > p:last-child').textContent = data.config.whole_field ?
+      'Full-field clarity deficit · online POAM wind estimates · actual diffusion rollouts.' :
+      'Archived 13-cell experiment · finite-feature GP · select a full-field POAM recording for the new model.';
     $('recording').value = id;
     $('method').value = data.metrics.method;
+    if (data.config.whole_field) $('scenario').value = data.config.scenario;
     $('seed').value = data.metrics.seed;
     $('variant').value = data.config.future_updates ? 'multistage' : 'two_stage';
     $('wind-std').value = data.config.wind_std;
@@ -899,6 +913,7 @@ async function replay(id) {
 }
 async function run() {
   const data = {
+    scenario: $('scenario').value,
     method: $('method').value,
     seed: Number($('seed').value),
     variant: $('variant').value,
@@ -1006,9 +1021,16 @@ $('comparison-timeline').oninput = () => {
 $('comparison-moment').onclick = () => {
   if (!state.data) return;
   const [a, b] = comparisonPair(state.data, state.comparison);
-  const times = [a, b].filter(Boolean).map(d => summary(d).accessTime).filter(Number.isFinite);
-  state.comparisonClock = times.length ? Math.min(summary(a).duration, Math.min(...times) + a
-    .config.dt) : summary(a).duration / 2;
+  let largest = 0,
+    index = Math.floor(a.mission.q.length / 2);
+  if (b) summary(a).costHistory.forEach((cost, i) => {
+    const gap = Math.abs(summary(b).costHistory[i] - cost);
+    if (gap > largest) {
+      largest = gap;
+      index = i;
+    }
+  });
+  state.comparisonClock = index * a.config.dt;
   state.playing = false;
   renderComparison();
 };
@@ -1141,3 +1163,160 @@ async function initialize() {
   }
 }
 initialize();
+
+function heatColor(v) {
+  v = clamp(v, 0, 1);
+  return `rgb(${Math.round(246-202*v)},${Math.round(246-159*v)},${Math.round(240-104*v)})`;
+}
+
+function pairedCurve(id, a, b, getPoints, time, fixedMax = null) {
+  let pa = getPoints(a),
+    pb = b ? getPoints(b) : [];
+  if (id.startsWith('wind-')) {
+    const steps = points => points.flatMap((p, i) => i ? [
+      [p[0], points[i - 1][1]], p
+    ] : [p]);
+    pa = steps(pa);
+    pb = steps(pb);
+  }
+  const max = fixedMax ?? Math.max(.01, ...pa.map(p => p[1]), ...pb.map(p => p[1])) * 1.1;
+  const axes = chartAxes(id, summary(a).duration, max, 'seconds');
+  if (pb.length) path(axes.g, pb, axes.xy, colors.amber, 2);
+  path(axes.g, pa, axes.xy, colors.teal, 2);
+  path(axes.g, [
+    [time, 0],
+    [time, max]
+  ], axes.xy, '#536572', 1, [3, 3]);
+}
+
+function drawWindMap(id, d, time, truth = false) {
+  const {
+    g,
+    w,
+    h
+  } = surface(id);
+  if (!d) return;
+  const bounds = d.environment.bounds,
+    scale = Math.min((w - 10) / 4.8, (h - 24) / 3.7);
+  const xy = p => [(w - 4.8 * scale) / 2 + (p[0] - bounds[0][0]) * scale, 8 + (bounds[1][1] - p[
+    1]) * scale];
+  const bi = beliefIndex(Math.floor(time / d.config.dt + 1e-6), d.config.stage_steps, d.beliefs
+    .length);
+  const belief = d.beliefs[bi],
+    error = $('wind-layer').value === 'error';
+  const nx = d.config.whole_field ? d.config.grid_nx : 25,
+    ny = d.config.whole_field ? d.config.grid_ny : 19;
+  const range = truth ? 1.2 : error ? 1.2 : Math.max(.6, d.config.wind_std);
+  const vectors = truth ? d.physical_wind : belief.mean;
+  d.wind_grid.forEach((p, i) => {
+    const a = xy(p);
+    const val = truth ? Math.hypot(...vectors[i]) : error ? Math.hypot(...belief.mean[i].map((v,
+      k) => v - d.physical_wind[i][k])) : belief.std[i];
+    g.fillStyle = heatColor(val / range);
+    g.fillRect(a[0] - scale * 4.8 / nx / 2, a[1] - scale * 3.7 / ny / 2, scale * 4.8 / nx + .3,
+      scale * 3.7 / ny + .3);
+    if (i % nx % 3 === 1 && Math.floor(i / nx) % 3 === 1) arrow(g, a, xy([p[0] + vectors[i][0] *
+      .3, p[1] + vectors[i][1] * .3
+    ]), '#1c323e', .8);
+  });
+  if (!truth) d.mission.x.slice(1, Math.floor(time / d.config.dt) + 1).forEach(p => {
+    const a = xy(p);
+    g.beginPath();
+    g.arc(...a, 1.3, 0, 7);
+    g.fillStyle = '#f1a441';
+    g.fill();
+  });
+  label(g, `Light 0 → dark ${range.toFixed(1)}  m/s² · arrows × 0.3`, w / 2, h - 3, '#637681', 8,
+    'center');
+  return {
+    belief,
+    bi
+  };
+}
+
+let diagnosticFrame = '';
+
+function drawFieldDiagnostics(a, b, time) {
+  const key =
+    `${a.metrics.scenario}/${a.metrics.method}/${a.metrics.seed}/${time.toFixed(1)}/${$('wind-layer').value}/${window.innerWidth}`;
+  if (diagnosticFrame === key) return;
+  diagnosticFrame = key;
+  $('field-key').textContent = $('field-layer').value === 'deficit' ?
+    'Light: 0 · Dark: 0.8 deficit · lower is better' : 'Light: 0 · Dark: 1 clarity';
+  pairedCurve('field-deficit-chart', a, b, d => d.mission.q.map((q, i) => [i * d.config.dt, deficit(
+    q, d.environment.targets)]), time);
+  pairedCurve('field-cost-chart', a, b, d => summary(d).costHistory.map((v, i) => [i * d.config.dt,
+    v
+  ]), time);
+  $('wind-map-a').setAttribute('aria-label',
+    `Proposed ${a.config.wind_backend === 'poam' ? 'POAM' : 'legacy GP'} wind estimate and uncertainty`
+    );
+  $('wind-map-b').setAttribute('aria-label',
+    `Comparator ${a.config.wind_backend === 'poam' ? 'POAM' : 'legacy GP'} wind estimate and uncertainty`
+    );
+  $('wind-model-label').textContent = a.config.wind_backend === 'poam' ? 'full POAM prediction' :
+    'legacy feature GP';
+  for (const [d, side] of [
+      [a, 'a'],
+      [b, 'b']
+    ]) {
+    const out = drawWindMap(`wind-map-${side}`, d, time);
+    $(`wind-note-${side}`).textContent = out ?
+      `Update ${out.bi} · RMSE ${windError(d,out.belief).toFixed(3)} · mean σ ${(out.belief.std.reduce((s,v)=>s+v,0)/out.belief.std.length).toFixed(3)}` :
+      'No matched run';
+  }
+  drawWindMap('wind-map-truth', a, time, true);
+  pairedCurve('wind-error-chart', a, b, d => d.beliefs.map((v, i) => [i * d.config.stage_steps * d
+    .config.dt, windError(d, v)
+  ]), time);
+  pairedCurve('wind-std-chart', a, b, d => d.beliefs.map((v, i) => [i * d.config.stage_steps * d
+    .config.dt, v.std.reduce((s, x) => s + x, 0) / v.std.length
+  ]), time);
+}
+
+function windError(d, belief) {
+  return Math.sqrt(belief.mean.reduce((s, v, i) => s + v.reduce((a, x, k) => a + (x - d
+    .physical_wind[i][k]) ** 2, 0), 0) / (2 * belief.mean.length));
+}
+
+function drawPairedDenoising() {
+  const pair = comparisonPair(state.data, state.comparison);
+  for (const [d, side, color] of [
+      [pair[0], 'a', colors.teal],
+      [pair[1], 'b', colors.amber]
+    ]) {
+    const {
+      g,
+      w,
+      h
+    } = surface(`denoising-${side}`);
+    if (!d) continue;
+    const p = d.planning[Math.min(state.period, d.planning.length - 1)],
+      l = Math.min(state.level, p.candidate_paths.length - 1);
+    const bounds = d.environment.bounds,
+      scale = Math.min((w - 24) / 4.8, (h - 24) / 3.7);
+    const xy = v => [(w - 4.8 * scale) / 2 + (v[0] - bounds[0][0]) * scale, 12 + (bounds[1][1] - v[
+      1]) * scale];
+    d.environment.obstacles.forEach(o => {
+      g.beginPath();
+      g.arc(...xy(o), o[2] * scale, 0, 7);
+      g.fillStyle = '#d9dfe3';
+      g.fill();
+    });
+    p.candidate_paths[l].forEach((points, i) => path(g, points, xy,
+      `rgba(80,105,120,${.12+.55*p.weights[l][i]})`, 1));
+    path(g, p.mean_paths[l], xy, colors.violet, 1.5, [3, 3]);
+    path(g, l === p.candidate_paths.length - 1 ? p.selected_path : p.incumbent_paths[l], xy, color,
+      2.5);
+    $(`denoising-note-${side}`).textContent =
+      `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · bold: best evaluated; purple: denoised mean`;
+  }
+}
+$('field-layer').onchange = () => {
+  diagnosticFrame = '';
+  update();
+};
+$('wind-layer').onchange = () => {
+  diagnosticFrame = '';
+  update();
+};

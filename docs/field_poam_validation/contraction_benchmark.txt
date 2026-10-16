@@ -1,0 +1,6 @@
+max value difference 7.5250864e-07
+max gradient difference 5.722046e-06
+expanded 8.058083476498723e-05
+contracted 6.775104033295065e-05
+filter compile/run 1.2643463750137016
+filter seconds 0.003656054999446496

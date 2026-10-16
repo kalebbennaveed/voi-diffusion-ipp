@@ -49,7 +49,14 @@ def _planner(cfg, method):
             seeds = jnp.stack(
                 (
                     initial,
-                    initial_policy(x, q, belief, env, cfg, env.roi_a),
+                    initial_policy(
+                        x,
+                        q,
+                        belief,
+                        env,
+                        cfg,
+                        task_goals(x, q, env, cfg)[1] if cfg.whole_field else env.roi_a,
+                    ),
                     initial_policy(x, q, belief, env, cfg, x[:2]),
                 )
             )
@@ -66,15 +73,30 @@ def _planner(cfg, method):
     return plan
 
 
+def task_goals(x, q, env, cfg):
+    """Data-dependent warm starts from distributed sensing benefit, no fixed ROI."""
+    need = jnp.maximum(env.targets - q, 0.0)
+    dist2 = jnp.sum((env.cells[:, None] - env.cells[None]) ** 2, axis=-1)
+    benefit = jnp.exp(-dist2 / cfg.sensor_sigma**2) @ need
+    distance = jnp.linalg.norm(env.cells - x[:2], axis=1)
+    clearance = jax.vmap(lambda p: env.clearance(jnp.r_[p, jnp.zeros(2)]))(env.cells)
+    score = jnp.where(clearance > cfg.safety_margin, benefit / (1 + 0.25 * distance), -jnp.inf)
+    first = env.cells[jnp.argmax(score)]
+    separated = jnp.linalg.norm(env.cells - first, axis=1) > 0.8
+    second = env.cells[jnp.argmax(jnp.where(separated, score, -jnp.inf))]
+    return jnp.stack((first, second))
+
+
 def initial_policy(x, q, belief, env, cfg, first_goal=None):
     """Task-only seed for every solver. No posterior outcomes or truths are used."""
+    task = task_goals(x, q, env, cfg) if cfg.whole_field else jnp.stack((env.roi_b, env.roi_a))
     if cfg.control_representation == "waypoint":
-        first = env.roi_b if first_goal is None else first_goal
-        goals = jnp.stack((first, env.roi_a, env.roi_b))[: 1 + cfg.branches]
+        first = task[0] if first_goal is None else first_goal
+        goals = jnp.stack((first, task[1], task[0]))[: 1 + cfg.branches]
         scale = jnp.array([cfg.waypoint_x_limit, cfg.waypoint_y_limit])
         latent = jnp.arctanh(jnp.clip(goals / scale, -0.95, 0.95))
         return jnp.tile(latent[:, None], (1, cfg.knots, 1)).ravel()
-    wind = lambda p: (belief.basis.features(p) @ belief.mean)[0]
+    wind = lambda p: belief.mean_at(p)[0]
 
     def toward(x, goal, n):
         def body(x, _):
@@ -88,9 +110,9 @@ def initial_policy(x, q, belief, env, cfg, first_goal=None):
         knots = jax.vmap(lambda u: jnp.interp(idx, jnp.arange(n), u), in_axes=1, out_axes=1)(us)
         return xf, jnp.arctanh(knots / cfg.umax)
 
-    xL, first = toward(x, env.roi_b if first_goal is None else first_goal, cfg.stage_steps)
-    _, a = toward(xL, env.roi_a, cfg.future_steps)
-    _, b = toward(xL, env.roi_b, cfg.future_steps)
+    xL, first = toward(x, task[0] if first_goal is None else first_goal, cfg.stage_steps)
+    _, a = toward(xL, task[1], cfg.future_steps)
+    _, b = toward(xL, task[0], cfg.future_steps)
     futures = jnp.stack((a, b))[: cfg.branches]
     return jnp.concatenate((first[None], futures)).ravel()
 

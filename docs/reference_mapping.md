@@ -46,3 +46,38 @@ The added read-only `mbd-playground` checkout was inspected via its README,
 execution. Its browser Safe-MPD solver/shield is not substituted for this
 repository's MBD or RPCBF. No code or assets were copied. See
 [interactive demo provenance](interactive_demo.md).
+
+## Full-field POAM revision (October 16, 2026)
+
+The full-field profile (`configs/field_poam.yaml`) uses the complete sparse POAM
+predictive distribution (Chen et al., RSS 2024, Eq. 4), including the conditional
+residual `Kxx - Kxz Kzz^-1 Kzx`. It no longer projects the distribution onto a
+finite-anchor wind model. Both prediction and hypothetical POAM updates preserve
+the learned attentive kernel. Real updates relocate inducing points by pivoted
+Cholesky, transport unweighted statistics (Eqs. 19–21), update `q(u)` (7–8), and
+train kernel hyperparameters by variational EM (10). Adam moments persist across
+updates. Observation variance is known from the simulated sensor and held fixed.
+
+The continuous sample-path implementation uses Wilson et al., *Efficiently
+sampling functions from Gaussian process posteriors*, ICML 2020,
+https://proceedings.mlr.press/v119/wilson20a.html. It retains a sampled conditional
+residual using `g(x) + Kxz Kzz^-1 (u-g(z))`, with independent `u~q(u)` and prior
+`g`. Sobol spectral quadrature approximates prior draws; the inference kernel and
+predictive covariance are not replaced by Fourier features. This is a numerical
+sampling approximation, not an exact continuous GP draw. Its covariance error
+is measured against the complete model, including after online learning.
+
+`tests/test_poam.py` checks full residual covariance, independent matrix identities,
+frozen-kernel real versus hypothetical POAM updates, empirical sample moments,
+spatial coherence, derivatives, and equivalent contracted field evaluation.
+`tests/test_field_monitoring.py` checks that all cells contribute to the objective,
+that clarity increases near sensing and decays away from it, that temporal
+integration converges, and that held-out physics does not depend on estimator
+inducing points or monitoring-grid resolution.
+
+The accepted sampler additionally conditions its prior paths on a full-kernel
+joint draw at 667 dense support points, retaining a spectral residual between
+them. This reduces post-learning covariance error from 12–17% for spectral-only
+paths to 0.22–0.27% in the three survey diagnostics. Dense support is a numerical
+sampling device; it neither replaces POAM inducing inputs nor projects away its
+predictive residual. Inference continues to evaluate the full kernel.

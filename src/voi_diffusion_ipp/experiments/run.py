@@ -19,32 +19,24 @@ from ..dynamics import step
 from ..planning.mpc import initial_policy, next_initial, planner
 from ..planning.rollout import continuation, rollout
 from ..planning.two_stage import decode, route
-from ..wind import WorldField
-from .scenarios import make_scenario
+from .scenarios import make_scenario, make_truth, new_poam
 
 
 def mission(cfg, method, seed, out, progress=True, observer=None):
     env, belief, x, q = make_scenario(cfg)
     # World key namespace differs from optimization/observation/filter namespaces.
     root = jax.random.PRNGKey(seed)
-    truth_belief = belief._replace(basis=belief.basis._replace(independent=jnp.array(False)))
-    truth = WorldField(
-        truth_belief.basis, truth_belief.sample_field(jax.random.fold_in(root, 100000), 1)[0]
-    )
+    truth = make_truth(cfg, belief, seed)
     poam = None
     if cfg.wind_backend == "poam" and method != "oracle":
-        from ..wind.poam import POAM
-
-        anchors = belief.basis.centers
-        poam = POAM(
-            anchors,
-            jax.random.fold_in(root, 600000),
-            noise_std=float(belief.noise_std),
-            prior_std=cfg.wind_std,
-        )
-        belief = poam.planning_belief(anchors)
+        poam = new_poam(cfg, belief.basis.centers)
+        belief = poam.planning_belief()
     if method == "oracle":
-        belief = truth_belief._replace(
+        if cfg.whole_field:
+            raise ValueError(
+                "Analytic-field oracle is not yet implemented; do not substitute a GP fit"
+            )
+        belief = belief._replace(
             mean=truth.coefficients, covariance=jnp.zeros_like(belief.covariance)
         )
     plan = planner(cfg, method)
@@ -82,9 +74,7 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
     warm_next = jax.jit(
         lambda previous, x, q, b: next_initial(previous, x, q, b, env, cfg, planning_updates)
     )
-    nominal_step = jax.jit(
-        lambda x, u, b: step(x, u, lambda p: (b.basis.features(p) @ b.mean)[0], cfg.dt)
-    )
+    nominal_step = jax.jit(lambda x, u, b: step(x, u, lambda p: b.mean_at(p)[0], cfg.dt))
     initial = jax.jit(lambda x, q, b: initial_policy(x, q, b, env, cfg))(x, q, belief)
     if observer:
         observer("compiling", {"config": cfg, "method": method, "seed": seed})
@@ -116,12 +106,18 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
     policies = []
     belief_means = [np.asarray(belief.mean)]
     belief_covariances = [np.asarray(belief.covariance)]
+    wind_mean_history = [np.asarray(belief.predict(env.cells)[0])]
+    wind_variance_history = [np.asarray(belief.predict(env.cells)[1][:, 0, 0])]
+    poam_losses = []
+    poam_states = []
     for h in range(cfg.mission_horizons):
         kp = jax.random.fold_in(root, 200000 + h)
         ki = jax.random.fold_in(root, 300000 + h)
         kn = jax.random.fold_in(root, 400000 + h)
-        eps = jax.random.normal(ki, (cfg.inner_samples, *belief.mean.shape))
+        eps = jax.random.normal(ki, (cfg.inner_samples, *belief.sample_shape))
         noise = jax.random.normal(kn, (cfg.stage_steps, 2))
+        if observer:
+            observer("planning", {"horizon": h, "compile_seconds": compile_s})
         t = time.perf_counter()
         opt = compiled(x, q, belief, kp, initial, env)
         opt.cost.block_until_ready()
@@ -156,15 +152,16 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
             if poam is None:
                 belief = belief.condition(result.x[1:, :2], result.observations)
             else:
-                poam.update(
+                losses = poam.update(
                     result.x[1:, :2],
                     result.observations,
                     jax.random.fold_in(root, 600001 + h),
                     train_steps=cfg.poam_train_steps,
                 )
-                belief = poam.planning_belief(anchors)
+                poam_losses.append(losses)
+                belief = poam.planning_belief()
         future_eps = jax.random.normal(
-            jax.random.fold_in(root, 500000 + h), (cfg.inner_samples, *belief.mean.shape)
+            jax.random.fold_in(root, 500000 + h), (cfg.inner_samples, *belief.sample_shape)
         )
         branch = choose(result.x[-1], result.q[-1], belief, fu, future_eps, planning_updates)
         future_noise = jax.random.normal(
@@ -222,6 +219,15 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
         means.append(np.asarray(mean))
         variances.append(np.asarray(cov[:, 0, 0]))
         branches.append(int(branch))
+        wind_mean_history.append(np.asarray(mean))
+        wind_variance_history.append(np.asarray(cov[:, 0, 0]))
+        if poam is not None:
+            poam_states.append(
+                {
+                    "inducing": np.asarray(poam.z).tolist(),
+                    "parameters": {k: np.asarray(v).tolist() for k, v in poam.parameters.items()},
+                }
+            )
         belief_means.append(np.asarray(belief.mean))
         belief_covariances.append(np.asarray(belief.covariance))
         costs.append(float(result.cost))
@@ -288,9 +294,35 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
         "config": config_dict(cfg),
     }
     if poam is not None:
-        metrics["poam_snapshot_max_omitted_variance"] = float(
-            jnp.max(poam.snapshot_residual_variance(query, anchors))
-        )
+        exact = np.asarray(belief.joint(query)[1])
+        sampled = np.asarray(belief.sample_moments(query)[1])
+        metrics["poam"] = {
+            "predictive_residual_retained": True,
+            "inducing_count": len(poam.z),
+            "spectral_nodes": cfg.poam_spectral_nodes,
+            "sampler_covariance_relative_error": float(
+                np.linalg.norm(sampled - exact) / np.linalg.norm(exact)
+            ),
+            "training_losses": poam_losses,
+            "states": poam_states,
+        }
+    metrics["monitoring_cells"] = len(env.cells)
+    metrics["monitoring_domain"] = "whole_field" if cfg.whole_field else "legacy_rois"
+    if cfg.whole_field:
+        for key in ("roi_a_access", "roi_a_time", "probe_seconds"):
+            metrics.pop(key)
+    truth_grid = np.asarray(truth.at(query))
+    metrics["wind_history"] = [
+        {
+            "time": h * cfg.stage_steps * cfg.dt,
+            "rmse": float(np.sqrt(np.mean((mu - truth_grid) ** 2))),
+            "mean_std": float(np.sqrt(np.maximum(v, 0)).mean()),
+            "coverage_95": float(
+                np.mean(np.abs(mu - truth_grid) <= 1.96 * np.sqrt(np.maximum(v, 0))[:, None])
+            ),
+        }
+        for h, (mu, v) in enumerate(zip(wind_mean_history, wind_variance_history))
+    ]
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     stem = f"{cfg.scenario}_{method}_{seed}"
@@ -321,6 +353,8 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
         roi_b=np.asarray(env.roi_b),
         probe=np.asarray(env.probe),
         true_wind=np.asarray(truth.at(query)),
+        wind_mean_history=np.asarray(wind_mean_history),
+        wind_variance_history=np.asarray(wind_variance_history),
         policy_vectors=np.asarray(policies),
         belief_coefficients=np.asarray(belief_means),
         belief_covariances=np.asarray(belief_covariances),
@@ -334,7 +368,7 @@ def mission(cfg, method, seed, out, progress=True, observer=None):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--config", default="configs/smoke.yaml")
+    p.add_argument("--config", default="configs/field_poam.yaml")
     p.add_argument("--methods", nargs="+")
     p.add_argument("--seeds", type=int, nargs="+")
     p.add_argument("--output", default="results/runs")

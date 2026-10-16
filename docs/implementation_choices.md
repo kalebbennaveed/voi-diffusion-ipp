@@ -54,7 +54,7 @@ ROI A; hold the current position), then runs every diffusion iteration normally.
 Their three additional objective calls are counted identically for all solvers.
 It is an initialization ablation; no probe reward or hidden wind enters it.
 
-## POAM adapter
+## Historical POAM adapter (superseded for current experiments)
 
 The online POAM implementation retains unweighted accumulated kernel statistics,
 transports them when inducing inputs/kernel change, selects inducing inputs by
@@ -77,3 +77,11 @@ integration substeps per control interval and does not certify continuous-time
 collision absence. Some experiment processes ran concurrently, so their runtime
 values include host contention; use the isolated kernel benchmark for a compact
 reproducible timing check. Process peak RSS also includes accumulated JIT caches.
+
+## Full POAM and whole-field revision
+
+See [field_poam_method.md](field_poam_method.md). The current planner uses the full
+sparse predictive covariance, including conditional residuals. The historical
+finite-anchor omission above has been removed. The finite numerical approximation
+now applies only to continuous posterior sample paths; its covariance convergence
+is measured explicitly. No new full-field experiment can select the feature backend.

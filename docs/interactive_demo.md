@@ -11,19 +11,35 @@ The browser frontend has no external dependencies, model downloads, fonts or
 CDNs. The numerical planner runs in Python/JAX on the tested CPU backend; it is
 not a JavaScript approximation and does not claim browser GPU acceleration.
 
-## What to inspect
+## Current whole-field views
+
+New recordings use POAM and 475 equal-area clarity cells, with three distributed
+monitoring scenarios (vortices, shear, mixed flow). Historical recordings are
+explicitly marked **Legacy**. Never interpret their corridor percentages as
+POAM/full-field results.
+
+The default comparison includes a field-layer selector (deficit, clarity, target),
+paired instantaneous and integrated deficit curves, and a shared animation clock.
+Wind panels show each planner's actual full POAM mean with uncertainty or error,
+and a separate physical-wind reference hidden from the planners. RMSE and posterior
+standard-deviation histories change at the real update boundaries. Denoising
+shows both planners' candidate populations, denoised means, and selected paths.
+The final table reports task deficit, clearance, collisions and allowed slack;
+ROI arrival is no longer a headline or scoring criterion.
+
+## Playback controls
 
 - **Compare & play (default):** an animated comparison starts automatically at
   half speed and loops after a short final-frame hold. Both robots share the same
   clock; their position markers, trails, clarity and cost so far change together.
   Play/Pause, Restart, speed, Loop and a time slider are directly above the maps.
-  “Jump to first ROI arrival” pauses at the first recorded arrival. Positions and
+  “Jump to largest cost gap” pauses where accumulated task costs differ most. Positions and
   clarity are visually interpolated between the recorded 0.15-second samples;
   this interpolation never affects the simulation or saved final metrics.
 - **Final result:** compare completed, actually executed missions side
   by side. Both approaches learn during execution; only the proposed planner
   anticipates learning while choosing current motion. The table separates initial
-  and later monitoring cost, arrival time, clearance, collisions and allowed
+  and later monitoring cost, clarity deficit, clearance, collisions and allowed
   barrier slack. Default seed 200 exactly reproduces archived validation states
   and costs. Pair identities stay consistent when either record is selected.
 - **Denoising:** inspect either planner from its result card, select a planning

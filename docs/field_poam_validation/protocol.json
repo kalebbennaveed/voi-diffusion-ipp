@@ -1,0 +1,60 @@
+{
+  "purpose": "Verify full POAM integration and whole-field clarity monitoring; three paired development scenarios, not a statistical superiority claim.",
+  "selection": "Declared before inspecting completed mission outcomes. All runs, including regressions, collisions and optimizer fallbacks, retained.",
+  "scenarios_and_seeds": [
+    [
+      "field_vortices",
+      300
+    ],
+    [
+      "field_shear",
+      301
+    ],
+    [
+      "field_mixed",
+      302
+    ]
+  ],
+  "methods": [
+    "proposed",
+    "current_belief"
+  ],
+  "config_yaml": "profile: smoke\nscenario: field_vortices\nwhole_field: true\nwind_backend: poam\npoam_inducing_x: 6\npoam_inducing_y: 4\npoam_spectral_nodes: 16\npoam_train_steps: 10\ngrid_nx: 25\ngrid_ny: 19\ncontrol_representation: waypoint\nbranch_rule: task\nrecourse_samples: 2\nfuture_updates: true\nwind_std: 0.55\nstage_steps: 12\nfuture_steps: 24\nknots: 3\nworlds: 4\ninner_samples: 4\nbackup_steps: 8\nbackup_dt: 0.24\ndiffusion_steps: 4\nproposals: 12\ncandidate_chunk: 1\nwarm_starts: 3\nmission_horizons: 10\nsensor_sigma: 0.48\nseeds: [300, 301, 302]\nmethods: [proposed, current_belief]\n",
+  "primary_metric": "Time integral of unweighted mean positive clarity deficit over all 475 uniform-area cells.",
+  "physics": "Independent spatial vortex/jet fields; identical seed and observation-noise stream per pair.",
+  "qoi": "Independent-cell clarity dynamics evaluated on executed positions; entire rectangle, including remotely sensed cells under flight obstacles.",
+  "wind": "Full POAM predictive covariance including conditional residual; online inducing relocation, variational updates, attentive-kernel training. Known simulated observation noise.",
+  "sampler": "Full prior covariance draw on a 29x23 spatial support; 16 Sobol spectral nodes per RBF component for the retained between-support residual; followed by sparse-posterior Matheron conditioning. Full predictive covariance used for inference. Sampling covariance errors tested on grid and off-grid.",
+  "source_sha256": {
+    "src/voi_diffusion_ipp/__init__.py": "8cc1e55939efbb83ca7af87e3c69abf111605c3377802b929032e33b7dad21bf",
+    "src/voi_diffusion_ipp/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/baselines/draft.py": "ad48de7e2dffc63b1f85644cb72eda16827c9067f45909e3c6f65d792d8c1eb1",
+    "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
+    "src/voi_diffusion_ipp/config.py": "db6f54c9f492194eca150baeed223a74ceff731cc16ca93ddabd61d0e2318c47",
+    "src/voi_diffusion_ipp/dynamics.py": "60bc8c68395e2d38e8f70c4e8b18b86a59e98fcbddc4c42c0affed9b02411e7c",
+    "src/voi_diffusion_ipp/environment.py": "19b647108adbc0cdafe044a48a19baadc3ea0789dd0e6857d04f668ffb41f5e8",
+    "src/voi_diffusion_ipp/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/experiments/run.py": "8d3916e20f2d85d5a21da39466bdba410edf1e52c5ef0ade90b2db529d9ac205",
+    "src/voi_diffusion_ipp/experiments/scenarios.py": "41455ad7670fead475651ad7df86b564327a3f32ee4690210ba5a36940c7d6cb",
+    "src/voi_diffusion_ipp/experiments/suite.py": "0c0ff8ef2b88d46a8de2214bf69429c16c0c4b9ef70aae4dd1ac00b57d0634c0",
+    "src/voi_diffusion_ipp/planning/__init__.py": "90c2781b42b77b8f1b9ad3d535b6f64d850c8158a69e6a6daa9e2acab02d306f",
+    "src/voi_diffusion_ipp/planning/mbd.py": "7314060715e61dedd8373fe28ce1a20e63406fee689cf81176fa7bf7a8b3cc93",
+    "src/voi_diffusion_ipp/planning/mpc.py": "0b3eadd2580191e2b0b59c77d323590b73dcf5512260d6ad23db494092a1fff4",
+    "src/voi_diffusion_ipp/planning/rollout.py": "06f843a250d5da730e32ec2d741bc5a7b07dd49d142485147bec517985a8947c",
+    "src/voi_diffusion_ipp/planning/two_stage.py": "dacf36acbd8156336f786ae1139d689e656ab564b9707f1d617187ad80c2705a",
+    "src/voi_diffusion_ipp/safety/__init__.py": "c00308ddb2d6c20920184172aa25a144dcff69b30e29074fd8a20f0764cd39ce",
+    "src/voi_diffusion_ipp/safety/qp.py": "fd3fda65e9cf952d9b502201751077a402547f75b2d202079436a9dc09b8768e",
+    "src/voi_diffusion_ipp/safety/rpcbf.py": "70d772cee35f17f6029e42d3b3fba6e2efb70b483b3bfb15263dea2580c110e8",
+    "src/voi_diffusion_ipp/safety/spline.py": "4cd9f4814a78aa42c7f6f13270a6aed55cacb60dd50ebae4e58b245c586b6582",
+    "src/voi_diffusion_ipp/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/viz/demo_data.py": "65bb52cedede0e81338b23bbf72a65b980164319521930f95a8231482490e917",
+    "src/voi_diffusion_ipp/viz/demo_server.py": "17e25c7432bb82800838bcfe03e0b07ca186aef4659dc82fe775b8cf120d5915",
+    "src/voi_diffusion_ipp/viz/report.py": "15724940b26a9c5740b5f94bbbb834ee03c2266625f3460ae2be29e1d479d0b6",
+    "src/voi_diffusion_ipp/wind/__init__.py": "df7aaf8bf26ec5b0ee4469564aa08c8ee7badace32f0591f72107b057a183ec9",
+    "src/voi_diffusion_ipp/wind/gp.py": "3d1feec0574a7e1f703bbb60c668f962246f1d2f57b8fb8bef423f9bf4c91aac",
+    "src/voi_diffusion_ipp/wind/physical.py": "253b023e7acb55d972e250f5dbe27a4ef7c972962fe0abd5e2d152aef00edaf3",
+    "src/voi_diffusion_ipp/wind/poam.py": "f87665cd0247e6dd30ac8c0c8ab7237c605bd71f6e9ae0a1ff3429acbfd844eb",
+    "src/voi_diffusion_ipp/wind/poam_belief.py": "8adfd15c5fa591571c6a5f79d7e4a5bcdd6f755fb14c76d7eb5a314389e47fb7"
+  },
+  "performance_revision": "The first 128-node attempt was terminated before the first planning result to optimize algebraically equivalent field evaluation. Its log and initial protocol are retained. No mission outcome was selected or discarded. A second spectral-only attempt was stopped before a completed mission after the separate survey revealed 12\u201317% posterior sampling covariance error. The corrected sampler reduces this to 0.22\u20130.27%; both aborted development logs are retained."
+}

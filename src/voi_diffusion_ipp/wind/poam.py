@@ -5,19 +5,16 @@ transported UNWEIGHTED sufficient statistics, Eqs. 7-8 variational update and
 Eq. 10 minibatch variational EM kernel training. Independently reimplemented
 from the paper and MIT-licensed vendor reference; see docs/reference_mapping.md.
 
-Full sparse-GP prediction includes conditional residual covariance. Planning uses
-an explicit finite-anchor snapshot: full covariance at anchors, Nyström extension
-between anchors (residual omitted there). This approximation is NOT the full GP.
+Full sparse-GP prediction and planning retain the conditional residual covariance.
+The continuous posterior sampler is separately validated against this covariance.
 """
-
-from typing import NamedTuple
 
 import jax
 import jax.numpy as jnp
 import jax.scipy as jsp
 import numpy as np
 
-from .gp import WindBelief
+from .poam_belief import POAMBelief, PosteriorBasis, spectral_nodes
 
 
 def init_parameters(key, components=4, width=8, prior_std=0.55):
@@ -33,14 +30,15 @@ def init_parameters(key, components=4, width=8, prior_std=0.55):
     }
 
 
-def attentive_kernel(params, x, y, lengths):
-    def features(x):
-        z = jnp.tanh(x @ params["w1"] + params["b1"])
-        z = jnp.tanh(z @ params["w2"] + params["b2"])
-        w = jax.nn.softmax(z @ params["w3"] + params["b3"], axis=-1)
-        return w / jnp.linalg.norm(w, axis=-1, keepdims=True)
+def attention_weights(params, x):
+    z = jnp.tanh(x @ params["w1"] + params["b1"])
+    z = jnp.tanh(z @ params["w2"] + params["b2"])
+    w = jax.nn.softmax(z @ params["w3"] + params["b3"], axis=-1)
+    return w / jnp.linalg.norm(w, axis=-1, keepdims=True)
 
-    wx, wy = features(x), features(y)
+
+def attentive_kernel(params, x, y, lengths):
+    wx, wy = attention_weights(params, x), attention_weights(params, y)
     dist = jnp.sum((x[:, None] - y[None]) ** 2, axis=-1)
     base = jnp.exp(-dist[:, :, None] / (2 * lengths**2))
     mixture = jnp.einsum("il,jl,ijl->ij", wx, wy, base)
@@ -68,23 +66,19 @@ def select_inducing(params, candidates, lengths, count):
     return candidates[jnp.array(selected)]
 
 
-class KernelBasis(NamedTuple):
-    centers: jax.Array
-    parameters: dict
-    lengths: jax.Array
-    inverse: jax.Array
-
-    def features(self, locations):
-        return (
-            attentive_kernel(self.parameters, jnp.atleast_2d(locations), self.centers, self.lengths)
-            @ self.inverse
-        )
-
-
 class POAM:
     """Online adapter with full prediction. Kernel adaptation only between plans."""
 
-    def __init__(self, centers, key, noise_std=0.1, lengths=(0.25, 0.6, 1.1, 1.8), prior_std=0.55):
+    def __init__(
+        self,
+        centers,
+        key,
+        noise_std=0.1,
+        lengths=(0.3, 0.8, 1.3, 1.8),
+        prior_std=0.55,
+        spectral_count=32,
+        prior_support=None,
+    ):
         if noise_std <= 0 or prior_std <= 0:
             raise ValueError(
                 "Positive observation noise and prior wind standard deviation required"
@@ -93,6 +87,13 @@ class POAM:
         self.parameters = init_parameters(key, len(lengths), prior_std=prior_std)
         self.lengths = jnp.asarray(lengths, jnp.float32)
         self.noise_std = float(noise_std)
+        self.frequencies = spectral_nodes(spectral_count)
+        self.prior_support = (
+            jnp.zeros((0, 2)) if prior_support is None else jnp.asarray(prior_support)
+        )
+        self.adam_m = jax.tree.map(jnp.zeros_like, self.parameters)
+        self.adam_v = jax.tree.map(jnp.zeros_like, self.parameters)
+        self.adam_step = 0
         n = len(centers)
         self.a = jnp.zeros((n, 2))
         self.B = jnp.zeros((n, n))
@@ -156,9 +157,9 @@ class POAM:
 
         grad = jax.jit(jax.value_and_grad(negative_elbo))
         losses = []
-        m = jax.tree.map(jnp.zeros_like, self.parameters)
-        v = jax.tree.map(jnp.zeros_like, self.parameters)
+        m, v = self.adam_m, self.adam_v
         for i in range(train_steps):
+            self.adam_step += 1
             key, k = jax.random.split(key)
             idx = jax.random.randint(k, (min(batch_size, len(self.data_x)),), 0, len(self.data_x))
             loss, g = grad(self.parameters, self.data_x[idx], self.data_y[idx])
@@ -166,16 +167,17 @@ class POAM:
             m = jax.tree.map(lambda a, b: 0.9 * a + 0.1 * b, m, g)
             v = jax.tree.map(lambda a, b: 0.999 * a + 0.001 * b * b, v, g)
             self.parameters = jax.tree.map(
-                lambda p, mm, vv, i=i: (
+                lambda p, mm, vv: (
                     p
                     - lr
-                    * (mm / (1 - 0.9 ** (i + 1)))
-                    / (jnp.sqrt(vv / (1 - 0.999 ** (i + 1))) + 1e-8)
+                    * (mm / (1 - 0.9**self.adam_step))
+                    / (jnp.sqrt(vv / (1 - 0.999**self.adam_step)) + 1e-8)
                 ),
                 self.parameters,
                 m,
                 v,
             )
+        self.adam_m, self.adam_v = m, v
         return losses
 
     def joint(self, locations):
@@ -191,14 +193,37 @@ class POAM:
         return mu, jnp.maximum(jnp.diag(cov), 0)[:, None, None] * jnp.eye(2)[None]
 
     def planning_belief(self, anchors=None):
-        anchors = self.z if anchors is None else jnp.asarray(anchors)
-        mu, cov = self.joint(anchors)
-        K = self.kernel(anchors, anchors)
-        basis = KernelBasis(
-            anchors, self.parameters, self.lengths, chol_solve(K, jnp.eye(len(anchors)))
-        )
-        return WindBelief(basis, mu, cov, jnp.array(self.noise_std))
+        """Immutable FULL predictive model; hypothetical updates keep kernel/Z fixed.
 
-    def snapshot_residual_variance(self, locations, anchors=None):
-        snap = self.planning_belief(anchors)
-        return jnp.diag(self.joint(locations)[1] - snap.joint(locations)[1])
+        No interpolation anchors, no discarded conditional residual. The argument
+        is accepted only for old callers passing the current inducing locations.
+        """
+        if anchors is not None and not np.array_equal(np.asarray(anchors), np.asarray(self.z)):
+            raise ValueError("POAM planning uses its full model, not an anchor projection")
+        K = self.kernel(self.z, self.z)
+        support = self.prior_support
+        Ks = self.kernel(support, support)
+        regularized = (Ks + Ks.T) * 0.5 + 1e-4 * jnp.eye(len(support))
+        Ls = jnp.linalg.cholesky(regularized)
+        inverse_s = jsp.linalg.cho_solve((Ls, True), jnp.eye(len(support)))
+        basis = PosteriorBasis(
+            self.z,
+            self.parameters,
+            self.lengths,
+            self.frequencies,
+            support,
+            inverse_s,
+            Ls,
+            attention_weights(self.parameters, support),
+            attention_weights(self.parameters, self.z),
+        )
+        return POAMBelief(
+            basis,
+            self.mean,
+            self.covariance,
+            chol_solve(K, jnp.eye(len(self.z))),
+            self.a,
+            self.B,
+            self.old_K,
+            jnp.array(self.noise_std),
+        )
