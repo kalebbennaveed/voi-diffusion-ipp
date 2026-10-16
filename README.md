@@ -28,8 +28,11 @@ no formal safety or optimality guarantee is claimed.
 JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.viz.demo_server --port 8765
 ```
 
-Open <http://127.0.0.1:8765>. The default **Final result** view compares completed
-missions side by side, with costs, arrival times, clarity and allowed safety slack.
+Open <http://127.0.0.1:8765>. **Compare & play** starts an animated, looping
+side-by-side replay immediately. Pause, restart, adjust speed or scrub the shared
+timeline above the moving robots. **Jump to first ROI arrival** reveals which
+planner gets there first. **Final result** shows completed trajectories, costs,
+arrival times, clarity and allowed safety slack.
 Both methods learn during execution; only the proposed method anticipates learning
 while choosing current motion. Inspect either planner's actual diffusion proposals,
 weights, score updates and selected trajectories, then play the executed mission with

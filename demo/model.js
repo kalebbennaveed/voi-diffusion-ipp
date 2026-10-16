@@ -59,3 +59,32 @@ export function missionSummary(data) {
     costHistory: cost
   };
 }
+
+// Interpolate recorded execution states for display only; never feeds the planner.
+export function playbackFrame(data, seconds) {
+  const last = data.mission.x.length - 1;
+  const sample = clamp(seconds / data.config.dt, 0, last);
+  const index = Math.floor(sample),
+    next = Math.min(index + 1, last),
+    mix = sample - index;
+  const interpolate = values => values[index].map((v, i) => v + mix * (values[next][i] - v));
+  return {
+    index,
+    next,
+    mix,
+    x: interpolate(data.mission.x),
+    q: interpolate(data.mission.q)
+  };
+}
+
+export function advanceComparison(clock, elapsed, speed, duration, loop) {
+  const next = clock + Math.max(elapsed, 0) * speed;
+  if (loop) return {
+    clock: next % (duration + 2),
+    playing: true
+  };
+  return {
+    clock: Math.min(next, duration),
+    playing: next < duration
+  };
+}

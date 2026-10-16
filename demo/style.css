@@ -679,6 +679,36 @@ footer span:last-child {
   display: none !important
 }
 
+.quick-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 20px;
+}
+
+.quick-actions .primary-button {
+  width: auto;
+  margin: 0;
+  padding: 13px 20px;
+  font-size: 14px;
+}
+
+.quick-secondary {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 12px 16px;
+  font-size: 13px;
+}
+
+.quick-actions span {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
 @keyframes pulse {
   50% {
     opacity: .3
@@ -1010,5 +1040,155 @@ footer span:last-child {
 
   .result-card canvas {
     height: 260px;
+  }
+}
+
+/* The landing surface is an animation player, with transport above the maps. */
+main {
+  padding-top: 19px;
+}
+
+.intro {
+  margin-bottom: 16px;
+}
+
+.intro .eyebrow {
+  display: none;
+}
+
+.intro h2 {
+  font-size: 24px;
+}
+
+.comparison-transport {
+  padding: 16px 18px 8px;
+}
+
+.comparison-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+
+.comparison-buttons .primary-button {
+  width: auto;
+  margin: 0;
+  padding: 11px 21px;
+  font-size: 14px;
+  min-width: 100px;
+  justify-content: center;
+}
+
+.comparison-buttons .quick-secondary {
+  padding: 10px 14px;
+}
+
+.comparison-buttons label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.comparison-event {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 11px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.comparison-event span {
+  flex: 1;
+}
+
+.comparison-event .text-button {
+  max-width: 145px;
+}
+
+.is-comparison .result-card-heading {
+  min-height: 73px;
+}
+
+.is-comparison .result-card-heading span {
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.is-comparison .result-card p {
+  min-height: 35px;
+  color: var(--ink);
+}
+
+.is-comparison .result-card canvas {
+  height: 300px;
+}
+
+.is-comparison .result-pair {
+  padding-top: 8px;
+}
+
+@media(max-width:760px) {
+  .intro h2 {
+    font-size: 22px;
+  }
+
+  .panel-top {
+    padding: 0 12px;
+  }
+
+  .tabs {
+    gap: 15px;
+  }
+
+  .tab {
+    font-size: 11px;
+  }
+
+  .is-comparison .result-card canvas {
+    height: 235px;
+  }
+
+  .comparison-transport {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .comparison-buttons {
+    gap: 8px;
+  }
+
+  .comparison-event {
+    font-size: 11px;
+  }
+
+  .is-comparison .result-pair {
+    gap: 9px;
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+}
+
+@media(max-width:420px) {
+  .is-comparison .result-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .is-comparison .result-card canvas {
+    height: 200px;
+  }
+
+  .is-comparison .result-card-heading {
+    font-size: 10px;
+    padding: 10px 7px 4px;
+  }
+
+  .is-comparison .result-card-heading span {
+    font-size: 13px;
   }
 }

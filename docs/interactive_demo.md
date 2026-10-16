@@ -13,7 +13,14 @@ not a JavaScript approximation and does not claim browser GPU acceleration.
 
 ## What to inspect
 
-- **Final result (default):** compare completed, actually executed missions side
+- **Compare & play (default):** an animated comparison starts automatically at
+  half speed and loops after a short final-frame hold. Both robots share the same
+  clock; their position markers, trails, clarity and cost so far change together.
+  Play/Pause, Restart, speed, Loop and a time slider are directly above the maps.
+  “Jump to first ROI arrival” pauses at the first recorded arrival. Positions and
+  clarity are visually interpolated between the recorded 0.15-second samples;
+  this interpolation never affects the simulation or saved final metrics.
+- **Final result:** compare completed, actually executed missions side
   by side. Both approaches learn during execution; only the proposed planner
   anticipates learning while choosing current motion. The table separates initial
   and later monitoring cost, arrival time, clearance, collisions and allowed
@@ -26,7 +33,7 @@ not a JavaScript approximation and does not claim browser GPU acceleration.
   last level, teal and the cost card include the final denoised-policy evaluation.
   Hover over a weight bar to isolate a candidate and inspect its objective,
   importance weight and observation-selected branch.
-- **Mission playback:** scrub actual robot motion, clarity, measurements, corrections,
+- **Details:** scrub actual robot motion, clarity, measurements, corrections,
   clearance and allowed barrier slack. Proposed is teal; the comparator is amber.
   The wind posterior changes only at period
   boundaries. The physical-wind layer is explicitly diagnostic and never feeds
@@ -45,8 +52,11 @@ not a JavaScript approximation and does not claim browser GPU acceleration.
   remains visible while the page stays interactive. Completed runs are stored
   under `results/demo/live/` and their catalog entries survive server restarts.
 
-The small-screen layout stacks the controls beneath the map; wider windows place
-them alongside it. Space plays/pauses when focus is outside an input control.
+The small-screen layout keeps the paired animation and its controls together;
+experiment settings move beneath it. Space plays/pauses the active animation when
+focus is outside an input control. Denoising starts when its tab is selected and
+has its own Play button and level slider above the forecast map. New recordings
+return the page to the top and start their comparison replay.
 
 ## Scientific provenance
 

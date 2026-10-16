@@ -1,6 +1,6 @@
 # Implementation checkpoints
 
-Current validation: 30 passing CPU tests, 7 passing frontend tests, 120 original
+Current validation: 30 passing CPU tests, 9 passing frontend tests, 120 original
 archived missions, 37 feedback/recourse missions, and 49 repeated-update refinement
 missions (including six explicitly superseded development runs).
 See [latest findings](multistage_findings.md), [recourse findings](recourse_findings.md)
@@ -118,3 +118,13 @@ clarity, controls, slack and feasibility. Seven frontend tests validate costs,
 comparison orientation, matching worlds and soft-slack accounting. The previous
 30 Python tests remain applicable; numerical planner source is unchanged.
 See [the precise soft-constraint policy and research stage](soft_constraint_interpretation.md).
+
+## Animation-first demo
+
+The static landing report was insufficiently discoverable. The default is now
+Compare & play: two moving robots, a shared scrubber, running costs, arrival
+messages, visible Pause/Restart/speed/Loop controls and automatic replay. Final
+results and denoising remain separate views. New recordings scroll to the player.
+Interpolation is visual only, bounded by actual recorded samples; clock/loop and
+interpolation tests raise the frontend total to nine. Numerical source and all
+experimental results are unchanged.

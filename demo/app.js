@@ -7,7 +7,9 @@ import {
   metricText,
   methodLabel,
   comparisonPair,
-  missionSummary
+  missionSummary,
+  playbackFrame,
+  advanceComparison
 } from './model.js';
 
 const $ = id => document.getElementById(id);
@@ -16,7 +18,8 @@ const state = {
   comparison: null,
   records: [],
   record: null,
-  mode: 'result',
+  mode: 'comparison',
+  comparisonClock: 0,
   period: 0,
   level: 0,
   step: 0,
@@ -35,6 +38,12 @@ const colors = {
   amber: '#b27738',
   red: '#bb514c'
 };
+const summaryCache = new WeakMap();
+
+function summary(data) {
+  if (!summaryCache.has(data)) summaryCache.set(data, missionSummary(data));
+  return summaryCache.get(data);
+}
 
 function status(text, kind = 'ready') {
   $('status').textContent = text;
@@ -425,7 +434,7 @@ function setMetric(i, title, value, detail) {
   $(`metric-detail-${i}`).textContent = detail;
 }
 
-function drawResultMap(id, d, color) {
+function drawResultMap(id, d, color, seconds = null) {
   const {
     g,
     w,
@@ -437,6 +446,8 @@ function drawResultMap(id, d, color) {
   }
   const e = d.environment,
     b = e.bounds;
+  const moving = seconds !== null;
+  const frame = playbackFrame(d, moving ? seconds : summary(d).duration);
   const scale = Math.min((w - 44) / (b[1][0] - b[0][0]), (h - 44) / (b[1][1] - b[0][1]));
   const left = (w - scale * (b[1][0] - b[0][0])) / 2;
   const top = (h - scale * (b[1][1] - b[0][1])) / 2;
@@ -454,16 +465,18 @@ function drawResultMap(id, d, color) {
   });
   e.cells.forEach((c, i) => {
     const a = xy(c),
-      v = clamp(d.mission.q.at(-1)[i] / e.targets[i], 0, 1);
+      v = clamp(frame.q[i] / e.targets[i], 0, 1);
     g.fillStyle =
       `rgb(${Math.round(228-202*v)},${Math.round(235-96*v)},${Math.round(233-97*v)})`;
     g.fillRect(a[0] - 3.5, a[1] - 3.5, 7, 7);
     g.strokeStyle = '#fff';
     g.strokeRect(a[0] - 3.5, a[1] - 3.5, 7, 7);
   });
-  path(g, d.mission.x, xy, color, 2.5);
+  const visiblePath = d.mission.x.slice(0, frame.index + 1);
+  visiblePath.push(frame.x);
+  path(g, visiblePath, xy, color, 2.5);
   // Observation boundaries are actual executed states, not forecast waypoints.
-  for (let i = d.config.stage_steps; d.config.measurements && i < d.mission.x.length - 1; i += d
+  for (let i = d.config.stage_steps; d.config.measurements && i <= frame.index; i += d
     .config.stage_steps) {
     const a = xy(d.mission.x[i]);
     g.beginPath();
@@ -475,17 +488,32 @@ function drawResultMap(id, d, color) {
     g.stroke();
   }
   const start = xy(d.mission.x[0]),
-    end = xy(d.mission.x.at(-1));
+    end = xy(frame.x);
   g.beginPath();
   g.arc(...start, 4, 0, 7);
   g.fillStyle = '#fff';
   g.fill();
   g.strokeStyle = color;
   g.stroke();
-  g.fillStyle = color;
-  g.fillRect(end[0] - 4, end[1] - 4, 8, 8);
-  label(g, 'Start', start[0], start[1] - 10, '#40545f', 10, 'center');
-  label(g, 'End', end[0], end[1] + 17, color, 10, 'center');
+  if (moving) {
+    g.beginPath();
+    g.arc(...end, 11, 0, Math.PI * 2);
+    g.fillStyle = `${color}22`;
+    g.fill();
+    g.beginPath();
+    g.arc(...end, 5, 0, Math.PI * 2);
+    g.fillStyle = color;
+    g.fill();
+    g.strokeStyle = '#fff';
+    g.lineWidth = 1.5;
+    g.stroke();
+    arrow(g, end, xy([frame.x[0] + frame.x[2] * .28, frame.x[1] + frame.x[3] * .28]), color, 1.7);
+  } else {
+    g.fillStyle = color;
+    g.fillRect(end[0] - 4, end[1] - 4, 8, 8);
+    label(g, 'End', end[0], end[1] + 17, color, 10, 'center');
+    label(g, 'Start', start[0], start[1] - 10, '#40545f', 10, 'center');
+  }
   for (const [name, roi] of [
       ['A', e.roi_a],
       ['B', e.roi_b]
@@ -493,8 +521,57 @@ function drawResultMap(id, d, color) {
     const a = xy(roi);
     label(g, `ROI ${name}`, a[0], a[1] + (name === 'B' ? 20 : -20), '#40545f', 10, 'center');
   }
-  label(g, d.config.measurements ? '○ belief update     ■ final position' : '■ final position', w /
+  label(g, moving ? `t = ${Math.min(seconds, summary(d).duration).toFixed(2)} s` : d.config
+    .measurements ? '○ belief update     ■ final position' : '■ final position', w /
     2, h - 5, '#6e7e88', 9, 'center');
+}
+
+function renderComparison() {
+  const [a, b] = comparisonPair(state.data, state.comparison);
+  const duration = summary(a).duration;
+  const time = Math.min(state.comparisonClock, duration);
+  $('comparison-play').textContent = state.playing ? 'Ⅱ Pause' : '▶ Play';
+  $('comparison-timeline').max = duration;
+  $('comparison-timeline').value = time;
+  $('comparison-time').textContent = `${time.toFixed(2)} / ${duration.toFixed(1)} s`;
+  $('result-name-a').textContent = methodLabel(a);
+  $('result-name-b').textContent = b ? methodLabel(b) : 'No matched comparator';
+  $('result-name-a').style.color = a.metrics.method === 'current_belief' ? colors.amber : colors
+    .teal;
+  $('result-name-b').style.color = colors.amber;
+  $('inspect-b').disabled = !b;
+  const arrived = d => d && summary(d).accessTime !== null && time >= summary(d).accessTime;
+  for (const [d, side, color] of [
+      [a, 'a', a.metrics.method === 'current_belief' ? colors.amber : colors.teal],
+      [b, 'b', colors.amber]
+    ]) {
+    if (d) {
+      const f = playbackFrame(d, time),
+        cost = summary(d).costHistory;
+      const currentCost = cost[f.index] + f.mix * (cost[f.next] - cost[f.index]);
+      $(`result-cost-${side}`).textContent = `Cost so far ${currentCost.toFixed(3)}`;
+      $(`result-note-${side}`).textContent = arrived(d) ?
+        `Reached ROI A at ${summary(d).accessTime.toFixed(2)} s` : 'Has not reached ROI A yet';
+      $(`result-map-${side}`).setAttribute('aria-label',
+        `Animated executed trajectory: ${methodLabel(d)}`);
+    } else {
+      $(`result-cost-${side}`).textContent = '—';
+      $(`result-note-${side}`).textContent = 'Run a matched comparator to animate both.';
+    }
+    drawResultMap(`result-map-${side}`, d, color, time);
+  }
+  let message = b ?
+    'Both robots execute on the same clock. Watch their routes and accumulated cost.' :
+    'Unpaired recording: watch the robot and its accumulated task cost.';
+  if (b && arrived(a) && !arrived(b)) message =
+    'Teal has reached ROI A. Amber is still approaching.';
+  else if (b && arrived(b) && !arrived(a)) message = 'Amber has reached ROI A first in this run.';
+  else if (b && arrived(a) && arrived(b)) message =
+    'Both reached ROI A. Compare the task cost accumulated along each route.';
+  if (time >= duration) message = $('comparison-loop').checked && state.playing ?
+    'Replay complete. Restarting automatically…' :
+    'Replay complete. Open Final result for the full comparison.';
+  if ($('comparison-event').textContent !== message) $('comparison-event').textContent = message;
 }
 
 function renderResults() {
@@ -575,24 +652,39 @@ function renderResults() {
 
 function update() {
   if (!state.data) return;
+  $('quick-play').disabled = false;
+  $('quick-diffusion').disabled = false;
+  $('quick-play').textContent = state.comparison ? '▶ Play comparison' : '▶ Play mission';
   const {
     d,
     H,
     p,
     t
-  } = active(), isDiff = state.mode === 'diffusion', isResult = state.mode === 'result';
-  $('result-view').classList.toggle('hidden', !isResult);
-  $('playback-view').classList.toggle('hidden', isResult);
-  $('mode-note').classList.toggle('hidden', isResult);
-  $('playback-layers').classList.toggle('hidden', isResult);
-  $('metrics-panel').classList.toggle('hidden', isResult);
-  $('charts-panel').classList.toggle('hidden', isResult);
+  } = active(), isDiff = state.mode === 'diffusion', isResult = state.mode === 'result', isCompare =
+    state.mode === 'comparison';
+  const isPairView = isResult || isCompare;
+  $('result-view').classList.toggle('hidden', !isPairView);
+  $('result-view').classList.toggle('is-comparison', isCompare);
+  $('result-view').setAttribute('aria-label', isCompare ? 'Animated planner comparison' :
+    'Final executed comparison');
+  $('comparison-transport').classList.toggle('hidden', !isCompare);
+  for (const id of ['result-heading', 'result-table-wrap', 'result-footnote', 'result-actions']) $(
+    id).classList.toggle('hidden', isCompare);
+  $('method-explainer').classList.toggle('hidden', isCompare);
+  document.querySelector('.quick-actions').classList.toggle('hidden', isCompare);
+  $('playback-view').classList.toggle('hidden', isPairView);
+  $('mode-note').classList.toggle('hidden', isPairView);
+  $('playback-layers').classList.toggle('hidden', isPairView);
+  $('metrics-panel').classList.toggle('hidden', isPairView);
+  $('charts-panel').classList.toggle('hidden', isPairView);
+  $('comparison-tab').classList.toggle('active', isCompare);
+  $('comparison-tab').setAttribute('aria-selected', String(isCompare));
   $('result-tab').classList.toggle('active', isResult);
   $('result-tab').setAttribute('aria-selected', String(isResult));
   $('diffusion-tab').classList.toggle('active', isDiff);
-  $('mission-tab').classList.toggle('active', !isDiff && !isResult);
+  $('mission-tab').classList.toggle('active', state.mode === 'mission');
   $('diffusion-tab').setAttribute('aria-selected', String(isDiff));
-  $('mission-tab').setAttribute('aria-selected', String(!isDiff && !isResult));
+  $('mission-tab').setAttribute('aria-selected', String(state.mode === 'mission'));
   $('last-level').classList.toggle('hidden', !isDiff);
   $('learning-explainer-title').textContent = d.config.measurements ?
     'Both planning approaches learn during execution.' :
@@ -617,6 +709,10 @@ function update() {
     d.config.future_updates ? 'Repeated belief updates' : 'Two-stage';
   $('provenance').textContent =
     `Seed ${d.metrics.seed} · ${d.metrics.method} · JAX ${d.metrics.jax_version} · ${d.metrics.mean_plan_seconds.toFixed(2)} s / plan · ${d.metrics.objective_evaluations_per_plan} objective evaluations`;
+  if (isCompare) {
+    renderComparison();
+    return;
+  }
   if (isResult) {
     renderResults();
     return;
@@ -751,7 +847,8 @@ async function replay(id) {
     const data = await response.json();
     state.record = record;
     state.data = data;
-    state.mode = 'result';
+    state.mode = 'comparison';
+    state.comparisonClock = 0;
     state.comparison = null;
     state.period = 0;
     state.level = 0;
@@ -790,7 +887,9 @@ async function replay(id) {
     $('levels').value = String(data.config.diffusion_steps);
     $('proposals').value = String(data.config.proposals);
     status(`${record.live?'Local experiment':'Recorded experiment'} ready`);
+    state.playing = true;
     update();
+    window.scrollTo(0, 0);
   } catch (e) {
     status(e.message, 'error');
   } finally {
@@ -846,7 +945,15 @@ async function run() {
   }
 }
 $('result-tab').onclick = () => state.data && setMode('result');
-$('diffusion-tab').onclick = () => state.data && setMode('diffusion');
+$('comparison-tab').onclick = () => state.data && startComparison();
+$('diffusion-tab').onclick = () => {
+  if (!state.data) return;
+  setMode('diffusion');
+  $('sequence').checked = false;
+  state.level = 0;
+  state.playing = true;
+  update();
+};
 $('mission-tab').onclick = () => state.data && setMode('mission');
 $('last-level').onclick = () => {
   state.playing = false;
@@ -865,15 +972,67 @@ async function inspectPlanner(index) {
 $('inspect-a').onclick = () => inspectPlanner(0);
 $('inspect-b').onclick = () => inspectPlanner(1);
 $('replay-pair').onclick = () => {
-  setMode('mission');
+  startComparison();
+};
+$('quick-play').onclick = () => {
+  startComparison();
+  $('comparison-tab').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+};
+
+function startComparison() {
+  if (!state.data) return;
+  state.mode = 'comparison';
+  state.comparisonClock = 0;
+  state.playing = true;
+  state.accumulator = 0;
+  update();
+}
+$('comparison-play').onclick = () => {
+  if (!state.data) return;
+  if (state.comparisonClock >= summary(state.data).duration) state.comparisonClock = 0;
+  state.playing = !state.playing;
+  renderComparison();
+};
+$('comparison-restart').onclick = startComparison;
+$('comparison-timeline').oninput = () => {
+  if (!state.data) return;
+  state.comparisonClock = Number($('comparison-timeline').value);
+  state.playing = false;
+  renderComparison();
+};
+$('comparison-moment').onclick = () => {
+  if (!state.data) return;
+  const [a, b] = comparisonPair(state.data, state.comparison);
+  const times = [a, b].filter(Boolean).map(d => summary(d).accessTime).filter(Number.isFinite);
+  state.comparisonClock = times.length ? Math.min(summary(a).duration, Math.min(...times) + a
+    .config.dt) : summary(a).duration / 2;
+  state.playing = false;
+  renderComparison();
+};
+$('quick-diffusion').onclick = async () => {
+  await inspectPlanner(0);
   $('sequence').checked = false;
-  $('compare').checked = true;
+  state.level = 0;
   state.playing = true;
   update();
+  $('diffusion-tab').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
 };
 $('play').onclick = () => {
   if (state.data) {
     if (state.mode === 'result') setMode('mission');
+    if (!state.playing && state.mode === 'diffusion' && state.level === state.data.config
+      .diffusion_steps - 1) state.level = 0;
+    if (!state.playing && state.mode === 'mission' && state.step === state.data.mission.x.length -
+      1) {
+      state.step = 0;
+      state.period = 0;
+    }
     state.playing = !state.playing;
     state.accumulator = 0;
     update();
@@ -914,13 +1073,22 @@ window.addEventListener('keydown', e => {
   if (e.code === 'Space' && !['INPUT', 'SELECT', 'BUTTON', 'TEXTAREA'].includes(e.target
       .tagName)) {
     e.preventDefault();
-    $('play').click();
+    $(state.mode === 'comparison' ? 'comparison-play' : 'play').click();
   }
 });
 
 function animate(now) {
   const elapsed = Math.min((now - state.last) / 1000, .1);
   state.last = now;
+  if (state.playing && state.data && state.mode === 'comparison') {
+    const next = advanceComparison(state.comparisonClock, elapsed, Number($('comparison-speed')
+      .value), summary(state.data).duration, $('comparison-loop').checked);
+    state.comparisonClock = next.clock;
+    state.playing = next.playing;
+    renderComparison();
+    requestAnimationFrame(animate);
+    return;
+  }
   if (state.playing && state.data) {
     state.accumulator += elapsed * Number($('speed').value);
     const interval = state.mode === 'diffusion' ? .9 : state.data.config.dt;

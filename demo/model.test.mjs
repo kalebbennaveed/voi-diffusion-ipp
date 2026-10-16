@@ -7,7 +7,9 @@ import {
   pairedRecord,
   metricText,
   missionSummary,
-  comparisonPair
+  comparisonPair,
+  playbackFrame,
+  advanceComparison
 } from './model.js';
 
 test('the displayed belief changes only at observation boundaries', () => {
@@ -147,4 +149,48 @@ test('the final comparison uses matched physical worlds and preserves cost decom
     const laterRecovery = sb.later - sa.later;
     assert.ok(Math.abs((laterRecovery - initialSacrifice) - (sb.cost - sa.cost)) < 1e-12);
   }
+});
+
+test('animated positions use bounded interpolation of actual execution samples', () => {
+  const data = {
+    config: {
+      dt: 0.5
+    },
+    mission: {
+      x: [
+        [0, 0],
+        [2, 4],
+        [4, 0]
+      ],
+      q: [
+        [0],
+        [0.6],
+        [1]
+      ]
+    }
+  };
+  assert.deepEqual(playbackFrame(data, 0).x, [0, 0]);
+  assert.deepEqual(playbackFrame(data, 0.25).x, [1, 2]);
+  assert.deepEqual(playbackFrame(data, 0.5).q, [0.6]);
+  assert.deepEqual(playbackFrame(data, 100).x, [4, 0]);
+  assert.deepEqual(playbackFrame(data, -1).x, [0, 0]);
+});
+
+test('the comparison clock stops exactly or loops after a final-frame hold', () => {
+  assert.deepEqual(advanceComparison(0, 2, 0.5, 12, false), {
+    clock: 1,
+    playing: true
+  });
+  assert.deepEqual(advanceComparison(11, 2, 1, 12, false), {
+    clock: 12,
+    playing: false
+  });
+  assert.deepEqual(advanceComparison(12, 1, 1, 12, true), {
+    clock: 13,
+    playing: true
+  });
+  assert.deepEqual(advanceComparison(13, 2, 1, 12, true), {
+    clock: 1,
+    playing: true
+  });
 });
