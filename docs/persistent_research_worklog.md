@@ -1,3 +1,53 @@
+# Active fast two-region development — 2026-10-16, 23:15 UTC
+
+The user explicitly asked why work stopped at task calibration: continue through
+implementation and experiments, not another task-design-only final response.
+Production source is now being extended on main after old jobs stopped. Do not
+resume old frozen experiments; their exact source revisions remain in Git.
+
+Optional linear drag is implemented consistently in simulator, nominal and
+backup controllers, RPCBF drift and dense collision checks. Eleven related tests
+passed. Full details/retained failures are in `docs/two_region_physics/`.
+The old acceleration-only dynamics are time-reversible for rest-to-rest paths.
+A restricted quintic timing screen exaggerated the initial gamma=.6 route gap;
+flexible speed optimization reduced it from 49% to 2%, so it was rejected.
+The corrected 144-case screen (40/80 path intervals) found gamma=1, along-wind
+acceleration=1.8: middle outbound 2.832 s, outer return 4.954 s versus middle
+return 7.047 s. All 144 optimizations converged; dense control bounds were checked.
+These are known-wind path-family physics diagnostics, NOT a learning advantage.
+
+Experimental `planning/budgeted.py` now uses actual MBD and actual spline RPCBF
+with tabulated full-POAM fields, a compact observation-conditioned future policy,
+and no inner recourse optimizer. `configs/two_region_budgeted.yaml` has a
+1-second first stage plus 9-second future stage. Cache code moved to `wind/cache.py`;
+original profiler imports it. Full independent uncached checker is available.
+`docs/budgeted_planner/profile.json` has three calls: steady-state cache+MBD+full
+selected-plan verification 0.940 and 0.966 seconds; maximum control discrepancy
+0.00051 on these initial-state plans only. Real online POAM update and execution
+are not included yet. Startup tracing/compilation is explicitly separate. Do not
+claim the complete one-second cycle or learning acceptance.
+
+A unit test initially failed because its 0.6-second reference saturated all
+controls and could not reveal a posterior effect; original output is retained.
+The 3-second nonsaturated fixture and cache checks now pass (5 tests). Next is a bounded paired
+closed-loop diagnostic with actual online POAM and actual safety controls. No
+long sweep until full-cycle timing, causal tests and mismatch checks pass. Keep
+one heavy worker at a time; inspect results/budgeted_tests.log and subsequent
+results/budgeted_missions before launching any duplicate.
+
+A pure-functional reusable POAM M-step gradient eliminates per-update JIT rebuilds.
+The mathematical ELBO, ten training steps, real inducing relocation and sufficient
+statistics are unchanged. A comparison initially exposed near-tied pivot selection
+amplifying 1e-7 floating-point differences. `select_inducing` now restores the
+analytically constant kernel diagonal and uses deterministic roundoff-scale ties.
+`check_poam_refactor.py` compares old/new M-steps with the SAME stabilized pivot
+policy: four batches agree within atol=3e-6/rtol=3e-5; biggest absolute error is
+4.77e-6 in a loss. Steady update timings are ~0.013 vs ~0.25 s for four-inducing
+component fixture, not yet the 24-inducing mission. Raw pre-fix snapshots and
+all outcomes are retained. Release tests are in results/budgeted_release_tests.log.
+
+---
+
 # Two-region shuttle — latest user steering, 2026-10-16
 
 The user has clarified the scientific scenario and authorized grounded method

@@ -1,0 +1,29 @@
+{
+  "status": "development prototype; no real-time or learning claim",
+  "horizon_seconds": 10,
+  "execute_seconds": 1,
+  "policy": "Two first-stage nominal-acceleration knots; four future position knots with clamped cubic tracking and a jointly optimized affine posterior-conditioned transverse/longitudinal shift. Posterior features are mean and standard deviation at the passage. No inner recourse optimization.",
+  "objective": "Expected integrated actual whole-grid clarity deficit; reject sampled physical contact; QP slack allowed and reported. No information bonus.",
+  "solver": "Actual MBD, four reverse levels, eight Gaussian proposals per level, plus seven shared warm starts. Both directions and staying available; no forced shuttling.",
+  "inference": "Full POAM; kernel/inducing locations frozen within each call; real updates train and relocate between calls. Coherent full-residual sampler retained. Explicit numerical approximation: 129-column C1 spatial table of prior samples and inducing kernels, regenerated after real model updates; hypothetical posterior correction fused into table.",
+  "validation": "Compare selected plan with original full-field sampled spline RPCBF and uncached sample paths using identical draws. Report cache rebuild, optimization, exact check, real POAM update and compilation separately. No long missions before timing and mismatch gates. Prototype small sample count is not a safety proof.",
+  "runtime_target": "Approximately one-second fresh planning cycle including required refresh/verification after compilation; later at least 100 varying inputs and deadline counts.",
+  "development_seeds": [
+    8101,
+    8102,
+    8103
+  ],
+  "short_paired_mission": {
+    "periods": 12,
+    "simulated_seconds": 12,
+    "seed": 8101,
+    "methods": [
+      "proposed",
+      "current_belief"
+    ],
+    "execution_dt": 0.05,
+    "same_real_poam_updates": true,
+    "fallback": "When cached or uncached selected-plan objective is nonfinite, execute the full design-policy/RPCBF backup and count the failed plan.",
+    "purpose": "Behavior and complete-cycle timing diagnostic; not long-mission acceptance or statistical evidence."
+  }
+}

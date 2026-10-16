@@ -28,7 +28,7 @@ class FilterInfo(NamedTuple):
 
 def design_policy(x, belief, cfg):
     mean = belief.mean_at(x[:2])[0]
-    return jnp.clip(-cfg.backup_gain * x[2:] - mean, -cfg.umax, cfg.umax)
+    return jnp.clip((cfg.linear_drag - cfg.backup_gain) * x[2:] - mean, -cfg.umax, cfg.umax)
 
 
 def values(x, belief, inner, env, cfg):
@@ -40,7 +40,7 @@ def values(x, belief, inner, env, cfg):
 
         def body(x, _):
             u = design_policy(x, belief, cfg)
-            xn = step(x, u, wind, cfg.backup_dt)
+            xn = step(x, u, wind, cfg.backup_dt, cfg.linear_drag)
             return xn, env.violations(xn, cfg.safety_margin)
 
         _, h = jax.lax.scan(body, x, None, length=cfg.backup_steps)
@@ -60,7 +60,11 @@ def constraints(x, belief, inner, env, cfg):
     grad, B = jax.jacfwd(value_with_aux, has_aux=True)(x)
     # All sampled instantaneous winds, not just the value-maximizing field.
     winds = inner.at(x[:2])[:, 0]
-    worst_drift = grad[:, :2] @ x[2:] + jnp.max(grad[:, 2:] @ winds.T, axis=1)
+    worst_drift = (
+        grad[:, :2] @ x[2:]
+        - cfg.linear_drag * (grad[:, 2:] @ x[2:])
+        + jnp.max(grad[:, 2:] @ winds.T, axis=1)
+    )
     return grad[:, 2:], -worst_drift - cfg.cbf_alpha * B, B, grad
 
 

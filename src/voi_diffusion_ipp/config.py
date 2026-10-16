@@ -20,6 +20,7 @@ class Config:
     backup_gain: float = 2.0
     cbf_alpha: float = 1.0
     umax: float = 1.6
+    linear_drag: float = 0.0  # s^-1; wind remains acceleration d=linear_drag*w_air
     safety_margin: float = 0.06
     diffusion_steps: int = 6
     proposals: int = 16
@@ -65,6 +66,8 @@ class Config:
     methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
     def __post_init__(self):
+        if not 0 <= self.linear_drag < float("inf"):
+            raise ValueError("Linear drag must be finite and nonnegative")
         for name in (
             "stage_steps",
             "future_steps",

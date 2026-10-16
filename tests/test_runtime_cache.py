@@ -1,20 +1,12 @@
 """Numerical checks for the explicitly experimental field cache."""
 
-import importlib.util
-from pathlib import Path
-
 import jax
 import jax.numpy as jnp
 import numpy as np
 import pytest
 
+from voi_diffusion_ipp.wind import cache as runtime
 from voi_diffusion_ipp.wind.poam import POAM
-
-spec = importlib.util.spec_from_file_location(
-    "runtime_profile", Path(__file__).resolve().parents[1] / "scripts/profile_runtime_redesign.py"
-)
-runtime = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(runtime)
 
 
 def test_cubic_cache_affine_values_gradients_and_domain():
@@ -49,6 +41,10 @@ def test_cached_prior_reused_across_actual_hypothetical_conditioning(cache_kerne
         np.testing.assert_allclose(
             cached.at(points), belief.inner_fields(eps).at(points), rtol=3e-5, atol=3e-5
         )
+        if cache_kernel:
+            mean, tabulated = cache.tabulate(belief)
+            np.testing.assert_allclose(tabulated.at(points), cached.at(points), atol=3e-5)
+            np.testing.assert_allclose(mean.mean_at(points), belief.mean_at(points), atol=3e-5)
     assert (
         float(jnp.linalg.norm(cache.condition(post).at(points) - cache.condition(b).at(points)))
         > 0.01

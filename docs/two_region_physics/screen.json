@@ -1,0 +1,1033 @@
+{
+  "label": "Known-wind fixed-family physics audit; not planner/learning evidence",
+  "spec": {
+    "bounds": [
+      [
+        -2.7,
+        -2.1
+      ],
+      [
+        2.7,
+        2.1
+      ]
+    ],
+    "region_a": [
+      1.5,
+      0.9
+    ],
+    "region_b": [
+      -1.5,
+      -0.9
+    ],
+    "region_size": [
+      1.4,
+      1.2
+    ],
+    "obstacle_normal_offset": 0.72,
+    "obstacle_radius": 0.5,
+    "grid_shape": [
+      41,
+      33
+    ],
+    "target": 0.7,
+    "sensor_R": 0.1,
+    "sensor_sigmas": [
+      0.5,
+      0.65
+    ],
+    "process_noise_values": [
+      0.04,
+      0.08,
+      0.12,
+      0.16
+    ],
+    "dwell_seconds": [
+      2.0,
+      4.0,
+      6.0
+    ],
+    "transfer_seconds": 4.0,
+    "mission_seconds": 120.0,
+    "dt": 0.05,
+    "initial_clarity": 0.74,
+    "maximum_control_acceleration": 1.6,
+    "selection_rule": "Prefer the fastest decay that gives at least 10 percent less integrated ROI clarity deficit for a symmetric shuttle than an optimistic analytical lower bound for every policy confined to one region after the first transfer; reject paths whose prescribed acceleration exceeds the declared zero-wind actuator bound. Retain every tested case. This selects the task, not evidence for a learning advantage."
+  },
+  "protocol": {
+    "status": "declared development physics audit; not a proposed-planner comparison",
+    "dynamics": "p_dot=v; v_dot=u-gamma*v+d(p); isotropic planar drag approximation; d=gamma*w_air when gamma>0",
+    "reason": "The old position-only acceleration disturbance is exactly time-reversible for rest-to-rest transfers, so the same reversed path and control have the same feasibility and duration. A velocity-dependent physical term is needed for the intended sustained directional effect.",
+    "source": "https://arxiv.org/html/1712.02402v3#S3",
+    "source_scope": "Faessler et al. Eq. 2 motivates linear rotor drag, but their full model includes attitude and assumes no wind. Isotropic planar drag relative to local air velocity is an explicitly declared reduction, not their complete helicopter model or flight validation.",
+    "paths": "Middle and two outer smooth paths; same geometric and timing families both directions. Optimize duration only; no route-dependent costs. This oracle diagnostic is not MBD and does not prove a global time optimum.",
+    "declared_sweep": {
+      "drag_per_second": [
+        0.0,
+        0.6,
+        1.0
+      ],
+      "along_acceleration": [
+        0.0,
+        1.2,
+        1.5,
+        1.8
+      ],
+      "cross_acceleration_fraction": 0.2,
+      "transverse_width": 0.35,
+      "longitudinal_width": 1.1,
+      "bypass_offsets": [
+        -1.5,
+        0.0,
+        1.5
+      ],
+      "duration_range_seconds": [
+        2.0,
+        30.0
+      ],
+      "duration_scan_step": 0.1,
+      "verification_points": 4001
+    },
+    "selection": "Retain every case. A successful physical mechanism requires a middle advantage A-to-B and at least 10 percent faster outer return B-to-A, under identical componentwise actuator bounds of 1.6 and positive physical clearance. Select the weakest nonzero field passing at the lowest tested drag. This chooses physics before seeing proposed-vs-passive outcomes.",
+    "independent_verification": "Reintegrate the algebraically recovered bounded controls under the production dynamics with fine time steps; report trajectory error and minimum clearance. Refining trajectory samples must preserve route ordering.",
+    "not_claimed": [
+      "learning benefit",
+      "RPCBF safety result",
+      "one-second online planning",
+      "helicopter flight validation"
+    ]
+  },
+  "results": [
+    {
+      "drag": 0.0,
+      "amplitude": 0.0,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 6.730843659915505,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 6.730843659915505,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.2901848664135223,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 3.2901848664135223,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.730843659915501,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 6.730843659915501,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.2901848664135223,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 3.2901848664135223,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        }
+      },
+      "return_time_reduction": 0.0,
+      "physics_gate": false
+    },
+    {
+      "drag": 0.0,
+      "amplitude": 1.2,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 6.730663528278361,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 6.730663528278361,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.7096371922486067,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 3.7096371922486067,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.731023806015917,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 6.731023806015917,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.7096371922486067,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 3.7096371922486067,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        }
+      },
+      "return_time_reduction": 0.0,
+      "physics_gate": false
+    },
+    {
+      "drag": 0.0,
+      "amplitude": 1.5,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 6.730618497628735,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 6.730618497628735,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 4.172808109132931,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 4.172808109132931,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.731068844801135,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 6.731068844801135,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 4.172808109132931,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 4.172808109132931,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        }
+      },
+      "return_time_reduction": 0.0,
+      "physics_gate": false
+    },
+    {
+      "drag": 0.0,
+      "amplitude": 1.8,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 6.7305734678829126,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 6.7305734678829126,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 5.223652551701841,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 5.223652551701841,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.731113884490457,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 6.731113884490457,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 5.223652551701841,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 5.223652551701841,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        }
+      },
+      "return_time_reduction": 0.0,
+      "physics_gate": false
+    },
+    {
+      "drag": 0.6,
+      "amplitude": 0.0,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 7.538958359240667,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 6.724070876824087,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.918427222787388,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 3.918427222787387,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.724070876824083,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 7.538958359240666,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.918427222787388,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 3.918427222787387,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        }
+      },
+      "return_time_reduction": 0.0,
+      "physics_gate": false
+    },
+    {
+      "drag": 0.6,
+      "amplitude": 1.2,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 7.538651057194414,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 7.342162508693242,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.608550339928335,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 6.102215252266871,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.394019601254966,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 7.539265854031869,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.608550339928335,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 6.102215252266871,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        }
+      },
+      "return_time_reduction": 0.0,
+      "physics_gate": false
+    },
+    {
+      "drag": 0.6,
+      "amplitude": 1.5,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 7.538574697267135,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 7.522937404744066,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.5614263580485117,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 8.246684760240178,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.393959403304645,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 7.539342733324925,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.5614263580485117,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 7.522937404744066,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        }
+      },
+      "return_time_reduction": 0.08776221918722094,
+      "physics_gate": false
+    },
+    {
+      "drag": 0.6,
+      "amplitude": 1.8,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 7.538498339550907,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 7.716613707726152,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.519299410482334,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 14.665342958594705,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 6.393899206931194,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 7.539419614856303,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.519299410482334,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 7.539419614856303,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      },
+      "return_time_reduction": 0.4859022638514031,
+      "physics_gate": true
+    },
+    {
+      "drag": 1.0,
+      "amplitude": 0.0,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 8.42261746350105,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 7.884206797605686,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 4.592495262297897,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 4.592495262297898,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 7.884206797605668,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 8.422617463501048,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 4.592495262297897,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 4.592495262297898,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        }
+      },
+      "return_time_reduction": 0.0,
+      "physics_gate": false
+    },
+    {
+      "drag": 1.0,
+      "amplitude": 1.2,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 8.42183204413974,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 8.646424192704526,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.9896949531325667,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 8.664522975441134,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 7.458935000083317,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 8.42340307975127,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.9896949531325667,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 8.42340307975127,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      },
+      "return_time_reduction": 0.027828409754731886,
+      "physics_gate": false
+    },
+    {
+      "drag": 1.0,
+      "amplitude": 1.5,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 8.421637709654611,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 8.875112080331613,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.917177657095166,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 12.436409431646878,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 7.458812429726256,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 8.423599514587922,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.917177657095166,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 8.423599514587922,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      },
+      "return_time_reduction": 0.32266627591462016,
+      "physics_gate": true
+    },
+    {
+      "drag": 1.0,
+      "amplitude": 1.8,
+      "routes": [
+        {
+          "offset": -1.5,
+          "direction": "A_to_B",
+          "seconds": 8.421443561543573,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": -1.5,
+          "direction": "B_to_A",
+          "seconds": 9.122101589707059,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244778
+        },
+        {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.854601042057867,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 0.0,
+          "direction": "B_to_A",
+          "seconds": 23.516616177512947,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        {
+          "offset": 1.5,
+          "direction": "A_to_B",
+          "seconds": 7.458689864594884,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        },
+        {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 8.600453607470207,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      ],
+      "best": {
+        "A_to_B": {
+          "offset": 0.0,
+          "direction": "A_to_B",
+          "seconds": 3.854601042057867,
+          "status": "interior",
+          "geometric_clearance": 0.22000000000000008
+        },
+        "B_to_A": {
+          "offset": 1.5,
+          "direction": "B_to_A",
+          "seconds": 8.600453607470207,
+          "status": "interior",
+          "geometric_clearance": 0.23948760861244767
+        }
+      },
+      "return_time_reduction": 0.6342818395916106,
+      "physics_gate": true
+    }
+  ],
+  "selected": {
+    "drag": 0.6,
+    "amplitude": 1.8,
+    "routes": [
+      {
+        "offset": -1.5,
+        "direction": "A_to_B",
+        "seconds": 7.538498339550907,
+        "status": "interior",
+        "geometric_clearance": 0.23948760861244778
+      },
+      {
+        "offset": -1.5,
+        "direction": "B_to_A",
+        "seconds": 7.716613707726152,
+        "status": "interior",
+        "geometric_clearance": 0.23948760861244778
+      },
+      {
+        "offset": 0.0,
+        "direction": "A_to_B",
+        "seconds": 3.519299410482334,
+        "status": "interior",
+        "geometric_clearance": 0.22000000000000008
+      },
+      {
+        "offset": 0.0,
+        "direction": "B_to_A",
+        "seconds": 14.665342958594705,
+        "status": "interior",
+        "geometric_clearance": 0.22000000000000008
+      },
+      {
+        "offset": 1.5,
+        "direction": "A_to_B",
+        "seconds": 6.393899206931194,
+        "status": "interior",
+        "geometric_clearance": 0.23948760861244767
+      },
+      {
+        "offset": 1.5,
+        "direction": "B_to_A",
+        "seconds": 7.539419614856303,
+        "status": "interior",
+        "geometric_clearance": 0.23948760861244767
+      }
+    ],
+    "best": {
+      "A_to_B": {
+        "offset": 0.0,
+        "direction": "A_to_B",
+        "seconds": 3.519299410482334,
+        "status": "interior",
+        "geometric_clearance": 0.22000000000000008
+      },
+      "B_to_A": {
+        "offset": 1.5,
+        "direction": "B_to_A",
+        "seconds": 7.539419614856303,
+        "status": "interior",
+        "geometric_clearance": 0.23948760861244767
+      }
+    },
+    "return_time_reduction": 0.4859022638514031,
+    "physics_gate": true
+  },
+  "independent_integration": [
+    {
+      "offset": -1.5,
+      "direction": "A_to_B",
+      "seconds": 7.538498339550907,
+      "status": "interior",
+      "geometric_clearance": 0.23948760861244778,
+      "max_position_error": 1.0985891286942748e-05,
+      "max_velocity_error": 7.956975266262307e-06,
+      "max_axis_control": 1.6000007390975952,
+      "minimum_clearance": 0.2394839755197965,
+      "substeps": 8000
+    },
+    {
+      "offset": -1.5,
+      "direction": "B_to_A",
+      "seconds": 7.716613707726152,
+      "status": "interior",
+      "geometric_clearance": 0.23948760861244778,
+      "max_position_error": 6.580642214192785e-06,
+      "max_velocity_error": 4.209311492193658e-06,
+      "max_axis_control": 1.6000003814697266,
+      "minimum_clearance": 0.23948760162162974,
+      "substeps": 8000
+    },
+    {
+      "offset": 0.0,
+      "direction": "A_to_B",
+      "seconds": 3.519299410482334,
+      "status": "interior",
+      "geometric_clearance": 0.22000000000000008,
+      "max_position_error": 4.546251493802678e-06,
+      "max_velocity_error": 4.359335658871043e-06,
+      "max_axis_control": 1.6000001430511475,
+      "minimum_clearance": 0.21999953383890192,
+      "substeps": 8000
+    },
+    {
+      "offset": 0.0,
+      "direction": "B_to_A",
+      "seconds": 14.665342958594705,
+      "status": "interior",
+      "geometric_clearance": 0.22000000000000008,
+      "max_position_error": 2.7960586512249466e-05,
+      "max_velocity_error": 1.375986560418352e-05,
+      "max_axis_control": 1.600000023841858,
+      "minimum_clearance": 0.21999913735237153,
+      "substeps": 8000
+    },
+    {
+      "offset": 1.5,
+      "direction": "A_to_B",
+      "seconds": 6.393899206931194,
+      "status": "interior",
+      "geometric_clearance": 0.23948760861244767,
+      "max_position_error": 8.159684217818531e-06,
+      "max_velocity_error": 6.86679303799895e-06,
+      "max_axis_control": 1.6000005006790161,
+      "minimum_clearance": 0.2394830058477454,
+      "substeps": 8000
+    },
+    {
+      "offset": 1.5,
+      "direction": "B_to_A",
+      "seconds": 7.539419614856303,
+      "status": "interior",
+      "geometric_clearance": 0.23948760861244767,
+      "max_position_error": 1.640071578630723e-05,
+      "max_velocity_error": 9.398500463920228e-06,
+      "max_axis_control": 1.6000003814697266,
+      "minimum_clearance": 0.23948871663000248,
+      "substeps": 8000
+    }
+  ]
+}

@@ -53,17 +53,48 @@ def chol_solve(A, b):
 def select_inducing(params, candidates, lengths, count):
     """Pivoted Cholesky; storage and work depend on M+new batch, not history."""
     K = np.asarray(attentive_kernel(params, candidates, candidates, lengths), dtype=np.float64)
+    # The normalized attentive kernel has a constant diagonal analytically.
+    # Restore it before pivoting; otherwise float32 normalization roundoff can
+    # choose a different first pivot after an equivalent JIT transformation.
+    amplitude = float(np.exp(np.asarray(params["log_amplitude"])))
+    np.fill_diagonal(K, amplitude)
     residual = np.diag(K).copy()
     L = np.zeros((len(candidates), count))
     selected = []
     for j in range(count):
         residual[selected] = -np.inf
-        i = int(np.argmax(residual))
+        tolerance = 8 * np.finfo(np.float32).eps * amplitude
+        i = int(np.flatnonzero(residual >= np.max(residual) - tolerance)[0])
         selected.append(i)
         v = max(residual[i], 1e-12)
         L[:, j] = (K[:, i] - L[:, :j] @ L[i, :j]) / np.sqrt(v)
         residual -= L[:, j] ** 2
     return candidates[jnp.array(selected)]
+
+
+# q(u), locations and accumulated statistics are fixed during the M-step.
+# Pass them as dynamic arguments so changing the posterior does not rebuild JIT.
+def negative_elbo(params, bx, by, z, mean, covariance, lengths, noise_std, data_count):
+    K = attentive_kernel(params, z, z, lengths)
+    Kxz = attentive_kernel(params, bx, z, lengths)
+    A = chol_solve(K, Kxz.T).T
+    mu = A @ jax.lax.stop_gradient(mean)
+    S = jax.lax.stop_gradient(covariance)
+    var = jnp.exp(params["log_amplitude"]) - jnp.sum(A * Kxz, axis=1) + jnp.sum((A @ S) * A, axis=1)
+    ll = -0.5 * jnp.sum((by - mu) ** 2 + var[:, None]) / noise_std**2
+    ll *= data_count / len(bx)
+    L = jnp.linalg.cholesky(K + 1e-6 * jnp.eye(len(z)))
+    LS = jnp.linalg.cholesky(S + 1e-6 * jnp.eye(len(z)))
+    kl = 0.5 * (
+        2 * jnp.trace(chol_solve(K, S))
+        + jnp.sum(mean * chol_solve(K, mean))
+        - 2 * len(z)
+        + 4 * jnp.sum(jnp.log(jnp.diag(L)) - jnp.log(jnp.diag(LS)))
+    )
+    return (-ll + kl) / data_count
+
+
+negative_elbo_gradient = jax.jit(jax.value_and_grad(negative_elbo))
 
 
 class POAM:
@@ -131,38 +162,24 @@ class POAM:
         self.data_x = jnp.concatenate((self.data_x, x))
         self.data_y = jnp.concatenate((self.data_y, y))
 
-        # Variational EM M-step: q(u), locations and accumulated statistics fixed.
-        def negative_elbo(params, bx, by):
-            K = attentive_kernel(params, z, z, self.lengths)
-            Kxz = attentive_kernel(params, bx, z, self.lengths)
-            A = chol_solve(K, Kxz.T).T
-            mu = A @ jax.lax.stop_gradient(self.mean)
-            S = jax.lax.stop_gradient(self.covariance)
-            var = (
-                jnp.exp(params["log_amplitude"])
-                - jnp.sum(A * Kxz, axis=1)
-                + jnp.sum((A @ S) * A, axis=1)
-            )
-            ll = -0.5 * jnp.sum((by - mu) ** 2 + var[:, None]) / self.noise_std**2
-            ll *= len(self.data_x) / len(bx)
-            L = jnp.linalg.cholesky(K + 1e-6 * jnp.eye(len(z)))
-            LS = jnp.linalg.cholesky(S + 1e-6 * jnp.eye(len(z)))
-            kl = 0.5 * (
-                2 * jnp.trace(chol_solve(K, S))
-                + jnp.sum(self.mean * chol_solve(K, self.mean))
-                - 2 * len(z)
-                + 4 * jnp.sum(jnp.log(jnp.diag(L)) - jnp.log(jnp.diag(LS)))
-            )
-            return (-ll + kl) / len(self.data_x)
-
-        grad = jax.jit(jax.value_and_grad(negative_elbo))
+        # Same variational EM objective; reusable compiled gradient.
         losses = []
         m, v = self.adam_m, self.adam_v
         for i in range(train_steps):
             self.adam_step += 1
             key, k = jax.random.split(key)
             idx = jax.random.randint(k, (min(batch_size, len(self.data_x)),), 0, len(self.data_x))
-            loss, g = grad(self.parameters, self.data_x[idx], self.data_y[idx])
+            loss, g = negative_elbo_gradient(
+                self.parameters,
+                self.data_x[idx],
+                self.data_y[idx],
+                z,
+                self.mean,
+                self.covariance,
+                self.lengths,
+                jnp.array(self.noise_std),
+                jnp.array(len(self.data_x), dtype=jnp.float32),
+            )
             losses.append(float(loss))
             m = jax.tree.map(lambda a, b: 0.9 * a + 0.1 * b, m, g)
             v = jax.tree.map(lambda a, b: 0.999 * a + 0.001 * b * b, v, g)

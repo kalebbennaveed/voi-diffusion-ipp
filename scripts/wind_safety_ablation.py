@@ -55,7 +55,7 @@ def replay_rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, wind
         waypoint, eps = inputs
         nominal = waypoint_controller(x, waypoint, belief, cfg)
         control, info = filter_control(x, nominal, filter_belief, filter_fields, env, cfg)
-        xn = step(x, control, physical_wind, cfg.dt)
+        xn = step(x, control, physical_wind, cfg.dt, cfg.linear_drag)
         qn = clarity.step(
             q,
             x[:2],
@@ -68,7 +68,7 @@ def replay_rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, wind
         )
         cost = 0.5 * cfg.dt * (clarity.deficit(q, env.targets) + clarity.deficit(qn, env.targets))
         observation = world.at(xn[:2])[0] + belief.noise_std * eps
-        mids = jax.vmap(lambda t: step(x, control, physical_wind, t))(
+        mids = jax.vmap(lambda t: step(x, control, physical_wind, t, cfg.linear_drag))(
             cfg.dt * jnp.array([0.25, 0.5, 0.75, 1.0])
         )
         clearance = jnp.min(jax.vmap(env.clearance)(mids))
@@ -103,13 +103,13 @@ def replay_rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, wind
     )
 
 
-def dense_clearance(states, controls, truth, env, dt, subdivisions=32):
+def dense_clearance(states, controls, truth, env, dt, subdivisions=32, linear_drag=0.0):
     """Independently integrate each held control to resolve near-grazing contact."""
     wind = lambda p: truth.at(p)[0]
 
     def segment(x, u):
         def tick(x, _):
-            xn = step(x, u, wind, dt / subdivisions)
+            xn = step(x, u, wind, dt / subdivisions, linear_drag)
             return xn, env.clearance(xn)
 
         return jax.lax.scan(tick, x, None, length=subdivisions)
@@ -188,9 +188,9 @@ def run_arm(data, cfg, wind_aware, seed=None):
             [getattr(results[0], name)[:1]] + [getattr(r, name)[1:] for r in results]
         )
     deficit = np.maximum(np.asarray(env.targets)[None] - mission["q"], 0).mean(axis=1)
-    dense, discrepancy = jax.jit(lambda x, u: dense_clearance(x, u, truth, env, cfg.dt))(
-        jnp.asarray(mission["x"]), jnp.asarray(mission["controls"])
-    )
+    dense, discrepancy = jax.jit(
+        lambda x, u: dense_clearance(x, u, truth, env, cfg.dt, linear_drag=cfg.linear_drag)
+    )(jnp.asarray(mission["x"]), jnp.asarray(mission["controls"]))
     mission["dense_clearance"] = np.asarray(dense)
     collision_steps = np.flatnonzero(mission["dense_clearance"] < 0)
     metrics = {

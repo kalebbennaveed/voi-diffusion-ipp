@@ -1,0 +1,12 @@
+{
+  "status": "declared development physics audit; not a proposed-planner comparison",
+  "dynamics": "p_dot=v; v_dot=u-gamma*v+d(p); isotropic planar drag approximation; d=gamma*w_air when gamma>0",
+  "reason": "The old position-only acceleration disturbance is exactly time-reversible for rest-to-rest transfers, so the same reversed path and control have the same feasibility and duration. A velocity-dependent physical term is needed for the intended sustained directional effect.",
+  "source": "https://arxiv.org/html/1712.02402v3#S3",
+  "source_scope": "Faessler et al. Eq. 2 motivates linear rotor drag, but their full model includes attitude and assumes no wind. Isotropic planar drag relative to local air velocity is an explicitly declared reduction, not their complete helicopter model or flight validation.",
+  "paths": "Middle and two outer smooth paths; same geometric and timing families both directions. Optimize duration only; no route-dependent costs. This oracle diagnostic is not MBD and does not prove a global time optimum.",
+  "declared_sweep": {"drag_per_second": [0.0, 0.6, 1.0], "along_acceleration": [0.0, 1.2, 1.5, 1.8], "cross_acceleration_fraction": 0.2, "transverse_width": 0.35, "longitudinal_width": 1.1, "bypass_offsets": [-1.5, 0.0, 1.5], "duration_range_seconds": [2.0, 30.0], "duration_scan_step": 0.1, "verification_points": 4001},
+  "selection": "Retain every case. A successful physical mechanism requires a middle advantage A-to-B and at least 10 percent faster outer return B-to-A, under identical componentwise actuator bounds of 1.6 and positive physical clearance. Select the weakest nonzero field passing at the lowest tested drag. This chooses physics before seeing proposed-vs-passive outcomes.",
+  "independent_verification": "Reintegrate the algebraically recovered bounded controls under the production dynamics with fine time steps; report trajectory error and minimum clearance. Refining trajectory samples must preserve route ordering.",
+  "not_claimed": ["learning benefit", "RPCBF safety result", "one-second online planning", "helicopter flight validation"]
+}

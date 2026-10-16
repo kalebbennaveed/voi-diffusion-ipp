@@ -68,13 +68,17 @@ def clarity_controller(x, q, belief, env, cfg):
     attractiveness = need / (0.25 + jnp.sum((env.cells - x[:2]) ** 2, axis=1))
     goal = env.cells[jnp.argmax(attractiveness)]
     mean = belief.mean_at(x[:2])[0]
-    return jnp.clip(1.3 * (goal - x[:2]) - 1.8 * x[2:] - mean, -cfg.umax, cfg.umax)
+    return jnp.clip(
+        1.3 * (goal - x[:2]) + (cfg.linear_drag - 1.8) * x[2:] - mean, -cfg.umax, cfg.umax
+    )
 
 
 def waypoint_controller(x, waypoint, belief, cfg):
     """Shared state-feedback policy; only the available wind mean compensates drift."""
     mean = belief.predict(x[:2])[0][0]
-    return jnp.clip(1.2 * (waypoint - x[:2]) - 1.8 * x[2:] - mean, -cfg.umax, cfg.umax)
+    return jnp.clip(
+        1.2 * (waypoint - x[:2]) + (cfg.linear_drag - 1.8) * x[2:] - mean, -cfg.umax, cfg.umax
+    )
 
 
 def rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, feedback=False):
@@ -89,7 +93,7 @@ def rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, feedback=Fa
         elif cfg.control_representation == "waypoint":
             u = waypoint_controller(x, u, belief, cfg)
         safe, info = filter_control(x, u, belief, inner, env, cfg)
-        xn = step(x, safe, wind, cfg.dt)
+        xn = step(x, safe, wind, cfg.dt, cfg.linear_drag)
         qn = clarity.step(
             q,
             x[:2],
@@ -103,7 +107,7 @@ def rollout(x0, q0, controls, belief, inner, world, noise, env, cfg, feedback=Fa
         cost = 0.5 * cfg.dt * (clarity.deficit(q, env.targets) + clarity.deficit(qn, env.targets))
         obs = world.at(xn[:2])[0] + belief.noise_std * eps
         # Sample RK4 trajectory at intermediate times for empirical collision diagnostics.
-        mids = jax.vmap(lambda t: step(x, safe, wind, t))(
+        mids = jax.vmap(lambda t: step(x, safe, wind, t, cfg.linear_drag))(
             cfg.dt * jnp.array([0.25, 0.5, 0.75, 1.0])
         )
         clearance = jnp.min(jax.vmap(env.clearance)(mids))

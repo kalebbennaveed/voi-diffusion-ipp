@@ -104,9 +104,11 @@ def initial_policy(x, q, belief, env, cfg, first_goal=None):
     def toward(x, goal, n):
         def body(x, _):
             u = jnp.clip(
-                1.2 * (goal - x[:2]) - 1.8 * x[2:] - wind(x[:2]), -0.92 * cfg.umax, 0.92 * cfg.umax
+                1.2 * (goal - x[:2]) + (cfg.linear_drag - 1.8) * x[2:] - wind(x[:2]),
+                -0.92 * cfg.umax,
+                0.92 * cfg.umax,
             )
-            return step(x, u, wind, cfg.dt), u
+            return step(x, u, wind, cfg.dt, cfg.linear_drag), u
 
         xf, us = jax.lax.scan(body, x, None, length=n)
         idx = jnp.linspace(0, n - 1, cfg.knots)

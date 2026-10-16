@@ -81,7 +81,9 @@ def mission(cfg, method, seed, out, progress=True, observer=None, checkpoint=Fal
     warm_next = jax.jit(
         lambda previous, x, q, b: next_initial(previous, x, q, b, env, cfg, planning_updates)
     )
-    nominal_step = jax.jit(lambda x, u, b: step(x, u, lambda p: b.mean_at(p)[0], cfg.dt))
+    nominal_step = jax.jit(
+        lambda x, u, b: step(x, u, lambda p: b.mean_at(p)[0], cfg.dt, cfg.linear_drag)
+    )
     initial = jax.jit(lambda x, q, b: initial_policy(x, q, b, env, cfg))(x, q, belief)
     if observer:
         observer("compiling", {"config": cfg, "method": method, "seed": seed})

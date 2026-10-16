@@ -82,3 +82,26 @@ them. This reduces post-learning covariance error from 12–17% for spectral-onl
 paths to 0.22–0.27% in the three survey diagnostics. Dense support is a numerical
 sampling device; it neither replaces POAM inducing inputs nor projects away its
 predictive residual. Inference continues to evaluate the full kernel.
+
+## Optional drag extension for directional wind (October 16, 2026)
+
+The user now requests a directional headwind/tailwind passage. The original
+position-only acceleration disturbance is time-reversible: reversing any
+rest-to-rest trajectory leaves its required acceleration/control unchanged.
+It therefore cannot alone create direction-dependent minimum transfer times.
+
+`dynamics.py` optionally uses `p_dot=v`, `v_dot=u-gamma*v+d(p)`, with
+`d=gamma*w_air` and `gamma>=0`; zero drag preserves the original studies.
+The planar isotropic, air-relative linear drag is a declared model reduction.
+Faessler, Franchi and Scaramuzza, RA-L 2018, Eq. (2),
+https://arxiv.org/html/1712.02402v3#S3, motivates linear rotor drag. Their model
+also includes attitude and assumes no wind; this implementation does not claim
+to reproduce their full dynamics or validate a helicopter. POAM still estimates
+wind-induced acceleration d in m/s², not raw air velocity. Controller compensation,
+backup integration, CBF drift, actual integration, nominal previews and dense
+collision reintegration all include the same gamma.
+
+Independent physics diagnostics in `docs/two_region_physics/` retain restrictive
+timing results, a failed dense-control check and its endpoint repair, and all
+144 flexible-speed optimizations. Only the refined physical route effect should
+inform method development; none of these oracle diagnostics establishes VoI.
