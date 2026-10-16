@@ -18,8 +18,20 @@ monitoring scenarios (vortices, shear, mixed flow). Historical recordings are
 explicitly marked **Legacy**. Never interpret their corridor percentages as
 POAM/full-field results.
 
+[Persistent missions](persistent_monitoring.md) run for 122.4 seconds in three
+additional environments: obstacle islands, staggered channels, and a demand
+mosaic. Their recordings appear as completed pairs, with a progress panel for
+ongoing computation. Playback defaults to 4× for these longer recordings.
+The field selector also includes spatial process noise Qp and distinct sensing
+passes. Click a cell to see both executed clarity histories, its target, and an
+analytic no-sensing decay reference. Final tables count repeated sensing passes
+and restoration of previously lost target clarity. These counts never treat
+continuous hovering as multiple visits.
+
 The default comparison includes a field-layer selector (deficit, clarity, target),
 paired instantaneous and integrated deficit curves, and a shared animation clock.
+Click either field map to inspect one cell's clarity history against its target.
+The Wind estimation button jumps directly to the wind panels.
 Wind panels show each planner's actual full POAM mean with uncertainty or error,
 and a separate physical-wind reference hidden from the planners. RMSE and posterior
 standard-deviation histories change at the real update boundaries. Denoising
@@ -40,8 +52,8 @@ ROI arrival is no longer a headline or scoring criterion.
   by side. Both approaches learn during execution; only the proposed planner
   anticipates learning while choosing current motion. The table separates initial
   and later monitoring cost, clarity deficit, clearance, collisions and allowed
-  barrier slack. Default seed 200 exactly reproduces archived validation states
-  and costs. Pair identities stay consistent when either record is selected.
+  barrier slack. Legacy seed 200 reproduces the archived corridor validation states and costs;
+  it is not a full-field POAM result. Pair identities stay consistent when either record is selected.
 - **Denoising:** inspect either planner from its result card, select a planning
   period and scrub the reverse updates. Gray
   paths are sampled policies, weighted by their actual stochastic objective.
@@ -100,11 +112,11 @@ arrays, with an automated check against the Python mission metric.
 
 ```sh
 JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.viz.demo_data \
-  --config configs/recourse_dev.yaml --seed 102 --method proposed \
+  --config configs/field_poam.yaml --seed 300 --method proposed \
   --output results/demo/reproduced
 uv run python scripts/bundle_demo.py \
-  results/demo/reproduced/localized_corridor_proposed_102.demo.json \
-  --label 'Reproduced proposed · seed 102' --group reproduced-two-stage
+  results/demo/reproduced/field_vortices_proposed_300.demo.json \
+  --label 'Full POAM reproduced · seed 300' --group reproduced-full-poam
 ```
 
 Generate the comparator with `--method current_belief` and use the same group
@@ -120,8 +132,9 @@ No reference solver, frontend code, 3D asset, external module or dependency was
 copied or imported. This implementation uses a restrained two-dimensional
 scientific view appropriate to the double-integrator model.
 
-The bundled scenarios are controlled examples with a known spatial wind shape.
-They are not a general robot simulator or a proof of safety. Live experiments
+The full-field scenarios use held-out stationary vortex/jet wind realizations whose
+shape and coefficients are hidden from POAM and the planner. They are controlled
+development examples, not a general robot simulator or a proof of safety. Live experiments
 are offline computations on the M3; changing controls creates a new experimental
 result, not an independently validated method claim. The interface retains losses,
 allowed barrier slack and optimizer failures rather than hiding them. A positive

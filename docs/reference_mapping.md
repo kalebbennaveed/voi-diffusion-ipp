@@ -26,7 +26,7 @@ MBD is Apache-2.0; vg-dip and its POAM vendor carry MIT licenses. Copies are ret
 
 Passing software tests alone does not establish a useful VoI effect or empirical safety.
 
-## POAM adapter added after prototype validation
+## Historical POAM adapter after prototype validation (superseded below)
 
 Primary source: Chen, Liu and Khardon, RSS 2024, https://www.roboticsproceedings.org/rss20/p019.pdf,
 Sec. III-B attentive kernel; Sec. IV-B pivoted Cholesky inducing selection;
@@ -35,9 +35,10 @@ Eq. (10) variational EM with minibatch kernel learning. JAX implementation is in
 `wind/poam.py`. Supplied vendor's `GPyTorchModel.update_variational` was also
 inspected. No Torch dependency is imported. Fixed observation noise is an explicit
 restriction; kernel NN and amplitude adapt between planning calls. Full sparse
-posterior retains conditional residual covariance. Finite-anchor planning
-snapshots omit the residual between anchors and log the variance discrepancy.
-Do not describe the default feature-GP missions as POAM missions.
+posterior retained conditional residual covariance, but its historical finite-anchor
+planning snapshots omitted the residual between anchors. That projection has now
+been removed. Historical feature-GP missions must not be described as POAM missions;
+the current default uses the full-field POAM profile described below.
 # Interactive demo reference
 
 The added read-only `mbd-playground` checkout was inspected via its README,

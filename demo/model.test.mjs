@@ -194,3 +194,19 @@ test('the comparison clock stops exactly or loops after a final-frame hold', () 
     playing: true
   });
 });
+
+test('persistent metrics distinguish dwelling from revisiting and recovering lost clarity', async () => {
+  const {persistenceMetrics} = await import('./model.js');
+  const data = {
+    config:{dt:1,sensor_sigma:.5}, environment:{cells:[[0,0]],targets:[.5]},
+    mission:{x:[[0,0],[0,0],[0,0],[5,0],[5,0],[5,0],[0,0],[0,0]],
+      q:[[.7],[.6],[.4],[.4],[.4],[.4],[.6],[.7]]}
+  };
+  const p=persistenceMetrics(data);
+  assert.deepEqual(p.visits,[2]);
+  assert.equal(p.revisitedCells,1);
+  assert.equal(p.recoveredCells,1);
+  assert.equal(p.medianRevisitSeconds,6);
+  data.mission.x=data.mission.x.map(()=>[0,0]);
+  assert.deepEqual(persistenceMetrics(data).visits,[1]);
+});

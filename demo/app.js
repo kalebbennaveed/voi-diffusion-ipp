@@ -8,6 +8,7 @@ import {
   methodLabel,
   comparisonPair,
   missionSummary,
+  persistenceMetrics,
   playbackFrame,
   advanceComparison
 } from './model.js';
@@ -27,6 +28,7 @@ const state = {
   accumulator: 0,
   last: 0,
   hover: -1,
+  cell: null,
   loading: false,
   cost: []
 };
@@ -39,6 +41,12 @@ const colors = {
   red: '#bb514c'
 };
 const summaryCache = new WeakMap();
+const persistenceCache = new WeakMap();
+
+function persistence(data) {
+  if (!persistenceCache.has(data)) persistenceCache.set(data, persistenceMetrics(data));
+  return persistenceCache.get(data);
+}
 
 function summary(data) {
   if (!summaryCache.has(data)) summaryCache.set(data, missionSummary(data));
@@ -88,15 +96,18 @@ function path(g, points, xy, color, width = 1, dash = []) {
 }
 
 function arrow(g, a, b, color, width = 1) {
+  const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  if (length < .4) return;
+  const head = Math.min(4, length * .45);
   g.strokeStyle = color;
   g.lineWidth = width;
   g.beginPath();
   g.moveTo(...a);
   g.lineTo(...b);
   const t = Math.atan2(b[1] - a[1], b[0] - a[0]);
-  g.moveTo(b[0] - 4 * Math.cos(t - .5), b[1] - 4 * Math.sin(t - .5));
+  g.moveTo(b[0] - head * Math.cos(t - .5), b[1] - head * Math.sin(t - .5));
   g.lineTo(...b);
-  g.lineTo(b[0] - 4 * Math.cos(t + .5), b[1] - 4 * Math.sin(t + .5));
+  g.lineTo(b[0] - head * Math.cos(t + .5), b[1] - head * Math.sin(t + .5));
   g.stroke();
 }
 
@@ -190,11 +201,23 @@ function drawMap() {
   e.cells.forEach((c, i) => {
     const a = xy(c),
       v = clamp(q[i] / e.targets[i], 0, 1);
+    const cw = d.config.whole_field ? scale * (b[1][0] - b[0][0]) / d.config.grid_nx : 12;
+    const ch = d.config.whole_field ? scale * (b[1][1] - b[0][1]) / d.config.grid_ny : 12;
     g.fillStyle =
       `rgb(${Math.round(228-202*v)},${Math.round(235-96*v)},${Math.round(233-97*v)})`;
-    g.fillRect(a[0] - 6, a[1] - 6, 12, 12);
-    g.strokeStyle = '#ffffffee';
-    g.strokeRect(a[0] - 6, a[1] - 6, 12, 12);
+    g.fillRect(a[0] - cw / 2, a[1] - ch / 2, cw, ch);
+    if (!d.config.whole_field) {
+      g.strokeStyle = '#ffffffee';
+      g.strokeRect(a[0] - cw / 2, a[1] - ch / 2, cw, ch);
+    }
+  });
+  if (d.config.whole_field) e.obstacles.forEach(o => {
+    g.beginPath();
+    g.arc(...xy(o), o[2] * scale, 0, Math.PI * 2);
+    g.fillStyle = '#d9dfe3';
+    g.fill();
+    g.strokeStyle = '#a6b3bd';
+    g.stroke();
   });
   if ($('compare').checked && state.comparison) {
     const c = state.comparison;
@@ -464,11 +487,12 @@ function drawResultMap(id, d, color, seconds = null) {
     g.stroke();
   });
   const layer = $('field-layer').value;
+  const passes = layer === 'visits' ? persistence(d).passHistory[frame.index] : null;
   e.cells.forEach((c, i) => {
     const a = xy(c),
-      value = layer === 'clarity' ? frame.q[i] : layer === 'target' ? e.targets[i] : Math.max(e
+      value = layer === 'clarity' ? frame.q[i] : layer === 'target' ? e.targets[i] : layer === 'process' ? (e.process_noise?.[i] ?? d.config.clarity_decay) : layer === 'visits' ? passes[i] : Math.max(e
         .targets[i] - frame.q[i], 0);
-    const v = clamp(value / (layer === 'deficit' ? .8 : 1), 0, 1);
+    const v = clamp(value / (layer === 'deficit' ? .8 : layer === 'process' ? .1 : layer === 'visits' ? 4 : 1), 0, 1);
     const cw = d.config.whole_field ? scale * (b[1][0] - b[0][0]) / d.config.grid_nx : 7;
     const ch = d.config.whole_field ? scale * (b[1][1] - b[0][1]) / d.config.grid_ny : 7;
     g.fillStyle = heatColor(v);
@@ -534,6 +558,15 @@ function drawResultMap(id, d, color, seconds = null) {
   label(g, moving ? `t = ${Math.min(seconds, summary(d).duration).toFixed(2)} s` : d.config
     .measurements ? '○ belief update     ■ final position' : '■ final position', w /
     2, h - 5, '#6e7e88', 9, 'center');
+  if (state.cell !== null && e.cells[state.cell]) {
+    const selected = xy(e.cells[state.cell]);
+    g.strokeStyle = '#fff';
+    g.lineWidth = 4;
+    g.strokeRect(selected[0] - 5, selected[1] - 5, 10, 10);
+    g.strokeStyle = '#223f50';
+    g.lineWidth = 1.4;
+    g.strokeRect(selected[0] - 5, selected[1] - 5, 10, 10);
+  }
 }
 
 function renderComparison() {
@@ -639,6 +672,15 @@ function renderResults() {
     ['Integrated barrier slack', s => s.integratedSlack.toFixed(4)],
     ['Physical collision', s => s.collision ? 'Observed' : 'None observed']
   ];
+  if (a.config.whole_field) {
+    sa.persistence = persistence(a);
+    if (sb) sb.persistence = persistence(b);
+    rows.splice(4, 0,
+      ['Cells with repeated sensing passes', s => `${s.persistence.revisitedCells} / ${a.environment.cells.length}`],
+      ['Cells recovered after losing target clarity', s => `${s.persistence.recoveredCells} / ${a.environment.cells.length}`],
+      ['Median interval between sensing passes', s => s.persistence.medianRevisitSeconds === null ? 'No repeated passes' : `${s.persistence.medianRevisitSeconds.toFixed(1)} s`]
+    );
+  }
   $('result-rows').replaceChildren(...rows.map(([title, format]) => {
     const row = document.createElement('tr');
     for (const [i, value] of [title, format(sa), sb ? format(sb) : '—'].entries()) {
@@ -713,7 +755,7 @@ function update() {
     `${d.config.scenario.replaceAll('_', ' ')} · ${d.environment.cells.length} cells` :
     'Legacy ROI experiment · feature GP';
   $('variant-tag').textContent = d.metrics.method === 'current_belief' ? 'No anticipated learning' :
-    d.config.future_updates ? 'Repeated belief updates' : 'Two-stage';
+    d.config.future_updates && d.config.future_steps > d.config.stage_steps ? 'Repeated belief updates' : 'Two-stage';
   $('provenance').textContent =
     `Seed ${d.metrics.seed} · ${d.metrics.method} · JAX ${d.metrics.jax_version} · ${d.metrics.mean_plan_seconds.toFixed(2)} s / plan · ${d.metrics.objective_evaluations_per_plan} objective evaluations`;
   if (isCompare) {
@@ -856,8 +898,11 @@ async function replay(id) {
     const data = await response.json();
     state.record = record;
     state.data = data;
+    diagnosticFrame = "";
+    state.cell = null;
     state.mode = 'comparison';
     state.comparisonClock = 0;
+    $('comparison-speed').value = (data.mission.x.length-1)*data.config.dt >= 60 ? '4' : '0.5';
     state.comparison = null;
     state.period = 0;
     state.level = 0;
@@ -1219,7 +1264,7 @@ function drawWindMap(id, d, time, truth = false) {
       .3, p[1] + vectors[i][1] * .3
     ]), '#1c323e', .8);
   });
-  if (!truth) d.mission.x.slice(1, Math.floor(time / d.config.dt) + 1).forEach(p => {
+  if (!truth && d.config.measurements) d.mission.x.slice(1, Math.floor(time / d.config.dt) + 1).forEach(p => {
     const a = xy(p);
     g.beginPath();
     g.arc(...a, 1.3, 0, 7);
@@ -1242,12 +1287,13 @@ function drawFieldDiagnostics(a, b, time) {
   if (diagnosticFrame === key) return;
   diagnosticFrame = key;
   $('field-key').textContent = $('field-layer').value === 'deficit' ?
-    'Light: 0 · Dark: 0.8 deficit · lower is better' : 'Light: 0 · Dark: 1 clarity';
+    'Light: 0 · Dark: 0.8 deficit · lower is better' : $('field-layer').value === 'process' ? 'Light: 0 · Dark: 0.1 process noise Qₚ' : $('field-layer').value === 'visits' ? 'Light: 0 · Dark: ≥4 distinct sensing passes' : 'Light: 0 · Dark: 1 clarity';
   pairedCurve('field-deficit-chart', a, b, d => d.mission.q.map((q, i) => [i * d.config.dt, deficit(
     q, d.environment.targets)]), time);
   pairedCurve('field-cost-chart', a, b, d => summary(d).costHistory.map((v, i) => [i * d.config.dt,
     v
   ]), time);
+  drawCellDiagnostic(a, b, time);
   $('wind-map-a').setAttribute('aria-label',
     `Proposed ${a.config.wind_backend === 'poam' ? 'POAM' : 'legacy GP'} wind estimate and uncertainty`
     );
@@ -1297,6 +1343,17 @@ function drawPairedDenoising() {
       scale = Math.min((w - 24) / 4.8, (h - 24) / 3.7);
     const xy = v => [(w - 4.8 * scale) / 2 + (v[0] - bounds[0][0]) * scale, 12 + (bounds[1][1] - v[
       1]) * scale];
+    if (d.config.whole_field) {
+      const q = d.mission.q[p.period * d.config.stage_steps];
+      const cw = scale * 4.8 / d.config.grid_nx, ch = scale * 3.7 / d.config.grid_ny;
+      g.globalAlpha = .4;
+      d.environment.cells.forEach((cell, i) => {
+        const a = xy(cell);
+        g.fillStyle = heatColor(Math.max(d.environment.targets[i] - q[i], 0) / .8);
+        g.fillRect(a[0]-cw/2, a[1]-ch/2, cw+.4, ch+.4);
+      });
+      g.globalAlpha = 1;
+    }
     d.environment.obstacles.forEach(o => {
       g.beginPath();
       g.arc(...xy(o), o[2] * scale, 0, 7);
@@ -1309,7 +1366,7 @@ function drawPairedDenoising() {
     path(g, l === p.candidate_paths.length - 1 ? p.selected_path : p.incumbent_paths[l], xy, color,
       2.5);
     $(`denoising-note-${side}`).textContent =
-      `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · bold: best evaluated; purple: denoised mean`;
+      `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · bold: best evaluated; purple: denoised mean${d.config.whole_field ? '; background: current clarity deficit' : ''}`;
   }
 }
 $('field-layer').onchange = () => {
@@ -1320,3 +1377,71 @@ $('wind-layer').onchange = () => {
   diagnosticFrame = '';
   update();
 };
+
+
+function drawCellDiagnostic(a, b, time) {
+  const i = state.cell;
+  const axes = chartAxes('cell-clarity-chart', summary(a).duration, 1, 'seconds');
+  if (i === null || !a.environment.cells[i]) {
+    label(axes.g, 'Click a cell on either field map', axes.w / 2, 65, '#637681', 12, 'center');
+    $('cell-description').textContent = 'Click either field map to see clarity rise with sensing and decay between visits.';
+    return;
+  }
+  const p = a.environment.cells[i], target = a.environment.targets[i];
+  const process = a.environment.process_noise?.[i] ?? a.config.clarity_decay;
+  const q0 = a.mission.q[0][i];
+  path(axes.g, a.mission.q.map((_,j)=>[j*a.config.dt,q0/(1+process*q0*j*a.config.dt)]), axes.xy, '#99a4ac', 1.2, [2,3]);
+  for (const [d, color] of [[a, colors.teal], [b, colors.amber]]) {
+    if (d) path(axes.g, d.mission.q.map((q, j) => [j*d.config.dt, q[i]]), axes.xy, color, 2);
+  }
+  path(axes.g, [[0, target], [summary(a).duration, target]], axes.xy, '#637681', 1, [4, 4]);
+  path(axes.g, [[time, 0], [time, 1]], axes.xy, '#536572', 1, [3, 3]);
+  const qa = playbackFrame(a, time).q[i], qb = b ? playbackFrame(b, time).q[i] : null;
+  $('cell-description').textContent = `Cell ${i+1} · (${p[0].toFixed(2)}, ${p[1].toFixed(2)}) m · Qₚ ${process.toFixed(3)} · target ${target.toFixed(3)} · clarity now: proposed ${qa.toFixed(3)}${qb === null ? '' : ', comparator '+qb.toFixed(3)}`;
+}
+
+for (const id of ['result-map-a', 'result-map-b']) $(id).addEventListener('click', event => {
+  if (!state.data) return;
+  const [d] = comparisonPair(state.data, state.comparison);
+  const rect = $(id).getBoundingClientRect(), bounds = d.environment.bounds;
+  const scale = Math.min((rect.width-44)/(bounds[1][0]-bounds[0][0]), (rect.height-44)/(bounds[1][1]-bounds[0][1]));
+  const left = (rect.width-scale*(bounds[1][0]-bounds[0][0]))/2;
+  const top = (rect.height-scale*(bounds[1][1]-bounds[0][1]))/2;
+  const point = [(event.clientX-rect.left-left)/scale+bounds[0][0], bounds[1][1]-(event.clientY-rect.top-top)/scale];
+  if (point.some((v,k) => v < bounds[0][k] || v > bounds[1][k])) return;
+  let best = Infinity;
+  d.environment.cells.forEach((p, i) => {
+    const distance = (p[0]-point[0])**2+(p[1]-point[1])**2;
+    if (distance < best) { best = distance; state.cell = i; }
+  });
+  diagnosticFrame = '';
+  update();
+});
+$('show-wind').onclick = () => $('wind-diagnostics').scrollIntoView({behavior:'smooth', block:'start'});
+
+async function persistentProgress() {
+  try {
+    const response = await fetch('/api/persistent-status');
+    if (!response.ok) return;
+    const progress = await response.json();
+    const jobs = progress.jobs || [];
+    $('persistent-progress').classList.toggle('hidden', !jobs.length);
+    if (jobs.length) {
+      const stale = Date.now()/1000 - progress.updated_at > 120;
+      const complete = jobs.filter(j => j.status === 'complete').length;
+      const running = jobs.filter(j => j.status === 'running').map(j =>
+        `${j.scenario.replace('persistent_','')} / ${j.method === 'proposed' ? 'proposed' : 'no anticipated learning'}: ${j.completed_periods || 0}/${j.total_periods} periods`);
+      const failed = jobs.filter(j => j.status === 'failed').length;
+      $('persistent-progress-text').textContent = `${complete}/${jobs.length} missions complete. ${running.join(' · ')}${failed ? ` · ${failed} failed; logs retained.` : ''}${stale && running.length ? ' · Progress has not updated recently; execution may be paused.' : ''} Completed pairs appear in Recorded run. These are offline CPU experiments.`;
+    }
+    setTimeout(persistentProgress, 10000);
+  } catch {
+    setTimeout(persistentProgress, 10000);
+  }
+}
+$('refresh-recordings').onclick = async () => {
+  await catalog();
+  const newest = state.records.find(r => r.id.startsWith('persistent_')) || state.records[0];
+  if (newest) await replay(newest.id);
+};
+persistentProgress();

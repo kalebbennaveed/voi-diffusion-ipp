@@ -1,4 +1,5 @@
 from dataclasses import replace
+from itertools import pairwise
 
 import jax.numpy as jnp
 import numpy as np
@@ -61,3 +62,49 @@ def test_clarity_rk4_matches_refined_whole_field_integration():
             fine, a, b, env.cells, cfg.sensor_sigma, cfg.sensor_R, cfg.clarity_decay, cfg.dt / 20
         )
     np.testing.assert_allclose(coarse, fine, atol=5e-4)
+
+
+def test_whole_field_clarity_matches_independent_kalman_covariance_solution():
+    """Check the QoI covariance model, not another copy of the clarity integrator."""
+    import jax
+    from scipy.integrate import solve_ivp
+
+    cfg = load_config("configs/field_poam.yaml")
+    env, _, x, q0 = make_scenario(cfg)
+    cells = np.asarray(env.cells, dtype=float)
+    start, end = np.asarray(x[:2], dtype=float), np.array([0.4, 1.1])
+    duration = cfg.dt * 30
+    times = np.linspace(0, duration, 31)
+
+    def covariance_rate(t, variance):
+        position = start + (end - start) * t / duration
+        squared_sensing = np.exp(-np.sum((cells - position) ** 2, axis=1) / cfg.sensor_sigma**2)
+        return cfg.clarity_decay - squared_sensing * variance**2 / cfg.sensor_R
+
+    reference = solve_ivp(
+        covariance_rate,
+        (0, duration),
+        1 / np.asarray(q0, dtype=float) - 1,
+        t_eval=times,
+        rtol=1e-10,
+        atol=1e-11,
+    )
+    assert reference.success
+    expected = 1 / (1 + reference.y.T)
+
+    integrate = jax.jit(
+        lambda q, a, b: step(
+            q, a, b, env.cells, cfg.sensor_sigma, cfg.sensor_R, cfg.clarity_decay, cfg.dt
+        )
+    )
+    q = q0
+    history = [q]
+    for a, b in pairwise(times):
+        q = integrate(q, start + (end - start) * a / duration, start + (end - start) * b / duration)
+        history.append(q)
+    actual = np.asarray(history)
+    np.testing.assert_allclose(actual, expected, atol=7e-4)
+    targets = np.asarray(env.targets)
+    actual_cost = np.trapezoid(np.maximum(targets - actual, 0).mean(1), times)
+    expected_cost = np.trapezoid(np.maximum(targets - expected, 0).mean(1), times)
+    assert abs(actual_cost - expected_cost) < 1e-4

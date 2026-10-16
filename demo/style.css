@@ -1304,3 +1304,18 @@ main {
     padding: 12px;
   }
 }
+
+.field-explanation { margin: 12px 18px 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+
+.cell-diagnostic{padding:12px 20px 16px;border-top:1px solid var(--line)}
+.cell-diagnostic h3{font-size:14px;margin:4px 0 8px}
+.cell-diagnostic p{font-size:12px;color:#637681}
+.cell-diagnostic canvas{width:100%;height:160px}
+#result-map-a,#result-map-b{cursor:crosshair}
+
+.record-toolbar{display:grid;grid-template-columns:minmax(240px,1fr) minmax(240px,1fr);gap:14px;align-items:center;margin:0 0 14px}
+.record-toolbar .field{margin:0;font-size:11px}
+.record-toolbar .comparison-summary{margin:0;padding:10px 13px;font-size:11px}
+@media(max-width:560px){.record-toolbar{grid-template-columns:1fr;gap:8px}}
+.persistent-progress { margin: 0 0 18px; padding: 14px 18px; border: 1px solid #c9d8da; border-radius: 8px; background: #f2f7f7; color: #304d58; font-size: 13px; line-height: 1.6; }
+.persistent-progress p { margin: 5px 0; }

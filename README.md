@@ -7,27 +7,32 @@ The previous ROI/finite-feature experiments are historical controls; their perce
 improvements do not establish performance for the new model. The local demo is
 available at `http://127.0.0.1:8765/` while `demo_server` is running.
 
+The [persistent-monitoring configurations](docs/persistent_monitoring.md) extend
+execution to **122.4 seconds** across obstacle islands, staggered channels and
+a distributed demand mosaic. They include spatial QoI process noise, repeated
+visits, clarity recovery and recoverable full-POAM experiment recordings.
+Run `JAX_PLATFORMS=cpu uv run python scripts/run_persistent_suite.py --workers 3`;
+completed paired recordings appear in the demo automatically. These offline CPU
+runs can take hours; the progress panel distinguishes them from completed results.
+
 A self-contained JAX research implementation of causal two-stage value-of-information
 planning for persistent monitoring under a fixed unknown spatial wind field.
 It includes paper-equation model-based diffusion (MBD), sampled spline RPCBF with
-a constrained QP, correlated GP inference, an optional POAM adapter, baselines,
+a constrained QP, online POAM wind inference, baselines,
 paired experiments, plots, and offline HTML replays.
 
-**Research status:** the software and component mechanisms are tested on the M3
-CPU. The original formulation did not establish a reliable mission-level advantage.
-A revised feedback/recourse variant reduced mean cost by 20.9% on its first ten
-validation seeds. Repeated future belief updates subsequently reduced mean cost
-by **28.1% versus frozen future belief** and **6.6% versus the two-stage variant**
-on ten new paired seeds. No collisions occurred, but repeated updates required
-9 allowed barrier-relaxation steps across 800 steps, versus 1 and 2 respectively.
-Safety is a soft constraint: slack is measured separately from physical collisions
-and optimizer failures. See the [precise policy and current research stage](docs/soft_constraint_interpretation.md).
-Read the [latest findings](docs/multistage_findings.md),
-[earlier recourse findings](docs/recourse_findings.md),
-[research workflow](docs/research_workflow.md), and
-[original measured findings](docs/experimental_findings.md) for the scope of this
-evidence. Generality and diffusion superiority remain unestablished. Sampled RPCBF is approximate;
-no formal safety or optimality guarantee is claimed.
+**Current research status:** whole-field monitoring and full POAM inference are
+implemented and component-tested on the M3 CPU. The new experiments evaluate
+three predeclared paired development cases with distributed clarity demand,
+independent physical wind, and soft RPCBF constraints. They are not a statistical
+superiority study. Diffusion's advantage over matched-budget CEM/MPPI and broad
+mission-level superiority still require validation.
+
+Earlier ROI/finite-feature experiments reported gains, including 28.1% against
+frozen future belief, but those numbers apply **only to the historical model**.
+They are archived in [multistage findings](docs/multistage_findings.md),
+[recourse findings](docs/recourse_findings.md), and
+[original findings](docs/experimental_findings.md).
 
 ## Interactive research demo
 
@@ -37,15 +42,17 @@ JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.viz.demo_server --port 8765
 
 Open <http://127.0.0.1:8765>. **Compare & play** starts an animated, looping
 side-by-side replay immediately. Pause, restart, adjust speed or scrub the shared
-timeline above the moving robots. **Jump to first ROI arrival** reveals which
-planner gets there first. **Final result** shows completed trajectories, costs,
-arrival times, clarity and allowed safety slack.
+timeline above the moving robots. **Jump to largest cost gap** locates the largest
+accumulated monitoring-cost difference. **Final result** shows completed trajectories,
+whole-field clarity, costs and allowed safety slack. Switch between deficit, clarity
+and target layers, or click any cell to inspect its clarity history. The wind section
+shows full POAM estimates, uncertainty, estimation error and the hidden physical field.
 Both methods learn during execution; only the proposed method anticipates learning
 while choosing current motion. Inspect either planner's actual diffusion proposals,
 weights, score updates and selected trajectories, then play the executed mission with
-clarity, wind belief, safety diagnostics and a paired comparator. The included
-ten recordings cover useful learning, a cost regression, repeated updates,
-QP relaxation events, and a no-measurement control.
+clarity, wind belief, safety diagnostics and a paired comparator. Full-field POAM
+recordings are listed first. Ten legacy recordings remain explicitly labeled for
+historical reproduction, including regressions and a no-measurement control.
 The interface can launch new JAX runs with different seeds and settings. It has
 no frontend dependencies or external assets. See [demo instructions and
 provenance](docs/interactive_demo.md). The original MBD playground was used only
@@ -62,8 +69,9 @@ export JAX_PLATFORMS=cpu
 uv sync --frozen
 uv run python scripts/check_environment.py
 uv run pytest -q
-uv run python -m voi_diffusion_ipp.experiments.run --config configs/smoke.yaml
-uv run python -m voi_diffusion_ipp.viz.report results/runs
+# Full-model validation missions are offline computations, taking tens of minutes.
+uv run python scripts/run_field_suite.py
+uv run python scripts/report_field_poam.py
 ```
 
 `uv.toml` keeps the UV package cache local. The Python pin is native ARM64 3.11;
@@ -78,6 +86,15 @@ See [backend evidence](docs/backend_report.md) and [Linux/CUDA portability](docs
 CUDA is not installed on this Mac. Keep plugin environments separate from the CPU lock.
 
 ## Experiments
+
+Use `scripts/run_field_suite.py` for the current three whole-field paired cases;
+`--scenario field_shear` (or `field_vortices`, `field_mixed`) restricts the run.
+Use `scripts/validate_full_poam.py` for the independent estimator survey and
+posterior-sampler covariance checks. `scripts/report_field_poam.py` validates
+recorded costs and provenance before bundling the interactive replay.
+
+The commands below reproduce the **legacy ROI/finite-feature experiments**;
+they are separate from the current full-field model.
 
 ```sh
 # Small paired suite: 3 scenarios, 3 physical-field seeds, all primary baselines.

@@ -1,0 +1,8 @@
+{
+  "results/field_poam/recordings/field_vortices/field_vortices_proposed_300.json": "7c7bbf9607dc092fc5c18a79c2358d77d4637cad183d767fe7b79a57413f3275",
+  "results/field_poam/recordings/field_vortices/field_vortices_proposed_300.npz": "7b8714e75ebd25384e6697c751de425c5bf0505ba9361cf04a81d3e92d558f07",
+  "results/field_poam/recordings/field_vortices/field_vortices_proposed_300.demo.json": "07bd0989f0cbff5f73529106f1a9067dc1d1efdd559a53bc9ec4479525215df4",
+  "results/field_poam/recordings/field_vortices/field_vortices_current_belief_300.json": "b7cf77ab66a55813da48a5bc317f01f338dbbbca920a64da6ea2d5fba39f223a",
+  "results/field_poam/recordings/field_vortices/field_vortices_current_belief_300.npz": "9c978df338ea58eb8473ce0a6d8a6f442cdc6283b88824088aad6950661abb7c",
+  "results/field_poam/recordings/field_vortices/field_vortices_current_belief_300.demo.json": "2db8bd18d9d66136fb6caadce040d5b80723e0ce11512821c82c56c77ec02ac8"
+}

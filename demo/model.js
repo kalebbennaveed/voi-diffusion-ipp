@@ -88,3 +88,47 @@ export function advanceComparison(clock, elapsed, speed, duration, loop) {
     playing: next < duration
   };
 }
+
+// Persistent monitoring diagnostics from executed states, independent of ROI labels.
+// A sensing pass has C^2 >= 0.25 for at least two samples. Gaps < 3 s stay one pass.
+export function persistenceMetrics(data) {
+  const {mission:m, config:c, environment:e} = data;
+  const visits = [], recoveries = [], intervals = [];
+  const passHistory = Array.from({length:m.x.length},()=>new Uint8Array(e.cells.length));
+  e.cells.forEach((cell, k) => {
+    let count = 0, lastNear = -Infinity, run = 0, eligible = false, lastPass = null;
+    let met = m.q[0][k] >= e.targets[k], lossStart = null, recovered = 0;
+    m.x.forEach((x, i) => {
+      const near = Math.exp(-((x[0]-cell[0])**2+(x[1]-cell[1])**2)/c.sensor_sigma**2) >= .25;
+      if (near) {
+        if (!run) eligible = !count || (i-lastNear)*c.dt >= 3;
+        run++;
+        if (run === 2 && eligible) {
+          const start = (i-1)*c.dt;
+          if (lastPass !== null) intervals.push(start-lastPass);
+          lastPass = start;
+          count++;
+        }
+        lastNear = i;
+      } else run = 0;
+      passHistory[i][k] = Math.min(count,255);
+      if (m.q[i][k] < e.targets[k]) {
+        if (met && lossStart === null) lossStart = i;
+      } else {
+        if (met && lossStart !== null && (i-lossStart)*c.dt >= 1) recovered++;
+        met = true;
+        lossStart = null;
+      }
+    });
+    visits.push(count);
+    recoveries.push(recovered);
+  });
+  intervals.sort((a,b)=>a-b);
+  return {
+    visits, recoveries, passHistory,
+    visitedCells: visits.filter(v=>v>0).length,
+    revisitedCells: visits.filter(v=>v>1).length,
+    recoveredCells: recoveries.filter(v=>v>0).length,
+    medianRevisitSeconds: intervals.length ? (intervals[Math.floor((intervals.length-1)/2)] + intervals[Math.floor(intervals.length/2)]) / 2 : null
+  };
+}
