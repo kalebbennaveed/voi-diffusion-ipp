@@ -1,9 +1,11 @@
 """Archive every completed paired whole-field run, check telemetry, and plot outcomes."""
 
 import argparse
+import fcntl
 import hashlib
 import json
 import os
+from collections import Counter
 from pathlib import Path
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(__file__).resolve().parents[1] / ".mplconfig"))
@@ -30,16 +32,19 @@ protocol = json.loads((args.protocol or out / "protocol.json").read_text())
 rows = []
 catalog = []
 manifest = {}
+scenario_counts = Counter(scenario for scenario, _ in protocol["scenarios_and_seeds"])
 for scenario, seed in protocol["scenarios_and_seeds"]:
+    directory = source / protocol.get("recording_directory_by_scenario", {}).get(scenario, scenario)
+    figure_stem = f"{scenario}_{seed}" if scenario_counts[scenario] > 1 else scenario
     if args.paired_only and not all(
-        (source / scenario / f"{scenario}_{method}_{seed}.demo.json").exists()
+        (directory / f"{scenario}_{method}_{seed}.demo.json").exists()
         for method in protocol["methods"]
     ):
         continue
     pair = []
     for method in protocol["methods"]:
         stem = f"{scenario}_{method}_{seed}"
-        file = source / scenario / f"{stem}.demo.json"
+        file = directory / f"{stem}.demo.json"
         if not file.exists():
             continue
         d = json.loads(file.read_text())
@@ -64,7 +69,7 @@ for scenario, seed in protocol["scenarios_and_seeds"]:
         pair.append((d, deficit, cumulative))
         (out / f"{stem}.json").write_text(json.dumps(m, indent=2) + "\n")
         for ext in ("json", "npz", "demo.json"):
-            p = source / scenario / f"{stem}.{ext}"
+            p = directory / f"{stem}.{ext}"
             manifest[str(p)] = hashlib.sha256(p.read_bytes()).hexdigest()
         row = {
             k: m[k]
@@ -113,6 +118,7 @@ for scenario, seed in protocol["scenarios_and_seeds"]:
         catalog.append(
             {
                 "id": stem,
+                "kind": "mission",
                 "label": f"{args.label_prefix} · {scenario.removeprefix('field_').removeprefix('persistent_')} · {method} · seed {seed}",
                 "method": method,
                 "seed": seed,
@@ -167,7 +173,7 @@ for scenario, seed in protocol["scenarios_and_seeds"]:
         ax.grid(alpha=0.2)
         ax.legend(fontsize=8)
     fig.suptitle(f"{scenario} · paired development seed {seed} · 475 monitoring cells")
-    fig.savefig(out / f"{scenario}_comparison.png", dpi=160)
+    fig.savefig(out / f"{figure_stem}_comparison.png", dpi=160)
     plt.close(fig)
 
     # Common scales make spatial coverage and remaining deficit directly comparable.
@@ -201,7 +207,7 @@ for scenario, seed in protocol["scenarios_and_seeds"]:
             ax.set(title=f"{d['metrics']['method']} · {title}", xlabel="x (m)", ylabel="y (m)")
             fig.colorbar(img, ax=ax, shrink=0.7)
     fig.suptitle(f"{scenario} · actual executed sensing over all 475 cells · seed {seed}")
-    fig.savefig(out / f"{scenario}_clarity_fields.png", dpi=160)
+    fig.savefig(out / f"{figure_stem}_clarity_fields.png", dpi=160)
     plt.close(fig)
     if "persistence" in a["metrics"]:
         fig, axs = plt.subplots(2, 3, figsize=(12, 7), constrained_layout=True)
@@ -220,7 +226,11 @@ for scenario, seed in protocol["scenarios_and_seeds"]:
                 zip(
                     fields,
                     ["Process noise Qp", "Distinct sensing passes", "Clarity target recoveries"],
-                    [0.1, max(max_passes, 1), max(max_recoveries, 1)],
+                    [
+                        max(0.1, float(np.max(d["environment"]["process_noise"]))),
+                        max(max_passes, 1),
+                        max(max_recoveries, 1),
+                    ],
                 )
             ):
                 ax = axs[row, col]
@@ -236,7 +246,7 @@ for scenario, seed in protocol["scenarios_and_seeds"]:
                 ax.set(title=f"{d['metrics']['method']} · {title}", xlabel="x (m)", ylabel="y (m)")
                 fig.colorbar(img, ax=ax, shrink=0.7)
         fig.suptitle(f"{scenario} · persistent monitoring diagnostics · seed {seed}")
-        fig.savefig(out / f"{scenario}_persistence.png", dpi=160)
+        fig.savefig(out / f"{figure_stem}_persistence.png", dpi=160)
         plt.close(fig)
 
         fig, axs = plt.subplots(2, 1, figsize=(12, 7), constrained_layout=True)
@@ -262,22 +272,25 @@ for scenario, seed in protocol["scenarios_and_seeds"]:
             )
             fig.colorbar(img, ax=ax, label="Clarity deficit ↓", shrink=0.8)
         fig.suptitle(f"{scenario} · complete field evolution; no selected cells omitted")
-        fig.savefig(out / f"{scenario}_clarity_evolution.png", dpi=160)
+        fig.savefig(out / f"{figure_stem}_clarity_evolution.png", dpi=160)
         plt.close(fig)
 (out / "missions.json").write_text(json.dumps(rows, indent=2) + "\n")
 (out / "raw_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 if catalog:
-    old = json.loads((root / "demo/data/catalog.json").read_text())
-    for r in old:
-        if r["id"] not in {v["id"] for v in catalog}:
-            if (
-                not r.get("kind")
-                and not r["id"].startswith(("field_", "persistent_"))
-                and not r["label"].startswith("Legacy · ")
-            ):
-                r["label"] = "Legacy · " + r["label"]
-            catalog.append(r)
-    temporary = root / "demo/data/catalog.tmp"
-    temporary.write_text(json.dumps(catalog, indent=2) + "\n")
-    temporary.replace(root / "demo/data/catalog.json")
+    (root / "results").mkdir(exist_ok=True)
+    with (root / "results/demo_catalog.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        old = json.loads((root / "demo/data/catalog.json").read_text())
+        for r in old:
+            if r["id"] not in {v["id"] for v in catalog}:
+                if (
+                    not r.get("kind")
+                    and not r["id"].startswith(("field_", "persistent_"))
+                    and not r["label"].startswith("Legacy · ")
+                ):
+                    r["label"] = "Legacy · " + r["label"]
+                catalog.append(r)
+        temporary = root / "demo/data/catalog.tmp"
+        temporary.write_text(json.dumps(catalog, indent=2) + "\n")
+        temporary.replace(root / "demo/data/catalog.json")
 print(json.dumps(rows, indent=2))

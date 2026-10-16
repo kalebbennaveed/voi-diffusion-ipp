@@ -1,0 +1,65 @@
+{
+  "type": "Archival adapter for an unchanged development-screen protocol",
+  "original_protocol": "tmp/learning-regimes/docs/regime_screen/protocol.json",
+  "original_protocol_sha256": "061d2348af6d7f2e4694d67a90763e0558724742d4b0e64bc3f030c4dc66e532",
+  "scenarios_and_seeds": [
+    [
+      "wind_gates",
+      710
+    ],
+    [
+      "wind_gates",
+      711
+    ],
+    [
+      "survey_basin",
+      720
+    ],
+    [
+      "survey_basin",
+      721
+    ]
+  ],
+  "recording_directory_by_scenario": {
+    "wind_gates": "wind_gates_screen",
+    "survey_basin": "quiet_basin_screen"
+  },
+  "methods": [
+    "proposed",
+    "current_belief"
+  ],
+  "source_sha256": {
+    "src/voi_diffusion_ipp/__init__.py": "8cc1e55939efbb83ca7af87e3c69abf111605c3377802b929032e33b7dad21bf",
+    "src/voi_diffusion_ipp/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/baselines/draft.py": "ad48de7e2dffc63b1f85644cb72eda16827c9067f45909e3c6f65d792d8c1eb1",
+    "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
+    "src/voi_diffusion_ipp/config.py": "5c53976ed86553242e693dccd930cb325c7a1532eb2d332a5e92761aa712e5d4",
+    "src/voi_diffusion_ipp/dynamics.py": "60bc8c68395e2d38e8f70c4e8b18b86a59e98fcbddc4c42c0affed9b02411e7c",
+    "src/voi_diffusion_ipp/environment.py": "ddad36cf27d4e5c682f434ebc2151cd03a5068892897036dbae9fa64b14cae52",
+    "src/voi_diffusion_ipp/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/experiments/checkpoint.py": "3fa3c71b9613be9fdd79002b1c595c7018c045d3764a0ea04f8e3d6bff00328f",
+    "src/voi_diffusion_ipp/experiments/persistence.py": "a2a334104e628be8743567ac009a7b1f9f9c5610a582360b6e5dd0fc1fd74904",
+    "src/voi_diffusion_ipp/experiments/run.py": "7de5e833c86f6e5cb1727ba95b5fb2f44ffd78eccaf0271a6aa16f9fca21b6f1",
+    "src/voi_diffusion_ipp/experiments/scenarios.py": "eb773bd3674f933a4ca070973935e2fd314d1d22cc2ff56da8ba78ae902f1fbc",
+    "src/voi_diffusion_ipp/experiments/suite.py": "0c0ff8ef2b88d46a8de2214bf69429c16c0c4b9ef70aae4dd1ac00b57d0634c0",
+    "src/voi_diffusion_ipp/planning/__init__.py": "90c2781b42b77b8f1b9ad3d535b6f64d850c8158a69e6a6daa9e2acab02d306f",
+    "src/voi_diffusion_ipp/planning/mbd.py": "7314060715e61dedd8373fe28ce1a20e63406fee689cf81176fa7bf7a8b3cc93",
+    "src/voi_diffusion_ipp/planning/mpc.py": "275ecf5c72c1d91fc0190995f04aa2af6eca9f6a41afb98a5503af223e8760e7",
+    "src/voi_diffusion_ipp/planning/rollout.py": "02638a992d56be1a33313e6bd7651c7cca1ea98382c90ab0f36e8b9923ade7e0",
+    "src/voi_diffusion_ipp/planning/two_stage.py": "dacf36acbd8156336f786ae1139d689e656ab564b9707f1d617187ad80c2705a",
+    "src/voi_diffusion_ipp/safety/__init__.py": "c00308ddb2d6c20920184172aa25a144dcff69b30e29074fd8a20f0764cd39ce",
+    "src/voi_diffusion_ipp/safety/qp.py": "fd3fda65e9cf952d9b502201751077a402547f75b2d202079436a9dc09b8768e",
+    "src/voi_diffusion_ipp/safety/rpcbf.py": "4f72d0dd580cb711f88b470f9e4c1607bb1b78793b97c0a344d4e85c1467bbd3",
+    "src/voi_diffusion_ipp/safety/spline.py": "4cd9f4814a78aa42c7f6f13270a6aed55cacb60dd50ebae4e58b245c586b6582",
+    "src/voi_diffusion_ipp/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/viz/demo_data.py": "a7c14ce32a81f0a3e7721af6fa7c1474ce51cec32e3db43b835e467aa0e87f2b",
+    "src/voi_diffusion_ipp/viz/demo_server.py": "87e79a3df71c6678394480988f0fb08d9eb1a079a2689d1c919c308e4f3d2772",
+    "src/voi_diffusion_ipp/viz/report.py": "15724940b26a9c5740b5f94bbbb834ee03c2266625f3460ae2be29e1d479d0b6",
+    "src/voi_diffusion_ipp/wind/__init__.py": "df7aaf8bf26ec5b0ee4469564aa08c8ee7badace32f0591f72107b057a183ec9",
+    "src/voi_diffusion_ipp/wind/gp.py": "3d1feec0574a7e1f703bbb60c668f962246f1d2f57b8fb8bef423f9bf4c91aac",
+    "src/voi_diffusion_ipp/wind/physical.py": "5a861ac2b3a91c96d0cb5f16aa9ba5adb52a32c7cc257b71a54d4101335c9b02",
+    "src/voi_diffusion_ipp/wind/poam.py": "f87665cd0247e6dd30ac8c0c8ab7237c605bd71f6e9ae0a1ff3429acbfd844eb",
+    "src/voi_diffusion_ipp/wind/poam_belief.py": "8adfd15c5fa591571c6a5f79d7e4a5bcdd6f755fb14c76d7eb5a314389e47fb7"
+  },
+  "interpretation": "Development only; these seeds cannot establish significance or equivalence."
+}

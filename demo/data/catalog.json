@@ -1,6 +1,7 @@
 [
   {
     "id": "field_vortices_proposed_300",
+    "kind": "mission",
     "label": "Full POAM \u00b7 18 s \u00b7 vortices \u00b7 proposed \u00b7 seed 300",
     "method": "proposed",
     "seed": 300,
@@ -11,6 +12,7 @@
   },
   {
     "id": "field_vortices_current_belief_300",
+    "kind": "mission",
     "label": "Full POAM \u00b7 18 s \u00b7 vortices \u00b7 current_belief \u00b7 seed 300",
     "method": "current_belief",
     "seed": 300,
@@ -21,6 +23,7 @@
   },
   {
     "id": "field_shear_proposed_301",
+    "kind": "mission",
     "label": "Full POAM \u00b7 18 s \u00b7 shear \u00b7 proposed \u00b7 seed 301",
     "method": "proposed",
     "seed": 301,
@@ -31,6 +34,7 @@
   },
   {
     "id": "field_shear_current_belief_301",
+    "kind": "mission",
     "label": "Full POAM \u00b7 18 s \u00b7 shear \u00b7 current_belief \u00b7 seed 301",
     "method": "current_belief",
     "seed": 301,
@@ -41,6 +45,7 @@
   },
   {
     "id": "field_mixed_proposed_302",
+    "kind": "mission",
     "label": "Full POAM \u00b7 18 s \u00b7 mixed \u00b7 proposed \u00b7 seed 302",
     "method": "proposed",
     "seed": 302,
@@ -51,6 +56,7 @@
   },
   {
     "id": "field_mixed_current_belief_302",
+    "kind": "mission",
     "label": "Full POAM \u00b7 18 s \u00b7 mixed \u00b7 current_belief \u00b7 seed 302",
     "method": "current_belief",
     "seed": 302,

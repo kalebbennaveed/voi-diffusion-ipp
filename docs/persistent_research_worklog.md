@@ -96,8 +96,18 @@ validation. No reference repository was modified or imported.
 
 The new regime status is served through a catalog entry of kind `study_status`
 referencing the nested worktree's status file. Keep that path until results are
-preserved. The regime coordinator does not automatically publish finished pairs:
-audit their hashes/telemetry and bundle them using the existing demo tooling.
+preserved. The regime coordinator does not automatically publish finished pairs.
+Run `uv run --no-sync python scripts/report_regime_screen.py` from the main
+checkout when new results complete. This validates frozen source hashes, declared
+configuration overrides, identities, duration and complete execution, then uses
+the shared telemetry reporter to publish only completed pairs. It preserves all
+seeds, uses separate per-seed figures and shows the full high-Q range. The
+translated archival protocol retains the hash of the unchanged original
+protocol. Pair outcomes remain explicitly developmental. Six publication guards
+were tested against actual full-POAM telemetry (including rejected source,
+configuration, identity, duration and truncation errors); the shared reporter
+also reproduced the six original full-POAM runs and ten frontend tests passed.
+No new long-run outcome was available during this publication preparation.
 After frozen runs finish, merge the development branch into the main checkout,
 preserve its protocols/results, update the catalog path and remove the worktree
 only after its active jobs have finished. The existing heartbeat

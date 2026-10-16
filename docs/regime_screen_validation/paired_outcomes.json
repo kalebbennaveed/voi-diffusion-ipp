@@ -1,0 +1,27 @@
+{
+  "status": "Development screen: no superiority or equivalence claim",
+  "complete_pairs": 0,
+  "expected_pairs": 4,
+  "cases": [
+    {
+      "scenario": "wind_gates",
+      "seed": 710,
+      "completed_methods": []
+    },
+    {
+      "scenario": "wind_gates",
+      "seed": 711,
+      "completed_methods": []
+    },
+    {
+      "scenario": "survey_basin",
+      "seed": 720,
+      "completed_methods": []
+    },
+    {
+      "scenario": "survey_basin",
+      "seed": 721,
+      "completed_methods": []
+    }
+  ]
+}
