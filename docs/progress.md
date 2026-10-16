@@ -9,3 +9,12 @@ Cholesky, grad, vmap, scan; four physical/GP tests pass. See generated
 
 The finite-feature GP is exact for its explicitly declared kernel; it is not POAM.
 Next: spline RPCBF and constrained QP, then diffusion and sequential integration.
+
+## Phases 2-3
+
+Nine CPU tests pass, covering spline maxima against SciPy, the paper's exact
+stopping gradient, RPCBF finite differences, QP solutions against independent
+SLSQP, explicit infeasibility, MBD's analytic Gaussian-convolution score (with
+Monte Carlo standard-error tolerance), multi-level optimization and equal budgets.
+Full and local-window spline variants retain policy-value and QP logic. No safety
+guarantee is inferred. Next: causal two-stage rollout and held-out missions.
