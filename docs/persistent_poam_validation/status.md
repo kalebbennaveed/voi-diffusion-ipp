@@ -4,6 +4,13 @@ Started 2026-10-16 at 17:05 America/Detroit. **Results are still being computed.
 The authoritative live status is `results/persistent_poam/recordings/status.json`;
 this page is a launch record, not a claim that the runs have completed.
 
+At 17:10, all three initial workers had completed their first actual 3.6-second
+segment and saved two POAM belief snapshots. The island pair increased clarity
+in 57 sensed cells while 418 cells decayed; the channel run increased clarity in
+67 cells while 408 decayed. This checks physical execution and field evolution,
+not successful long-term maintenance. The first optimizations took about 171–172
+seconds each with three concurrent CPU workers, plus recording and update time.
+
 All six 122.4-second comparisons are frozen in `protocol.json`. Three workers
 run concurrently; proposed/current-belief archipelago and proposed channels run
 first, followed by the remaining channel and two mosaic runs. The coordinator

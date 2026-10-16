@@ -593,7 +593,7 @@ dev = [
 requires-dist = [
     { name = "jax", specifier = "==0.4.38" },
     { name = "matplotlib", specifier = ">=3.8,<4" },
-    { name = "numpy", specifier = ">=1.26,<3" },
+    { name = "numpy", specifier = ">=2,<3" },
     { name = "pyyaml", specifier = ">=6,<7" },
     { name = "scipy", specifier = ">=1.12,<1.17" },
 ]
