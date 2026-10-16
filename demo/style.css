@@ -1319,3 +1319,4 @@ main {
 @media(max-width:560px){.record-toolbar{grid-template-columns:1fr;gap:8px}}
 .persistent-progress { margin: 0 0 18px; padding: 14px 18px; border: 1px solid #c9d8da; border-radius: 8px; background: #f2f7f7; color: #304d58; font-size: 13px; line-height: 1.6; }
 .persistent-progress p { margin: 5px 0; }
+.persistent-progress summary { font-weight: 600; }

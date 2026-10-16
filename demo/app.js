@@ -1429,6 +1429,7 @@ async function persistentProgress() {
     if (jobs.length) {
       const stale = Date.now()/1000 - progress.updated_at > 120;
       const complete = jobs.filter(j => j.status === 'complete').length;
+      $('persistent-progress-summary').textContent = `122 s persistent study · ${complete}/${jobs.length} complete · ${jobs.filter(j => j.status === 'running').length} running`;
       const running = jobs.filter(j => j.status === 'running').map(j =>
         `${j.scenario.replace('persistent_','')} / ${j.method === 'proposed' ? 'proposed' : 'no anticipated learning'}: ${j.completed_periods || 0}/${j.total_periods} periods`);
       const failed = jobs.filter(j => j.status === 'failed').length;
