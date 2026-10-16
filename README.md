@@ -7,9 +7,13 @@ a constrained QP, correlated GP inference, an optional POAM adapter, baselines,
 paired experiments, plots, and offline HTML replays.
 
 **Research status:** the software and component mechanisms are tested on the M3
-CPU. A reliable mission-level advantage from deliberate disturbance sensing is
-not yet established. Read the [measured findings](docs/experimental_findings.md) before interpreting a successful
-trajectory as evidence for the proposed hypothesis. Sampled RPCBF is approximate;
+CPU. The original formulation did not establish a reliable mission-level advantage.
+A revised feedback/recourse variant reduced mean cost by 20.9% on ten fresh paired
+seeds in a controlled localized-wind scenario (eight wins, two losses, no collisions,
+one infeasible executed QP). Read the [new findings](docs/recourse_findings.md),
+[research workflow](docs/research_workflow.md), and
+[original measured findings](docs/experimental_findings.md) for the scope of this
+evidence. Generality and diffusion superiority remain unestablished. Sampled RPCBF is approximate;
 no formal safety or optimality guarantee is claimed.
 
 ## Setup on Apple Silicon
@@ -106,6 +110,8 @@ concise reviewable evidence is also saved under `docs/`.
 ## Method and code
 
 - [Mathematical formulation](docs/method.md)
+- [Research workflow and literature-informed revisions](docs/research_workflow.md)
+- [Feedback/recourse findings and all 37 new missions](docs/recourse_findings.md)
 - [Measured findings and remaining research limitations](docs/experimental_findings.md)
 - [Complete archived result table](docs/validation/summary.md)
 - [Source-to-implementation mapping and licenses](docs/reference_mapping.md)

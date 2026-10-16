@@ -89,6 +89,8 @@ sampling errors must be checked before claiming robust performance.
    an operating region, including cases where probing should not help. Evaluate
    more outer worlds, more inner RPCBF fields and more predictive recourse worlds.
    A promising case is a mechanism example; a stable region supports a method claim.
+   Replay any infeasible safety constraints independently, then check backup
+   horizon, control discretization and sampling sensitivity around that event.
 5. **Optimizer and formulation study.** Compare MBD with CEM/MPPI using the same
    improved objective and policy class, matched total rollout work and wall time.
    Then investigate multimodal MBD particles/warm starts and recourse with several
@@ -111,9 +113,41 @@ JAX_PLATFORMS=cpu uv run python scripts/screen_recourse.py
 JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.experiments.run \
   --config configs/recourse_dev.yaml --output results/recourse_pilot
 JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.viz.report results/recourse_pilot
+# Freeze numerical source and record its hashes before the fresh-seed run.
+uv run python scripts/freeze_recourse_protocol.py
+JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.experiments.run \
+  --config configs/recourse_validation.yaml --output results/recourse_validation
+JAX_PLATFORMS=cpu uv run python scripts/recourse_controls.py
+JAX_PLATFORMS=cpu uv run python scripts/recourse_controls.py --no-measurements
+# Requires all 37 missions and the pre-run protocol.json; checks source hashes.
+uv run python scripts/report_recourse.py
+JAX_PLATFORMS=cpu uv run python scripts/diagnose_recourse_failures.py
 ```
+
+The freeze command requires an empty study directory. Existing archived evidence
+should be retained; use a separate output directory when starting another study.
+Repeating seeds 100–109 reproduces validation results; it is not a new test set.
 
 The nested action-value calculation increases work per objective evaluation:
 each outer scenario now evaluates both future policies over the configured
 number of recourse worlds as well as its actual future rollout. Comparisons
 between new and old variants must account for this, not just count MBD proposals.
+
+## Scenarios to develop next
+
+- **Information needed before commitment:** a short side approach measures a
+  spatially correlated disturbance in a valuable passage. A remote ROI offers a
+  safe but lower-value alternative. Tune the observation location so that passive
+  monitoring does not provide the same information at negligible cost.
+- **Information acquired on the useful route:** the same disturbance is visible
+  during ordinary monitoring. Active probing should have little additional value;
+  this checks whether the method pays unnecessary information costs.
+- **Information unable to change the action:** a passage stays infeasible even
+  under known wind, or both continuations have similar task value. Reduced
+  posterior variance alone should not cause a detour.
+
+For each case, first estimate the best achievable continuation under known wind,
+then compare candidate first policies with and without their measurements at the
+same resulting state. An information opportunity must survive this check before
+we spend time tuning its optimizer. These are proposed scenario families, not
+completed experimental claims.

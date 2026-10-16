@@ -1,0 +1,112 @@
+[
+  {
+    "run": "results/recourse_validation/localized_corridor_proposed_101.json",
+    "step": 20,
+    "step_end_seconds": 3.15,
+    "saved_slack": 0.010179704986512661,
+    "independent_minimum_common_slack": 0.010184781620878906,
+    "clearance": 0.16083157062530518,
+    "control": [
+      -1.599777102470398,
+      0.6409128904342651
+    ],
+    "A": [
+      [
+        0.10332668572664261,
+        0.7436842918395996
+      ],
+      [
+        0.11885713040828705,
+        -0.6248188018798828
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.013398117385804653,
+        -0.36098840832710266
+      ],
+      [
+        0.38379988074302673,
+        0.005124599207192659
+      ],
+      [
+        0.014925655908882618,
+        0.38568970561027527
+      ]
+    ],
+    "b": [
+      0.30112749338150024,
+      -0.6008090376853943,
+      2.486990213394165,
+      1.3268712759017944,
+      1.7488023042678833,
+      1.814448356628418
+    ],
+    "barrier_values": [
+      -0.2174054980278015,
+      -0.04414087533950806,
+      -2.126842975616455,
+      -1.6064985990524292,
+      -2.4163665771484375,
+      -1.704579472541809
+    ],
+    "interpretation": "Bounded robust halfspaces are infeasible; independent LP confirms positive minimum slack. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  },
+  {
+    "run": "results/recourse_ablations/task_openloop/localized_corridor_proposed_20.json",
+    "step": 37,
+    "step_end_seconds": 5.7,
+    "saved_slack": 0.09991279244422913,
+    "independent_minimum_common_slack": 0.09993027150630951,
+    "clearance": 0.023013651371002197,
+    "control": [
+      0.14868544042110443,
+      -1.600000023841858
+    ],
+    "A": [
+      [
+        0.646141529083252,
+        2.3770079612731934
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.3310215175151825,
+        0.07398226112127304
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.4153909683227539,
+        0.06162505969405174
+      ],
+      [
+        0.007979433052241802,
+        0.6288939714431763
+      ]
+    ],
+    "b": [
+      0.23351716995239258,
+      -0.09993027150630951,
+      1.2398567199707031,
+      1.4930739402770996,
+      3.101419687271118,
+      1.7263593673706055
+    ],
+    "barrier_values": [
+      -3.397442102432251,
+      0.06101030111312866,
+      -1.4463531970977783,
+      -0.6437933444976807,
+      -3.134211540222168,
+      -2.594485282897949
+    ],
+    "interpretation": "Bounded robust halfspaces are infeasible; independent LP confirms positive minimum slack. This was a recorded relaxed-QP fallback, not an unreported collision or optimizer failure."
+  }
+]

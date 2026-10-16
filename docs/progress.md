@@ -1,7 +1,8 @@
 # Implementation checkpoints
 
-Final recorded validation: 19 passing CPU tests and 120 archived mission runs.
-See [measured findings](experimental_findings.md) for the current result; the
+Current validation: 23 passing CPU tests, 120 original archived missions and
+37 additional feedback/recourse missions. See [new findings](recourse_findings.md)
+and [original measured findings](experimental_findings.md); the
 entries below preserve the sequence of implementation checkpoints.
 
 ## Phases 0-1
@@ -64,3 +65,17 @@ and all-invalid optimization fallbacks remain in the evidence. The source, lock,
 configurations, metrics, distribution tables, selected figures and backend/test
 logs are preserved. CPU is validated; both tested Metal stacks are unsupported
 for this workload/OS, and Linux CUDA remains untested.
+
+## Research iteration 1 — feedback policies and posterior task values
+
+Added optional waypoint feedback parameters, independent posterior-predictive
+continuation values and a localized uncertainty mechanism scenario. Full MBD
+and spline RPCBF are preserved. Development seeds 20–22 gave a 7.68% mean cost
+reduction. Source commit `cfa1820` and configuration were frozen before seeds
+100–109: mean cost reduction was 20.93%, with eight wins and two losses. No
+validation collisions occurred; one proposed step used the infeasible-QP fallback.
+Task routing alone was not consistently better in the development ablations.
+No-measurement execution arrays match exactly. All 37 new missions, tests,
+the pre-run protocol, hashes, paired bootstrap intervals and every loss/failure
+are archived separately. The result supports a controlled example, not a general
+method or solver-superiority claim. See the research workflow for decision gates.

@@ -126,6 +126,50 @@ current mean; a mission with no valid candidate logs failure and uses the
 explicit safety-filtered fallback. The best evaluated candidate is retained.
 CEM and MPPI use their own updates under the same objective-evaluation budget.
 
+## Optional revised feedback and task-valued recourse
+
+The default formulation above retains the original open-loop approximation. The
+research variant in `configs/recourse_dev.yaml` changes the common candidate
+parameters to waypoint knots. Interpolated targets define the nominal policy
+
+```
+u_nom(x, b, target) = clip(1.2*(target-position) - 1.8*velocity - mean_wind_b(position), ±umax)
+```
+
+The full RPCBF filters this input at every control step. All worlds share
+the same policy parameters; observed state and available belief may produce
+different controls. This is an explicit change in the policy class, not an
+open-loop-control implementation detail.
+
+With `branch_rule: task`, branch selection at the first-period terminal state is
+
+```
+j* = argmin_j (1/M) sum_m J_future(x_H, q_H, policy_j, b_H, W_m)
+W_m ~ p(W | b_H)
+```
+
+The predictive fields use separate fixed standard-normal draws, common across
+candidates. They are independent of the outer physical field, which is never an
+argument to the router. Each action value includes actual safety-filtered dynamics
+and clarity evolution. The outer objective then evaluates the selected branch
+in the unchanged outer physical field. The comparator substitutes the old belief
+for `b_H` during prediction, while retaining the same real measurement updates
+between executed MPC periods. Both methods have the same computation structure.
+
+This nested finite-library decision is approximate. Two predictive fields per
+branch and four inner safety fields are deliberately small development budgets;
+the finite action library and sample noise can misrank branches. The future
+period still freezes its available belief throughout, even though real execution
+will replan and assimilate more data. Multi-boundary belief recourse is a separate
+proposed extension. No information bonus or hidden-world branch assignment is used.
+
+The localized corridor uses `w(p)=phi(p)*a`, where
+`phi(p)=exp(-||p||²/(2*length²))` and the two components of `a` have independent
+Gaussian priors. Its known spatial shape creates a controlled mechanism study:
+measurements near the passage are more informative than remote measurements.
+It is a rank-one spatial GP per component and does not establish generality to
+unknown spatial structures. See [research workflow](research_workflow.md).
+
 ## Diagnostics and interpretation
 
 A matched no-information continuation starts at exactly the same first-period
