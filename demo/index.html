@@ -7,7 +7,8 @@
 <section class="intro"><div><p class="eyebrow">LEARN THE DISTURBANCE. IMPROVE THE MISSION.</p><h2>Watch clarity evolve across the field.</h2><p>Full-field clarity deficit · online POAM wind estimates · actual diffusion rollouts.</p></div><div class="run-state"><span id="status-dot" class="dot"></span><span id="status" role="status">Loading recorded experiments…</span></div></section>
 <section id="environments" class="environment-picker" aria-labelledby="environment-heading">
  <div class="environment-heading"><h3 id="environment-heading">Choose an environment</h3><span id="environment-count">Loading comparisons…</span></div>
- <p>Play opens both planners side by side, with clarity, wind estimation and denoising. Long missions become playable when both recordings finish.</p>
+ <p>Play actual execution and denoising now. Unfinished missions show the completed portion, clearly marked as a preview. Completed pairs show final results.</p>
+ <div class="comparison-buttons"><button id="open-long" class="primary-button">▶ Play latest long mission</button><button id="open-regions" class="quick-secondary">▶ Region A / Region B example</button></div>
  <div id="environment-grid" class="environment-grid"></div>
 </section>
 <details id="safety-study" class="safety-study panel hidden">
@@ -32,6 +33,7 @@
 <section id="persistent-progress" class="persistent-progress hidden" aria-label="Persistent experiment progress"><details><summary id="persistent-progress-summary">Persistent monitoring · 122.4 seconds per mission</summary><p id="persistent-progress-text" role="status"></p><button id="refresh-recordings" class="text-button">Load completed persistent comparison →</button></details></section>
 <div class="workspace">
 <section class="visual-panel panel">
+ <div id="preview-banner" class="preview-banner hidden" role="status"></div>
  <div class="environment-return"><button id="all-environments" class="text-button">↑ All environments</button><span id="active-environment"></span></div>
  <div class="panel-top"><div class="tabs" role="tablist" aria-label="Playback mode"><button id="comparison-tab" class="tab active" role="tab" aria-selected="true">Compare &amp; play</button><button id="result-tab" class="tab" role="tab" aria-selected="false">Final result</button><button id="diffusion-tab" class="tab" role="tab" aria-selected="false">Denoising</button><button id="mission-tab" class="tab" role="tab" aria-selected="false">Details</button></div><div class="scene-label"><span id="scene-label">Localized wind · corridor</span><span class="tag" id="variant-tag">Two-stage</span></div></div>
  <div id="method-explainer" class="method-explainer"><strong id="learning-explainer-title">Both planners learn during execution.</strong><span id="learning-explainer-text">The proposed planner also anticipates how future measurements will improve later decisions. The comparator plans its future using the belief available now.</span></div>

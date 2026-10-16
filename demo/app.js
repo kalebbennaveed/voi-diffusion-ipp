@@ -57,13 +57,13 @@ const environments = [
 ];
 
 function environmentRecord(environment) {
-  return state.records.find(r => r.id.startsWith(`${environment.id}_`) &&
-    r.method === 'proposed' && pairedRecord(state.records, r));
+  const candidates = state.records.filter(r => (r.scenario === environment.id || r.id.startsWith(`${environment.id}_`)) && r.method === 'proposed');
+  return candidates.find(r => r.kind !== 'mission_preview' && pairedRecord(state.records,r)) || candidates.find(r => pairedRecord(state.records,r)) || candidates.find(r => r.kind === 'mission_preview');
 }
 
 function renderEnvironments() {
   const available = environments.filter(environmentRecord).length;
-  $('environment-count').textContent = `${available} playable · ${environments.length - available} awaiting paired runs`;
+  $('environment-count').textContent = `${available} playable, including previews · ${environments.length - available} without recordings`;
   const stale = !state.persistent || Date.now()/1000 - state.persistent.updated_at > 120;
   for (const environment of environments) {
     let card = $(`environment-${environment.id}`);
@@ -87,10 +87,10 @@ function renderEnvironments() {
     const button = card.querySelector('button');
     button.disabled = !record || state.loading;
     button.setAttribute('aria-label', `${record ? 'Play' : 'Awaiting'} ${environment.name} comparison`);
-    button.textContent = record ? `▶ ${selected ? 'Replay' : 'Play'} comparison` : 'Awaiting completed pair';
+    button.textContent = record ? record.kind === 'mission_preview' ? `▶ Play ${record.available_seconds.toFixed(1)} s preview` : `▶ ${selected ? 'Replay' : 'Play'} comparison` : 'Awaiting execution';
     const study = ['wind_gates','survey_basin'].includes(environment.id) ? state.regimes : state.persistent;
     const jobs = study?.jobs?.filter(j => j.scenario === environment.id) || [];
-    card.querySelector('.environment-job-status').textContent = record ? 'Ready · full POAM · both planners' :
+    card.querySelector('.environment-job-status').textContent = record ? record.kind === 'mission_preview' ? `${record.stopped ? 'STOPPED FOR REDESIGN' : 'IN PROGRESS'} · ${record.available_seconds.toFixed(1)} s recorded · ${pairedRecord(state.records,record) ? 'paired at the same duration' : 'proposed only; comparator unavailable'}` : 'Ready · full POAM · both planners' :
       jobs.length > 2 ? `${jobs.filter(j=>j.status==='complete').length}/${jobs.length} missions complete · ${jobs.filter(j=>j.status==='running').length} running · ${jobs.filter(j=>j.status==='queued').length} queued` : jobs.length ? jobs.map(j => `${j.method === 'proposed' ? 'Proposed' : 'Comparator'}: ${j.status === 'running' ? `${j.completed_periods || 0}/${j.total_periods} periods${stale ? ' · last known' : ' · running'}` : j.status}`).join(' · ') : 'No completed recording yet';
   }
   $('active-environment').textContent = environments.find(e => e.id === state.data?.config.scenario)?.name || 'Recorded experiment';
@@ -324,7 +324,7 @@ function drawMap() {
   } else {
     const ownColor = d.metrics.method === 'current_belief' ? colors.amber : colors.teal;
     const period = Math.min(Math.floor(t / H), d.planning.length - 1);
-    path(g, d.mission.nominal_paths[period], xy, '#8599a7', 1.1, [3, 4]);
+    if (d.mission.nominal_paths?.[period]) path(g, d.mission.nominal_paths[period], xy, '#8599a7', 1.1, [3, 4]);
     path(g, d.mission.x.slice(0, t + 1), xy, ownColor, 2.8);
     for (let i = H; d.config.measurements && i <= t; i += H) {
       const a = xy(d.mission.x[i]);
@@ -658,7 +658,7 @@ function renderComparison() {
     'Both robots execute on the same clock. Watch their routes and accumulated cost.' :
     'Unpaired recording: watch the robot and its accumulated task cost.';
   message = 'Every cell contributes to the task cost. Compare the maps and deficit curves below.';
-  if (time >= duration) message = $('comparison-loop').checked && state.playing ?
+  if (time >= duration) message = a.preview ? a.preview.stopped ? 'End of recorded preview. Expensive experiments were stopped for the one-second planner redesign.' : 'End of recorded preview. Reload for newer execution.' : $('comparison-loop').checked && state.playing ?
     'Replay complete. Restarting automatically…' :
     'Replay complete. Open Final result for the full comparison.';
   if ($('comparison-event').textContent !== message) $('comparison-event').textContent = message;
@@ -669,7 +669,7 @@ function renderResults() {
   const [a, b] = comparisonPair(state.data, state.comparison);
   const sa = missionSummary(a),
     sb = b ? missionSummary(b) : null;
-  $('result-scope').textContent = b ? 'COMPLETED MISSIONS · SAME WIND AND START' :
+  $('result-scope').textContent = a.preview ? 'UNFINISHED MISSION · RECORDED PORTION ONLY' : b ? 'COMPLETED MISSIONS · SAME WIND AND START' :
     'COMPLETED MISSION · UNPAIRED RECORDING';
   const colorA = a.metrics.method === 'current_belief' ? colors.amber : colors.teal;
   $('result-name-a').textContent = methodLabel(a);
@@ -693,8 +693,8 @@ function renderResults() {
   $('inspect-b').disabled = !b;
   $('replay-pair').textContent = b ? 'Replay both missions from the start →' :
     'Replay this mission from the start →';
-  $('result-map-a').setAttribute('aria-label', `Completed trajectory: ${methodLabel(a)}`);
-  $('result-map-b').setAttribute('aria-label', b ? `Completed trajectory: ${methodLabel(b)}` :
+  $('result-map-a').setAttribute('aria-label', `Recorded trajectory: ${methodLabel(a)}`);
+  $('result-map-b').setAttribute('aria-label', b ? `Recorded trajectory: ${methodLabel(b)}` :
     'No matched trajectory');
   $('result-verdict').style.color = colors.ink;
   if (sb) {
@@ -711,11 +711,15 @@ function renderResults() {
     $('result-context').textContent =
       `Seed ${a.metrics.seed} · ${sa.duration.toFixed(1)} seconds · ${a.planning.length} replans. A paired benefit cannot be calculated from one run.`;
   }
+  if (a.preview) {
+    $('result-verdict').textContent = `Recorded through ${sa.duration.toFixed(1)} s · mission unfinished`;
+    $('result-context').textContent = 'Costs, clarity and safety below cover only the recorded portion. They are not final mission results.';
+  }
   const rows = [
     ['Total monitoring cost ↓', s => s.cost.toFixed(3)],
     [`First ${(a.config.stage_steps*a.config.dt).toFixed(1)} s cost`, s => s.first.toFixed(3)],
     ['Remaining mission cost', s => s.later.toFixed(3)],
-    ['Final clarity deficit ↓', s => s.finalDeficit.toFixed(3)],
+    [a.preview ? 'Latest clarity deficit ↓' : 'Final clarity deficit ↓', s => s.finalDeficit.toFixed(3)],
     ['Minimum obstacle clearance', s => `${s.clearance.toFixed(3)} m`],
     ['Peak allowed barrier slack', s => s.peakSlack.toFixed(4)],
     ['Time using barrier slack', s =>
@@ -750,6 +754,9 @@ function renderResults() {
 
 function update() {
   if (!state.data) return;
+  $('result-tab').textContent = state.data.preview ? 'Latest recorded state' : 'Final result';
+  $('preview-banner').classList.toggle('hidden', !state.data.preview);
+  if (state.data.preview) $('preview-banner').textContent = `${state.data.preview.stopped ? 'STOPPED FOR RUNTIME REDESIGN' : 'IN PROGRESS'}: ${state.data.preview.available_seconds.toFixed(1)} of ${state.data.preview.planned_seconds.toFixed(1)} s recorded (${state.data.preview.completed_periods}/${state.data.preview.planned_periods} periods). Actual execution, POAM updates and MBD denoising are playable. This is not a final result.`;
   $('quick-play').disabled = false;
   $('quick-diffusion').disabled = false;
   $('quick-play').textContent = state.comparison ? '▶ Play comparison' : '▶ Play mission';
@@ -791,7 +798,7 @@ function update() {
     'The proposed planner also anticipates how future measurements will improve later decisions. The comparator plans its future using the belief available now.' :
     'The wind belief is not updated. This is a separate no-measurement control; it is different from the comparator that learns during execution but does not anticipate learning while planning.';
   $('mode-note').textContent = isDiff ?
-    `Denoising: ${methodLabel(d)}. Each candidate predicts ${((H+d.config.future_steps)*d.config.dt).toFixed(1)} s; only the first ${(H*d.config.dt).toFixed(1)} s is executed before updating and replanning. “Final result” shows the completed actual mission.` :
+    `Denoising: ${methodLabel(d)}. Each candidate predicts ${((H+d.config.future_steps)*d.config.dt).toFixed(1)} s; only the first ${(H*d.config.dt).toFixed(1)} s is executed before updating and replanning. ${d.preview ? '“Latest recorded state” shows the executed portion so far.' : '“Final result” shows the completed actual mission.'}` :
     `Mission playback: ${methodLabel(d)} is ${d.metrics.method === 'current_belief' ? 'amber' : 'teal'}. ${state.comparison ? 'The other planner can be overlaid at the same execution time.' : 'This recording has no paired comparator.'}`;
   $('play').textContent = state.playing ? 'Ⅱ' : '▶';
   $('play').setAttribute('aria-label', state.playing ? 'Pause playback' : 'Play playback');
@@ -927,7 +934,7 @@ async function catalog() {
   const response = await fetch('/api/catalog');
   if (!response.ok) throw Error('Cannot load local experiment catalog');
   const records = await response.json();
-  state.records = records.filter(r => !r.kind || r.kind === 'mission');
+  state.records = records.filter(r => !r.kind || r.kind === 'mission' || r.kind === 'mission_preview');
   state.safetyRecords = records.filter(r => r.kind === 'safety_ablation');
   setupSafetyStudy();
   const selected = $('recording').value;
@@ -982,7 +989,7 @@ async function replay(id) {
         .integrated_deficit) / baseline.metrics.integrated_deficit * 100;
       $('comparison-summary').classList.toggle('regression', improvement < 0);
       summary =
-        `<strong>${Math.abs(improvement).toFixed(1)}% ${improvement>=0?'lower':'higher'} mission cost</strong> when anticipating learning.<br>Same physical wind · seed ${data.metrics.seed}`;
+        `<strong>${Math.abs(improvement).toFixed(1)}% ${improvement>=0?'lower':'higher'} ${data.preview ? 'cost so far' : 'mission cost'}</strong> when anticipating learning.<br>Same physical wind · seed ${data.metrics.seed}${data.preview ? ' · unfinished comparison' : ''}`;
     }
     $('comparison-summary').innerHTML = summary;
     $('run-diagnostics').textContent =
@@ -1008,7 +1015,7 @@ async function replay(id) {
     $('measurements').checked = data.config.measurements;
     $('levels').value = String(data.config.diffusion_steps);
     $('proposals').value = String(data.config.proposals);
-    status(`${record.live?'Local experiment':'Recorded experiment'} ready`);
+    status(data.preview ? `${data.preview.available_seconds.toFixed(1)} s preview ready · ${data.preview.stopped ? 'experiment stopped for runtime redesign' : 'experiment continues'}` : `${record.live?'Local experiment':'Recorded experiment'} ready`);
     state.playing = true;
     update();
     window.scrollTo(0, 0);
@@ -1280,7 +1287,8 @@ async function initialize() {
       return;
     }
     const requested = new URLSearchParams(location.search).get('run');
-    await replay(state.records.some(r => r.id === requested) ? requested : state.records[0].id);
+    const resolved = state.records.find(r => r.id === requested) || state.records.find(r => r.id === requested?.replace(/^preview_/, ''));
+    await replay(resolved ? resolved.id : state.records[0].id);
   } catch (e) {
     status(e.message, 'error');
   }
@@ -1525,9 +1533,10 @@ async function persistentProgress() {
         `${j.scenario.replace('persistent_','')} / ${j.method === 'proposed' ? 'proposed' : 'no anticipated learning'}: ${j.completed_periods || 0}/${j.total_periods} periods`);
       const failed = jobs.filter(j => j.status === 'failed').length;
       const paired = jobs.some(j => j.status === 'complete' && jobs.some(k => k.scenario === j.scenario && k.method !== j.method && k.status === 'complete'));
-      $('refresh-recordings').disabled = !paired;
-      $('refresh-recordings').textContent = paired ? 'Load completed persistent comparison →' : 'Persistent replay available when a pair finishes';
-      $('persistent-progress-text').textContent = `${complete}/${jobs.length} missions complete. ${running.join(' · ')}. ${failed ? `${failed} failed; logs retained. ` : ''}${stale && running.length ? 'Progress has not updated recently; execution may be paused. ' : ''}Completed pairs appear in Recorded run. These are offline CPU experiments.`;
+      const preview = state.records.some(r => r.kind === 'mission_preview');
+      $('refresh-recordings').disabled = !paired && !preview;
+      $('refresh-recordings').textContent = paired ? 'Load completed persistent comparison →' : preview ? 'Play latest recorded long-mission preview →' : 'Waiting for the first executed period';
+      $('persistent-progress-text').textContent = `${complete}/${jobs.length} missions complete. ${running.join(' · ')}. ${failed ? `${failed} failed; logs retained. ` : ''}${stale && running.length ? 'Progress has not updated recently; execution may be paused. ' : ''}Completed pairs appear in Recorded run. ${progress.stopped_reason || 'These are offline CPU experiments.'}`;
     }
     setTimeout(persistentProgress, 10000);
   } catch {
@@ -1537,8 +1546,16 @@ async function persistentProgress() {
 }
 $('refresh-recordings').onclick = async () => {
   await catalog();
-  const newest = state.records.find(r => r.id.startsWith('persistent_')) || state.records[0];
+  const newest = state.records.find(r => r.id.startsWith('persistent_') && r.method === 'proposed') || state.records.find(r=>r.kind==='mission_preview' && r.method==='proposed') || state.records[0];
   if (newest) await replay(newest.id);
+};
+$('open-long').onclick = async () => {
+  await $('refresh-recordings').onclick();
+  document.querySelector('.visual-panel').scrollIntoView({behavior:'smooth',block:'start'});
+};
+$('open-regions').onclick = async () => {
+  await replay('308f4f304d0fadc7');
+  document.querySelector('.visual-panel').scrollIntoView({behavior:'smooth',block:'start'});
 };
 $('all-environments').onclick = () => $('environments').scrollIntoView({behavior:'smooth', block:'start'});
 persistentProgress();

@@ -1356,4 +1356,6 @@ main {
 .field-evolution > p { font-size: 11px; color: var(--muted); margin: 0 18px; line-height: 1.6; }
 .field-evolution canvas { height: 240px; cursor: crosshair; }
 #decay-summary { padding: 9px 12px; background: #f0f5f5; border-radius: 5px; color: #36545c; }
+.preview-banner { margin: 14px; padding: 12px 16px; border: 1px solid #d6bb77; border-radius: 6px; background: #fff8e6; color: #66511e; font-size: 12px; line-height: 1.6; }
+#environments > .comparison-buttons { margin: 12px 0; }
 @media(max-width:560px) { .environment-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .environment-heading { align-items: start; } .environment-heading span { max-width: 130px; text-align: right; } }
