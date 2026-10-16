@@ -20,7 +20,7 @@ import numpy as np
 from .gp import WindBelief
 
 
-def init_parameters(key, components=4, width=8):
+def init_parameters(key, components=4, width=8, prior_std=0.55):
     k1, k2, k3 = jax.random.split(key, 3)
     return {
         "w1": jax.random.normal(k1, (2, width)) * 0.4,
@@ -29,7 +29,7 @@ def init_parameters(key, components=4, width=8):
         "b2": jnp.zeros(width),
         "w3": jax.random.normal(k3, (width, components)) * 0.25,
         "b3": jnp.zeros(components),
-        "log_amplitude": jnp.array(np.log(0.55**2), jnp.float32),
+        "log_amplitude": jnp.array(np.log(prior_std**2), jnp.float32),
     }
 
 
@@ -84,9 +84,13 @@ class KernelBasis(NamedTuple):
 class POAM:
     """Online adapter with full prediction. Kernel adaptation only between plans."""
 
-    def __init__(self, centers, key, noise_std=0.1, lengths=(0.25, 0.6, 1.1, 1.8)):
+    def __init__(self, centers, key, noise_std=0.1, lengths=(0.25, 0.6, 1.1, 1.8), prior_std=0.55):
+        if noise_std <= 0 or prior_std <= 0:
+            raise ValueError(
+                "Positive observation noise and prior wind standard deviation required"
+            )
         self.z = jnp.asarray(centers, jnp.float32)
-        self.parameters = init_parameters(key, len(lengths))
+        self.parameters = init_parameters(key, len(lengths), prior_std=prior_std)
         self.lengths = jnp.asarray(lengths, jnp.float32)
         self.noise_std = float(noise_std)
         n = len(centers)

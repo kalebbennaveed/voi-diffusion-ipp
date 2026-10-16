@@ -5,8 +5,26 @@ import json
 from dataclasses import replace
 from pathlib import Path
 
-from ..config import Config
+from ..config import Config, config_dict
 from .run import mission
+
+
+def completed_run(path, cfg):
+    """Resume only complete results with the requested physical/numerical setup."""
+    path = Path(path)
+    if not path.exists() or not path.with_suffix(".npz").exists():
+        return False
+    saved = json.loads(path.read_text())["config"]
+    requested = config_dict(cfg)
+    # These select a batch; they do not affect an individual mission.
+    for key in ("seeds", "methods"):
+        saved.pop(key, None)
+        requested.pop(key, None)
+    if saved != requested:
+        raise ValueError(
+            f"Configuration differs for {path}; use a new output directory or --overwrite"
+        )
+    return True
 
 
 def main():
@@ -26,6 +44,7 @@ def main():
     )
     p.add_argument("--ablations", action="store_true")
     p.add_argument("--research", action="store_true")
+    p.add_argument("--overwrite", action="store_true", help="Recompute existing mission files")
     a = p.parse_args()
     out = Path(a.output)
     out.mkdir(parents=True, exist_ok=True)
@@ -67,7 +86,9 @@ def main():
             c = replace(base, scenario=scenario)
             for method in a.methods:
                 for seed in a.seeds:
-                    if (dest / f"{scenario}_{method}_{seed}.json").exists():
+                    if not a.overwrite and completed_run(
+                        dest / f"{scenario}_{method}_{seed}.json", c
+                    ):
                         continue
                     try:
                         mission(c, method, seed, dest)

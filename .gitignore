@@ -227,3 +227,4 @@ __marimo__/
 .mplconfig/
 results/
 tmp/
+!docs/validation/*.log

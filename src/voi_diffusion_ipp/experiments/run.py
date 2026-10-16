@@ -36,7 +36,12 @@ def mission(cfg, method, seed, out, progress=True):
         from ..wind.poam import POAM
 
         anchors = belief.basis.centers
-        poam = POAM(anchors, jax.random.fold_in(root, 600000), float(belief.noise_std))
+        poam = POAM(
+            anchors,
+            jax.random.fold_in(root, 600000),
+            noise_std=float(belief.noise_std),
+            prior_std=cfg.wind_std,
+        )
         belief = poam.planning_belief(anchors)
     if method == "oracle":
         belief = truth_belief._replace(
@@ -55,7 +60,16 @@ def mission(cfg, method, seed, out, progress=True):
     )
     future_exec = jax.jit(
         lambda x, q, u, b, eps: rollout(
-            x, q, u, b, b.inner_fields(eps), truth, jnp.zeros((cfg.future_steps, 2)), env, cfg
+            x,
+            q,
+            u,
+            b,
+            b.inner_fields(eps),
+            truth,
+            jnp.zeros((cfg.future_steps, 2)),
+            env,
+            cfg,
+            feedback=(method == "fixed"),
         )
     )
     nominal_step = jax.jit(
@@ -136,11 +150,12 @@ def mission(cfg, method, seed, out, progress=True):
                 "admissible_change": float(
                     jnp.mean(learned.admissible) - jnp.mean(noinfo.admissible)
                 ),
+                "optimized_policy_valid": not optimizer_failed,
             }
         )
         nominal = [np.asarray(x)]
         nx = x
-        for uu in u:
+        for uu in result.nominal:
             nx = nominal_step(nx, uu, old)
             nominal.append(np.asarray(nx))
         nom_paths.append(np.array(nominal))

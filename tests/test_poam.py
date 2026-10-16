@@ -13,6 +13,9 @@ def test_poam_kernel_psd_batch_statistics_and_projection():
     K = np.asarray(p.kernel(z, z))
     assert np.linalg.eigvalsh(K).min() > 0
     np.testing.assert_allclose(np.diag(K), 0.55**2, atol=1e-6)
+    custom = POAM(z, jax.random.PRNGKey(1), prior_std=0.2)
+    # Prediction solves add 1e-6 Cholesky jitter; allow that perturbation in float32.
+    np.testing.assert_allclose(custom.predict(z)[1][:, 0, 0], 0.2**2, atol=2e-6)
     p.update(x[:2], y[:2], jax.random.PRNGKey(2), train_steps=0, relocate=False)
     p.update(x[2:], y[2:], jax.random.PRNGKey(3), train_steps=0, relocate=False)
     batch = POAM(z, jax.random.PRNGKey(1))

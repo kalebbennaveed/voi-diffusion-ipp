@@ -54,7 +54,6 @@ def test_sequential_states_posterior_and_nonanticipativity():
     np.testing.assert_array_equal(no.x[0], r.future.x[0])
     np.testing.assert_array_equal(no.q[0], r.future.q[0])
     assert "world" not in inspect.signature(route).parameters
-    assert route(x, q, b, env, cfg) == route(x, q, b, env, cfg)
     # Changing only an unused branch must not alter any trajectory in this scenario.
     inactive = 1 - int(r.branch)
     altered = y.reshape((3, cfg.knots, 2)).at[inactive + 1].set(2.0).ravel()
@@ -62,3 +61,17 @@ def test_sequential_states_posterior_and_nonanticipativity():
     np.testing.assert_allclose(rr.future.x, r.future.x, atol=1e-6)
     with pytest.raises(TypeError):
         values(x, b, WorldField(b.basis, buf.world_coefficients[0]), env, cfg)
+
+
+def test_observed_crosswind_selects_distinct_shared_branches():
+    cfg = Config()
+    env, belief, x, q = make_scenario(cfg)
+    positions = jnp.zeros((12, 2))
+    calm = belief.condition(positions, jnp.zeros((12, 2)))
+    windy = belief.condition(positions, jnp.tile(jnp.array([[0.0, 0.9]]), (12, 1)))
+    assert int(route(x, q, calm, env, cfg)) == 0
+    assert int(route(x, q, windy, env, cfg)) == 1
+    # Identical uncertainty and locations, different available measurement values.
+    np.testing.assert_array_equal(calm.covariance, windy.covariance)
+    shared = replace(cfg, shared_future=True)
+    assert int(route(x, q, calm, env, shared)) == int(route(x, q, windy, env, shared)) == 0

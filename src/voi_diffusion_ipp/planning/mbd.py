@@ -80,9 +80,13 @@ def optimize(objective, initial, key, cfg, algorithm="mbd"):
             idx = jnp.argsort(jnp.where(jnp.isfinite(costs), costs, jnp.inf))[:elite_n]
             elite = candidates[idx]
             ok = jnp.any(jnp.isfinite(costs))
-            y = jnp.where(ok, jnp.mean(elite, axis=0), y)
-            scale = jnp.where(ok, jnp.maximum(jnp.std(elite, axis=0), 0.06), scale)
-            w = jnp.zeros(cfg.proposals).at[idx].set(1 / elite_n)
+            ew = jnp.isfinite(costs[idx]).astype(initial.dtype)
+            ew = ew / jnp.maximum(jnp.sum(ew), 1.0)
+            mean = ew @ elite
+            std = jnp.sqrt(jnp.sum(ew[:, None] * (elite - mean) ** 2, axis=0))
+            y = jnp.where(ok, mean, y)
+            scale = jnp.where(ok, jnp.maximum(std, 0.06), scale)
+            w = jnp.zeros(cfg.proposals).at[idx].set(ew)
         else:
             w = weights(costs, cfg.temperature)
             y = jnp.where(jnp.any(jnp.isfinite(costs)), w @ candidates, y)

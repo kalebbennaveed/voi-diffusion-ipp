@@ -55,3 +55,11 @@ def test_one_dimensional_quadratic_reproducible():
     b = run(jax.random.PRNGKey(33))
     np.testing.assert_array_equal(a.vector, b.vector)
     assert a.cost < 0.01 and a.iterates.shape == (12, 1)
+
+
+def test_cem_elites_exclude_infeasible_candidates():
+    cfg = replace(Config(), diffusion_steps=5, proposals=12, candidate_chunk=1)
+    f = lambda y: jnp.where((y[0] >= 0) & (y[0] <= 0.1), (y[0] - 0.07) ** 2, jnp.inf)
+    result = optimize(f, jnp.array([0.05]), jax.random.PRNGKey(8), cfg, "cem")
+    assert np.isfinite(result.cost)
+    assert np.all((np.asarray(result.iterates) >= 0) & (np.asarray(result.iterates) <= 0.1))

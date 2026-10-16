@@ -1,0 +1,9 @@
+profile: smoke
+diffusion_steps: 4
+proposals: 12
+inner_samples: 4
+backup_steps: 10
+backup_dt: 0.192
+candidate_chunk: 1
+mission_horizons: 5
+seeds: [10, 11, 12]
