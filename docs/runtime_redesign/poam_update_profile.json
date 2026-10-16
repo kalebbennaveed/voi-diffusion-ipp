@@ -1,0 +1,30 @@
+{
+  "label": "four real recorded observation batches; includes actual online train/relocation and tracing costs",
+  "backend": "cpu",
+  "rows": [
+    {
+      "period": 0,
+      "train_steps": 10,
+      "update_seconds": 2.055948166991584,
+      "belief_construction_seconds": 0.6578632920281962
+    },
+    {
+      "period": 1,
+      "train_steps": 10,
+      "update_seconds": 0.4882428749697283,
+      "belief_construction_seconds": 0.010497958050109446
+    },
+    {
+      "period": 2,
+      "train_steps": 10,
+      "update_seconds": 0.27735095797106624,
+      "belief_construction_seconds": 0.008838957990519702
+    },
+    {
+      "period": 3,
+      "train_steps": 10,
+      "update_seconds": 0.276990249985829,
+      "belief_construction_seconds": 0.009174249949865043
+    }
+  ]
+}

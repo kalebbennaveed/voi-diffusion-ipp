@@ -1,3 +1,114 @@
+# Runtime redesign — latest user steering, 2026-10-16
+
+The user now requires **a 10-second trajectory in approximately 1 second on the
+M3 Air**. This supersedes continuing the expensive experiment sweeps below.
+Both coordinators were interrupted, all heavy workers were confirmed stopped,
+and numeric checkpoints/partial telemetry remain intact. Status snapshots before
+stopping are retained as `status_before_runtime_redesign.json` beside each status.
+Do not restart either sweep. The existing heartbeat now prioritizes bounded,
+single-worker latency research. No long validation study until timing and
+full-model mismatch checks pass. Existing outcomes remain valid for their old
+protocol; do not mix a new implementation into those frozen recordings.
+
+The old main planner made 53 objective evaluations, each with four outer worlds
+and 144 safety-filter steps, or 30,528 RPCBF calls per replan. Four inner fields
+and eight backup steps yield about 976,896 backup integration steps, plus state
+derivatives. Recent planning alone took a median 137.6 seconds excluding the
+first call during the three-worker batch. Telemetry generation/execution added
+roughly 35–45 seconds per period. These are observed concurrent wall times, not
+an isolated component profile. POAM hyperparameter training occurs between
+real execution periods, not inside every candidate evaluation.
+
+Investigate shared spatial evaluation of coherent wind samples first, preserving
+full POAM inference and actual spline RPCBF/MBD. Numerical interpolation must
+be labeled and checked for field, gradient, filter and task error. If insufficient,
+develop a clearly labeled multi-fidelity candidate evaluator with full RPCBF
+checking of selected trajectories and applied controls. Preserve causal future
+learning and the monitoring objective; do not introduce an information bonus.
+Measure synchronized steady-state p50/p95, compilation, belief refresh, cache
+refresh, optimization and final checks; report all deadline misses. A component
+speedup is not a one-second planner. Preview data is recorded execution, not a
+live real-time planner and not a completed superiority study.
+
+---
+
+## Bounded runtime investigation completed on 2026-10-16
+
+`scripts/profile_runtime_redesign.py` contains three explicitly experimental
+interpolators, outside the production source tree. CPU JAX 0.4.38 measurements
+use 32 predeclared random states and eight synchronized repetitions; compilation
+is separate. Raw samples and errors are in `docs/runtime_redesign/`.
+
+| Variant | 32 RPCBF calls, median | Cache build | Posterior field refresh | Largest control difference |
+|---|---:|---:|---:|---:|
+| Original POAM field evaluation | 90–93 ms | — | — | reference |
+| Entire draw and mean tabulated, 129 columns | 4.84 ms | 63.9 ms per posterior | requires rebuild | 0.0240 |
+| Fixed prior tabulated, exact posterior kernels | 13.08 ms | 65.7 ms per bank | 0.256 ms | 0.0232 |
+| Fixed prior and kernel tabulated | 12.93 ms | 62.6 ms per bank | 0.295 ms | 0.0240 |
+
+The coarse 65-column complete-field cache changed a control by 0.336 and is
+rejected. Fine-cache tests still observed barrier-gradient errors around 0.12;
+zero feasibility disagreements in 32 states is not a safety validation. NaN
+outside the interpolation interior makes domain exits explicit; a deployable
+planner must reject/refresh such cases. Kernel/inducing changes invalidate the
+cache. Covariance inference remains full POAM; interpolated fields are only a
+numerical sampling/evaluation approximation. Cache identities are independent
+draw indices, never a hidden-world feature available to a branch router.
+
+Decoupling uses the existing Matheron sampler: precompute the unchanged prior
+draw, then change only its exact small inducing correction when q(u) changes.
+This is based on Wilson et al., ICML 2020,
+https://proceedings.mlr.press/v119/wilson20a.html . The experiment keeps the actual
+backup rollout, cubic-spline extremum, state derivative and QP. Catmull–Rom field
+interpolation is additional to the RPCBF time spline and is labeled separately.
+The MBD reference remains Pan et al., NeurIPS 2024,
+https://proceedings.neurips.cc/paper_files/paper/2024/file/6a5c38a730b17f3827c09cf6b192be04-Paper-Conference.pdf .
+
+Four actual recorded observation batches were replayed through online POAM with
+10 training steps and inducing relocation. Update/construction times were
+2.056/0.658 s initially, 0.488/0.0105 s next, then 0.277/0.00884 and 0.277/0.00917 s.
+These include tracing costs; only four batches were measured. Full online POAM
+is therefore not the main multiplicative bottleneck. This one-off measurement
+used the first four execution batches of the preserved archipelago proposed
+partial record and `new_poam`, `update`, `planning_belief` with its frozen config.
+
+**No end-to-end one-second result exists yet.** Even a sevenfold component
+speedup leaves too many nested calls. Next implement and benchmark a separately
+labeled budgeted approximation, rather than resuming the old objective sweep:
+
+1. A warm-started 10-second receding-horizon MBD plan, with a coarse control-knot
+   representation and finer executed integration. Do not execute ten seconds
+   open-loop. Keep full-grid Q clarity dynamics.
+2. Replace the inner Monte Carlo branch-selection optimization with a compact
+   observation-conditioned future feedback policy jointly optimized by MBD.
+   Its inputs may contain only first-stage terminal state, clarity and posterior
+   summaries. Both posterior mean and uncertainty may affect future controls.
+   The candidate objective remains causal task cost, with no information bonus.
+3. Compare cached full RPCBF against a local approximate candidate filter under
+   a declared trust region. Use full RPCBF on selected trajectories and actual
+   applied controls; report disagreement and rejection. A frozen local model
+   must not silently pretend to account for changed posterior backup values.
+   Retain the full evaluator as a development reference, not in every proposal.
+4. Allocate an explicit ~1-second total budget including required belief/cache
+   refresh, optimization and selected-plan verification. Initial compilation is
+   a reported startup cost. Measure full-cycle p50/p95 and deadline misses over
+   at least 100 varying calls, not repeated identical data only. Reusing a prior
+   plan on a miss must be reported as a missed fresh-plan deadline.
+5. Compare candidate ranking, first-action discrepancy, empirical clearance,
+   physical collisions and executed clarity against the full model before
+   long missions. A fast result with no learning benefit is not acceptance.
+
+Only bounded single-worker profiling continues. No heavy worker remains after
+these measurements. Two interpolation/conditioning tests initially passed;
+the conditioning test was then expanded to both kernel modes. Ten frontend
+tests and the syntax/lint checks passed. Production src and frozen configs were
+not edited. Existing previews contain 97.2 seconds of actual execution for both
+archipelago arms and proposed channels, explicitly marked stopped/unfinished.
+The archived A/B example is directly reachable and remains labeled a legacy
+feature-GP experiment; it is not evidence for full POAM superiority.
+
+## Historical study instructions (superseded where conflicting)
+
 # Persistent research continuation — 2026-10-16
 
 The requested end result is an evidence-based demonstration of three regimes:
