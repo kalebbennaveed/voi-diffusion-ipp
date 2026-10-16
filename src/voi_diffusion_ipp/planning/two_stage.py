@@ -7,7 +7,7 @@ import jax.numpy as jnp
 
 from ..clarity import deficit
 from ..wind import WorldField, information_gain
-from .rollout import rollout
+from .rollout import continuation, rollout
 
 
 class ScenarioBuffers(NamedTuple):
@@ -15,6 +15,7 @@ class ScenarioBuffers(NamedTuple):
     observation_noise: jax.Array
     inner_prior_eps: jax.Array
     inner_future_eps: jax.Array
+    future_noise: jax.Array
 
 
 class TwoStageResult(NamedTuple):
@@ -34,10 +35,11 @@ def make_buffers(belief, key, cfg):
         jax.random.normal(ko, (cfg.worlds, cfg.stage_steps, 2)),
         jax.random.normal(ki, shape),
         jax.random.normal(kf, shape),
+        jax.random.normal(jax.random.fold_in(ko, 81001), (cfg.worlds, cfg.future_steps, 2)),
     )
 
 
-def route(x, q, belief, env, cfg, futures=None, inner_eps=None):
+def route(x, q, belief, env, cfg, futures=None, inner_eps=None, updates=None):
     """Only observable state and posterior enter this API. No field or scenario ID."""
     if cfg.shared_future or cfg.branches == 1:
         return jnp.array(0, jnp.int32)
@@ -46,7 +48,7 @@ def route(x, q, belief, env, cfg, futures=None, inner_eps=None):
             raise ValueError(
                 "Task-conditioned recourse requires the candidate future policy library"
             )
-        costs = recourse_costs(x, q, belief, futures, env, cfg, inner_eps)
+        costs = recourse_costs(x, q, belief, futures, env, cfg, inner_eps, updates)
         return jnp.argmin(costs).astype(jnp.int32)
     mean, cov = belief.predict(jnp.array([[0.0, 0.0]]))
     crosswind = jnp.abs(mean[0, 1]) + 1.5 * jnp.sqrt(cov[0, 1, 1])
@@ -54,7 +56,7 @@ def route(x, q, belief, env, cfg, futures=None, inner_eps=None):
     return (crosswind > 0.45).astype(jnp.int32)
 
 
-def recourse_costs(x, q, belief, futures, env, cfg, inner_eps=None):
+def recourse_costs(x, q, belief, futures, env, cfg, inner_eps=None, updates=None):
     """Posterior predictive action values, with no outer-world argument.
 
     These independent, fixed standardized draws are common random numbers across
@@ -66,25 +68,33 @@ def recourse_costs(x, q, belief, futures, env, cfg, inner_eps=None):
         inner_eps = jax.random.normal(
             jax.random.PRNGKey(910032), (cfg.inner_samples, *belief.mean.shape)
         )
-    inner = belief.inner_fields(inner_eps)
+    updates = cfg.future_updates if updates is None else updates
+    noises = jax.random.normal(
+        jax.random.PRNGKey(910033), (cfg.recourse_samples, cfg.future_steps, 2)
+    )
 
     def policy_cost(controls):
-        def world_cost(coeff):
-            out = rollout(
+        def world_cost(inputs):
+            coeff, noise = inputs
+            out = continuation(
                 x,
                 q,
                 controls,
                 belief,
-                inner,
+                inner_eps,
                 WorldField(belief.basis, coeff),
-                jnp.zeros((cfg.future_steps, 2)),
+                noise,
                 env,
                 cfg,
+                updates=updates,
             )
             cost = out.cost + cfg.terminal_seconds * deficit(out.q[-1], env.targets)
-            return jnp.where(cfg.reject_collisions & (jnp.min(out.clearance) < 0), jnp.inf, cost)
+            invalid = (cfg.reject_collisions & (jnp.min(out.clearance) < 0)) | (
+                cfg.require_feasible_candidates & ~jnp.all(out.feasible)
+            )
+            return jnp.where(invalid, jnp.inf, cost)
 
-        return jnp.mean(jax.lax.map(world_cost, coefficients))
+        return jnp.mean(jax.lax.map(world_cost, (coefficients, noises)))
 
     return jax.lax.map(policy_cost, futures)
 
@@ -108,7 +118,18 @@ def decode(vector, cfg):
 
 
 def evaluate_one(
-    vector, x, q, belief, coeff, noise, inner_eps, future_eps, env, cfg, mode="proposed"
+    vector,
+    x,
+    q,
+    belief,
+    coeff,
+    noise,
+    inner_eps,
+    future_eps,
+    env,
+    cfg,
+    mode="proposed",
+    future_noise=None,
 ):
     first_controls, futures = decode(vector, cfg)
     world = WorldField(belief.basis, coeff)
@@ -118,17 +139,21 @@ def evaluate_one(
         belief.condition(first.x[1:, :2], first.observations) if cfg.measurements else belief
     )
     stage_belief = posterior if mode in ("proposed", "fixed") else belief
-    branch = route(first.x[-1], first.q[-1], stage_belief, env, cfg, futures, future_eps)
-    future = rollout(
+    updates = cfg.future_updates and mode in ("proposed", "fixed")
+    if future_noise is None:
+        future_noise = jax.random.normal(jax.random.PRNGKey(910034), (cfg.future_steps, 2))
+    branch = route(first.x[-1], first.q[-1], stage_belief, env, cfg, futures, future_eps, updates)
+    future = continuation(
         first.x[-1],
         first.q[-1],
         futures[branch],
         stage_belief,
-        stage_belief.inner_fields(future_eps),
+        future_eps,
         world,
-        jnp.zeros((cfg.future_steps, 2)),
+        future_noise,
         env,
         cfg,
+        updates=updates,
         feedback=(mode == "fixed"),
     )
     ig = information_gain(belief, posterior)
@@ -156,12 +181,17 @@ def evaluate_one(
         if mode not in ("passive", "heuristic"):
             feasible &= jnp.min(future.clearance) >= 0
         cost = jnp.where(feasible, cost, jnp.inf)
+    if cfg.require_feasible_candidates:
+        feasible_qp = jnp.all(first.feasible)
+        if mode not in ("passive", "heuristic"):
+            feasible_qp &= jnp.all(future.feasible)
+        cost = jnp.where(feasible_qp, cost, jnp.inf)
     return TwoStageResult(cost, first, future, posterior, branch, ig)
 
 
 def objective(vector, x, q, belief, buffers, env, cfg, mode="proposed"):
     def one(args):
-        coeff, noise = args
+        coeff, noise, future_noise = args
         result = evaluate_one(
             vector,
             x,
@@ -174,11 +204,16 @@ def objective(vector, x, q, belief, buffers, env, cfg, mode="proposed"):
             env,
             cfg,
             mode,
+            future_noise,
         )
         return result.cost
 
     # Sequential scenario map bounds memory; all candidates share these exact random buffers.
-    return jnp.mean(jax.lax.map(one, (buffers.world_coefficients, buffers.observation_noise)))
+    return jnp.mean(
+        jax.lax.map(
+            one, (buffers.world_coefficients, buffers.observation_noise, buffers.future_noise)
+        )
+    )
 
 
 def matched_no_information(result, vector, old_belief, coeff, future_eps, env, cfg):
@@ -190,7 +225,7 @@ def matched_no_information(result, vector, old_belief, coeff, future_eps, env, c
     _, futures = decode(vector, cfg)
     x = result.first.x[-1]
     q = result.first.q[-1]
-    b = route(x, q, old_belief, env, cfg, futures, future_eps)
+    b = route(x, q, old_belief, env, cfg, futures, future_eps, updates=False)
     return rollout(
         x,
         q,

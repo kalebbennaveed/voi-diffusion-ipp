@@ -17,13 +17,13 @@ from ..clarity import deficit
 from ..config import config_dict, load_config
 from ..dynamics import step
 from ..planning.mpc import initial_policy, next_initial, planner
-from ..planning.rollout import rollout
+from ..planning.rollout import continuation, rollout
 from ..planning.two_stage import decode, route
 from ..wind import WorldField
 from .scenarios import make_scenario
 
 
-def mission(cfg, method, seed, out, progress=True):
+def mission(cfg, method, seed, out, progress=True, observer=None):
     env, belief, x, q = make_scenario(cfg)
     # World key namespace differs from optimization/observation/filter namespaces.
     root = jax.random.PRNGKey(seed)
@@ -59,25 +59,35 @@ def mission(cfg, method, seed, out, progress=True):
         )
     )
     future_exec = jax.jit(
-        lambda x, q, u, b, eps: rollout(
+        lambda x, q, u, b, eps, noise, updates: continuation(
             x,
             q,
             u,
             b,
-            b.inner_fields(eps),
+            eps,
             truth,
-            jnp.zeros((cfg.future_steps, 2)),
+            noise,
             env,
             cfg,
+            updates=updates,
             feedback=(method == "fixed"),
-        )
+        ),
+        static_argnames=("updates",),
     )
-    choose = jax.jit(lambda x, q, b, fu, eps: route(x, q, b, env, cfg, fu, eps))
-    warm_next = jax.jit(lambda previous, x, q, b: next_initial(previous, x, q, b, env, cfg))
+    planning_updates = cfg.future_updates and method in ("proposed", "cem", "mppi", "fixed")
+    choose = jax.jit(
+        lambda x, q, b, fu, eps, updates: route(x, q, b, env, cfg, fu, eps, updates),
+        static_argnames=("updates",),
+    )
+    warm_next = jax.jit(
+        lambda previous, x, q, b: next_initial(previous, x, q, b, env, cfg, planning_updates)
+    )
     nominal_step = jax.jit(
         lambda x, u, b: step(x, u, lambda p: (b.basis.features(p) @ b.mean)[0], cfg.dt)
     )
     initial = jax.jit(lambda x, q, b: initial_policy(x, q, b, env, cfg))(x, q, belief)
+    if observer:
+        observer("compiling", {"config": cfg, "method": method, "seed": seed})
     compile_start = time.perf_counter()
     compiled = plan.lower(x, q, belief, jax.random.fold_in(root, 200000), initial, env).compile()
     compile_s = time.perf_counter() - compile_start
@@ -102,6 +112,10 @@ def mission(cfg, method, seed, out, progress=True):
     diag = []
     optimizer_failures = []
     query = env.cells
+    history = []
+    policies = []
+    belief_means = [np.asarray(belief.mean)]
+    belief_covariances = [np.asarray(belief.covariance)]
     for h in range(cfg.mission_horizons):
         kp = jax.random.fold_in(root, 200000 + h)
         ki = jax.random.fold_in(root, 300000 + h)
@@ -112,6 +126,21 @@ def mission(cfg, method, seed, out, progress=True):
         opt = compiled(x, q, belief, kp, initial, env)
         opt.cost.block_until_ready()
         timings.append(time.perf_counter() - t)
+        history.append(jax.tree.map(np.asarray, opt.history))
+        policies.append(np.asarray(opt.vector))
+        if observer:
+            observer(
+                "planned",
+                {
+                    "horizon": h,
+                    "x": x,
+                    "q": q,
+                    "belief": belief,
+                    "opt": opt,
+                    "key": kp,
+                    "environment": env,
+                },
+            )
         optimizer_failed = not np.isfinite(opt.cost)
         optimizer_failures.append(optimizer_failed)
         if optimizer_failed:
@@ -137,10 +166,23 @@ def mission(cfg, method, seed, out, progress=True):
         future_eps = jax.random.normal(
             jax.random.fold_in(root, 500000 + h), (cfg.inner_samples, *belief.mean.shape)
         )
-        branch = choose(result.x[-1], result.q[-1], belief, fu, future_eps)
-        learned = future_exec(result.x[-1], result.q[-1], fu[branch], belief, future_eps)
-        old_branch = choose(result.x[-1], result.q[-1], old, fu, future_eps)
-        noinfo = future_exec(result.x[-1], result.q[-1], fu[old_branch], old, future_eps)
+        branch = choose(result.x[-1], result.q[-1], belief, fu, future_eps, planning_updates)
+        future_noise = jax.random.normal(
+            jax.random.fold_in(root, 510000 + h), (cfg.future_steps, 2)
+        )
+        learned = future_exec(
+            result.x[-1],
+            result.q[-1],
+            fu[branch],
+            belief,
+            future_eps,
+            future_noise,
+            cfg.future_updates,
+        )
+        old_branch = choose(result.x[-1], result.q[-1], old, fu, future_eps, False)
+        noinfo = future_exec(
+            result.x[-1], result.q[-1], fu[old_branch], old, future_eps, future_noise, False
+        )
         diag.append(
             {
                 "learned_cost": float(learned.cost),
@@ -180,12 +222,25 @@ def mission(cfg, method, seed, out, progress=True):
         means.append(np.asarray(mean))
         variances.append(np.asarray(cov[:, 0, 0]))
         branches.append(int(branch))
+        belief_means.append(np.asarray(belief.mean))
+        belief_covariances.append(np.asarray(belief.covariance))
         costs.append(float(result.cost))
         traces.append(np.asarray(opt.trace))
         if progress:
             print(
                 f"{cfg.scenario} {method} seed={seed} horizon={h + 1}/{cfg.mission_horizons} cost={costs[-1]:.4f} plan={timings[-1]:.2f}s clearance={float(jnp.min(result.clearance)):.3f}",
                 flush=True,
+            )
+        if observer:
+            observer(
+                "executed",
+                {
+                    "horizon": h,
+                    "result": result,
+                    "belief": belief,
+                    "branch": int(branch),
+                    "cost": costs[-1],
+                },
             )
     X = np.concatenate(xs)
     Q = np.concatenate(qs)
@@ -266,6 +321,13 @@ def mission(cfg, method, seed, out, progress=True):
         roi_b=np.asarray(env.roi_b),
         probe=np.asarray(env.probe),
         true_wind=np.asarray(truth.at(query)),
+        policy_vectors=np.asarray(policies),
+        belief_coefficients=np.asarray(belief_means),
+        belief_covariances=np.asarray(belief_covariances),
+        **{
+            f"diffusion_{name}": np.stack([getattr(item, name) for item in history])
+            for name in opt.history._fields
+        },
     )
     return metrics
 

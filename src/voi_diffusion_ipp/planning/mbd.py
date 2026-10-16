@@ -11,12 +11,26 @@ import jax
 import jax.numpy as jnp
 
 
+class DiffusionHistory(NamedTuple):
+    candidates: jax.Array
+    costs: jax.Array
+    weights: jax.Array
+    noisy_before: jax.Array
+    noisy_after: jax.Array
+    score: jax.Array
+    incumbent: jax.Array
+    alpha: jax.Array
+    alphabar: jax.Array
+
+
 class OptimizationResult(NamedTuple):
     vector: jax.Array
     cost: jax.Array
     trace: jax.Array  # incumbent, population mean, effective sample size, invalid fraction
     evaluations: jax.Array
     iterates: jax.Array
+    history: DiffusionHistory
+    initial: jax.Array
 
 
 def schedule(steps, beta_min, beta_max):
@@ -61,6 +75,8 @@ def optimize(objective, initial, key, cfg, algorithm="mbd"):
 
     def iteration(carry, i):
         y, scale, best, best_cost, key = carry
+        noisy_before = y
+        s = jnp.zeros_like(y)
         key, k = jax.random.split(key)
         eps = jax.random.normal(k, (cfg.proposals, initial.size))
         if algorithm == "mbd":
@@ -100,9 +116,10 @@ def optimize(objective, initial, key, cfg, algorithm="mbd"):
             if algorithm == "mbd"
             else y
         )
-        return (y, scale, best, best_cost, key), (trace, normalized)
+        history = DiffusionHistory(candidates, costs, w, noisy_before, y, s, best, alpha[i], ab[i])
+        return (y, scale, best, best_cost, key), (trace, normalized, history)
 
-    (y, _, best, cost, _), (trace, iterates) = jax.lax.scan(
+    (y, _, best, cost, _), (trace, iterates, history) = jax.lax.scan(
         iteration,
         (y, jnp.ones_like(initial) * 0.8, initial, initial_cost, key),
         jnp.arange(cfg.diffusion_steps - 1, -1, -1),
@@ -115,4 +132,6 @@ def optimize(objective, initial, key, cfg, algorithm="mbd"):
         trace,
         jnp.array(cfg.diffusion_steps * cfg.proposals + 2),
         iterates,
+        history,
+        initial,
     )

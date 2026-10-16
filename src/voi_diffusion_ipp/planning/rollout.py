@@ -22,6 +22,46 @@ class Rollout(NamedTuple):
     slack: jax.Array
 
 
+def continuation(
+    x, q, controls, belief, inner_eps, world, noise, env, cfg, updates=False, feedback=False
+):
+    """Execute shared policy parameters, conditioning only at complete period boundaries.
+
+    The physical world remains fixed. Inner fields are posterior transforms of
+    fixed independent standard draws. Measurements enter only subsequent periods.
+    """
+    if not updates or not cfg.measurements:
+        return rollout(
+            x, q, controls, belief, belief.inner_fields(inner_eps), world, noise, env, cfg, feedback
+        )
+    periods = len(controls) // cfg.stage_steps
+    us = controls.reshape(periods, cfg.stage_steps, 2)
+    ns = noise.reshape(periods, cfg.stage_steps, 2)
+
+    def period(carry, inputs):
+        x, q, b = carry
+        u, n = inputs
+        out = rollout(x, q, u, b, b.inner_fields(inner_eps), world, n, env, cfg, feedback)
+        updated = b.condition(out.x[1:, :2], out.observations)
+        return (out.x[-1], out.q[-1], updated), out
+
+    _, out = jax.lax.scan(period, (x, q, belief), (us, ns))
+    flatten = lambda a: a.reshape((-1, *a.shape[2:]))
+    return Rollout(
+        jnp.concatenate((x[None], flatten(out.x[:, 1:]))),
+        jnp.concatenate((q[None], flatten(out.q[:, 1:]))),
+        flatten(out.nominal),
+        flatten(out.controls),
+        flatten(out.observations),
+        out.cost.sum(),
+        flatten(out.correction),
+        flatten(out.feasible),
+        flatten(out.clearance),
+        flatten(out.admissible),
+        flatten(out.slack),
+    )
+
+
 def clarity_controller(x, q, belief, env, cfg):
     """Fixed task-aware continuation approximation; no wind-information reward."""
     need = jnp.maximum(env.targets - q, 0)

@@ -49,6 +49,8 @@ class Config:
     recourse_samples: int = 3
     waypoint_x_limit: float = 2.25
     waypoint_y_limit: float = 1.65
+    future_updates: bool = False
+    require_feasible_candidates: bool = False
     seeds: tuple = (0, 1, 2)
     methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
@@ -85,6 +87,8 @@ class Config:
             raise ValueError("Unknown control representation")
         if self.branch_rule not in ("crosswind", "task"):
             raise ValueError("Unknown branch rule")
+        if self.future_updates and self.future_steps % self.stage_steps:
+            raise ValueError("Future updates require whole fixed-belief periods")
 
 
 def load_config(path):

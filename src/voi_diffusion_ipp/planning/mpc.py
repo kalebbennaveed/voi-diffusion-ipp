@@ -95,12 +95,12 @@ def initial_policy(x, q, belief, env, cfg, first_goal=None):
     return jnp.concatenate((first[None], futures)).ravel()
 
 
-def next_initial(previous, x, q, belief, env, cfg):
+def next_initial(previous, x, q, belief, env, cfg, updates=None):
     # Reuse the observation-selected future as a warm first period. Remaining
     # branches are task-only seeds; the whole vector is optimized again.
     base = initial_policy(x, q, belief, env, cfg).reshape((1 + cfg.branches, cfg.knots, 2))
     prior = previous.reshape(base.shape)
-    b = route(x, q, belief, env, cfg, decode(previous, cfg)[1])
+    b = route(x, q, belief, env, cfg, decode(previous, cfg)[1], updates=updates)
     # First period only covers the first TL/TF of previous future.
     times = jnp.linspace(0, min(1, cfg.stage_steps / cfg.future_steps), cfg.knots)
     knots = jax.vmap(

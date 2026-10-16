@@ -63,3 +63,21 @@ def test_cem_elites_exclude_infeasible_candidates():
     result = optimize(f, jnp.array([0.05]), jax.random.PRNGKey(8), cfg, "cem")
     assert np.isfinite(result.cost)
     assert np.all((np.asarray(result.iterates) >= 0) & (np.asarray(result.iterates) <= 0.1))
+
+
+def test_recorded_diffusion_is_the_actual_score_and_reverse_update():
+    cfg = replace(Config(), diffusion_steps=4, proposals=12, candidate_chunk=1)
+    objective = lambda y: jnp.sum((y - 0.4) ** 2)
+    r = optimize(objective, jnp.zeros(3), jax.random.PRNGKey(81), cfg)
+    h = r.history
+    np.testing.assert_allclose(h.costs, jax.vmap(jax.vmap(objective))(h.candidates), atol=1e-7)
+    np.testing.assert_allclose(h.weights.sum(axis=1), 1, atol=1e-6)
+    for i in range(cfg.diffusion_steps):
+        s, w = score(h.noisy_before[i], h.candidates[i], h.costs[i], h.alphabar[i], cfg.temperature)
+        # Separate eager/JIT evaluations round the cancellation numerator in
+        # float32 differently; division by 1-alphabar amplifies that error.
+        np.testing.assert_allclose(h.score[i], s, atol=2e-5, rtol=1e-5)
+        np.testing.assert_allclose(h.weights[i], w, atol=2e-6)
+        expected = (h.noisy_before[i] + (1 - h.alphabar[i]) * s) / jnp.sqrt(h.alpha[i])
+        np.testing.assert_allclose(h.noisy_after[i], expected, atol=2e-6)
+    np.testing.assert_array_equal(h.noisy_before[1:], h.noisy_after[:-1])
