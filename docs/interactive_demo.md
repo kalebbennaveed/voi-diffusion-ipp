@@ -13,7 +13,7 @@ not a JavaScript approximation and does not claim browser GPU acceleration.
 
 ## Current whole-field views
 
-The **Choose an environment** grid at the top lists all six full-model scenarios.
+The **Choose an environment** grid at the top lists all eight full-model scenarios.
 **Play comparison** opens both methods and scrolls directly to the animated maps;
 **All environments** returns to the grid. Each pending persistent environment
 shows the status of both methods and executed planning-period counts. The browser
@@ -36,6 +36,28 @@ passes. Click a cell to see both executed clarity histories, its target, and an
 analytic no-sensing decay reference. Final tables count repeated sensing passes
 and restoration of previously lost target clarity. These counts never treat
 continuous hovering as multiple visits.
+
+Two further development environments, **Wind gates** and **Quiet survey basin**,
+are queued for 90-second missions with stronger spatial process noise (base
+Qp = 0.08, approximately 0.04–0.12 across the field). They test a potentially
+useful-learning regime and a small-wind negative control. Pending cards show
+their actual batch state; their outcomes have not yet been established.
+
+**Every cell over the full mission** shows two history heatmaps, with all 475
+cells in fixed grid order and real execution time on the horizontal axis. Switch
+between clarity and deficit, then click a history to choose both a cell and a
+time. The cell plot shows actual loss and recovery, its target and its analytic
+no-sensing trajectory. Initial cell selection favors repeated sensing, target
+recoveries and observed decay; this selection rule is disclosed. The decay
+caption reports actual Qp and the time for unsensed clarity to fall from 0.8 to
+0.6. These views use saved executed clarity, without synthetic cycles.
+
+**Wind in the safety filter** contains a separate fixed-policy ablation, with
+27 paired replays, play/pause, a first-contact jump, final paths and physical
+clearance histories. Both arms retain real wind and full online POAM. Only the
+RPCBF wind model changes. The recorded waypoint schedule is fixed, so this is
+not a new MBD replanning comparison. All failures and the complete aggregate
+result are visible; see [safety findings](wind_safety_validation/findings.md).
 
 The default comparison includes a field-layer selector (deficit, clarity, target),
 paired instantaneous and integrated deficit curves, and a shared animation clock.

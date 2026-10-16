@@ -19,6 +19,8 @@ const state = {
   comparison: null,
   records: [],
   persistent: null,
+  regimes: null,
+  safetyRecords: [],
   record: null,
   mode: 'comparison',
   comparisonClock: 0,
@@ -49,7 +51,9 @@ const environments = [
   {id:'field_mixed', name:'Mixed flow', duration:18, detail:'Vortices and shear · distributed monitoring demand'},
   {id:'persistent_archipelago', name:'Obstacle islands', duration:122.4, detail:'Six islands · repeated sensing as clarity decays'},
   {id:'persistent_channels', name:'Staggered channels', duration:122.4, detail:'Five obstacles · demand bands · striped process noise'},
-  {id:'persistent_mosaic', name:'Demand mosaic', duration:122.4, detail:'Five obstacles · patchy decay · varying clarity targets'}
+  {id:'persistent_mosaic', name:'Demand mosaic', duration:122.4, detail:'Five obstacles · patchy decay · varying clarity targets'},
+  {id:'wind_gates', name:'Wind gates', duration:90, detail:'Two constrictions · strong spatial Q decay · repeated monitoring'},
+  {id:'survey_basin', name:'Quiet survey basin', duration:90, detail:'Six islands · strong Q decay · low-value wind learning control'}
 ];
 
 function environmentRecord(environment) {
@@ -84,9 +88,10 @@ function renderEnvironments() {
     button.disabled = !record || state.loading;
     button.setAttribute('aria-label', `${record ? 'Play' : 'Awaiting'} ${environment.name} comparison`);
     button.textContent = record ? `▶ ${selected ? 'Replay' : 'Play'} comparison` : 'Awaiting completed pair';
-    const jobs = state.persistent?.jobs?.filter(j => j.scenario === environment.id) || [];
+    const study = ['wind_gates','survey_basin'].includes(environment.id) ? state.regimes : state.persistent;
+    const jobs = study?.jobs?.filter(j => j.scenario === environment.id) || [];
     card.querySelector('.environment-job-status').textContent = record ? 'Ready · full POAM · both planners' :
-      jobs.length ? jobs.map(j => `${j.method === 'proposed' ? 'Proposed' : 'Comparator'}: ${j.status === 'running' ? `${j.completed_periods || 0}/${j.total_periods} periods${stale ? ' · last known' : ' · running'}` : j.status}`).join(' · ') : 'No completed recording yet';
+      jobs.length > 2 ? `${jobs.filter(j=>j.status==='complete').length}/${jobs.length} missions complete · ${jobs.filter(j=>j.status==='running').length} running · ${jobs.filter(j=>j.status==='queued').length} queued` : jobs.length ? jobs.map(j => `${j.method === 'proposed' ? 'Proposed' : 'Comparator'}: ${j.status === 'running' ? `${j.completed_periods || 0}/${j.total_periods} periods${stale ? ' · last known' : ' · running'}` : j.status}`).join(' · ') : 'No completed recording yet';
   }
   $('active-environment').textContent = environments.find(e => e.id === state.data?.config.scenario)?.name || 'Recorded experiment';
 }
@@ -505,7 +510,7 @@ function setMetric(i, title, value, detail) {
   $(`metric-detail-${i}`).textContent = detail;
 }
 
-function drawResultMap(id, d, color, seconds = null) {
+function drawResultMap(id, d, color, seconds = null, layer = $('field-layer').value) {
   const {
     g,
     w,
@@ -534,7 +539,6 @@ function drawResultMap(id, d, color, seconds = null) {
     g.lineWidth = 1;
     g.stroke();
   });
-  const layer = $('field-layer').value;
   const passes = layer === 'visits' ? persistence(d).passHistory[frame.index] : null;
   e.cells.forEach((c, i) => {
     const a = xy(c),
@@ -922,7 +926,10 @@ function setPeriod(period) {
 async function catalog() {
   const response = await fetch('/api/catalog');
   if (!response.ok) throw Error('Cannot load local experiment catalog');
-  state.records = await response.json();
+  const records = await response.json();
+  state.records = records.filter(r => !r.kind || r.kind === 'mission');
+  state.safetyRecords = records.filter(r => r.kind === 'safety_ablation');
+  setupSafetyStudy();
   const selected = $('recording').value;
   $('recording').replaceChildren(...state.records.map(r => {
     const o = document.createElement('option');
@@ -939,6 +946,8 @@ async function replay(id) {
   renderEnvironments();
   $('recording').disabled = true;
   state.playing = false;
+  $('safety-study').open = false;
+  safety.playing = false;
   status('Loading experiment telemetry…', 'busy');
   try {
     const record = state.records.find(r => r.id === id);
@@ -964,6 +973,7 @@ async function replay(id) {
       const other = await fetch(`/api/replay/${encodeURIComponent(paired.id)}`);
       if (other.ok) state.comparison = await other.json();
     }
+    selectIllustrativeCell();
     let summary = 'No matched comparator for this recording.';
     $('comparison-summary').classList.remove('regression');
     if (state.comparison) {
@@ -1201,6 +1211,20 @@ window.addEventListener('keydown', e => {
 function animate(now) {
   const elapsed = Math.min((now - state.last) / 1000, .1);
   state.last = now;
+  if ($('safety-study').open && safety.data) {
+    if (safety.playing) {
+      const contact = firstSafetyContact();
+      const next = Math.min(safety.clock + elapsed * .5, safety.duration);
+      if (contact !== null && safety.clock < contact && next >= contact) {
+        safety.clock = contact;
+        safety.playing = false;
+      } else {
+        safety.clock = next;
+        safety.playing = next < safety.duration;
+      }
+    }
+    renderSafetyStudy();
+  }
   if (state.playing && state.data && state.mode === 'comparison') {
     const next = advanceComparison(state.comparisonClock, elapsed, Number($('comparison-speed')
       .value), summary(state.data).duration, $('comparison-loop').checked);
@@ -1340,6 +1364,10 @@ function drawFieldDiagnostics(a, b, time) {
     `${a.metrics.scenario}/${a.metrics.method}/${a.metrics.seed}/${time.toFixed(1)}/${$('wind-layer').value}/${window.innerWidth}`;
   if (diagnosticFrame === key) return;
   diagnosticFrame = key;
+  const process = a.environment.process_noise || a.environment.cells.map(()=>a.config.clarity_decay);
+  const qmin = Math.min(...process), qmax = Math.max(...process);
+  const decayTime = q => ((1/.6-1/.8)/q).toFixed(1);
+  $('decay-summary').textContent = `This recording: ${summary(a).duration.toFixed(1)} s · Qₚ ${qmin.toFixed(3)}${qmax-qmin>1e-6?'–'+qmax.toFixed(3):''}. ${qmax>0 ? `Without sensing, clarity 0.8 falls to 0.6 in ${decayTime(qmax)}${qmin>0 && qmax-qmin>1e-6?'–'+decayTime(qmin):''} seconds. The unsensed reference uses q(t)=q₀/(1+Qₚq₀t).` : 'Process-noise decay is disabled in this recording.'}`;
   $('field-key').textContent = $('field-layer').value === 'deficit' ?
     'Light: 0 · Dark: 0.8 deficit · lower is better' : $('field-layer').value === 'process' ? 'Light: 0 · Dark: 0.1 process noise Qₚ' : $('field-layer').value === 'visits' ? 'Light: 0 · Dark: ≥4 distinct sensing passes' : 'Light: 0 · Dark: 1 clarity';
   pairedCurve('field-deficit-chart', a, b, d => d.mission.q.map((q, i) => [i * d.config.dt, deficit(
@@ -1348,6 +1376,8 @@ function drawFieldDiagnostics(a, b, time) {
     v
   ]), time);
   drawCellDiagnostic(a, b, time);
+  drawFieldEvolution('evolution-a', a, time);
+  drawFieldEvolution('evolution-b', b, time);
   $('wind-map-a').setAttribute('aria-label',
     `Proposed ${a.config.wind_backend === 'poam' ? 'POAM' : 'legacy GP'} wind estimate and uncertainty`
     );
@@ -1469,20 +1499,22 @@ for (const id of ['result-map-a', 'result-map-b']) $(id).addEventListener('click
     if (distance < best) { best = distance; state.cell = i; }
   });
   diagnosticFrame = '';
+  $('cell-selection-note').textContent = 'Cell selected by you. All cells remain visible in the histories above.';
   update();
 });
 $('show-wind').onclick = () => $('wind-diagnostics').scrollIntoView({behavior:'smooth', block:'start'});
 
 async function persistentProgress() {
   try {
-    const response = await fetch('/api/persistent-status');
+    const [response, regimeResponse] = await Promise.all([fetch('/api/persistent-status'),fetch('/api/replay/regime_screen_status')]);
     if (!response.ok) throw Error('Progress unavailable');
+    if (regimeResponse.ok) state.regimes = await regimeResponse.json();
     const progress = await response.json();
     state.persistent = progress;
     const jobs = progress.jobs || [];
     // Publication happens after completion; retry until every complete pair is in the catalog.
     const missing = environments.some(e => !environmentRecord(e) && jobs.filter(j => j.scenario === e.id && j.status === 'complete').length === 2);
-    if (missing) await catalog();
+    if (missing || !state.loading) await catalog();
     renderEnvironments();
     $('persistent-progress').classList.toggle('hidden', !jobs.length);
     if (jobs.length) {
@@ -1510,3 +1542,180 @@ $('refresh-recordings').onclick = async () => {
 };
 $('all-environments').onclick = () => $('environments').scrollIntoView({behavior:'smooth', block:'start'});
 persistentProgress();
+
+// Separate from replanned learning comparisons: actual matched-policy safety replay.
+const safety = {data:null, arms:null, clock:0, duration:0, playing:false, signature:'', frame:'', request:0};
+function setupSafetyStudy() {
+  $('safety-study').classList.toggle('hidden', !state.safetyRecords.length);
+  const signature = state.safetyRecords.map(r=>r.id).join('|');
+  if (signature === safety.signature) return;
+  safety.signature = signature;
+  const selected = $('safety-case').value;
+  $('safety-case').replaceChildren(...state.safetyRecords.map(record => {
+    const option = document.createElement('option');
+    option.value = record.id;
+    option.textContent = record.label;
+    return option;
+  }));
+  const pilot = state.safetyRecords.find(r=>r.id === 'safety_field_mixed_302');
+  $('safety-case').value = state.safetyRecords.some(r=>r.id === selected) ? selected : (pilot || state.safetyRecords[0])?.id || '';
+  $('safety-study-count').textContent = `${state.safetyRecords.length} completed paired replays`;
+  fetch('/api/replay/wind_safety_index').then(r=> {
+    if (!r.ok) throw Error('Safety study summary unavailable');
+    return r.json();
+  }).then(report => {
+    $('safety-aggregate').textContent = `${report.completed_heldout}/${report.expected_heldout} independent wind seeds complete. Collisions: wind-aware ${report.wind_aware_collisions}, wind-ignored ${report.wind_ignored_collisions}.${report.complete && report.paired_exact_p !== null ? ` Paired exact test p = ${report.paired_exact_p.toPrecision(3)}.${report.paired_exact_p >= .05 ? ' This batch does not establish a collision-rate advantage.' : ''}` : ' Inference waits for the declared batch to finish.'} Original-seed positive controls are excluded from these counts.`;
+  }).catch(error => { $('safety-aggregate').textContent = error.message; });
+}
+
+async function loadSafetyCase(id) {
+  const request = ++safety.request;
+  safety.playing = false;
+  safety.data = null;
+  state.playing = false;
+  $('safety-case-note').textContent = 'Loading matched safety replay…';
+  for (const key of ['safety-play','safety-contact','safety-final','safety-timeline']) $(key).disabled = true;
+  try {
+    const response = await fetch(`/api/replay/${encodeURIComponent(id)}`);
+    if (!response.ok) throw Error('Safety recording unavailable');
+    const data = await response.json();
+    if (request !== safety.request) return;
+    safety.data = data;
+    safety.arms = ['wind_aware','wind_ignored'].map((name,i) => ({
+      config:data.config, environment:data.environment,
+      mission:data[name].mission,
+      metrics:{...data[name].metrics, method:i ? 'wind_ignored' : 'proposed', seed:data.seed}
+    }));
+    safety.duration = summary(safety.arms[0]).duration;
+    safety.clock = 0;
+    safety.frame = '';
+    safety.playing = true;
+    $('safety-timeline').max = safety.duration;
+    for (const key of ['safety-play','safety-contact','safety-final','safety-timeline']) $(key).disabled = false;
+    $('safety-contact').disabled = firstSafetyContact() === null;
+    renderSafetyStudy();
+  } catch (error) {
+    $('safety-case-note').textContent = error.message;
+  }
+}
+function firstSafetyContact() {
+  if (!safety.data) return null;
+  const times = ['wind_aware','wind_ignored'].map(k=>safety.data[k].metrics.first_collision_time).filter(Number.isFinite);
+  return times.length ? Math.min(...times) : null;
+}
+function renderSafetyStudy() {
+  if (!safety.data || !$('safety-study').open) return;
+  const frame = `${safety.clock.toFixed(2)}/${safety.playing}/${window.innerWidth}`;
+  if (safety.frame === frame) return;
+  safety.frame = frame;
+  const t = safety.clock, data = safety.data;
+  $('safety-play').textContent = safety.playing ? 'Ⅱ Pause safety replay' : '▶ Play safety replay';
+  $('safety-timeline').value = t;
+  $('safety-time').textContent = `${t.toFixed(2)} / ${safety.duration.toFixed(1)} s`;
+  const contact = firstSafetyContact();
+  const split = data.seed === data.policy_seed ? 'Original-seed positive control' : 'Independent physical wind seed';
+  $('safety-case-note').textContent = `${split} ${data.seed} · waypoint policy from seed ${data.policy_seed}. ${contact !== null && t >= contact ? 'Contact has occurred. Later motion is diagnostic continuation without collision-response physics.' : 'Both runs use their own online POAM estimates; waypoint schedules match.'}`;
+  for (const [i, name] of ['wind_aware','wind_ignored'].entries()) {
+    const side = i ? 'b' : 'a', arm = data[name], metric = arm.metrics;
+    drawResultMap(`safety-map-${side}`, safety.arms[i], i ? colors.red : colors.teal, t, 'deficit');
+    const collided = metric.first_collision_time !== null && t >= metric.first_collision_time;
+    const index = Math.max(0, Math.min(arm.mission.dense_clearance.length - 1, Math.ceil(t/data.config.dt)-1));
+    const initial = arm.mission.x[0];
+    const bounds = data.environment.bounds;
+    const atEnd = t >= safety.duration;
+    const clearance = atEnd ? metric.dense_minimum_clearance : t === 0 ? Math.min(...data.environment.obstacles.map(o=>Math.hypot(initial[0]-o[0],initial[1]-o[1])-o[2]), initial[0]-bounds[0][0], initial[1]-bounds[0][1], bounds[1][0]-initial[0], bounds[1][1]-initial[1]) : arm.mission.dense_clearance[index];
+    $('safety-outcome-'+side).textContent = `${collided ? 'Contact occurred' : atEnd ? 'No contact' : 'No contact yet'} · ${clearance.toFixed(3)} m ${atEnd ? 'mission minimum' : t === 0 ? 'initial clearance' : 'control-interval minimum'}`;
+    $('safety-outcome-'+side).style.color = collided ? colors.red : colors.teal;
+  }
+  const {g,w,h} = surface('safety-clearance');
+  const all = safety.arms.flatMap(d=>d.mission.dense_clearance);
+  const lo = Math.min(-.04, ...all) - .02, hi = Math.max(.1, ...all) + .02;
+  const xy = ([x,y]) => [42+x/safety.duration*(w-56), h-24-(y-lo)/(hi-lo)*(h-36)];
+  g.fillStyle = '#fff1ef';
+  g.fillRect(42, xy([0,0])[1], w-56, xy([0,lo])[1]-xy([0,0])[1]);
+  for (const y of [lo,0,hi]) {
+    path(g,[[0,y],[safety.duration,y]],xy,y===0 ? colors.red : '#dce3e7',1,y===0?[4,3]:[]);
+    label(g,y.toFixed(2),36,xy([0,y])[1]+3,'#637681',9,'right');
+  }
+  safety.arms.forEach((d,i)=>path(g,d.mission.dense_clearance.map((v,k)=>[(k+1)*d.config.dt,v]),xy,i?colors.red:colors.teal,1.8));
+  path(g,[[t,lo],[t,hi]],xy,'#536572',1,[3,3]);
+  label(g,'0',42,h-7,'#637681',9);
+  label(g,`${safety.duration.toFixed(1)} seconds`,w-14,h-7,'#637681',9,'right');
+}
+$('safety-study').ontoggle = () => {
+  if ($('safety-study').open) {
+    state.playing = false;
+    if (state.data) update();
+    if (!safety.data && $('safety-case').value) loadSafetyCase($('safety-case').value);
+    else { safety.frame = ''; renderSafetyStudy(); }
+  } else safety.playing = false;
+};
+$('safety-case').onchange = () => loadSafetyCase($('safety-case').value);
+$('safety-play').onclick = () => {
+  if (!safety.data) return;
+  if (safety.clock >= safety.duration) safety.clock = 0;
+  safety.playing = !safety.playing;
+  renderSafetyStudy();
+};
+$('safety-timeline').oninput = () => { safety.clock = Number($('safety-timeline').value); safety.playing = false; renderSafetyStudy(); };
+$('safety-contact').onclick = () => { safety.clock = firstSafetyContact() ?? 0; safety.playing = false; renderSafetyStudy(); };
+$('safety-final').onclick = () => { safety.clock = safety.duration; safety.playing = false; renderSafetyStudy(); };
+
+function selectIllustrativeCell() {
+  const [d] = comparisonPair(state.data, state.comparison);
+  const p = persistence(d);
+  let best = -Infinity;
+  d.environment.cells.forEach((_,k) => {
+    let peak = d.mission.q[0][k], fall = 0;
+    for (const q of d.mission.q) { peak = Math.max(peak,q[k]); fall = Math.max(fall,peak-q[k]); }
+    const score = (p.visits[k]>1 ? 100 : p.visits[k]>0 ? 1 : 0) + 10*p.recoveries[k] + fall;
+    if (score > best) { best = score; state.cell = k; }
+  });
+  $('cell-selection-note').textContent = 'Initial cell selection favors repeated sensing and target recoveries, then the largest observed clarity drop. Click any cell or history row to inspect another.';
+}
+const evolutionCache = new WeakMap();
+function drawFieldEvolution(id, d, time) {
+  const {g,w,h} = surface(id);
+  if (!d) return;
+  const layer = $('evolution-layer').value;
+  let cached = evolutionCache.get(d);
+  if (!cached || cached.layer !== layer) {
+    const canvas = document.createElement('canvas');
+    canvas.width = d.mission.q.length;
+    canvas.height = d.environment.cells.length;
+    const context = canvas.getContext('2d'), pixels = context.createImageData(canvas.width,canvas.height);
+    d.mission.q.forEach((q,t)=>q.forEach((value,k)=> {
+      const v = clamp(layer==='clarity' ? value : Math.max(0,d.environment.targets[k]-value)/.8,0,1);
+      const index = 4*(k*canvas.width+t);
+      pixels.data.set([Math.round(246-202*v),Math.round(246-159*v),Math.round(240-104*v),255],index);
+    }));
+    context.putImageData(pixels,0,0);
+    cached = {layer,canvas}; evolutionCache.set(d,cached);
+  }
+  const left=32, top=6, width=w-42, height=h-30;
+  g.imageSmoothingEnabled=false;
+  g.drawImage(cached.canvas,left,top,width,height);
+  g.imageSmoothingEnabled=true;
+  const x=left+clamp(time/summary(d).duration,0,1)*width;
+  g.strokeStyle='#fff'; g.lineWidth=2; g.beginPath(); g.moveTo(x,top); g.lineTo(x,top+height); g.stroke();
+  if (state.cell!==null) {
+    const y=top+(state.cell+.5)/d.environment.cells.length*height;
+    g.strokeStyle='#087f83';g.lineWidth=1;g.beginPath();g.moveTo(left,y);g.lineTo(left+width,y);g.stroke();
+  }
+  label(g,'1',left-6,top+8,'#637681',8,'right');
+  label(g,String(d.environment.cells.length),left-6,top+height,'#637681',8,'right');
+  label(g,'0 s',left,h-7,'#637681',9);
+  label(g,`${summary(d).duration.toFixed(1)} s`,w-10,h-7,'#637681',9,'right');
+}
+$('evolution-layer').onchange=()=>{diagnosticFrame='';update();};
+for (const id of ['evolution-a','evolution-b']) $(id).onclick=event=> {
+  if (!state.data) return;
+  const [d] = comparisonPair(state.data,state.comparison);
+  const box=$(id).getBoundingClientRect(), x=event.clientX-box.left-32,y=event.clientY-box.top-6;
+  if(x<0 || x>box.width-42 || y<0 || y>box.height-30) return;
+  state.cell=clamp(Math.floor(y/(box.height-30)*d.environment.cells.length),0,d.environment.cells.length-1);
+  state.comparisonClock=x/(box.width-42)*summary(d).duration;
+  state.mode='comparison';state.playing=false;diagnosticFrame='';
+  $('cell-selection-note').textContent='Cell and time selected by you from the complete field history.';
+  update();
+};

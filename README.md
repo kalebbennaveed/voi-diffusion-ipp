@@ -33,6 +33,14 @@ The completed [18-second full-POAM comparisons](docs/field_poam_findings.md) gav
 shear. All six runs are retained in the demo. This mixed outcome is the current
 evidence; the longer persistent study is running separately.
 
+The [wind-in-RPCBF ablation](docs/wind_safety_validation/findings.md) completed
+24 fresh physical wind seeds with matched fixed waypoint policies. It found
+one collision with wind-aware filtering and two when the filter ignored wind
+(paired exact p = 1.0). Individual contact examples are available in the demo,
+but this batch does not establish a collision-rate advantage. Stronger-decay
+90-second development cases are queued; the three requested research claims
+remain under investigation.
+
 Earlier ROI/finite-feature experiments reported gains, including 28.1% against
 frozen future belief, but those numbers apply **only to the historical model**.
 They are archived in [multistage findings](docs/multistage_findings.md),

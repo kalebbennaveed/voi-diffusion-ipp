@@ -270,8 +270,10 @@ if catalog:
     old = json.loads((root / "demo/data/catalog.json").read_text())
     for r in old:
         if r["id"] not in {v["id"] for v in catalog}:
-            if not r["id"].startswith(("field_", "persistent_")) and not r["label"].startswith(
-                "Legacy · "
+            if (
+                not r.get("kind")
+                and not r["id"].startswith(("field_", "persistent_"))
+                and not r["label"].startswith("Legacy · ")
             ):
                 r["label"] = "Legacy · " + r["label"]
             catalog.append(r)

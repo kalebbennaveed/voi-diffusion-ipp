@@ -158,5 +158,295 @@
     "group": "repeated-validation",
     "file": "demo/data/9313ee9837939ec9.json",
     "live": false
+  },
+  {
+    "id": "regime_screen_status",
+    "kind": "study_status",
+    "label": "High-decay ninety-second study progress",
+    "method": "status",
+    "seed": 0,
+    "group": "regime-screen",
+    "file": "tmp/learning-regimes/results/regime_screen/status.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_300",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 300 \u00b7 positive-control",
+    "method": "safety_ablation",
+    "seed": 300,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_300.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_610",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 610 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 610,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_610.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_611",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 611 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 611,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_611.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_612",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 612 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 612,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_612.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_613",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 613 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 613,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_613.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_614",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 614 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 614,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_614.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_615",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 615 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 615,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_615.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_616",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 616 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 616,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_616.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_vortices_617",
+    "kind": "safety_ablation",
+    "label": "vortices \u00b7 seed 617 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 617,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_vortices_617.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_301",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 301 \u00b7 positive-control",
+    "method": "safety_ablation",
+    "seed": 301,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_301.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_620",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 620 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 620,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_620.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_621",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 621 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 621,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_621.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_622",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 622 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 622,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_622.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_623",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 623 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 623,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_623.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_624",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 624 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 624,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_624.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_625",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 625 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 625,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_625.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_626",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 626 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 626,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_626.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_shear_627",
+    "kind": "safety_ablation",
+    "label": "shear \u00b7 seed 627 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 627,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_shear_627.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_302",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 302 \u00b7 positive-control",
+    "method": "safety_ablation",
+    "seed": 302,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_302.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_630",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 630 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 630,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_630.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_631",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 631 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 631,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_631.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_632",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 632 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 632,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_632.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_633",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 633 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 633,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_633.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_634",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 634 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 634,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_634.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_635",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 635 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 635,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_635.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_636",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 636 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 636,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_636.json",
+    "live": false
+  },
+  {
+    "id": "safety_field_mixed_637",
+    "kind": "safety_ablation",
+    "label": "mixed \u00b7 seed 637 \u00b7 held-out",
+    "method": "safety_ablation",
+    "seed": 637,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/safety_field_mixed_637.json",
+    "live": false
+  },
+  {
+    "id": "wind_safety_index",
+    "kind": "safety_index",
+    "label": "Wind-in-RPCBF study",
+    "method": "safety_ablation",
+    "seed": 0,
+    "group": "wind-safety-ablation",
+    "file": "demo/data/wind_safety_index.json",
+    "live": false
   }
 ]

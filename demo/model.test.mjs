@@ -52,6 +52,7 @@ test('all bundled replays have coherent telemetry and displayed actual costs', (
     'utf8'));
   assert.ok(catalog.length);
   for (const item of catalog) {
+    if (item.kind && item.kind !== 'mission') continue;
     const data = JSON.parse(fs.readFileSync(new URL('../' + item.file, import.meta.url),
       'utf8'));
     const c = cumulativeCost(data.mission.q, data.environment.targets, data.config.dt);
