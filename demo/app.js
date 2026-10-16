@@ -18,6 +18,7 @@ const state = {
   data: null,
   comparison: null,
   records: [],
+  persistent: null,
   record: null,
   mode: 'comparison',
   comparisonClock: 0,
@@ -42,6 +43,53 @@ const colors = {
 };
 const summaryCache = new WeakMap();
 const persistenceCache = new WeakMap();
+const environments = [
+  {id:'field_vortices', name:'Vortex field', duration:18, detail:'Three obstacles · seven distributed demand peaks'},
+  {id:'field_shear', name:'Shear flow', duration:18, detail:'Staggered obstacles · opposing flow across the field'},
+  {id:'field_mixed', name:'Mixed flow', duration:18, detail:'Vortices and shear · distributed monitoring demand'},
+  {id:'persistent_archipelago', name:'Obstacle islands', duration:122.4, detail:'Six islands · repeated sensing as clarity decays'},
+  {id:'persistent_channels', name:'Staggered channels', duration:122.4, detail:'Five obstacles · demand bands · striped process noise'},
+  {id:'persistent_mosaic', name:'Demand mosaic', duration:122.4, detail:'Five obstacles · patchy decay · varying clarity targets'}
+];
+
+function environmentRecord(environment) {
+  return state.records.find(r => r.id.startsWith(`${environment.id}_`) &&
+    r.method === 'proposed' && pairedRecord(state.records, r));
+}
+
+function renderEnvironments() {
+  const available = environments.filter(environmentRecord).length;
+  $('environment-count').textContent = `${available} playable · ${environments.length - available} awaiting paired runs`;
+  const stale = !state.persistent || Date.now()/1000 - state.persistent.updated_at > 120;
+  for (const environment of environments) {
+    let card = $(`environment-${environment.id}`);
+    if (!card) {
+      card = document.createElement('article');
+      card.id = `environment-${environment.id}`;
+      card.className = 'environment-card';
+      card.innerHTML = `<div class="environment-card-title"><h4>${environment.name}</h4><span>${environment.duration} s</span></div><p>${environment.detail}</p><div class="environment-job-status"></div><button type="button" class="environment-play"></button>`;
+      $('environment-grid').append(card);
+      card.querySelector('button').onclick = async () => {
+        const record = environmentRecord(environment);
+        if (!record || state.loading) return;
+        await replay(record.id);
+        if (state.record?.id === record.id) document.querySelector('.visual-panel').scrollIntoView({behavior:'smooth', block:'start'});
+      };
+    }
+    const record = environmentRecord(environment);
+    const selected = state.data?.config.scenario === environment.id;
+    card.classList.toggle('selected', selected);
+    card.classList.toggle('pending', !record);
+    const button = card.querySelector('button');
+    button.disabled = !record || state.loading;
+    button.setAttribute('aria-label', `${record ? 'Play' : 'Awaiting'} ${environment.name} comparison`);
+    button.textContent = record ? `▶ ${selected ? 'Replay' : 'Play'} comparison` : 'Awaiting completed pair';
+    const jobs = state.persistent?.jobs?.filter(j => j.scenario === environment.id) || [];
+    card.querySelector('.environment-job-status').textContent = record ? 'Ready · full POAM · both planners' :
+      jobs.length ? jobs.map(j => `${j.method === 'proposed' ? 'Proposed' : 'Comparator'}: ${j.status === 'running' ? `${j.completed_periods || 0}/${j.total_periods} periods${stale ? ' · last known' : ' · running'}` : j.status}`).join(' · ') : 'No completed recording yet';
+  }
+  $('active-environment').textContent = environments.find(e => e.id === state.data?.config.scenario)?.name || 'Recorded experiment';
+}
 
 function persistence(data) {
   if (!persistenceCache.has(data)) persistenceCache.set(data, persistenceMetrics(data));
@@ -883,10 +931,12 @@ async function catalog() {
     return o;
   }));
   if (state.records.some(r => r.id === selected)) $('recording').value = selected;
+  renderEnvironments();
 }
 async function replay(id) {
   if (state.loading) return;
   state.loading = true;
+  renderEnvironments();
   $('recording').disabled = true;
   state.playing = false;
   status('Loading experiment telemetry…', 'busy');
@@ -936,6 +986,9 @@ async function replay(id) {
       'Full-field clarity deficit · online POAM wind estimates · actual diffusion rollouts.' :
       'Archived 13-cell experiment · finite-feature GP · select a full-field POAM recording for the new model.';
     $('recording').value = id;
+    const url = new URL(location.href);
+    url.searchParams.set('run', id);
+    history.replaceState(null, '', url);
     $('method').value = data.metrics.method;
     if (data.config.whole_field) $('scenario').value = data.config.scenario;
     $('seed').value = data.metrics.seed;
@@ -954,6 +1007,7 @@ async function replay(id) {
   } finally {
     state.loading = false;
     $('recording').disabled = false;
+    renderEnvironments();
   }
 }
 async function run() {
@@ -1422,9 +1476,14 @@ $('show-wind').onclick = () => $('wind-diagnostics').scrollIntoView({behavior:'s
 async function persistentProgress() {
   try {
     const response = await fetch('/api/persistent-status');
-    if (!response.ok) return;
+    if (!response.ok) throw Error('Progress unavailable');
     const progress = await response.json();
+    state.persistent = progress;
     const jobs = progress.jobs || [];
+    // Publication happens after completion; retry until every complete pair is in the catalog.
+    const missing = environments.some(e => !environmentRecord(e) && jobs.filter(j => j.scenario === e.id && j.status === 'complete').length === 2);
+    if (missing) await catalog();
+    renderEnvironments();
     $('persistent-progress').classList.toggle('hidden', !jobs.length);
     if (jobs.length) {
       const stale = Date.now()/1000 - progress.updated_at > 120;
@@ -1440,6 +1499,7 @@ async function persistentProgress() {
     }
     setTimeout(persistentProgress, 10000);
   } catch {
+    renderEnvironments();
     setTimeout(persistentProgress, 10000);
   }
 }
@@ -1448,4 +1508,5 @@ $('refresh-recordings').onclick = async () => {
   const newest = state.records.find(r => r.id.startsWith('persistent_')) || state.records[0];
   if (newest) await replay(newest.id);
 };
+$('all-environments').onclick = () => $('environments').scrollIntoView({behavior:'smooth', block:'start'});
 persistentProgress();

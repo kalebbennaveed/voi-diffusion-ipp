@@ -13,6 +13,15 @@ not a JavaScript approximation and does not claim browser GPU acceleration.
 
 ## Current whole-field views
 
+The **Choose an environment** grid at the top lists all six full-model scenarios.
+**Play comparison** opens both methods and scrolls directly to the animated maps;
+**All environments** returns to the grid. Each pending persistent environment
+shows the status of both methods and executed planning-period counts. The browser
+refreshes availability as completed pairs are published, without interrupting the
+current playback. The selected recording is retained in the URL for direct links.
+A queued/running mission is not a completed demo; missing outcomes are never filled
+with repeated short recordings.
+
 New recordings use POAM and 475 equal-area clarity cells, with three distributed
 monitoring scenarios (vortices, shear, mixed flow). Historical recordings are
 explicitly marked **Legacy**. Never interpret their corridor percentages as

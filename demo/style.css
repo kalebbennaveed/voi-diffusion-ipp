@@ -1320,3 +1320,25 @@ main {
 .persistent-progress { margin: 0 0 18px; padding: 14px 18px; border: 1px solid #c9d8da; border-radius: 8px; background: #f2f7f7; color: #304d58; font-size: 13px; line-height: 1.6; }
 .persistent-progress p { margin: 5px 0; }
 .persistent-progress summary { font-weight: 600; }
+
+.environment-picker { margin: 0 0 20px; scroll-margin-top: 16px; }
+.environment-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.environment-heading h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.environment-heading span, .environment-picker > p { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.environment-picker > p { margin: 6px 0 12px; }
+.environment-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.environment-card { background: white; border: 1px solid var(--line); border-radius: 7px; padding: 12px; display: flex; flex-direction: column; }
+.environment-card.selected { border-color: var(--teal); box-shadow: inset 0 2px var(--teal); }
+.environment-card-title { display: flex; justify-content: space-between; align-items: baseline; gap: 5px; }
+.environment-card h4 { font-size: 13px; margin: 0; }
+.environment-card-title > span { font-size: 10px; white-space: nowrap; color: var(--muted); }
+.environment-card > p { color: var(--muted); font-size: 11px; line-height: 1.4; margin: 7px 0; }
+.environment-job-status { font-size: 10px; color: var(--teal); line-height: 1.5; margin-top: auto; }
+.environment-card.pending { background: #edf1f3; }
+.environment-card.pending .environment-job-status { color: #5d6e77; }
+.environment-play { border: 0; border-radius: 4px; background: #e5f1ef; color: #126b6d; text-align: left; padding: 8px; font-size: 11px; font-weight: 600; margin-top: 8px; }
+.environment-play:disabled { opacity: 1; color: #69767e; background: #e3e8eb; cursor: default; }
+.environment-return { display: flex; align-items: center; justify-content: space-between; padding: 7px 18px; background: #f6f9fa; border-bottom: 1px solid var(--line); }
+.environment-return span { color: var(--muted); font-size: 11px; }
+.visual-panel { scroll-margin-top: 10px; }
+@media(max-width:560px) { .environment-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .environment-heading { align-items: start; } .environment-heading span { max-width: 130px; text-align: right; } }
