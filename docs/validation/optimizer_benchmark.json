@@ -1,0 +1,182 @@
+[
+  {
+    "method": "mbd",
+    "seed": 0,
+    "cost": 0.8670364618301392,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 1,
+    "cost": 0.6019056439399719,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 2,
+    "cost": 0.5469621419906616,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 3,
+    "cost": 0.7121697068214417,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 4,
+    "cost": 0.7035142779350281,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 5,
+    "cost": 0.6071246862411499,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 6,
+    "cost": 1.2013851404190063,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 7,
+    "cost": 0.6845457553863525,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 8,
+    "cost": 0.5525782108306885,
+    "evaluations": 770
+  },
+  {
+    "method": "mbd",
+    "seed": 9,
+    "cost": 1.0180442333221436,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 0,
+    "cost": 0.7320755124092102,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 1,
+    "cost": 0.6953681707382202,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 2,
+    "cost": 1.0628182888031006,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 3,
+    "cost": 0.6510043740272522,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 4,
+    "cost": 0.7352880835533142,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 5,
+    "cost": 0.9862648844718933,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 6,
+    "cost": 0.7569721341133118,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 7,
+    "cost": 0.6755714416503906,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 8,
+    "cost": 0.8364676237106323,
+    "evaluations": 770
+  },
+  {
+    "method": "cem",
+    "seed": 9,
+    "cost": 0.6803810000419617,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 0,
+    "cost": 0.5472972989082336,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 1,
+    "cost": 0.5515367984771729,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 2,
+    "cost": 0.5568841695785522,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 3,
+    "cost": 0.5426121354103088,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 4,
+    "cost": 0.5515709519386292,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 5,
+    "cost": 0.5495554804801941,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 6,
+    "cost": 0.5608193874359131,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 7,
+    "cost": 0.5512781143188477,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 8,
+    "cost": 0.5748334527015686,
+    "evaluations": 770
+  },
+  {
+    "method": "mppi",
+    "seed": 9,
+    "cost": 0.5455873608589172,
+    "evaluations": 770
+  }
+]

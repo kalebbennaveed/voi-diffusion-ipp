@@ -1,0 +1,101 @@
+{
+  "scenario": "corridor",
+  "method": "proposed",
+  "seed": 0,
+  "integrated_deficit": 0.48300445079803467,
+  "final_deficit": 0.45577895641326904,
+  "roi_a_access": false,
+  "roi_a_time": null,
+  "probe_seconds": 0.0,
+  "collision": false,
+  "minimum_clearance": 0.6291654706001282,
+  "qp_infeasible_fraction": 0.0,
+  "correction_frequency": 0.6666666666666666,
+  "mean_correction": 0.6085862517356873,
+  "max_qp_slack": 0.0,
+  "wind_rmse": 0.747109591960907,
+  "wind_95_coverage": 0.9615384615384616,
+  "wind_mean_std": 0.3942910432815552,
+  "compile_seconds": 12.923874208936468,
+  "planning_seconds": [
+    0.027157458011060953,
+    0.027356541948392987
+  ],
+  "mean_plan_seconds": 0.02725699997972697,
+  "objective_evaluations_per_plan": 10,
+  "optimizer_failure_count": 0,
+  "seconds_per_objective": 0.002725699997972697,
+  "mission_wall_seconds": 9.37760804197751,
+  "peak_process_bytes": 1530953728,
+  "backend": "cpu",
+  "devices": [
+    "TFRT_CPU_0"
+  ],
+  "jax_version": "0.4.38",
+  "platform": "macOS-15.7.4-arm64-arm-64bit",
+  "matched_continuations": [
+    {
+      "learned_cost": 0.29330939054489136,
+      "no_information_cost": 0.29331088066101074,
+      "net_benefit": 1.4901161193847656e-06,
+      "correction_change": 0.05568140745162964,
+      "admissible_change": -0.04591834545135498,
+      "optimized_policy_valid": true
+    },
+    {
+      "learned_cost": 0.2707868218421936,
+      "no_information_cost": 0.2707868218421936,
+      "net_benefit": 0.0,
+      "correction_change": 0.010302752256393433,
+      "admissible_change": 0.0,
+      "optimized_policy_valid": true
+    }
+  ],
+  "config": {
+    "scenario": "corridor",
+    "dt": 0.15,
+    "stage_steps": 3,
+    "future_steps": 4,
+    "mission_horizons": 2,
+    "knots": 3,
+    "branches": 2,
+    "worlds": 2,
+    "inner_samples": 2,
+    "backup_steps": 4,
+    "backup_dt": 0.12,
+    "backup_gain": 2.0,
+    "cbf_alpha": 1.0,
+    "umax": 1.6,
+    "safety_margin": 0.06,
+    "diffusion_steps": 2,
+    "proposals": 4,
+    "temperature": 0.035,
+    "beta_min": 0.005,
+    "beta_max": 0.18,
+    "candidate_chunk": 1,
+    "terminal_seconds": 0.0,
+    "sensor_sigma": 0.38,
+    "sensor_R": 0.18,
+    "clarity_decay": 0.035,
+    "wind_std": 0.55,
+    "wind_length": 1.1,
+    "observation_std": 0.1,
+    "ig_weight": 0.025,
+    "measurements": true,
+    "shared_future": false,
+    "independent_cells": false,
+    "spline": "full",
+    "wind_backend": "poam",
+    "poam_train_steps": 3,
+    "reject_collisions": true,
+    "warm_starts": 1,
+    "obstacle_radius": 0.79,
+    "seeds": [
+      0
+    ],
+    "methods": [
+      "proposed"
+    ]
+  },
+  "poam_snapshot_max_omitted_variance": 0.0732133686542511
+}

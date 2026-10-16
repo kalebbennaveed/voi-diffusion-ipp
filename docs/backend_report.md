@@ -3,6 +3,8 @@
 Host: ARM64 Apple M3, 16 GB, macOS 15.7.4, Xcode command-line tools present.
 UV 0.10.8. Python environments, package caches and downloaded interpreters all
 live under this repository.
+Copies of the environment, timing and failure logs are committed in
+[validation/](validation/), alongside the 19-test CPU log.
 
 ## CPU: validated
 

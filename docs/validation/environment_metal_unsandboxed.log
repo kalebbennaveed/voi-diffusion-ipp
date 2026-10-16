@@ -1,0 +1,37 @@
+Platform 'METAL' is experimental and not all JAX functionality may be correctly supported!
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+W0000 00:00:1792169211.241524 15983557 mps_client.cc:510] WARNING: JAX Apple GPU support is experimental and not all JAX functionality is correctly supported!
+Metal device set to: Apple M3
+I0000 00:00:1792169211.256226 15983557 service.cc:145] XLA service 0x116c860f0 initialized for platform METAL (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1792169211.256357 15983557 service.cc:153]   StreamExecutor device (0): Metal, <undefined>
+I0000 00:00:1792169211.257788 15983557 mps_client.cc:406] Using Simple allocator.
+I0000 00:00:1792169211.257802 15983557 mps_client.cc:384] XLA backend will use up to 11452776448 bytes on device 0 for SimpleAllocator.
+
+systemMemory: 16.00 GB
+maxCacheSize: 5.33 GB
+
+Traceback (most recent call last):
+  File "/Users/kalebbennaveed/phd_research/repos/disturbance-aware-ipp-ws/voi-diffusion-ipp/scripts/check_environment.py", line 37, in <module>
+    main()
+  File "/Users/kalebbennaveed/phd_research/repos/disturbance-aware-ipp-ws/voi-diffusion-ipp/scripts/check_environment.py", line 26, in main
+    t = time.perf_counter(); y = f(x).block_until_ready()
+                                 ^^^^
+jaxlib.xla_extension.XlaRuntimeError: UNKNOWN: /Users/kalebbennaveed/phd_research/repos/disturbance-aware-ipp-ws/voi-diffusion-ipp/scripts/check_environment.py:13:8: error: failed to legalize operation 'mhlo.cholesky'
+    L = jnp.linalg.cholesky(a)
+       ^
+/Users/kalebbennaveed/phd_research/repos/disturbance-aware-ipp-ws/voi-diffusion-ipp/scripts/check_environment.py:13:8: note: called from
+    L = jnp.linalg.cholesky(a)
+       ^
+/Users/kalebbennaveed/phd_research/repos/disturbance-aware-ipp-ws/voi-diffusion-ipp/scripts/check_environment.py:26:33: note: called from
+    t = time.perf_counter(); y = f(x).block_until_ready()
+                                ^
+/Users/kalebbennaveed/phd_research/repos/disturbance-aware-ipp-ws/voi-diffusion-ipp/scripts/check_environment.py:37:4: note: called from
+    main()
+   ^
+/Users/kalebbennaveed/phd_research/repos/disturbance-aware-ipp-ws/voi-diffusion-ipp/scripts/check_environment.py:13:8: note: see current operation: %46 = "mhlo.cholesky"(%45) {lower = true} : (tensor<32x32xf32>) -> tensor<32x32xf32>
+    L = jnp.linalg.cholesky(a)
+       ^
+
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+I0000 00:00:1792169212.108271 15983557 mps_client.h:209] MetalClient destroyed.

@@ -1,5 +1,9 @@
 # Implementation checkpoints
 
+Final recorded validation: 19 passing CPU tests and 120 archived mission runs.
+See [measured findings](experimental_findings.md) for the current result; the
+entries below preserve the sequence of implementation checkpoints.
+
 ## Phases 0-1
 
 Native ARM64 macOS 15.7.4, Xcode command-line tools present. UV 0.10.8,
@@ -42,3 +46,21 @@ paired trials and a higher-budget initialization/horizon diagnostic are running.
 An equal-budget nonconvex trajectory benchmark favors MPPI over MBD on ten seeds;
 this negative solver result is retained. All-invalid optimization is now an
 explicit fallback event, not a discarded mission.
+
+## Phase 6 — measured baseline and ablation report
+
+Completed 90 baseline missions (ten methods, three scenarios, three seeds),
+18 ablation missions, three larger-budget paired diagnostics, and nine longer
+missions on fresh seeds. All use the actual spline RPCBF; no penalty substitutes
+are used. MBD/CEM/MPPI share objective-evaluation budgets. CEM invalid elites,
+fallback reporting and fixed-continuation diagnostics were corrected and affected
+experiments rerun. Config-safe resume and numerical observation-routing tests pass.
+
+The larger-budget single-seed case improves cost by 17.28% over the frozen-future
+belief comparator. Fresh-seed longer missions show learning is useful but the
+proposed objective is 3.36% worse on average than that comparator. The intended
+robust VoI advantage is therefore not established. All collisions, infeasible QPs
+and all-invalid optimization fallbacks remain in the evidence. The source, lock,
+configurations, metrics, distribution tables, selected figures and backend/test
+logs are preserved. CPU is validated; both tested Metal stacks are unsupported
+for this workload/OS, and Linux CUDA remains untested.

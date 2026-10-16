@@ -60,9 +60,20 @@ The online POAM implementation retains unweighted accumulated kernel statistics,
 transports them when inducing inputs/kernel change, selects inducing inputs by
 pivoted Cholesky, analytically updates the variational distribution, and adapts
 an attentive-kernel NN/amplitude with minibatch variational EM. Observation-noise
-variance stays fixed. The full sparse predictive joint covariance includes the
-conditional residual. Planning freezes a finite-anchor snapshot and omits the
+variance stays fixed. The attentive kernel uses the same normalized NN output
+for length-scale mixture and membership weights; these are tied parameters.
+The configured prior wind standard deviation initializes its amplitude. The full
+sparse predictive joint covariance includes the conditional residual.
+Planning freezes a finite-anchor snapshot and omits the
 residual between anchors, which is logged on monitoring cells. This permits
 coherent field samples and static array shapes; it can underestimate uncertainty
 between anchors. The default feature-GP experiments do not validate POAM-based
 mission performance. `configs/poam.yaml` is only an integration smoke check.
+
+The independent nonconvex optimizer benchmark uses a soft circle cost purely as
+an optimizer test. It is not an RPCBF experiment; every mission comparison uses
+the full policy-value filter. Empirical mission clearance is sampled at four
+integration substeps per control interval and does not certify continuous-time
+collision absence. Some experiment processes ran concurrently, so their runtime
+values include host contention; use the isolated kernel benchmark for a compact
+reproducible timing check. Process peak RSS also includes accumulated JIT caches.
