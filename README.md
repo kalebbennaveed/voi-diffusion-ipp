@@ -12,7 +12,9 @@ A revised feedback/recourse variant reduced mean cost by 20.9% on its first ten
 validation seeds. Repeated future belief updates subsequently reduced mean cost
 by **28.1% versus frozen future belief** and **6.6% versus the two-stage variant**
 on ten new paired seeds. No collisions occurred, but repeated updates required
-9 infeasible-QP relaxations across 800 steps, versus 1 and 2 respectively.
+9 allowed barrier-relaxation steps across 800 steps, versus 1 and 2 respectively.
+Safety is a soft constraint: slack is measured separately from physical collisions
+and optimizer failures. See the [precise policy and current research stage](docs/soft_constraint_interpretation.md).
 Read the [latest findings](docs/multistage_findings.md),
 [earlier recourse findings](docs/recourse_findings.md),
 [research workflow](docs/research_workflow.md), and
@@ -26,10 +28,13 @@ no formal safety or optimality guarantee is claimed.
 JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.viz.demo_server --port 8765
 ```
 
-Open <http://127.0.0.1:8765>. Inspect the actual diffusion proposals, weights,
-score updates and selected trajectories, then play the executed mission with
+Open <http://127.0.0.1:8765>. The default **Final result** view compares completed
+missions side by side, with costs, arrival times, clarity and allowed safety slack.
+Both methods learn during execution; only the proposed method anticipates learning
+while choosing current motion. Inspect either planner's actual diffusion proposals,
+weights, score updates and selected trajectories, then play the executed mission with
 clarity, wind belief, safety diagnostics and a paired comparator. The included
-eight recordings cover useful learning, a cost regression, repeated updates,
+ten recordings cover useful learning, a cost regression, repeated updates,
 QP relaxation events, and a no-measurement control.
 The interface can launch new JAX runs with different seeds and settings. It has
 no frontend dependencies or external assets. See [demo instructions and

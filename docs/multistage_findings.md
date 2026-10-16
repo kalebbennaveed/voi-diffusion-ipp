@@ -1,5 +1,10 @@
 # Repeated belief updates and an inspectable diffusion demo
 
+**Subsequent scope clarification:** safety relaxation is allowed. References below
+to QP failures mean infeasibility of the *unrelaxed* inequalities, not failure of
+the soft-constraint method or physical collision. Numerical evidence is unchanged;
+see [the revised interpretation and slack magnitudes](soft_constraint_interpretation.md).
+
 The refined planner produces a repeatable monitoring benefit in the controlled
 localized-wind scenario. Across ten fresh paired seeds, it reduced mean executed
 clarity cost by **28.07%** relative to frozen-future-belief planning and **6.57%**

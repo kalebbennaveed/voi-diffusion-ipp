@@ -1,5 +1,25 @@
 [
   {
+    "id": "308f4f304d0fadc7",
+    "label": "Validation \u00b7 repeated updates \u00b7 proposed \u00b7 seed 200",
+    "method": "proposed",
+    "seed": 200,
+    "variant": "multistage",
+    "group": "repeated-validation",
+    "file": "demo/data/308f4f304d0fadc7.json",
+    "live": false
+  },
+  {
+    "id": "a2c93e5d491ca445",
+    "label": "Validation \u00b7 no anticipated learning \u00b7 seed 200",
+    "method": "current_belief",
+    "seed": 200,
+    "variant": "multistage",
+    "group": "repeated-validation",
+    "file": "demo/data/a2c93e5d491ca445.json",
+    "live": false
+  },
+  {
     "id": "recorded-proposed-102",
     "label": "Useful learning \u00b7 proposed \u00b7 seed 102",
     "method": "proposed",
@@ -11,7 +31,7 @@
   },
   {
     "id": "recorded-current-102",
-    "label": "Useful learning \u00b7 frozen belief \u00b7 seed 102",
+    "label": "Useful learning \u00b7 no anticipated learning \u00b7 seed 102",
     "method": "current_belief",
     "seed": 102,
     "variant": "two_stage",
@@ -41,7 +61,7 @@
   },
   {
     "id": "e714aac26248f130",
-    "label": "Cost regression \u00b7 frozen belief \u00b7 seed 104",
+    "label": "Cost regression \u00b7 no anticipated learning \u00b7 seed 104",
     "method": "current_belief",
     "seed": 104,
     "variant": "two_stage",
@@ -51,7 +71,7 @@
   },
   {
     "id": "73a106502172678b",
-    "label": "Repeated updates \u00b7 proposed \u00b7 seed 20",
+    "label": "Development \u00b7 Repeated updates \u00b7 proposed \u00b7 seed 20",
     "method": "proposed",
     "seed": 20,
     "variant": "multistage",
@@ -61,7 +81,7 @@
   },
   {
     "id": "25e23a0515fe7309",
-    "label": "Repeated updates \u00b7 frozen belief \u00b7 seed 20",
+    "label": "Development \u00b7 Repeated updates \u00b7 no anticipated learning \u00b7 seed 20",
     "method": "current_belief",
     "seed": 20,
     "variant": "multistage",
@@ -71,7 +91,7 @@
   },
   {
     "id": "9313ee9837939ec9",
-    "label": "QP relaxation \u00b7 repeated updates \u00b7 seed 204",
+    "label": "Allowed safety relaxation \u00b7 repeated updates \u00b7 seed 204",
     "method": "proposed",
     "seed": 204,
     "variant": "multistage",

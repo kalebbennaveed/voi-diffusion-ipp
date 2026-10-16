@@ -13,19 +13,29 @@ not a JavaScript approximation and does not claim browser GPU acceleration.
 
 ## What to inspect
 
-- **Diffusion:** select a planning period and scrub the reverse updates. Gray
+- **Final result (default):** compare completed, actually executed missions side
+  by side. Both approaches learn during execution; only the proposed planner
+  anticipates learning while choosing current motion. The table separates initial
+  and later monitoring cost, arrival time, clearance, collisions and allowed
+  barrier slack. Default seed 200 exactly reproduces archived validation states
+  and costs. Pair identities stay consistent when either record is selected.
+- **Denoising:** inspect either planner from its result card, select a planning
+  period and scrub the reverse updates. Gray
   paths are sampled policies, weighted by their actual stochastic objective.
   Purple is the denoised policy mean; teal is the best evaluated policy. At the
   last level, teal and the cost card include the final denoised-policy evaluation.
   Hover over a weight bar to isolate a candidate and inspect its objective,
   importance weight and observation-selected branch.
-- **Mission:** scrub actual robot motion, clarity, measurements, corrections,
-  clearance and QP feasibility. The wind posterior changes only at period
+- **Mission playback:** scrub actual robot motion, clarity, measurements, corrections,
+  clearance and allowed barrier slack. Proposed is teal; the comparator is amber.
+  The wind posterior changes only at period
   boundaries. The physical-wind layer is explicitly diagnostic and never feeds
   the planner or safety filter.
 - **Follow planning → execution:** play all recorded denoising levels for a
   period, execute that period, then proceed to the next plan and updated belief.
-  Playback speed is independent of measured solve time.
+  Playback speed is independent of measured solve time. “Show final selected plan”
+  jumps to the final evaluated selection; completed mission playback returns to
+  the Final result view.
 - **Paired comparator:** overlay a run using the same physical wind. The comparison
   uses actual integrated clarity cost. A no-measurement demonstration and losing
   cases are included alongside favorable cases.
@@ -88,4 +98,6 @@ The bundled scenarios are controlled examples with a known spatial wind shape.
 They are not a general robot simulator or a proof of safety. Live experiments
 are offline computations on the M3; changing controls creates a new experimental
 result, not an independently validated method claim. The interface retains losses,
-infeasible QPs and optimizer failures rather than hiding them.
+allowed barrier slack and optimizer failures rather than hiding them. A positive
+slack is not a collision or an automatic mission failure; see the
+[soft-constraint interpretation and research status](soft_constraint_interpretation.md).

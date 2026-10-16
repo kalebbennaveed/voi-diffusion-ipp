@@ -1,6 +1,6 @@
 # Implementation checkpoints
 
-Current validation: 30 passing CPU tests, 4 passing frontend tests, 120 original
+Current validation: 30 passing CPU tests, 7 passing frontend tests, 120 original
 archived missions, 37 feedback/recourse missions, and 49 repeated-update refinement
 missions (including six explicitly superseded development runs).
 See [latest findings](multistage_findings.md), [recourse findings](recourse_findings.md)
@@ -100,3 +100,21 @@ launches new serialized JAX runs. Eight bundled recordings include losses and
 QP failures. Browser verification included a completed live experiment; 30
 Python tests and four frontend tests pass. Source and dependencies remain
 inside this repository; all five reference repositories remain read-only.
+
+## Demo clarity and soft-constraint interpretation
+
+The user clarified that barrier relaxation is allowed. The numerical minimum-slack
+filter is unchanged: positive slack is now assessed separately from physical
+collisions and optimizer failures. A report of peak, integrated and duration-based
+slack metrics reuses the unchanged 30 validation missions.
+
+The demo now defaults to a paired final-result view with completed trajectories,
+initial/later/total task costs and arrival times. Both methods learn during real
+execution; only the proposed method anticipates future learning during planning.
+Either planner's denoising can be inspected, including its final selected plan,
+and mission playback returns to the final comparison. Ten recordings include
+the new validation seed 200 pair, which exactly reproduces archived states,
+clarity, controls, slack and feasibility. Seven frontend tests validate costs,
+comparison orientation, matching worlds and soft-slack accounting. The previous
+30 Python tests remain applicable; numerical planner source is unchanged.
+See [the precise soft-constraint policy and research stage](soft_constraint_interpretation.md).
