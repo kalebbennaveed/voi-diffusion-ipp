@@ -28,6 +28,11 @@ independent physical wind, and soft RPCBF constraints. They are not a statistica
 superiority study. Diffusion's advantage over matched-budget CEM/MPPI and broad
 mission-level superiority still require validation.
 
+The completed [18-second full-POAM comparisons](docs/field_poam_findings.md) gave
+6.38% lower cost in mixed flow, but 4.52% and 2.29% higher cost in vortices and
+shear. All six runs are retained in the demo. This mixed outcome is the current
+evidence; the longer persistent study is running separately.
+
 Earlier ROI/finite-feature experiments reported gains, including 28.1% against
 frozen future belief, but those numbers apply **only to the historical model**.
 They are archived in [multistage findings](docs/multistage_findings.md),

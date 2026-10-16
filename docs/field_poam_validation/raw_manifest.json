@@ -4,5 +4,17 @@
   "results/field_poam/recordings/field_vortices/field_vortices_proposed_300.demo.json": "07bd0989f0cbff5f73529106f1a9067dc1d1efdd559a53bc9ec4479525215df4",
   "results/field_poam/recordings/field_vortices/field_vortices_current_belief_300.json": "b7cf77ab66a55813da48a5bc317f01f338dbbbca920a64da6ea2d5fba39f223a",
   "results/field_poam/recordings/field_vortices/field_vortices_current_belief_300.npz": "9c978df338ea58eb8473ce0a6d8a6f442cdc6283b88824088aad6950661abb7c",
-  "results/field_poam/recordings/field_vortices/field_vortices_current_belief_300.demo.json": "2db8bd18d9d66136fb6caadce040d5b80723e0ce11512821c82c56c77ec02ac8"
+  "results/field_poam/recordings/field_vortices/field_vortices_current_belief_300.demo.json": "2db8bd18d9d66136fb6caadce040d5b80723e0ce11512821c82c56c77ec02ac8",
+  "results/field_poam/recordings/field_shear/field_shear_proposed_301.json": "323f0933444a3ca4000c27bd31f3f43d7934764bcab99cb2f85908e08d137d62",
+  "results/field_poam/recordings/field_shear/field_shear_proposed_301.npz": "8067e280953897001fbc90de251466602a35d5047ecd99e0eb4bd7e89f0df739",
+  "results/field_poam/recordings/field_shear/field_shear_proposed_301.demo.json": "4a88480c02d4852483b287fe00c5189c6fab35a61d69979440fc7db5a72c00df",
+  "results/field_poam/recordings/field_shear/field_shear_current_belief_301.json": "978ea1d610ecd9581ee330dbfe7bc38d91fbacb2b9c0f234bb24a98764ca55d1",
+  "results/field_poam/recordings/field_shear/field_shear_current_belief_301.npz": "8a8dc84334a40cf6f4085690d059ece56e2af856a392025ca16dca01f40dcf89",
+  "results/field_poam/recordings/field_shear/field_shear_current_belief_301.demo.json": "ddaf04f0d9f7271008dc86300c44061e40c2c5f5d4d9304dea5bf0db9c550edf",
+  "results/field_poam/recordings/field_mixed/field_mixed_proposed_302.json": "8dac7ef2f7dee90d30d29d6ff2573b61fcff7a6217d3553948512c9e0db11d7d",
+  "results/field_poam/recordings/field_mixed/field_mixed_proposed_302.npz": "76c4d1095494316fb098724916da19fdaeebb25e695c54c5c60a60e54f6521a2",
+  "results/field_poam/recordings/field_mixed/field_mixed_proposed_302.demo.json": "92e5bc39e55cb4a00c11601308bf8128361a24412a4aab19aa3842bf3d7851bc",
+  "results/field_poam/recordings/field_mixed/field_mixed_current_belief_302.json": "eed09056dd04bd757fba91693cdeba758616ce1525d17c3820fb4aa647ae33fa",
+  "results/field_poam/recordings/field_mixed/field_mixed_current_belief_302.npz": "6c6fb03a5d0508a7f063668d0ce126790b9f2c3478e3f4f8c86f298c3da77c71",
+  "results/field_poam/recordings/field_mixed/field_mixed_current_belief_302.demo.json": "7fa09daff73f0da68ef19f36468e5fb61ce17ffc63e45ca8b8dda95c52d34897"
 }

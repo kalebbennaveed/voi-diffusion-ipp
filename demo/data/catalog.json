@@ -1,7 +1,7 @@
 [
   {
     "id": "field_vortices_proposed_300",
-    "label": "Full POAM \u00b7 vortices \u00b7 proposed \u00b7 seed 300",
+    "label": "Full POAM \u00b7 18 s \u00b7 vortices \u00b7 proposed \u00b7 seed 300",
     "method": "proposed",
     "seed": 300,
     "variant": "multistage",
@@ -11,12 +11,52 @@
   },
   {
     "id": "field_vortices_current_belief_300",
-    "label": "Full POAM \u00b7 vortices \u00b7 current_belief \u00b7 seed 300",
+    "label": "Full POAM \u00b7 18 s \u00b7 vortices \u00b7 current_belief \u00b7 seed 300",
     "method": "current_belief",
     "seed": 300,
     "variant": "multistage",
     "group": "full-poam-field_vortices",
     "file": "demo/data/field_vortices_current_belief_300.json",
+    "live": false
+  },
+  {
+    "id": "field_shear_proposed_301",
+    "label": "Full POAM \u00b7 18 s \u00b7 shear \u00b7 proposed \u00b7 seed 301",
+    "method": "proposed",
+    "seed": 301,
+    "variant": "multistage",
+    "group": "full-poam-field_shear",
+    "file": "demo/data/field_shear_proposed_301.json",
+    "live": false
+  },
+  {
+    "id": "field_shear_current_belief_301",
+    "label": "Full POAM \u00b7 18 s \u00b7 shear \u00b7 current_belief \u00b7 seed 301",
+    "method": "current_belief",
+    "seed": 301,
+    "variant": "multistage",
+    "group": "full-poam-field_shear",
+    "file": "demo/data/field_shear_current_belief_301.json",
+    "live": false
+  },
+  {
+    "id": "field_mixed_proposed_302",
+    "label": "Full POAM \u00b7 18 s \u00b7 mixed \u00b7 proposed \u00b7 seed 302",
+    "method": "proposed",
+    "seed": 302,
+    "variant": "multistage",
+    "group": "full-poam-field_mixed",
+    "file": "demo/data/field_mixed_proposed_302.json",
+    "live": false
+  },
+  {
+    "id": "field_mixed_current_belief_302",
+    "label": "Full POAM \u00b7 18 s \u00b7 mixed \u00b7 current_belief \u00b7 seed 302",
+    "method": "current_belief",
+    "seed": 302,
+    "variant": "multistage",
+    "group": "full-poam-field_mixed",
+    "file": "demo/data/field_mixed_current_belief_302.json",
     "live": false
   },
   {

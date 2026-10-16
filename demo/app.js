@@ -1432,7 +1432,10 @@ async function persistentProgress() {
       const running = jobs.filter(j => j.status === 'running').map(j =>
         `${j.scenario.replace('persistent_','')} / ${j.method === 'proposed' ? 'proposed' : 'no anticipated learning'}: ${j.completed_periods || 0}/${j.total_periods} periods`);
       const failed = jobs.filter(j => j.status === 'failed').length;
-      $('persistent-progress-text').textContent = `${complete}/${jobs.length} missions complete. ${running.join(' · ')}${failed ? ` · ${failed} failed; logs retained.` : ''}${stale && running.length ? ' · Progress has not updated recently; execution may be paused.' : ''} Completed pairs appear in Recorded run. These are offline CPU experiments.`;
+      const paired = jobs.some(j => j.status === 'complete' && jobs.some(k => k.scenario === j.scenario && k.method !== j.method && k.status === 'complete'));
+      $('refresh-recordings').disabled = !paired;
+      $('refresh-recordings').textContent = paired ? 'Load completed persistent comparison →' : 'Persistent replay available when a pair finishes';
+      $('persistent-progress-text').textContent = `${complete}/${jobs.length} missions complete. ${running.join(' · ')}. ${failed ? `${failed} failed; logs retained. ` : ''}${stale && running.length ? 'Progress has not updated recently; execution may be paused. ' : ''}Completed pairs appear in Recorded run. These are offline CPU experiments.`;
     }
     setTimeout(persistentProgress, 10000);
   } catch {
