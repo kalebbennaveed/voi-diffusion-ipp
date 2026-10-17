@@ -1,0 +1,111 @@
+[
+  {
+    "file": "aerial_grass_rock_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_grass_rock/aerial_grass_rock_diff_1k.jpg",
+    "sha256": "57b8041bfe0d0f01430e4dbaad45e7ddddf0a9fc97317f90dbc51f7b0d9e1b5d",
+    "bytes": 666655,
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "aerial_grass_rock_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_grass_rock/aerial_grass_rock_nor_gl_1k.jpg",
+    "sha256": "1aa3e23bff453f152e089b9f83aa36b4901651e019f7e2ca01d5331a9bbbda78",
+    "bytes": 904956,
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "aerial_grass_rock_rough_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/aerial_grass_rock/aerial_grass_rock_rough_1k.jpg",
+    "sha256": "b9f3f76aba74007f708333c0dbe73c52eb83ea0c4187a13e2e994f888a25114a",
+    "bytes": 362214,
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "rocky_terrain_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_terrain/rocky_terrain_diff_1k.jpg",
+    "sha256": "429315865fd89c150272592f6d93def174c6f69804a565ff08e53627a885579b",
+    "bytes": 905179,
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "rocky_terrain_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_terrain/rocky_terrain_nor_gl_1k.jpg",
+    "sha256": "a6556e1220c6e6c822e68ceeb9589719e4db8c87340199657cc705fea6ecf391",
+    "bytes": 1059194,
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "rocky_terrain_rough_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_terrain/rocky_terrain_rough_1k.jpg",
+    "sha256": "b37dfff29fff10a219bfe73886940625df63b345289ea6b71ec5f6ddadc8adcb",
+    "bytes": 439748,
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "helicopter.glb",
+    "url": "https://raw.githubusercontent.com/srcejon/sdrangel-3d-models/main/helicopter.glb",
+    "source": "https://skfb.ly/6XBwS",
+    "author": "Gigantic Burger",
+    "sha256": "cf93bc4c874e6ead912456bbe64c108570aa300d37967a452388fbf217962e3f",
+    "bytes": 2214424,
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "modifications": "Original binary unchanged; display scale, position and rotor animation are set at runtime."
+  },
+  {
+    "file": "pine_tree_01_twig_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_tree_01/pine_tree_01_twig_diff_1k.jpg",
+    "source": "https://polyhaven.com/a/pine_tree_01",
+    "author": "Rico Cilliers / Rob Tuytel",
+    "license": "CC0-1.0",
+    "sha256": "e649f0f9bc74d1af5f1a45eaf2fe7a29adaaddfab251f746b983da301e4b80e1",
+    "bytes": 510932
+  },
+  {
+    "file": "pine_tree_01_twig_alpha_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_tree_01/pine_tree_01_twig_alpha_1k.jpg",
+    "source": "https://polyhaven.com/a/pine_tree_01",
+    "author": "Rico Cilliers / Rob Tuytel",
+    "license": "CC0-1.0",
+    "sha256": "bee10734c529a874570da6e4091758de5cc7dee17a359eeacd9c67fde1cb0947",
+    "bytes": 195206
+  },
+  {
+    "file": "aircraft.glb",
+    "url": "https://raw.githubusercontent.com/srcejon/sdrangel-3d-models/main/glider.glb",
+    "source": "https://skfb.ly/S9LQ",
+    "author": "helijah",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "bytes": 2487768,
+    "sha256": "c78e0c051979d274b538c362da584c5bf9c54698a5627c75a837bda08b4ac001",
+    "modifications": "Original binary unchanged, renamed aircraft.glb. Scale, orientation and placement set at runtime."
+  },
+  {
+    "file": "rock_face_03_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_face_03/rock_face_03_diff_1k.jpg",
+    "source": "https://polyhaven.com/a/rock_face_03",
+    "author": "Dario Barresi / Rico Cilliers",
+    "license": "CC0-1.0",
+    "bytes": 927082,
+    "sha256": "ea48e0e47ad42c8bd312476178b1248ec66f0eb19156a26a1c222f2a40caaf2d"
+  },
+  {
+    "file": "rock_face_03_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_face_03/rock_face_03_nor_gl_1k.jpg",
+    "source": "https://polyhaven.com/a/rock_face_03",
+    "author": "Dario Barresi / Rico Cilliers",
+    "license": "CC0-1.0",
+    "bytes": 1146788,
+    "sha256": "c6423169583f31715cf0636954bad524e806848a5f2861fcea6794275f726ff0"
+  },
+  {
+    "file": "rock_face_03_rough_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_face_03/rock_face_03_rough_1k.jpg",
+    "source": "https://polyhaven.com/a/rock_face_03",
+    "author": "Dario Barresi / Rico Cilliers",
+    "license": "CC0-1.0",
+    "bytes": 638904,
+    "sha256": "9e3d9a2fd75244892e7acb6bab2eaed1279299510a7970672c0ee27ff1c19fea"
+  }
+]

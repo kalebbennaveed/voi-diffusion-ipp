@@ -1,0 +1,31 @@
+Fixed-wing aircraft (current display)
+Author: helijah (https://sketchfab.com/helijah)
+Original: ASK 21 Mi — https://sketchfab.com/models/b69f1e3209ba40dcbb07a662d32736dd
+Distribution: https://github.com/srcejon/sdrangel-3d-models/blob/main/glider.glb
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Original binary unchanged, renamed aircraft.glb. Display placement and orientation set at runtime.
+Visual airframe only; the replay is not validated fixed-wing dynamics.
+
+Helicopter
+Author: Gigantic Burger (https://sketchfab.com/gigantic.burger)
+Original: https://sketchfab.com/3d-models/helicopter-ef70283b1dea4ae8b18eec9231ce390e
+Distribution: https://github.com/srcejon/sdrangel-3d-models/blob/main/helicopter.glb
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+The GLB is unchanged. Display scale, placement and existing rotor animation are set at runtime.
+This asset is a visual model only; its original aircraft is not the validated dynamics model of this project.
+
+Terrain and foliage textures
+Aerial Grass Rock — Rob Tuytel — https://polyhaven.com/a/aerial_grass_rock
+Rocky Terrain — Amal Kumar — https://polyhaven.com/a/rocky_terrain
+Pine Tree 01 foliage atlas — Rico Cilliers / Rob Tuytel — https://polyhaven.com/a/pine_tree_01
+License: CC0 1.0 — https://polyhaven.com/license
+Texture files are unchanged. The demo uses its own terrain/forest meshes and maps the foliage atlas's needle patch onto branches.
+
+Exact downloaded URLs, file sizes and SHA-256 hashes are in provenance.json.
+
+Rock Face 03 textures — Dario Barresi / Rico Cilliers
+https://polyhaven.com/a/rock_face_03
+CC0 1.0 — https://polyhaven.com/license
+Original files unchanged; display material desaturates the cliff surface at runtime.

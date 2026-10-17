@@ -196,7 +196,45 @@ def handler(state):
                 "/app.js": ("app.js", "text/javascript"),
                 "/style.css": ("style.css", "text/css"),
                 "/model.js": ("model.js", "text/javascript"),
+                "/3d": ("3d/index.html", "text/html; charset=utf-8"),
+                "/3d/": ("3d/index.html", "text/html; charset=utf-8"),
+                "/3d/app.js": ("3d/app.js", "text/javascript"),
+                "/3d/data.js": ("3d/data.js", "text/javascript"),
+                "/3d/scene.js": ("3d/scene.js", "text/javascript"),
+                "/3d/terrain.js": ("3d/terrain.js", "text/javascript"),
+                "/3d/terrain-math.js": ("3d/terrain-math.js", "text/javascript"),
+                "/3d/style.css": ("3d/style.css", "text/css"),
+                "/3d/vendor/three/three.module.min.js": (
+                    "3d/vendor/three/three.module.min.js",
+                    "text/javascript",
+                ),
+                "/3d/vendor/three/OrbitControls.js": (
+                    "3d/vendor/three/OrbitControls.js",
+                    "text/javascript",
+                ),
+                "/3d/vendor/three/LICENSE": (
+                    "3d/vendor/three/LICENSE",
+                    "text/plain; charset=utf-8",
+                ),
             }
+            for asset in ("GLTFLoader.js", "BufferGeometryUtils.js"):
+                files[f"/3d/vendor/three/{asset}"] = (f"3d/vendor/three/{asset}", "text/javascript")
+            for asset in (
+                "aerial_grass_rock_diff_1k.jpg",
+                "aerial_grass_rock_nor_gl_1k.jpg",
+                "aerial_grass_rock_rough_1k.jpg",
+                "rocky_terrain_diff_1k.jpg",
+                "rocky_terrain_nor_gl_1k.jpg",
+                "rocky_terrain_rough_1k.jpg",
+                "rock_face_03_diff_1k.jpg",
+                "rock_face_03_nor_gl_1k.jpg",
+                "rock_face_03_rough_1k.jpg",
+                "pine_tree_01_twig_diff_1k.jpg",
+                "pine_tree_01_twig_alpha_1k.jpg",
+            ):
+                files[f"/3d/assets/{asset}"] = (f"3d/assets/{asset}", "image/jpeg")
+            files["/3d/assets/helicopter.glb"] = ("3d/assets/helicopter.glb", "model/gltf-binary")
+            files["/3d/assets/aircraft.glb"] = ("3d/assets/aircraft.glb", "model/gltf-binary")
             if path not in files:
                 return self.send_json({"error": "Not found"}, 404)
             name, mime = files[path]

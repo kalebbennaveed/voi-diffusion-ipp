@@ -89,8 +89,14 @@ clarity, wind belief, safety diagnostics and a paired comparator. Full-field POA
 recordings are listed first. Ten legacy recordings remain explicitly labeled for
 historical reproduction, including regressions and a no-measurement control.
 The collapsed older-environment controls launch the earlier, expensive planner.
-The fast two-region command is shown below. The interface has
-no frontend dependencies or external assets. See [demo instructions and
+The fast two-region command is shown below. The original 2D interface has
+no frontend dependencies or external assets. A separate **[3D aircraft survey replay](http://127.0.0.1:8765/3d/)**
+preserves the original demo and presents the same 120-second recordings in a textured
+river valley with pump-station buildings, with a large/full-screen view, aircraft chase and downward sensor cameras, optional
+side-by-side playback, field layers and actual MBD denoising. It uses locally vendored
+Three.js and licensed local models/textures, and starts no planner jobs. The fixed flight altitude and aircraft
+attitude are illustrative; the recorded physics remain planar. See [3D controls and
+provenance](docs/3d_demo.md), and [original demo instructions and
 provenance](docs/interactive_demo.md). The original MBD playground was used only
 as an interaction reference; numerical planning remains in this repository.
 

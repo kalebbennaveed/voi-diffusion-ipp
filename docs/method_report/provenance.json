@@ -1,0 +1,1045 @@
+{
+  "title": "Value-of-Information Diffusion Planning",
+  "date": "2026-10-17",
+  "source_head": "3a31937d4924b92af9bb6cec03a2c761fe4d86e8",
+  "scope": "Documentation only; no research jobs or automations started",
+  "sections": [
+    [
+      1,
+      ""
+    ],
+    [
+      2,
+      "Scope and reading guide"
+    ],
+    [
+      3,
+      "Mission and physical model"
+    ],
+    [
+      4,
+      "Persistent clarity dynamics"
+    ],
+    [
+      5,
+      "Wind belief: full sparse POAM"
+    ],
+    [
+      6,
+      "POAM updates and stable statistics"
+    ],
+    [
+      7,
+      "Coherent sampling and information flow"
+    ],
+    [
+      8,
+      "RPCBF from a backup policy"
+    ],
+    [
+      9,
+      "Soft safety and executable control"
+    ],
+    [
+      10,
+      "Anticipated learning: the objective"
+    ],
+    [
+      11,
+      "The fast causal policy class"
+    ],
+    [
+      12,
+      "One planning and execution cycle"
+    ],
+    [
+      13,
+      "Actual model-based diffusion"
+    ],
+    [
+      14,
+      "What denoising shows"
+    ],
+    [
+      15,
+      "Runtime and computation budget"
+    ],
+    [
+      16,
+      "Baselines and what they isolate"
+    ],
+    [
+      17,
+      "Reproducible development configuration"
+    ],
+    [
+      18,
+      "Recorded persistent behavior"
+    ],
+    [
+      19,
+      "Whole-field clarity and task cost"
+    ],
+    [
+      20,
+      "Wind estimation and calibration"
+    ],
+    [
+      21,
+      "Safety evidence and research status"
+    ],
+    [
+      22,
+      "Verification and bounded next steps"
+    ],
+    [
+      23,
+      "Reproduction and source provenance"
+    ],
+    [
+      24,
+      "References and attribution"
+    ]
+  ],
+  "equation_count": 31,
+  "pdf_sha256": "67124862554ec2fb2832761557cb15a10df8b44022ccc16e4f9b5acd7581a709",
+  "figures": {
+    "audits": [
+      {
+        "input": "results/budgeted_missions/persistent_two_region_2s_01/proposed.npz",
+        "method": "proposed",
+        "complete": true,
+        "duration_s": 120.0,
+        "integrated_whole_grid_deficit": 2.839329481124878,
+        "integrated_roi_deficit": 21.342293266455332,
+        "recorded_cost_disagreement": 1.2293457984924316e-07,
+        "dense_substeps": 32,
+        "minimum_dense_clearance": 0.0899065036137251,
+        "contact_intervals": 0,
+        "max_local_state_error": 1.2455111986220402e-07,
+        "peak_control": 1.6000001430511475,
+        "backup_periods": 0,
+        "visits": [
+          {
+            "region": "A",
+            "entry_s": 0.0,
+            "duration_s": 8.15
+          },
+          {
+            "region": "B",
+            "entry_s": 12.65,
+            "duration_s": 6.3500000000000005
+          },
+          {
+            "region": "A",
+            "entry_s": 23.150000000000002,
+            "duration_s": 0.9
+          },
+          {
+            "region": "B",
+            "entry_s": 29.200000000000003,
+            "duration_s": 1.25
+          },
+          {
+            "region": "A",
+            "entry_s": 33.6,
+            "duration_s": 1.55
+          },
+          {
+            "region": "A",
+            "entry_s": 37.35,
+            "duration_s": 1.4000000000000001
+          },
+          {
+            "region": "B",
+            "entry_s": 42.1,
+            "duration_s": 1.25
+          },
+          {
+            "region": "A",
+            "entry_s": 47.050000000000004,
+            "duration_s": 1.55
+          },
+          {
+            "region": "B",
+            "entry_s": 51.800000000000004,
+            "duration_s": 2.2
+          },
+          {
+            "region": "B",
+            "entry_s": 55.0,
+            "duration_s": 1.05
+          },
+          {
+            "region": "B",
+            "entry_s": 56.800000000000004,
+            "duration_s": 1.6500000000000001
+          },
+          {
+            "region": "A",
+            "entry_s": 62.0,
+            "duration_s": 1.3
+          },
+          {
+            "region": "B",
+            "entry_s": 66.65,
+            "duration_s": 1.3
+          },
+          {
+            "region": "A",
+            "entry_s": 71.4,
+            "duration_s": 1.35
+          },
+          {
+            "region": "B",
+            "entry_s": 76.55,
+            "duration_s": 1.0
+          },
+          {
+            "region": "A",
+            "entry_s": 81.05000000000001,
+            "duration_s": 3.3000000000000003
+          },
+          {
+            "region": "B",
+            "entry_s": 86.05000000000001,
+            "duration_s": 1.7000000000000002
+          },
+          {
+            "region": "B",
+            "entry_s": 88.25,
+            "duration_s": 1.0
+          },
+          {
+            "region": "B",
+            "entry_s": 90.4,
+            "duration_s": 1.4500000000000002
+          },
+          {
+            "region": "B",
+            "entry_s": 93.15,
+            "duration_s": 1.4500000000000002
+          },
+          {
+            "region": "A",
+            "entry_s": 98.5,
+            "duration_s": 0.7000000000000001
+          },
+          {
+            "region": "B",
+            "entry_s": 103.7,
+            "duration_s": 1.0
+          },
+          {
+            "region": "A",
+            "entry_s": 109.55000000000001,
+            "duration_s": 0.8500000000000001
+          },
+          {
+            "region": "A",
+            "entry_s": 112.85000000000001,
+            "duration_s": 5.6000000000000005
+          }
+        ],
+        "transfers": [
+          {
+            "direction": "A_to_B",
+            "departure_s": 8.15,
+            "arrival_s": 12.65,
+            "seconds": 4.5,
+            "midplane_lateral_m": -1.6644175834673922,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 19.0,
+            "arrival_s": 23.150000000000002,
+            "seconds": 4.15,
+            "midplane_lateral_m": -1.6655664466628215,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 24.05,
+            "arrival_s": 29.200000000000003,
+            "seconds": 5.15,
+            "midplane_lateral_m": 1.6885509887153258,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 30.450000000000003,
+            "arrival_s": 33.6,
+            "seconds": 3.1500000000000004,
+            "midplane_lateral_m": -1.7110765068173834,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 38.75,
+            "arrival_s": 42.1,
+            "seconds": 3.35,
+            "midplane_lateral_m": -1.8718160939335593,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 43.35,
+            "arrival_s": 47.050000000000004,
+            "seconds": 3.7,
+            "midplane_lateral_m": 1.6955137293617417,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 48.6,
+            "arrival_s": 51.800000000000004,
+            "seconds": 3.2,
+            "midplane_lateral_m": -1.7521354810814915,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 58.45,
+            "arrival_s": 62.0,
+            "seconds": 3.5500000000000003,
+            "midplane_lateral_m": 1.806638730704408,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 63.300000000000004,
+            "arrival_s": 66.65,
+            "seconds": 3.35,
+            "midplane_lateral_m": -1.6826886073417282,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 67.95,
+            "arrival_s": 71.4,
+            "seconds": 3.45,
+            "midplane_lateral_m": 1.7002233222488075,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 72.75,
+            "arrival_s": 76.55,
+            "seconds": 3.8000000000000003,
+            "midplane_lateral_m": -1.8997478112059722,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 77.55000000000001,
+            "arrival_s": 81.05000000000001,
+            "seconds": 3.5,
+            "midplane_lateral_m": 1.6670531404458986,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 84.35000000000001,
+            "arrival_s": 86.05000000000001,
+            "seconds": 1.7000000000000002,
+            "midplane_lateral_m": 0.12677760624855997,
+            "route": "middle"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 94.60000000000001,
+            "arrival_s": 98.5,
+            "seconds": 3.9000000000000004,
+            "midplane_lateral_m": -1.5644199952985494,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 99.2,
+            "arrival_s": 103.7,
+            "seconds": 4.5,
+            "midplane_lateral_m": 1.9695524588743774,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 104.7,
+            "arrival_s": 109.55000000000001,
+            "seconds": 4.8500000000000005,
+            "midplane_lateral_m": -1.7704508484787544,
+            "route": "outer"
+          }
+        ],
+        "passage_rmse_initial_final": [
+          0.9166338443756104,
+          0.15277256071567535
+        ],
+        "passage_std_initial_final": [
+          0.48935315012931824,
+          0.043348368257284164
+        ],
+        "visit_sequence": [
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A"
+        ],
+        "startup_cycle_s": [
+          25.835606207954697,
+          3.107837501098402
+        ],
+        "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+        "steady_cycle_s": {
+          "median": 1.725378186965827,
+          "p95": 1.9840403838141356,
+          "max": 2.0384536249330267
+        },
+        "cycle_1s_miss_fraction": 1.0,
+        "cycle_2s_miss_fraction": 0.034482758620689655,
+        "final_mean_clarity": {
+          "A": 0.6708793044090271,
+          "B": 0.26673591136932373
+        },
+        "initialization": "outer-survey",
+        "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+      },
+      {
+        "input": "results/budgeted_missions/persistent_two_region_2s_01/current_belief.npz",
+        "method": "current_belief",
+        "complete": true,
+        "duration_s": 120.0,
+        "integrated_whole_grid_deficit": 2.954908847808838,
+        "integrated_roi_deficit": 22.211064839363097,
+        "recorded_cost_disagreement": 3.91155481338501e-08,
+        "dense_substeps": 32,
+        "minimum_dense_clearance": 0.12724088345299056,
+        "contact_intervals": 0,
+        "max_local_state_error": 1.23917964334197e-07,
+        "peak_control": 1.6000001430511475,
+        "backup_periods": 1,
+        "visits": [
+          {
+            "region": "A",
+            "entry_s": 0.0,
+            "duration_s": 10.4
+          },
+          {
+            "region": "B",
+            "entry_s": 15.700000000000001,
+            "duration_s": 2.1
+          },
+          {
+            "region": "B",
+            "entry_s": 22.200000000000003,
+            "duration_s": 0.6000000000000001
+          },
+          {
+            "region": "A",
+            "entry_s": 26.400000000000002,
+            "duration_s": 1.25
+          },
+          {
+            "region": "B",
+            "entry_s": 32.300000000000004,
+            "duration_s": 1.35
+          },
+          {
+            "region": "A",
+            "entry_s": 41.050000000000004,
+            "duration_s": 1.0
+          },
+          {
+            "region": "B",
+            "entry_s": 47.0,
+            "duration_s": 0.9
+          },
+          {
+            "region": "A",
+            "entry_s": 51.550000000000004,
+            "duration_s": 1.55
+          },
+          {
+            "region": "A",
+            "entry_s": 55.0,
+            "duration_s": 2.0500000000000003
+          },
+          {
+            "region": "B",
+            "entry_s": 59.1,
+            "duration_s": 4.75
+          },
+          {
+            "region": "B",
+            "entry_s": 64.75,
+            "duration_s": 4.0
+          },
+          {
+            "region": "A",
+            "entry_s": 74.10000000000001,
+            "duration_s": 1.05
+          },
+          {
+            "region": "A",
+            "entry_s": 77.4,
+            "duration_s": 2.0
+          },
+          {
+            "region": "B",
+            "entry_s": 81.75,
+            "duration_s": 1.0
+          },
+          {
+            "region": "B",
+            "entry_s": 84.75,
+            "duration_s": 2.0
+          },
+          {
+            "region": "A",
+            "entry_s": 90.5,
+            "duration_s": 0.8
+          },
+          {
+            "region": "B",
+            "entry_s": 95.2,
+            "duration_s": 3.1
+          },
+          {
+            "region": "A",
+            "entry_s": 101.7,
+            "duration_s": 1.55
+          },
+          {
+            "region": "A",
+            "entry_s": 105.60000000000001,
+            "duration_s": 1.1
+          },
+          {
+            "region": "B",
+            "entry_s": 110.95,
+            "duration_s": 0.9500000000000001
+          },
+          {
+            "region": "A",
+            "entry_s": 115.9,
+            "duration_s": 1.05
+          }
+        ],
+        "transfers": [
+          {
+            "direction": "A_to_B",
+            "departure_s": 10.4,
+            "arrival_s": 15.700000000000001,
+            "seconds": 5.300000000000001,
+            "midplane_lateral_m": 1.4995891207861192,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 22.8,
+            "arrival_s": 26.400000000000002,
+            "seconds": 3.6,
+            "midplane_lateral_m": 1.837309493619715,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 27.650000000000002,
+            "arrival_s": 32.300000000000004,
+            "seconds": 4.65,
+            "midplane_lateral_m": -1.780036245798021,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 33.65,
+            "arrival_s": 37.35,
+            "seconds": 3.7,
+            "midplane_lateral_m": 1.595161761005523,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 42.050000000000004,
+            "arrival_s": 47.0,
+            "seconds": 4.95,
+            "midplane_lateral_m": 2.0211647111558495,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 47.900000000000006,
+            "arrival_s": 51.550000000000004,
+            "seconds": 3.6500000000000004,
+            "midplane_lateral_m": -1.7330857162519622,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 57.050000000000004,
+            "arrival_s": 59.1,
+            "seconds": 2.0500000000000003,
+            "midplane_lateral_m": 0.09333534120621118,
+            "route": "middle"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 68.75,
+            "arrival_s": 74.10000000000001,
+            "seconds": 5.3500000000000005,
+            "midplane_lateral_m": -0.0013080113408614992,
+            "route": "middle"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 79.4,
+            "arrival_s": 81.75,
+            "seconds": 2.35,
+            "midplane_lateral_m": 0.05701379016864315,
+            "route": "middle"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 86.75,
+            "arrival_s": 90.0,
+            "seconds": 3.25,
+            "midplane_lateral_m": 1.4064968658813135,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 91.30000000000001,
+            "arrival_s": 95.2,
+            "seconds": 3.9000000000000004,
+            "midplane_lateral_m": -1.671311529298386,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 98.30000000000001,
+            "arrival_s": 101.7,
+            "seconds": 3.4000000000000004,
+            "midplane_lateral_m": -1.76864711588434,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 106.7,
+            "arrival_s": 110.95,
+            "seconds": 4.25,
+            "midplane_lateral_m": -2.1244318623710883,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 111.9,
+            "arrival_s": 115.9,
+            "seconds": 4.0,
+            "midplane_lateral_m": 1.924594270115801,
+            "route": "outer"
+          }
+        ],
+        "passage_rmse_initial_final": [
+          0.9166338443756104,
+          0.1587742567062378
+        ],
+        "passage_std_initial_final": [
+          0.48935315012931824,
+          0.04713278263807297
+        ],
+        "visit_sequence": [
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A"
+        ],
+        "startup_cycle_s": [
+          16.02441087504849,
+          0.8800149990711361
+        ],
+        "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+        "steady_cycle_s": {
+          "median": 0.770715874445159,
+          "p95": 0.8263942204765045,
+          "max": 1.0804824159713462
+        },
+        "cycle_1s_miss_fraction": 0.017241379310344827,
+        "cycle_2s_miss_fraction": 0.0,
+        "final_mean_clarity": {
+          "A": 0.5472145676612854,
+          "B": 0.4137721061706543
+        },
+        "initialization": "outer-survey",
+        "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+      },
+      {
+        "input": "results/budgeted_missions/persistent_two_region_safety_only_01/wind_blind_planner.npz",
+        "method": "wind_blind_planner",
+        "complete": true,
+        "duration_s": 120.0,
+        "integrated_whole_grid_deficit": 3.4986467361450195,
+        "integrated_roi_deficit": 26.2981613000234,
+        "recorded_cost_disagreement": 1.5366822481155396e-08,
+        "dense_substeps": 32,
+        "minimum_dense_clearance": 0.1108723047997906,
+        "contact_intervals": 0,
+        "max_local_state_error": 1.4235925238637037e-07,
+        "peak_control": 1.6000001430511475,
+        "backup_periods": 5,
+        "visits": [
+          {
+            "region": "A",
+            "entry_s": 0.0,
+            "duration_s": 2.2
+          },
+          {
+            "region": "B",
+            "entry_s": 5.800000000000001,
+            "duration_s": 1.55
+          },
+          {
+            "region": "B",
+            "entry_s": 9.55,
+            "duration_s": 3.7
+          },
+          {
+            "region": "B",
+            "entry_s": 14.15,
+            "duration_s": 5.75
+          },
+          {
+            "region": "A",
+            "entry_s": 23.6,
+            "duration_s": 4.45
+          },
+          {
+            "region": "B",
+            "entry_s": 33.2,
+            "duration_s": 1.1
+          },
+          {
+            "region": "B",
+            "entry_s": 36.1,
+            "duration_s": 1.6
+          },
+          {
+            "region": "A",
+            "entry_s": 43.400000000000006,
+            "duration_s": 1.35
+          },
+          {
+            "region": "A",
+            "entry_s": 47.1,
+            "duration_s": 0.9
+          },
+          {
+            "region": "A",
+            "entry_s": 51.5,
+            "duration_s": 4.15
+          },
+          {
+            "region": "A",
+            "entry_s": 59.5,
+            "duration_s": 1.0
+          },
+          {
+            "region": "A",
+            "entry_s": 64.95,
+            "duration_s": 1.4000000000000001
+          },
+          {
+            "region": "A",
+            "entry_s": 70.9,
+            "duration_s": 3.5
+          },
+          {
+            "region": "B",
+            "entry_s": 76.5,
+            "duration_s": 1.0
+          },
+          {
+            "region": "B",
+            "entry_s": 78.80000000000001,
+            "duration_s": 2.0500000000000003
+          },
+          {
+            "region": "B",
+            "entry_s": 82.60000000000001,
+            "duration_s": 0.8500000000000001
+          },
+          {
+            "region": "B",
+            "entry_s": 85.5,
+            "duration_s": 1.9000000000000001
+          },
+          {
+            "region": "B",
+            "entry_s": 90.0,
+            "duration_s": 1.55
+          },
+          {
+            "region": "A",
+            "entry_s": 97.35000000000001,
+            "duration_s": 1.1500000000000001
+          },
+          {
+            "region": "B",
+            "entry_s": 101.9,
+            "duration_s": 2.15
+          },
+          {
+            "region": "B",
+            "entry_s": 105.30000000000001,
+            "duration_s": 1.55
+          },
+          {
+            "region": "A",
+            "entry_s": 110.9,
+            "duration_s": 0.7000000000000001
+          },
+          {
+            "region": "A",
+            "entry_s": 117.0,
+            "duration_s": 1.2000000000000002
+          }
+        ],
+        "transfers": [
+          {
+            "direction": "A_to_B",
+            "departure_s": 2.2,
+            "arrival_s": 5.800000000000001,
+            "seconds": 3.6,
+            "midplane_lateral_m": 1.5507024828793816,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 19.900000000000002,
+            "arrival_s": 23.6,
+            "seconds": 3.7,
+            "midplane_lateral_m": 1.6723376044815055,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 28.05,
+            "arrival_s": 33.2,
+            "seconds": 5.15,
+            "midplane_lateral_m": -0.09701704895740787,
+            "route": "middle"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 37.7,
+            "arrival_s": 43.400000000000006,
+            "seconds": 5.7,
+            "midplane_lateral_m": 1.5738717180559632,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 74.4,
+            "arrival_s": 76.5,
+            "seconds": 2.1,
+            "midplane_lateral_m": 0.014726026652329298,
+            "route": "middle"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 91.55000000000001,
+            "arrival_s": 97.35000000000001,
+            "seconds": 5.800000000000001,
+            "midplane_lateral_m": 1.7178238368924204,
+            "route": "outer"
+          },
+          {
+            "direction": "A_to_B",
+            "departure_s": 98.5,
+            "arrival_s": 101.9,
+            "seconds": 3.4000000000000004,
+            "midplane_lateral_m": -1.5776723198335856,
+            "route": "outer"
+          },
+          {
+            "direction": "B_to_A",
+            "departure_s": 106.85000000000001,
+            "arrival_s": 110.9,
+            "seconds": 4.05,
+            "midplane_lateral_m": -1.6671264636570455,
+            "route": "outer"
+          }
+        ],
+        "passage_rmse_initial_final": [
+          0.9166338443756104,
+          0.1570587456226349
+        ],
+        "passage_std_initial_final": [
+          0.48935315012931824,
+          0.041807934641838074
+        ],
+        "visit_sequence": [
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A"
+        ],
+        "startup_cycle_s": [
+          2.454835833981633,
+          1.135548667050898
+        ],
+        "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+        "steady_cycle_s": {
+          "median": 0.06747433310374618,
+          "p95": 0.07557115808012896,
+          "max": 0.09102541604079306
+        },
+        "cycle_1s_miss_fraction": 0.0,
+        "cycle_2s_miss_fraction": 0.0,
+        "final_mean_clarity": {
+          "A": 0.629344642162323,
+          "B": 0.2987510561943054
+        },
+        "initialization": "outer-survey",
+        "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+      }
+    ],
+    "denoising_period": 10,
+    "denoising_trace": [
+      [
+        0.27338865399360657,
+        0.33895543217658997,
+        2.8835489749908447,
+        0.0
+      ],
+      [
+        0.257946252822876,
+        0.3226701617240906,
+        3.7744038105010986,
+        0.0
+      ],
+      [
+        0.2533089220523834,
+        0.2673703730106354,
+        6.689549922943115,
+        0.0
+      ],
+      [
+        0.2533089220523834,
+        0.25891244411468506,
+        7.960659980773926,
+        0.0
+      ]
+    ],
+    "inputs": {
+      "results/budgeted_missions/persistent_two_region_2s_01/proposed.npz": "908eb333fc601ace8bd613c8d2e002f2ce56527d7e4e3f0cae1cec38363957a3",
+      "results/budgeted_missions/persistent_two_region_2s_01/current_belief.npz": "08fa68b50acfa3d6a4c6ec9a784e2312312ae732d1a1c1a1f77febe3e63866e4",
+      "results/budgeted_missions/persistent_two_region_safety_only_01/wind_blind_planner.npz": "2bf0490beb9edb748b9d5e7bd23c8a31883511fe779cc89b1ad48d47ab359e48"
+    },
+    "equations": [
+      "elbo",
+      "branches",
+      "dynamics",
+      "observation",
+      "riccati",
+      "clarity",
+      "footprint",
+      "objective",
+      "decay",
+      "kernel",
+      "predictmean",
+      "predictcov",
+      "statistics",
+      "posterior",
+      "root",
+      "sample",
+      "cbf",
+      "backup",
+      "constraint",
+      "qp",
+      "slack",
+      "saa",
+      "voi",
+      "features",
+      "knots",
+      "feedback",
+      "forward",
+      "proposal",
+      "weights",
+      "score",
+      "physical"
+    ]
+  },
+  "source_sha256": {
+    "configs/two_region_budgeted.yaml": "a76cbd3f736d4eabc5af68d4189dd7b1a2d388aea5a01601200f6d5ec6863316",
+    "configs/two_region_design.yaml": "d2bbd88d72975ae4199756e8cff5d304c38777ad4c9641dabac33755e3457ff0",
+    "docs/method_report/build_report.py": "a83b8f07b1ea9fd12fe5d8978440a632c2db47bfee57c4cc2b0bc43a07a2dc51",
+    "docs/method_report/make_assets.py": "0c11f84045a7d816585e15a4c63095b3feb04673a4934e7e429a774bf3fef13a",
+    "scripts/audit_budgeted_mission.py": "f390e3f6b136cd91652470a1130589c277fe99660c92d9d1eea6ecfc819593dc",
+    "scripts/run_budgeted_mission.py": "c85e47b93db80bb1d0986c9347f81ac15df6dbee720598166601bcdb11063426",
+    "src/voi_diffusion_ipp/__init__.py": "8cc1e55939efbb83ca7af87e3c69abf111605c3377802b929032e33b7dad21bf",
+    "src/voi_diffusion_ipp/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/baselines/draft.py": "ad48de7e2dffc63b1f85644cb72eda16827c9067f45909e3c6f65d792d8c1eb1",
+    "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
+    "src/voi_diffusion_ipp/config.py": "d099da62dcafa99d352c2e3829d8ae1d5796e6a6d7298c378d5549553cc979b5",
+    "src/voi_diffusion_ipp/dynamics.py": "7b99b46fb45adc0cff005fa3a009518178df408aa2f201aa167a88fd5ce22544",
+    "src/voi_diffusion_ipp/environment.py": "ddad36cf27d4e5c682f434ebc2151cd03a5068892897036dbae9fa64b14cae52",
+    "src/voi_diffusion_ipp/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/experiments/checkpoint.py": "3fa3c71b9613be9fdd79002b1c595c7018c045d3764a0ea04f8e3d6bff00328f",
+    "src/voi_diffusion_ipp/experiments/persistence.py": "a2a334104e628be8743567ac009a7b1f9f9c5610a582360b6e5dd0fc1fd74904",
+    "src/voi_diffusion_ipp/experiments/run.py": "107db94d0cd43005ca6d910418f2cf905176a68b19d6478c72602bc22d95469e",
+    "src/voi_diffusion_ipp/experiments/scenarios.py": "5e05aae9bafe89be57f98e3378fc0c3884b491a58006f395a32192b32aaa6104",
+    "src/voi_diffusion_ipp/experiments/suite.py": "0c0ff8ef2b88d46a8de2214bf69429c16c0c4b9ef70aae4dd1ac00b57d0634c0",
+    "src/voi_diffusion_ipp/experiments/two_region.py": "98d274d9ff67cc1d4f5ab685a057b710090fce756bd443220dc93fdb81a91f9b",
+    "src/voi_diffusion_ipp/planning/__init__.py": "90c2781b42b77b8f1b9ad3d535b6f64d850c8158a69e6a6daa9e2acab02d306f",
+    "src/voi_diffusion_ipp/planning/budgeted.py": "a023974978990f30a6eb1c0ea1394c8acf878e078ea0874325dd93ed14247bfd",
+    "src/voi_diffusion_ipp/planning/mbd.py": "7314060715e61dedd8373fe28ce1a20e63406fee689cf81176fa7bf7a8b3cc93",
+    "src/voi_diffusion_ipp/planning/mpc.py": "12bc58c0c671b2372bc0a923186632e93ed4170365e81da2040e782174d0ba4f",
+    "src/voi_diffusion_ipp/planning/rollout.py": "eb51284c7951a87237549217e5e90b5775f6b043d71a6afe746cd1275404d05d",
+    "src/voi_diffusion_ipp/planning/two_stage.py": "dacf36acbd8156336f786ae1139d689e656ab564b9707f1d617187ad80c2705a",
+    "src/voi_diffusion_ipp/planning/wind_blind.py": "fe0dfb3c8937a6bab084a5127ed951e7a3f5c4ed4bcf5ad5ca36be790ffa5a0b",
+    "src/voi_diffusion_ipp/safety/__init__.py": "c00308ddb2d6c20920184172aa25a144dcff69b30e29074fd8a20f0764cd39ce",
+    "src/voi_diffusion_ipp/safety/qp.py": "fd3fda65e9cf952d9b502201751077a402547f75b2d202079436a9dc09b8768e",
+    "src/voi_diffusion_ipp/safety/rpcbf.py": "ea5f3db70a58cd33f2348811262b3f0f9f6d4110228b424fc9903845cbe3e26d",
+    "src/voi_diffusion_ipp/safety/spline.py": "4cd9f4814a78aa42c7f6f13270a6aed55cacb60dd50ebae4e58b245c586b6582",
+    "src/voi_diffusion_ipp/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/viz/demo_data.py": "a7c14ce32a81f0a3e7721af6fa7c1474ce51cec32e3db43b835e467aa0e87f2b",
+    "src/voi_diffusion_ipp/viz/demo_server.py": "5a88740b105195cfdab87b1841561e53d07cc62e30c56197cc29bd4452d90eb5",
+    "src/voi_diffusion_ipp/viz/report.py": "15724940b26a9c5740b5f94bbbb834ee03c2266625f3460ae2be29e1d479d0b6",
+    "src/voi_diffusion_ipp/wind/__init__.py": "df7aaf8bf26ec5b0ee4469564aa08c8ee7badace32f0591f72107b057a183ec9",
+    "src/voi_diffusion_ipp/wind/cache.py": "31e5f2a8e01b8cb42fed67cc42006237e21707d7227159842f8620316bb8d0cd",
+    "src/voi_diffusion_ipp/wind/gp.py": "3d1feec0574a7e1f703bbb60c668f962246f1d2f57b8fb8bef423f9bf4c91aac",
+    "src/voi_diffusion_ipp/wind/oracle.py": "867800a0d1b0f9fa73866e0b8048e8e379e558175900d822f164b6c9fcaf7925",
+    "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70",
+    "src/voi_diffusion_ipp/wind/poam.py": "666b50f58e38797634713349f6f0d53698661ced86ae9957b9bd4b137b096275",
+    "src/voi_diffusion_ipp/wind/poam_belief.py": "a29a8160148784f801ee0dcbc0616b5dfa862e718b51e998d340280b3a4dbf7b"
+  }
+}
