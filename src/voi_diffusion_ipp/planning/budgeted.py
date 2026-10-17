@@ -19,7 +19,7 @@ from ..dynamics import step
 from ..safety.mpd_shield import filter_control as shield_control
 from ..safety.rpcbf import design_policy, filter_control
 from ..wind import InnerFields, WorldField
-from .mbd import optimize
+from .mbd import optimize, target_objective
 
 
 class Segment(NamedTuple):
@@ -280,7 +280,7 @@ def make_planner(cfg, anticipate=True, objective_cells=None):
         objective = lambda vector: (
             evaluate(vector, x, qe, belief, cache, noise, ee, cfg, anticipate)[0] * scale
         )
-        costs = jax.lax.map(objective, initials)
+        costs = jax.lax.map(target_objective(objective, cfg), initials)
         initial = initials[jnp.argmin(costs)]
         result = optimize(objective, initial, key, cfg)
         return result._replace(evaluations=result.evaluations + len(initials))

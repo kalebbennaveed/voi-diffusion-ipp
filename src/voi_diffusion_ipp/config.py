@@ -27,6 +27,8 @@ class Config:
     temperature: float = 0.035
     beta_min: float = 0.005
     beta_max: float = 0.18
+    mbd_latent_bound: float = 0.0  # 0: archived unbounded search; >0: proper uniform-box target
+    diffusion_reference_steps: int = 0  # optional fixed noise endpoints for budget comparisons
     candidate_chunk: int = 2
     terminal_seconds: float = 0.0
     sensor_sigma: float = 0.38
@@ -73,6 +75,10 @@ class Config:
     methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
     def __post_init__(self):
+        if not 0 <= self.mbd_latent_bound < float("inf"):
+            raise ValueError("MBD latent bound must be finite and nonnegative")
+        if self.diffusion_reference_steps < 0:
+            raise ValueError("Negative diffusion reference schedule")
         if self.safety_filter not in ("rpcbf", "sampled_mpd_shield"):
             raise ValueError("Unknown safety filter")
         if self.shield_terminal_speed <= 0 or self.shield_substeps < 1:

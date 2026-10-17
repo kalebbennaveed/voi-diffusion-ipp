@@ -22,6 +22,7 @@ from voi_diffusion_ipp.config import Config, config_dict
 from voi_diffusion_ipp.experiments.checkpoint import source_hashes
 from voi_diffusion_ipp.experiments.two_region import make_two_region
 from voi_diffusion_ipp.experiments.wind_cases import CASE_LABELS, physical_wind, wind_case_spec
+from voi_diffusion_ipp.planning import covariance
 from voi_diffusion_ipp.planning.budgeted import evaluate
 from voi_diffusion_ipp.planning.sampling import couple_outer_samples
 from voi_diffusion_ipp.planning.wind_blind import evaluate_nominal
@@ -56,9 +57,17 @@ def export(path, pair_with=None):
         raise ValueError("Task definition differs from the recorded mission")
     cfg = Config(**meta["config"])
     method, seed = meta["method"], meta["seed"]
-    if method not in ("proposed", "current_belief", "wind_blind_planner"):
+    if method not in (
+        "proposed",
+        "current_belief",
+        "wind_blind_planner",
+        "wind_blind_matched",
+        "covariance_anticipated",
+        "mean_frozen",
+    ):
         raise ValueError("This exporter requires full POAM arms")
-    wind_blind = method == "wind_blind_planner"
+    wind_blind = method in ("wind_blind_planner", "wind_blind_matched")
+    covariance_mode = method in ("covariance_anticipated", "mean_frozen")
     pairing = None
     if pair_with is not None:
         if not wind_blind:
@@ -145,10 +154,23 @@ def export(path, pair_with=None):
     snapshot = jax.jit(lambda b: b.predict(env.cells))
 
     @jax.jit
-    def forecast(vectors, x, q, b, cache, noise):
+    def forecast(vectors, x, q, b, cache, noise, inner_eps, observation_eps):
         def one(v):
             if wind_blind:
                 _, (first, future) = evaluate_nominal(v, x, q, env, viz_cfg)
+            elif covariance_mode:
+                _, (first, future) = covariance.evaluate(
+                    v,
+                    x,
+                    q,
+                    b,
+                    cache,
+                    inner_eps,
+                    observation_eps,
+                    env,
+                    cfg,
+                    method == "covariance_anticipated",
+                )
             else:
                 _, (first, future) = evaluate(
                     v, x, q, b, cache, noise, env, viz_cfg, method == "proposed"
@@ -192,6 +214,11 @@ def export(path, pair_with=None):
         )
         eps = jnp.concatenate((all_eps[:1], all_eps[cfg.worlds :]))
         noise = all_noise[:1]
+        interval = cfg.budgeted_update_steps or cfg.future_steps
+        capacity = cfg.stage_steps + cfg.future_steps - interval
+        observation_eps = jax.random.normal(keys[3], (cfg.inner_samples, capacity, 2))
+        if covariance_mode:
+            eps = all_eps[cfg.worlds :]
         hist = row["history"]
         # In reverse order, ab[i-1] = ab[i]/alpha[i], including ab[-1]=1 at last step.
         means = (
@@ -222,6 +249,8 @@ def export(path, pair_with=None):
                     b,
                     cache,
                     noise,
+                    all_eps[cfg.worlds :],
+                    observation_eps,
                 )
             )
             np.savez_compressed(target, vectors=vectors, paths=paths)
@@ -359,6 +388,29 @@ def export(path, pair_with=None):
             "Same initial outer-route survey, physical wind, task, 10 s horizon, 2 s replanning, "
             "20 Hz RPCBF and 5 Hz observations as the two existing arms. Comparing against proposed "
             "combines wind-aware planning and anticipated learning; it does not isolate learning value."
+        )
+    if method == "wind_blind_matched":
+        note = note.replace(
+            "only the continuously applied execution RPCBF uses "
+            "that belief. Nominal control has no wind compensation.",
+            "the nominal execution controller AND RPCBF use that belief, "
+            "matching the wind-aware arms. Only planning is wind-blind.",
+        )
+    if covariance_mode:
+        note = (
+            "Development covariance study. Planning uses deterministic earned-mean wind dynamics, "
+            "not sampled outer physical worlds. Full coherent inner RPCBF field samples remain. "
+            + (
+                "Full predictive GP covariance is conditioned on executed forecast locations at "
+                "2,4,6,8 seconds; mean, kernel and inducing inputs are frozen. This differs from "
+                "future variational POAM refitting and is not exact expected value of information. "
+                if method == "covariance_anticipated"
+                else "The forecast belief is frozen; this isolates the covariance-update effect. "
+            )
+            + "Real execution uses full online POAM, the same wind-aware nominal controller, "
+            "20 Hz RPCBF and 5 Hz measurements. Genuine stored MBD candidates are replayed, "
+            "not reoptimized. All cells evolve with the archived Q; two large regions have targets. "
+            "10-second forecasts, 2-second executed periods. Export time is not planning latency."
         )
     payload = {
         "schema": 2,

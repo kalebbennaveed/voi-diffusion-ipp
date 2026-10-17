@@ -33,9 +33,27 @@ class OptimizationResult(NamedTuple):
     initial: jax.Array
 
 
-def schedule(steps, beta_min, beta_max):
+def schedule(steps, beta_min, beta_max, reference_steps=0):
+    if reference_steps and steps != reference_steps:
+        reference = jnp.cumprod(1 - jnp.linspace(beta_min, beta_max, reference_steps))
+        ab = jnp.exp(jnp.linspace(jnp.log(reference[0]), jnp.log(reference[-1]), steps))
+        alpha = ab / jnp.r_[1.0, ab[:-1]]
+        return alpha, ab
     alpha = 1 - jnp.linspace(beta_min, beta_max, steps)
     return alpha, jnp.cumprod(alpha)
+
+
+def target_objective(objective, cfg):
+    """Uniform finite-domain target: zero weight outside, never clip proposals.
+
+    Bounded physical commands via tanh alone do not normalize an unbounded
+    latent density. The old option remains for exact archived reproduction.
+    """
+    if not cfg.mbd_latent_bound:
+        return objective
+    return lambda y: jax.lax.cond(
+        jnp.all(jnp.abs(y) <= cfg.mbd_latent_bound), objective, lambda _: jnp.array(jnp.inf), y
+    )
 
 
 def weights(cost, temperature):
@@ -61,7 +79,10 @@ def reverse_update(y_i, estimated_score, alpha, alphabar):
 def optimize(objective, initial, key, cfg, algorithm="mbd"):
     if algorithm not in ("mbd", "cem", "mppi"):
         raise ValueError(algorithm)
-    alpha, ab = schedule(cfg.diffusion_steps, cfg.beta_min, cfg.beta_max)
+    objective = target_objective(objective, cfg)
+    alpha, ab = schedule(
+        cfg.diffusion_steps, cfg.beta_min, cfg.beta_max, cfg.diffusion_reference_steps
+    )
     key, kinit = jax.random.split(key)
     y = jnp.sqrt(ab[-1]) * initial + jnp.sqrt(1 - ab[-1]) * jax.random.normal(kinit, initial.shape)
     if algorithm != "mbd":

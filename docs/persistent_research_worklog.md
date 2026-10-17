@@ -1150,3 +1150,76 @@ installed. Reference tracked files are untouched (an existing untracked .DS_Stor
 was left alone). CPU is the measured supported backend; earlier Metal limitations
 remain. Safe-MPD replay data is not mislabeled as RPCBF: existing exporter rejects
 new shield formats; comparisons are supplied as independently audited2D plots.
+
+### Covariance-anticipated planner investigation (active foreground)
+
+The user approved the attached plan: implement a separate mean-dynamics planner
+with analytic covariance anticipation, preserve original methods/results, retain
+MBD and spline RPCBF/full real POAM, then diagnose optimizer error and run matched
+persistent comparisons. Automations remain paused. All implementation stays here.
+
+New wind/covariance_forecast.py conditions the full current POAM predictive GP,
+including spatial residual/cross covariance, at earned predicted executed points.
+Frozen mean/kernel/inducing representation; this is NOT a future POAM variational
+refit. Gaussian algebra, sequential conditioning, sampling/cached derivatives and
+causality tests pass. The 12s five-mode pilot is complete: covariance median1.234s,
+mean-frozen0.456s, originalproposed1.585s, currentbelief0.802s, planning-only blind
+0.040s. Original first12s states/clarity/controls/POAM mean/std reproduce exactly.
+Pilot is not persistent benefit evidence: covariance and mean-frozen costs both
+about0.247 vsproposed0.210 andcurrentbelief0.195.
+
+Mechanism studies: docs/covariance_study/mechanism_02 (periods0,5) and mechanism_03
+(period18) have all24 candidate results plus8 fresh posterior physical fields per
+candidate. First stage identical. Covariance changes some future costs/corrections
+substantially, both signs; best candidate among the fixed bank stays the same in
+allthree states. Contacts under sampled physical stress occur in both variants.
+This is not a calibration/safety proof. Retain mechanism_01 failure (unhashable
+Config JSONlists); mechanism_02 stopped atperiod18 because eager prediction differed
+from recording JIT by4.53e-5 in two stds. Replaying with the same JIT evaluation
+passes unchanged tolerances in mechanism_03. No tolerance was loosened.
+
+Proper finite-box target is optional mbd_latent_bound; new experiments use6, old
+zero default preserves archived optimizer. Gaussian proposals remain unmodified;
+outside support receives zero weight. Noise endpoint comparison optional
+reference_steps4. See docs/covariance_anticipated_method.md. A test used unsupported
+JAX list indexing; failure retained, repaired test passes.35 other component and
+regression tests passed plus3 target tests after repair.
+
+ACTIVE session72223: scripts/benchmark_covariance_mbd.py, output
+ docs/covariance_study/budgets_01, log results/covariance_budgets_01.log.
+Three same saved states, two optimizerseeds, realization/covariance modes,
+4x8/8x16/16x32 plus equal37-evaluation one4x7 vs three4x2 chains. Fixed training
+bank, independent4-world selection and8-world final evaluation. Full causal
+hypothetical POAM is used in the independent evaluation, including random mean
+updates; inner base draws fixed to isolate outer-bank changes. One heavy worker.
+Preserve src and benchmark driver while active. Do not duplicate/restart.
+
+No long covariance missions have started yet. A new standalone2D page is staged
+in demo/covariance (original2D/3D untouched); server route added, exporter supports
+new methods but has not yet exported/visually validated new data. New
+wind_blind_matched differs only in planning: same real nominal wind compensation
+and RPCBF as wind-aware arms; historical wind_blind_planner retained. A separate
+mean_frozen control is essential to isolate anticipation from mean-dynamics
+approximation. Next: finish budget screen, report all regressions, freeze/deploy
+bounded matched120s development missions, dense audits, export honest demos and
+inspect them. Do not promote a variant from optimistic short forecasts alone.
+
+Budget screen complete: all60 declared optimizer calls at three saved states,
+two seeds and both forecast modes. docs/covariance_study/budget_summary.json and
+budget_comparison.png retain every outcome. 16x32 improved independent mean cost
+in8/12 matched comparisons (four initial-state ties), but slightly worsened the
+training objective in two. It costs median19.587s realization /18.458s covariance,
+vs1.477s /1.351s at4x8 (optimizer only, excludes full cycle). Equal37-evaluation
+three chains helped atperiod5, regressed atperiod18 for one seed, tied otherwise.
+Fresh4-world shortlist reranking changed17/60 selections; the separate8-world bank
+improved in7 and regressed in10. Contact incidences across these repeated candidate
+checks went4 to2; these are NOT independent safety trials. No search/reranking
+change is promoted to online planning from this screen.
+
+Next declared protocol docs/covariance_study/persistent_protocol_01.json:
+15 serial120s missions, original physical/task fields, seeds8101 (old development),
+985201/985202 (new development), five methods. All use the new finite latent box6,
+4x8 search,10s forecast/2s execution; no independent reranking. Keep source frozen.
+Generic serial runner is scripts/run_safe_mpd_study.py (historical filename; every
+job explicitly selects RPCBF). Source hashes include runner/auditor/configs.
+No held-out confirmation or across-environment success claim from this small study.

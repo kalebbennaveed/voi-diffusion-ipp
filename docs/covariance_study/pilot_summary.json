@@ -1,0 +1,47 @@
+[
+  {
+    "method": "proposed",
+    "complete": true,
+    "duration_s": 12,
+    "cost": 0.21048255637288094,
+    "steady_cycle_median": 1.5854016455014062,
+    "max_cycle": 1.8398120409983676,
+    "backup_periods": 0
+  },
+  {
+    "method": "wind_blind_matched",
+    "complete": true,
+    "duration_s": 12,
+    "cost": 0.20763149810954928,
+    "steady_cycle_median": 0.040000229000725085,
+    "max_cycle": 0.04087833300582133,
+    "backup_periods": 0
+  },
+  {
+    "method": "covariance_anticipated",
+    "complete": true,
+    "duration_s": 12,
+    "cost": 0.24708126485347748,
+    "steady_cycle_median": 1.2339262080022309,
+    "max_cycle": 1.2825406240008306,
+    "backup_periods": 0
+  },
+  {
+    "method": "mean_frozen",
+    "complete": true,
+    "duration_s": 12,
+    "cost": 0.24705027416348457,
+    "steady_cycle_median": 0.45573585349848145,
+    "max_cycle": 0.4753625829980592,
+    "backup_periods": 0
+  },
+  {
+    "method": "current_belief",
+    "complete": true,
+    "duration_s": 12,
+    "cost": 0.1951141096651554,
+    "steady_cycle_median": 0.8017941460020666,
+    "max_cycle": 0.8084801259901724,
+    "backup_periods": 0
+  }
+]

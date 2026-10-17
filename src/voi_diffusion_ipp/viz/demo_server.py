@@ -196,6 +196,8 @@ def handler(state):
                 "/app.js": ("app.js", "text/javascript"),
                 "/style.css": ("style.css", "text/css"),
                 "/model.js": ("model.js", "text/javascript"),
+                "/covariance/": ("covariance/index.html", "text/html; charset=utf-8"),
+                "/covariance/app.js": ("covariance/app.js", "text/javascript"),
                 "/3d": ("3d/index.html", "text/html; charset=utf-8"),
                 "/3d/": ("3d/index.html", "text/html; charset=utf-8"),
                 "/3d/app.js": ("3d/app.js", "text/javascript"),

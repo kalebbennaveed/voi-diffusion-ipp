@@ -12,7 +12,7 @@ import jax
 import jax.numpy as jnp
 
 from .budgeted import future_reference, reference_matrices, segment, split_vector
-from .mbd import optimize
+from .mbd import optimize, target_objective
 
 
 class StillAir(NamedTuple):
@@ -89,7 +89,7 @@ def make_nominal_planner(cfg, objective_cells=None):
             )
             scale = len(objective_cells) / len(q)
         objective = lambda y: evaluate_nominal(y, x, qe, ee, cfg)[0] * scale
-        costs = jax.lax.map(objective, initials)
+        costs = jax.lax.map(target_objective(objective, cfg), initials)
         result = optimize(objective, initials[jnp.argmin(costs)], key, cfg)
         return result._replace(evaluations=result.evaluations + len(initials))
 

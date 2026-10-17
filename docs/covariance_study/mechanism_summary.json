@@ -1,0 +1,35 @@
+[
+  {
+    "period": 0,
+    "candidates": 8,
+    "mean_prediction_best_frozen": 0,
+    "mean_prediction_best_covariance": 0,
+    "max_improvement": 0.0048052966594696045,
+    "max_regression": 0.0005079209804534912,
+    "max_first_stage_error": 0.0,
+    "fresh_contact_counts_frozen": 2,
+    "fresh_contact_counts_covariance": 4
+  },
+  {
+    "period": 5,
+    "candidates": 8,
+    "mean_prediction_best_frozen": 7,
+    "mean_prediction_best_covariance": 7,
+    "max_improvement": 0.014901995658874512,
+    "max_regression": 0.005960404872894287,
+    "max_first_stage_error": 0.0,
+    "fresh_contact_counts_frozen": 10,
+    "fresh_contact_counts_covariance": 9
+  },
+  {
+    "period": 18,
+    "candidates": 8,
+    "mean_prediction_best_frozen": 1,
+    "mean_prediction_best_covariance": 1,
+    "max_improvement": 0.020821750164031982,
+    "max_regression": 0.012492090463638306,
+    "max_first_stage_error": 0.0,
+    "fresh_contact_counts_frozen": 1,
+    "fresh_contact_counts_covariance": 2
+  }
+]

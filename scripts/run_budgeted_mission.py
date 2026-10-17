@@ -21,7 +21,7 @@ from voi_diffusion_ipp.config import config_dict, load_config
 from voi_diffusion_ipp.experiments.checkpoint import source_hashes
 from voi_diffusion_ipp.experiments.two_region import make_two_region, outer_survey_positions
 from voi_diffusion_ipp.experiments.wind_cases import WIND_CASES, physical_wind, wind_case_spec
-from voi_diffusion_ipp.planning import safe_mpd
+from voi_diffusion_ipp.planning import covariance, safe_mpd
 from voi_diffusion_ipp.planning.budgeted import (
     evaluate,
     make_planner,
@@ -117,12 +117,21 @@ def run(
         belief = KnownWind(KnownBasis(truth))
         build = jax.jit(lambda b, e: KnownCache(jnp.ones((len(e), 1, 2))))
     anticipate = method == "proposed"
-    wind_blind = method == "wind_blind_planner"
+    wind_blind = method in ("wind_blind_planner", "wind_blind_matched")
+    covariance_mode = method in ("covariance_anticipated", "mean_frozen")
     objective_cells = np.flatnonzero(np.asarray(env.targets) > 0)
     plan = make_planner(cfg, anticipate, objective_cells)
     verify = jax.jit(
         lambda y, x, q, b, e, n: evaluate(y, x, q, b, None, n, env, cfg, anticipate, True, e)
     )
+    if covariance_mode:
+        forecast_learning = method == "covariance_anticipated"
+        plan = covariance.make_planner(cfg, forecast_learning, objective_cells)
+        verify = jax.jit(
+            lambda y, x, q, b, e, n: covariance.evaluate(
+                y, x, q, b, None, e, n, env, cfg, forecast_learning, True
+            )
+        )
     if planner_form != "compact":
         plan = safe_mpd.make_planner(cfg, objective_cells, transformed=planner_form == "safe_mpd")
         verify = jax.jit(
@@ -150,7 +159,7 @@ def run(
             actual_cfg,
             False,
             backup,
-            nominal_wind_aware=not wind_blind,
+            nominal_wind_aware=method != "wind_blind_planner",
             actuator_controls=planner_form != "compact",
         )
     )
@@ -192,6 +201,17 @@ def run(
         "source_sha256": source_hashes(),
         "label": "Short development diagnostic, not statistical validation",
         "planning_wind": "zero; no safety in objective" if wind_blind else "current POAM belief",
+        "forecast_belief": (
+            "fixed mean; full predictive GP covariance conditioning, fixed kernel/inducing inputs"
+            if method == "covariance_anticipated"
+            else "frozen mean dynamics and covariance"
+            if method == "mean_frozen"
+            else "sampled hypothetical POAM updates"
+            if anticipate
+            else "frozen"
+        ),
+        "planning_outer_worlds": 0 if covariance_mode or wind_blind else cfg.worlds,
+        "execution_nominal_wind_compensation": method != "wind_blind_planner",
         "execution_safety": (
             "full POAM wind-aware spline RPCBF at 20 Hz"
             if cfg.safety_filter == "rpcbf"
@@ -212,6 +232,18 @@ def run(
             cache_s = 0.0
             best, plan_s = timed(plan, x, q, env, initials, keys[2])
             checked, verify_s = timed(verify, best.vector, x, q)
+        elif covariance_mode:
+            interval = cfg.budgeted_update_steps or cfg.future_steps
+            capacity = cfg.stage_steps + cfg.future_steps - interval
+            conditioning_noise = jax.random.normal(keys[3], (cfg.inner_samples, capacity, 2))
+            inner_eps = eps[cfg.worlds :]
+            cache, cache_s = timed(build, belief, inner_eps)
+            best, plan_s = timed(
+                plan, x, q, belief, cache, inner_eps, conditioning_noise, env, initials, keys[2]
+            )
+            checked, verify_s = timed(
+                verify, best.vector, x, q, belief, inner_eps, conditioning_noise
+            )
         else:
             cache, cache_s = timed(build, belief, eps)
             best, plan_s = timed(plan, x, q, belief, cache, noise, env, initials, keys[2])
@@ -356,6 +388,7 @@ def main():
     p.add_argument("--future-update-steps", type=int, default=0)
     p.add_argument("--chunk", type=int, default=1)
     p.add_argument("--proposals", type=int, default=8)
+    p.add_argument("--latent-bound", type=float, default=0.0)
     p.add_argument("--first-stage", type=float, default=1.0)
     p.add_argument(
         "--prior-regime", choices=["cold", "outer-survey", "routes-survey"], default="cold"
@@ -387,6 +420,7 @@ def main():
         budgeted_update_steps=args.future_update_steps,
         candidate_chunk=args.chunk,
         proposals=args.proposals,
+        mbd_latent_bound=args.latent_bound,
         safety_filter=args.safety_filter,
         shield_terminal_speed=args.shield_terminal_speed,
         shield_substeps=args.shield_substeps,
@@ -394,7 +428,15 @@ def main():
     )
     args.output.mkdir(parents=True, exist_ok=False)
     for method in args.methods:
-        if method not in ("proposed", "current_belief", "oracle", "wind_blind_planner"):
+        if method not in (
+            "proposed",
+            "current_belief",
+            "oracle",
+            "wind_blind_planner",
+            "wind_blind_matched",
+            "covariance_anticipated",
+            "mean_frozen",
+        ):
             raise ValueError(method)
         print("METHOD", method, flush=True)
         run(
