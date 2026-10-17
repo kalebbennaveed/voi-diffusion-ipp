@@ -1,0 +1,119 @@
+[
+  {
+    "grid": [
+      6,
+      4
+    ],
+    "observed_distance_to_center": 0.0,
+    "prior_sigma_center": 0.7613019347190857,
+    "fixed_sigma_center": 0.4798241853713989,
+    "relocated_sigma_center": 0.0316196084022522,
+    "fixed_sigma_observed": 0.4798241853713989,
+    "relocated_sigma_observed": 0.0316196084022522,
+    "minimum_inducing_distance_to_center": 0.8069144487380981
+  },
+  {
+    "grid": [
+      6,
+      4
+    ],
+    "observed_distance_to_center": 0.5,
+    "prior_sigma_center": 0.7613019347190857,
+    "fixed_sigma_center": 0.5426117777824402,
+    "relocated_sigma_center": 0.5426156520843506,
+    "fixed_sigma_observed": 0.3186682164669037,
+    "relocated_sigma_observed": 0.3186681568622589,
+    "minimum_inducing_distance_to_center": 0.8069144487380981
+  },
+  {
+    "grid": [
+      6,
+      4
+    ],
+    "observed_distance_to_center": 1.0,
+    "prior_sigma_center": 0.7613019347190857,
+    "fixed_sigma_center": 0.6102303862571716,
+    "relocated_sigma_center": 0.6484013795852661,
+    "fixed_sigma_observed": 0.2537338137626648,
+    "relocated_sigma_observed": 0.03157801553606987,
+    "minimum_inducing_distance_to_center": 0.8069144487380981
+  },
+  {
+    "grid": [
+      5,
+      5
+    ],
+    "observed_distance_to_center": 0.0,
+    "prior_sigma_center": 0.762804388999939,
+    "fixed_sigma_center": 0.031617842614650726,
+    "relocated_sigma_center": 0.03162160515785217,
+    "fixed_sigma_observed": 0.031617842614650726,
+    "relocated_sigma_observed": 0.03162160515785217,
+    "minimum_inducing_distance_to_center": 0.0
+  },
+  {
+    "grid": [
+      5,
+      5
+    ],
+    "observed_distance_to_center": 0.5,
+    "prior_sigma_center": 0.762804388999939,
+    "fixed_sigma_center": 0.3349473178386688,
+    "relocated_sigma_center": 0.3349188268184662,
+    "fixed_sigma_observed": 0.3661549985408783,
+    "relocated_sigma_observed": 0.3661552369594574,
+    "minimum_inducing_distance_to_center": 0.0
+  },
+  {
+    "grid": [
+      5,
+      5
+    ],
+    "observed_distance_to_center": 1.0,
+    "prior_sigma_center": 0.762804388999939,
+    "fixed_sigma_center": 0.5515986084938049,
+    "relocated_sigma_center": 0.5515793561935425,
+    "fixed_sigma_observed": 0.3104616105556488,
+    "relocated_sigma_observed": 0.31046169996261597,
+    "minimum_inducing_distance_to_center": 0.0
+  },
+  {
+    "grid": [
+      7,
+      5
+    ],
+    "observed_distance_to_center": 0.0,
+    "prior_sigma_center": 0.7643474340438843,
+    "fixed_sigma_center": 0.03160761669278145,
+    "relocated_sigma_center": 0.03160666301846504,
+    "fixed_sigma_observed": 0.03160761669278145,
+    "relocated_sigma_observed": 0.03160666301846504,
+    "minimum_inducing_distance_to_center": 0.0
+  },
+  {
+    "grid": [
+      7,
+      5
+    ],
+    "observed_distance_to_center": 0.5,
+    "prior_sigma_center": 0.7643474340438843,
+    "fixed_sigma_center": 0.41293007135391235,
+    "relocated_sigma_center": 0.4129098057746887,
+    "fixed_sigma_observed": 0.30849865078926086,
+    "relocated_sigma_observed": 0.30849790573120117,
+    "minimum_inducing_distance_to_center": 0.0
+  },
+  {
+    "grid": [
+      7,
+      5
+    ],
+    "observed_distance_to_center": 1.0,
+    "prior_sigma_center": 0.7643474340438843,
+    "fixed_sigma_center": 0.6141785979270935,
+    "relocated_sigma_center": 0.6141610145568848,
+    "fixed_sigma_observed": 0.2490704357624054,
+    "relocated_sigma_observed": 0.24906957149505615,
+    "minimum_inducing_distance_to_center": 0.0
+  }
+]

@@ -44,6 +44,8 @@ class Config:
     spline: str = "full"
     wind_backend: str = "feature"
     poam_train_steps: int = 10
+    hypothetical_relocation: bool = False
+    budgeted_update_steps: int = 0  # 0: one future stage; >0: causal future belief periods
     poam_inducing_x: int = 6
     poam_inducing_y: int = 4
     poam_spectral_nodes: int = 32
@@ -66,6 +68,10 @@ class Config:
     methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
     def __post_init__(self):
+        if self.budgeted_update_steps < 0 or (
+            self.budgeted_update_steps and self.future_steps % self.budgeted_update_steps
+        ):
+            raise ValueError("Budgeted update interval must divide the future horizon")
         if not 0 <= self.linear_drag < float("inf"):
             raise ValueError("Linear drag must be finite and nonnegative")
         for name in (

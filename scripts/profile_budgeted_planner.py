@@ -4,6 +4,7 @@ import argparse
 import json
 import platform
 import time
+from dataclasses import replace
 from pathlib import Path
 
 import jax
@@ -42,8 +43,21 @@ def serial(value):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--calls", type=int, default=3)
+    parser.add_argument("--relocate", action="store_true")
+    parser.add_argument("--future-update-steps", type=int, default=0)
+    parser.add_argument("--chunk", type=int, default=1)
+    parser.add_argument("--active-cells", action="store_true")
+    parser.add_argument("--proposals", type=int, default=8)
+    parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     cfg = load_config(ROOT / "configs/two_region_budgeted.yaml")
+    cfg = replace(
+        cfg,
+        hypothetical_relocation=args.relocate,
+        candidate_chunk=args.chunk,
+        budgeted_update_steps=args.future_update_steps,
+        proposals=args.proposals,
+    )
     spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
     env, poam, x, q, truth = make_two_region(spec, cfg)
     root = jax.random.PRNGKey(8101)
@@ -54,7 +68,9 @@ def main():
     belief, startup_snapshot = timed(poam.planning_belief)
     print("initial POAM", startup_update, startup_snapshot, flush=True)
     build = jax.jit(lambda b, e: build_prior_cache(b, e, 129, True))
-    plan = make_planner(cfg, True)
+    plan = make_planner(
+        cfg, True, np.flatnonzero(np.asarray(env.targets) > 0) if args.active_cells else None
+    )
     approximate = jax.jit(lambda y, x, q, b, c, n: evaluate(y, x, q, b, c, n, env, cfg, True))
     exact = jax.jit(lambda y, x, q, b, e, n: evaluate(y, x, q, b, None, n, env, cfg, True, True, e))
     result = {
@@ -62,6 +78,7 @@ def main():
         "backend": jax.default_backend(),
         "machine": platform.machine(),
         "jax": jax.__version__,
+        "active_cells_only": args.active_cells,
         "startup_poam_update_s": startup_update,
         "startup_snapshot_s": startup_snapshot,
         "calls": [],
@@ -108,9 +125,18 @@ def main():
             "trace": np.asarray(best.trace),
         }
         result["calls"].append(serial(row))
-        (ROOT / "docs/budgeted_planner/profile.json").write_text(
-            json.dumps(result, indent=2) + "\n"
-        )
+        (
+            args.output
+            or (
+                ROOT
+                / "docs/budgeted_planner"
+                / (
+                    f"profile_relocation_chunk{args.chunk}_updates{args.future_update_steps}.json"
+                    if args.relocate
+                    else f"profile_chunk{args.chunk}.json"
+                )
+            )
+        ).write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2), flush=True)
 
 

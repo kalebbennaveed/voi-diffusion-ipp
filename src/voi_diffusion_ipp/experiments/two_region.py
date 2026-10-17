@@ -28,6 +28,21 @@ class PassageWind(NamedTuple):
         )
 
 
+def outer_survey_positions(env, count=21):
+    """Declared historical flight lines; geometry only, independent of wind values."""
+    tangent = (env.roi_b - env.roi_a) / jnp.linalg.norm(env.roi_b - env.roi_a)
+    normal = jnp.array([-tangent[1], tangent[0]])
+    s = jnp.linspace(0, 1, count)
+    return jnp.concatenate(
+        [
+            env.roi_a
+            + s[:, None] * (env.roi_b - env.roi_a)
+            + h * (16 * s**2 * (1 - s) ** 2)[:, None] * normal
+            for h in [-1.5, 1.5]
+        ]
+    )
+
+
 def make_two_region(spec, cfg, amplitude=1.8, poam_key=600000):
     """Every cell evolves; only the two large regions have positive targets.
 
@@ -82,4 +97,10 @@ def make_two_region(spec, cfg, amplitude=1.8, poam_key=600000):
     truth = PassageWind(
         tangent, normal, jnp.array(amplitude), jnp.array(0.2), jnp.array(1.1), jnp.array(0.35)
     )
-    return env, poam, jnp.r_[a, jnp.zeros(2)], jnp.full(len(cells), spec["initial_clarity"]), truth
+    return (
+        env,
+        poam,
+        jnp.r_[a, jnp.zeros(2)],
+        jnp.full(len(cells), spec["initial_clarity"], dtype=jnp.float32),
+        truth,
+    )

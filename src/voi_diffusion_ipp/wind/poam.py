@@ -72,6 +72,39 @@ def select_inducing(params, candidates, lengths, count):
     return candidates[jnp.array(selected)]
 
 
+def select_inducing_jax(params, candidates, lengths, count):
+    """Same pivoted-Cholesky rule as real POAM, usable inside a hypothetical rollout."""
+    K = attentive_kernel(params, candidates, candidates, lengths)
+    amplitude = jnp.exp(params["log_amplitude"])
+    K = K.at[jnp.diag_indices(len(candidates))].set(amplitude)
+    tolerance = 8 * jnp.finfo(jnp.float32).eps * amplitude
+
+    def pivot(j, state):
+        residual, L, used, indices = state
+        eligible = jnp.where(used, -jnp.inf, residual)
+        index = jnp.argmax(eligible >= eligible.max() - tolerance)
+        column = (K[:, index] - L @ L[index]) / jnp.sqrt(jnp.maximum(residual[index], 1e-12))
+        return (
+            residual - column**2,
+            L.at[:, j].set(column),
+            used.at[index].set(True),
+            indices.at[j].set(index),
+        )
+
+    _, _, _, indices = jax.lax.fori_loop(
+        0,
+        count,
+        pivot,
+        (
+            jnp.full(len(candidates), amplitude),
+            jnp.zeros((len(candidates), count)),
+            jnp.zeros(len(candidates), dtype=bool),
+            jnp.zeros(count, dtype=jnp.int32),
+        ),
+    )
+    return candidates[indices]
+
+
 # q(u), locations and accumulated statistics are fixed during the M-step.
 # Pass them as dynamic arguments so changing the posterior does not rebuild JIT.
 def negative_elbo(params, bx, by, z, mean, covariance, lengths, noise_std, data_count):
@@ -99,6 +132,27 @@ negative_elbo_gradient = jax.jit(jax.value_and_grad(negative_elbo))
 
 class POAM:
     """Online adapter with full prediction. Kernel adaptation only between plans."""
+
+    @classmethod
+    def from_data(cls, positions, measurements, key, inducing_count, train_steps=10, **kwargs):
+        """Initialize inducing locations from available data, then run ordinary POAM.
+
+        The reference POAM initializes Z from training locations. A coverage grid
+        containing unobserved locations can instead spend most of a small sparse
+        model's capacity away from its data. Pivoting the initial data makes this
+        choice deterministic; no physical field or unobserved value is accessed.
+        This constructor requires at least M distinct initial locations.
+        """
+        x = jnp.asarray(positions, jnp.float32)
+        if len(np.unique(np.asarray(x), axis=0)) < inducing_count:
+            raise ValueError("Data-supported POAM initialization needs M distinct locations")
+        model = cls(x[:inducing_count], key, **kwargs)
+        z = select_inducing(model.parameters, x, model.lengths, inducing_count)
+        model.z = z
+        model.old_K = model.kernel(z, z)
+        model.covariance = model.old_K
+        model.update(x, measurements, key, train_steps=train_steps, relocate=False)
+        return model
 
     def __init__(
         self,

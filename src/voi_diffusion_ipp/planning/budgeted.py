@@ -151,24 +151,61 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
             cfg,
             False,
         )
-        posterior = belief.condition(first.x[1:, :2], first.observations) if anticipate else belief
-        if exact:
-            future_mean, all_future = posterior, posterior.inner_fields(eps)
-        else:
-            future_mean, all_future = cache.tabulate(posterior)
-        future_inner = InnerFields(all_future.basis, all_future.coefficients[cfg.worlds :])
-        reference = future_reference(vector, first.x[-1], posterior, env, matrices, cfg)
-        future = segment(
-            first.x[-1],
-            first.q[-1],
-            reference,
-            future_mean,
-            future_inner,
-            world,
-            observation_noise[cfg.stage_steps :],
-            env,
-            cfg,
-            True,
+        posterior = (
+            belief.condition(
+                first.x[1:, :2], first.observations, relocate=cfg.hypothetical_relocation
+            )
+            if anticipate
+            else belief
+        )
+        interval = cfg.budgeted_update_steps or cfg.future_steps
+        periods = cfg.future_steps // interval
+
+        def future_period(carry, index):
+            xf, qf, bf = carry
+            if exact:
+                future_mean, all_future = bf, bf.inner_fields(eps)
+            else:
+                # Recompute the small inducing-kernel table. Carrying the entire
+                # prior cache through scan was measured to be slower on M3 CPU.
+                future_cache = (
+                    cache.relocate(bf) if anticipate and cfg.hypothetical_relocation else cache
+                )
+                future_mean, all_future = future_cache.tabulate(bf)
+            future_inner = InnerFields(all_future.basis, all_future.coefficients[cfg.worlds :])
+            # Global time reference; only current and later controls see this posterior.
+            reference = future_reference(vector, first.x[-1], bf, env, matrices, cfg)
+            reference = jax.lax.dynamic_slice_in_dim(reference, index * interval, interval)
+            ns = jax.lax.dynamic_slice_in_dim(
+                observation_noise, cfg.stage_steps + index * interval, interval
+            )
+            out = segment(xf, qf, reference, future_mean, future_inner, world, ns, env, cfg, True)
+            if anticipate and periods > 1:
+                bf = jax.lax.cond(
+                    index < periods - 1,
+                    lambda old_b: old_b.condition(
+                        out.x[1:, :2], out.observations, relocate=cfg.hypothetical_relocation
+                    ),
+                    lambda old_b: old_b,
+                    bf,
+                )
+            return (out.x[-1], out.q[-1], bf), out
+
+        _, parts = jax.lax.scan(
+            future_period,
+            (first.x[-1], first.q[-1], posterior),
+            jnp.arange(periods),
+        )
+        flatten = lambda a: a.reshape((-1, *a.shape[2:]))
+        future = Segment(
+            jnp.concatenate((first.x[-1, None], flatten(parts.x[:, 1:]))),
+            jnp.concatenate((first.q[-1, None], flatten(parts.q[:, 1:]))),
+            parts.cost.sum(),
+            flatten(parts.observations),
+            flatten(parts.controls),
+            flatten(parts.correction),
+            flatten(parts.slack),
+            flatten(parts.clearance),
         )
         cost = first.cost + future.cost
         valid = jnp.isfinite(cost)
@@ -180,12 +217,29 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
     return costs.mean(), trajectories
 
 
-def make_planner(cfg, anticipate=True):
+def make_planner(cfg, anticipate=True, objective_cells=None):
+    """Optionally omit zero-target cells from candidate scoring, exactly.
+
+    Their nonnegative clarity contributes zero deficit, and neither dynamics,
+    wind inference nor this policy depends on them. Normalize by the ORIGINAL
+    grid size. Execution and independent verification still evolve every cell.
+    The caller must pass precisely the positive-target indices.
+    """
+
     @jax.jit
     def plan(x, q, belief, cache, noise, env, initials, key):
-        objective = lambda vector: evaluate(
-            vector, x, q, belief, cache, noise, env, cfg, anticipate
-        )[0]
+        if objective_cells is None:
+            qe, ee, scale = q, env, 1.0
+        else:
+            idx = jnp.asarray(objective_cells)
+            qe = q[idx]
+            ee = env._replace(
+                cells=env.cells[idx], targets=env.targets[idx], process_noise=env.process_noise[idx]
+            )
+            scale = len(objective_cells) / len(q)
+        objective = lambda vector: (
+            evaluate(vector, x, qe, belief, cache, noise, ee, cfg, anticipate)[0] * scale
+        )
         costs = jax.lax.map(objective, initials)
         initial = initials[jnp.argmin(costs)]
         result = optimize(objective, initial, key, cfg)
@@ -194,7 +248,7 @@ def make_planner(cfg, anticipate=True):
     return plan
 
 
-def warm_starts(x, env, cfg):
+def warm_starts(x, env, cfg, rapid=False):
     """Shared geometric seeds, including staying. MBD selects by task cost only."""
     candidates = []
     # Both region goals remain available regardless of current location/clarity.
@@ -204,6 +258,12 @@ def warm_starts(x, env, cfg):
         normal = jnp.array([-direction[1], direction[0]])
         for offset in [0.0, -1.5, 1.5] if goal_index < 2 else [0.0]:
             fractions = jnp.array([0.25, 0.5, 0.8, 1.0])
+            if rapid:
+                fractions = (
+                    jnp.array([0.7, 1.0, 1.0, 1.0])
+                    if offset == 0
+                    else jnp.array([0.5, 1.0, 1.0, 1.0])
+                )
             positions = (
                 x[:2]
                 + fractions[:, None] * delta

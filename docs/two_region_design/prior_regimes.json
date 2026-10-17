@@ -1,0 +1,42 @@
+{
+  "status": "declared development initial-information regime; no learning result yet",
+  "motivation": "Cold-prior failures retained: uncertainty over every route prevents the compact planner from reaching B. The user-motivated passage question also merits testing when outer alternatives have been surveyed previously.",
+  "common_prior": "Both methods receive exactly the same archived noisy wind observations on both outer route curves before mission time zero. These are an explicit initial-information assumption, not free measurements acquired during the mission. No passage-core wind values are supplied.",
+  "survey": {
+    "points_per_outer_route": 21,
+    "offsets": [
+      -1.5,
+      1.5
+    ],
+    "observation_std": 0.1,
+    "seed_namespace": 610000,
+    "kernel_training_steps": 10
+  },
+  "prior_std_screen": [
+    0.8,
+    1.5
+  ],
+  "selection_rule": "Inspect posterior calibration and known-outer/unknown-passage contrast before planner comparisons. Keep both outcomes. Do not select on proposed-vs-passive cost, inject oracle route costs, freeze passive real updates, or reset clarity during the mission.",
+  "negative_control": "A separately labeled prior survey that also covers the passage can later test low value of further learning, using the same task and physics.",
+  "scope": "This regime assumes historical wind information on outer routes. Any resulting benefit must not be generalized to a completely uninformative initial belief. The original cold-prior failures remain part of the study.",
+  "data_supported_followup": {
+    "reason": "Reference POAM initializes inducing locations from observed training locations. Uniform unobserved centers left surveyed routes unnecessarily uncertain.",
+    "reference": "POAM/src/models/poam_model.py::_init_inducing (read-only workspace reference)",
+    "initialization": "24 pivoted-Cholesky inducing locations from 42 archived outer-route observations; same data for both arms; no central observations.",
+    "diagnostic": "docs/budgeted_planner/outer_survey_data_supported.json",
+    "short_mission": {
+      "seed": 8101,
+      "duration_s": 24,
+      "methods": [
+        "proposed",
+        "current_belief"
+      ],
+      "prior_std": 0.8,
+      "future_update_steps": 15,
+      "chunk": 2,
+      "rapid_shared_initializations": true,
+      "output": "results/budgeted_missions/outer_survey_01"
+    },
+    "selection": "The existing std=0.8 remains the main development configuration; std=1.5 failure retained. This is not held-out evidence."
+  }
+}

@@ -105,3 +105,23 @@ Independent physics diagnostics in `docs/two_region_physics/` retain restrictive
 timing results, a failed dense-control check and its endpoint repair, and all
 144 flexible-speed optimizations. Only the refined physical route effect should
 inform method development; none of these oracle diagnostics establishes VoI.
+
+
+## Budgeted belief-feedback continuation and initialization
+
+The two-region runtime redesign restricts future controls to a cubic reference
+with a shared posterior-feature feedback map. This is an explicitly approximate
+policy class, preserving causality without an inner optimization per candidate.
+The general computational rationale for a restricted causal feedback policy is
+also discussed in Lee and Borrelli, *Fast Stochastic MPC using Affine Disturbance
+Feedback Gains Learned Offline*, arXiv:2411.13935, Eq. (4) and Remark 3
+(https://arxiv.org/html/2411.13935v1). Their linear-system offline SVD method and
+chance-constraint guarantees are **not** implemented or claimed here. Our
+posterior-feature policy and nonlinear RPCBF must earn their performance through
+independent experiments.
+
+POAM's reference `POAM/src/models/poam_model.py::_init_inducing` initializes from
+training inputs. `POAM.from_data` uses the available initial data with pivoted
+Cholesky selection rather than spending sparse capacity on unobserved uniform
+centers. It requires M distinct observed positions. This is used only in the
+explicit common historical-survey regime; old cold-prior studies are preserved.

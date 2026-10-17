@@ -1,0 +1,42 @@
+[
+  {
+    "period": 70,
+    "min_K_eigenvalue": 0.0006343089975550692,
+    "min_B_eigenvalue": 4.467180000924112e-06,
+    "min_A_eigenvalue": 0.001221599578922277,
+    "min_S_eigenvalue": 0.00018056767921713048,
+    "S_asymmetry": 2.8342128643998876e-08
+  },
+  {
+    "period": 71,
+    "min_K_eigenvalue": 0.0006699167179249113,
+    "min_B_eigenvalue": 7.597352615363245e-07,
+    "min_A_eigenvalue": 0.0008106512329841293,
+    "min_S_eigenvalue": 0.00018139761739985395,
+    "S_asymmetry": 4.901721695205197e-08
+  },
+  {
+    "period": 72,
+    "min_K_eigenvalue": 0.0006927323235917016,
+    "min_B_eigenvalue": -1.2485254847792685e-06,
+    "min_A_eigenvalue": 0.000741931562081866,
+    "min_S_eigenvalue": 0.0001838529486510133,
+    "S_asymmetry": 3.321474650874734e-08
+  },
+  {
+    "period": 73,
+    "min_K_eigenvalue": 0.0007381136782961423,
+    "min_B_eigenvalue": -5.2280012463913405e-06,
+    "min_A_eigenvalue": 0.00013580074114870788,
+    "min_S_eigenvalue": 0.00019282760546836055,
+    "S_asymmetry": 3.7800054997205734e-07
+  },
+  {
+    "period": 74,
+    "min_K_eigenvalue": 0.0006939054644416638,
+    "min_B_eigenvalue": -3.9033210801773204e-05,
+    "min_A_eigenvalue": -0.0025914299951499483,
+    "min_S_eigenvalue": null,
+    "S_asymmetry": NaN
+  }
+]

@@ -339,3 +339,140 @@ preserve its protocols/results, update the catalog path and remove the worktree
 only after its active jobs have finished. The existing heartbeat
 `validate-persistent-poam-monitoring` continues this work and should stay quiet
 until validated completion or a genuine blocker.
+
+## Active continuation after 7e01f35 (no completion claim)
+
+The 12-second paired `results/budgeted_missions/dev_01` diagnostic completed.
+Both methods mostly remained in A; costs 0.201145 proposed and 0.201676 current
+belief are essentially equal, NOT a useful learning result. No backup or contact
+was reported in that short run. Warmed component-sum planning cycles including
+previous real POAM update/snapshot were ~0.93–1.00 s proposed and ~0.89–0.93 s
+current belief. These sums exclude input preparation, so future runs must also
+record inclusive generation wall time. Actual execution used 20 Hz safety AND
+20 Hz wind assimilation while hypothetical learning used 5 Hz observations.
+Fix the observation-rate mismatch to 5 Hz assimilation before any accepted study;
+retain dev_01 as a diagnostic. Physical controls should still run at 20 Hz.
+
+`diagnose_budgeted_seeds.py` replays the first eight real POAM batches from dev_01
+and inspects shared slow/rapid initializations. Rapid transfers help with known
+wind (cost to B 0.224 vs staying 0.272), but uncertain forecasts still stall.
+`wind/oracle.py` is an explicitly privileged analytic known-wind reference, never
+a learning backend; it exists only to isolate physical/task/search limitations.
+The duplicate initial `diagnose_budgeted_oracle.py` can be consolidated later.
+
+`check_poam_learning_resolution.py` established a material hypothetical-update
+approximation error: with the 6x4 initial inducing grid, ten center observations
+leave sigma=0.480 in the frozen-Z forecast versus 0.0316 after actual POAM inducing
+relocation. 5x5/7x5 grids have a center point and eliminate that particular floor,
+but do not remove floors at arbitrary other positions. Prefer fixing the causal
+update to reflect full POAM relocation over selecting a representation solely
+for a winning outcome. Raw table: docs/budgeted_planner/learning_resolution.json.
+
+Uncommitted current changes implement optional hypothetical POAM relocation via
+JAX pivoted Cholesky and full sufficient-statistic transport; cache relocation
+refreshes inducing kernels/prior values without regenerating fixed prior draws.
+Config flag `hypothetical_relocation` defaults false, so old configurations retain
+fixed-Z behavior. `tests/test_hypothetical_poam.py` compares the full relocated
+posterior/statistics against real POAM update with training disabled (same frozen
+kernel); cache sampling checks also pass. Ten POAM/budgeted tests passed in
+results/hypothetical_poam_tests.log. Full POAM kernel training remains real-only.
+
+Currently running bounded profiler: session 43642, command
+scripts/profile_budgeted_planner.py --calls 3 --relocate; output
+results/budgeted_relocation_profile.log and docs/budgeted_planner/profile_relocation.json.
+Do not start a duplicate. After timings, run the shared-seed diagnostic with
+--first-stage 1/2 --relocate; do not assume success. A 2-second stage with fixed
+inducing locations did NOT resolve the blocked predicted transfers. Keep the
+10-second total horizon and one-second-ish full cycle requirement. No generic
+information reward or forced visiting. Current configs still use the original
+1+9 seconds until a bounded revision is actually justified and tested.
+
+
+## Most recent multi-stage checks (still no successful mission)
+
+The single-update relocated profiler completed at ~1.02–1.07 s for cache+MBD+
+uncached verification, excluding actual POAM update/input prep. Relocation alone
+did not make the recorded-state transfers attractive. A bounded multi-stage
+variant now updates the hypothetical full POAM at future period boundaries and
+recomputes the shared feedback reference only for future controls. Config field
+`budgeted_update_steps=0` preserves the one-stage future; 15 gives updates after
+1, 4 and 7 s in a 1+9 s horizon. Four causality/POAM tests pass, including changing
+future observations without affecting any earlier controls. Full physical wind
+remains the same outer draw across all stages.
+
+`profile_relocation_chunk2_updates15.json` reports ~1.53 s cache+optimization+
+full checking, with candidates batched in pairs. This exceeds the one-second
+target. The multi-stage shared-seed check improves some bypass predictions, but
+still prefers staying in A (roughly 0.272 vs 0.295 for the better transfer). Thus
+more causality alone is not yet sufficient. All diagnostics retained. No second
+mission has run yet. scripts/run_budgeted_mission.py is being improved to use
+5 Hz actual wind assimilation matching the forecast (20 Hz physical safety),
+and inclusive generation wall-time rather than only component sums. It accepts
+explicit --rapid/--relocate/--future-update-steps/--first-stage/--chunk flags.
+
+Potential next diagnosis: the current zero-mean, globally uncertain initial wind
+prior also makes the OUTER routes unpredictable, whereas the user's motivating
+case has a localized windy passage with usable outer alternatives. A declared,
+common archived survey of outer routes could provide physically justified prior
+knowledge without leaking unobserved passage wind; compare this as a separate
+initial-information regime, retain the cold-prior failures, and label all such
+prior data explicitly. Do not assert this will succeed before measuring.
+
+
+## Continuation after premature stop: measured A/B missions and active work
+
+The user asked why work stopped. Work resumed; no acceptance claim. A 24-second
+known-wind MBD+RPCBF reference completed A/B/A/B, dense minimum clearance 0.127 m
+and zero contacts. This is a privileged oracle only. A matched full-POAM pair
+with the declared common archived outer-route survey also completed A/B/A/B:
+proposed cost 0.496185 versus 0.512685 current-belief (3.2% lower, one development
+seed, not substantial/held-out evidence). Both had no dense 32-substep contact.
+Raw runs: results/budgeted_missions/outer_survey_01. Auditor independently
+reintegrates the actual held controls in NumPy and recomputes whole-grid deficit.
+
+Found an initialization issue: reference POAM initializes inducing inputs from
+training data (POAM/src/models/poam_model.py::_init_inducing). Uniform unobserved
+initial Z spends sparse capacity away from surveyed paths. New POAM.from_data
+selects initial Z from the available data via pivoted Cholesky, then uses the
+ordinary full statistic transport/variational update/training. Both priors 0.8
+and 1.5 were retained; 0.8 remained the existing configuration, not selected on
+proposed wins. High 1.5 uncertainty still blocks useful motion. Diagnostics in
+docs/budgeted_planner/outer_survey_{screen,data_supported}.json. No passage truth
+is supplied to the estimator. Initial survey is an explicitly different prior
+regime; cold-prior failures remain.
+
+Optional exact kernel-column reuse for hypothetical relocation passed numerical
+tests, but carrying the large cache through lax.scan increased planner latency
+to ~2 s/cycle. It was reverted in the planner, while the tested optional cache
+API is retained. Omitting zero-target cells from candidate scoring preserves
+the original full-grid normalization and is mathematically exact for this
+policy. Actual execution and selected-plan verification still evolve all cells.
+This alone did not materially improve timing; retain profile_active_cells.json.
+Current profiler reduces MBD proposals from eight to six at all four genuine
+reverse levels, keeps two outer worlds and three RPCBF samples, and restores the
+faster non-carried cache. Session 13294; log results/budgeted_6_proposal_profile.log,
+output docs/budgeted_planner/profile_6_proposals.json. Do not start duplicates.
+
+New scripts/audit_budgeted_mission.py independently audits saved controls/costs.
+New scripts/export_budgeted_demo.py reconstructs POAM from saved real data, checks
+every snapshot, and replays stored MBD vectors for genuine candidate-path
+visualization. It has not yet been run. Export time is separate from planning.
+Next: finish latency measurement/tests, declare/run a 120-second development pair
+(single heavy worker), audit it, export both arms and verify the interactive UI.
+Then diagnose whether the central passage is actually learned/used: repeated
+outer-route shuttling alone is not the requested positive learning case. Do not
+launch held-out seed sweeps before that mechanism works.
+
+
+### Latest user steering during the 120-second run
+
+The user explicitly accepts **about two seconds per generated trajectory, as
+long as its horizon is ten seconds or longer**. The earlier one-second target
+is superseded. Prioritize quality/learning behavior within ~2 s; do not keep
+reducing proposals to force a hard one-second deadline. The frozen 120-second
+6-proposal study is already running (session 34419, results/persistent_two_region_01.log);
+finish it unchanged and retain its outcome. Its 10-second horizon remains valid.
+The four-call benchmark was ~1.14–1.16 s cache+MBD+full check; actual mission
+cycles including POAM/input preparation are ~1.25 s. Startup compilation is
+separate and remains substantial. Relevant 21 numerical/causality/cache/drag
+tests and 10 frontend model tests passed.

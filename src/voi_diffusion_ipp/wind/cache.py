@@ -88,6 +88,46 @@ class PriorCache(NamedTuple):
     prior_at_inducing: jax.Array
     inducing_eps: jax.Array
 
+    def relocate(self, belief, new_positions=None):
+        """Refresh only the inducing correction for a fixed-kernel POAM relocation.
+
+        The unchanged prior draws remain independent of observations. Evaluating
+        their values at new inducing locations uses the same declared C1 table.
+        """
+        table = self.basis.table
+        ny, nx = self.basis.prior_fields.shape[1:3]
+        xx, yy = jnp.meshgrid(jnp.arange(nx), jnp.arange(ny))
+        locations = table.lower + jnp.stack((xx.ravel(), yy.ravel()), axis=-1) * table.spacing
+        full_kernel = lambda: belief.basis.kernel_centers(locations).reshape(
+            ny, nx, len(belief.mean)
+        )
+        if new_positions is None:
+            kernel = full_kernel()
+        else:
+            from .poam import attention_weights
+
+            # POAM selects Z from old Z + new observations. Reuse unchanged
+            # columns exactly; compute kernels only for the newly earned points.
+            candidates = jnp.concatenate((self.basis.exact_basis.centers, new_positions))
+            matches = jnp.all(belief.basis.centers[:, None] == candidates[None], axis=-1)
+            indices = jnp.argmax(matches, axis=1)
+            extra = belief.basis.cross(
+                locations,
+                new_positions,
+                attention_weights(belief.basis.parameters, new_positions),
+            ).reshape(ny, nx, len(new_positions))
+            combined = jnp.concatenate((self.basis.kernel_grid, extra), axis=-1)
+            kernel = jax.lax.cond(
+                jnp.all(jnp.any(matches, axis=1)),
+                lambda: combined[:, :, indices],
+                full_kernel,
+            )
+        gz = jax.vmap(lambda f: table.evaluate(belief.basis.centers, f))(self.basis.prior_fields)
+        return self._replace(
+            basis=self.basis._replace(exact_basis=belief.basis, kernel_grid=kernel),
+            prior_at_inducing=gz,
+        )
+
     def tabulate(self, belief):
         """Fuse frozen prior and changed inducing correction into dense fields.
 
