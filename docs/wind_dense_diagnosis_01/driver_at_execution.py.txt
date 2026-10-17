@@ -1,0 +1,204 @@
+"""Offline matched-kernel diagnosis: online POAM, batch sparse and dense GP.
+
+No trajectory optimization, new observations or inference changes. All four
+models use the same observations available at the chosen snapshot. Physical
+wind enters only the error calculation. Dense references are diagnostic only.
+"""
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+import jax
+import jax.numpy as jnp
+import numpy as np
+from scipy.linalg import cho_factor, cho_solve
+import yaml
+
+from diagnose_wind_calibration import spatial_masks, summary
+from voi_diffusion_ipp.config import Config
+from voi_diffusion_ipp.experiments.checkpoint import source_hashes
+from voi_diffusion_ipp.wind.poam import POAM
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def kernel(parameters, lengths, x, y):
+    """Independent float64 implementation of the full attentive kernel."""
+    p = {k: np.asarray(v, dtype=np.float64) for k, v in parameters.items()}
+    x, y = np.asarray(x, dtype=float), np.asarray(y, dtype=float)
+
+    def attention(a):
+        h = np.tanh(a @ p["w1"] + p["b1"])
+        h = np.tanh(h @ p["w2"] + p["b2"])
+        logits = h @ p["w3"] + p["b3"]
+        w = np.exp(logits - logits.max(axis=1, keepdims=True))
+        return w / np.linalg.norm(w, axis=1, keepdims=True)
+
+    wx, wy = attention(x), attention(y)
+    d2 = np.sum((x[:, None] - y[None]) ** 2, axis=-1)
+    rbf = np.exp(-d2[:, :, None] / (2 * np.asarray(lengths, dtype=float) ** 2))
+    return np.exp(p["log_amplitude"]) * (wx @ wy.T) * np.einsum("il,jl,ijl->ij", wx, wy, rbf)
+
+
+def dense_predict(k, x, y, query, noise, amplitude):
+    K = k(x, x)
+    L = cho_factor((K + K.T) / 2 + noise**2 * np.eye(len(x)), lower=True)
+    cross = k(query, x)
+    mean = cross @ cho_solve(L, y)
+    variance = amplitude - np.sum(cross * cho_solve(L, cross.T).T, axis=1)
+    return mean, variance
+
+
+def batch_sparse(k, x, y, query, z, noise, amplitude):
+    K, Kuf = k(z, z), k(z, x)
+    a, B = Kuf @ y, Kuf @ Kuf.T
+    factor = cho_factor((K + K.T) / 2 + B / noise**2 + 1e-6 * np.eye(len(z)), lower=True)
+    m = K @ cho_solve(factor, a) / noise**2
+    S = K @ cho_solve(factor, K)
+    Kxz = k(query, z)
+    A = cho_solve(cho_factor(K + 1e-6 * np.eye(len(z)), lower=True), Kxz.T).T
+    mean = A @ m
+    variance = amplitude - np.sum(A * Kxz, axis=1) + np.sum((A @ S) * A, axis=1)
+    return mean, variance
+
+
+def run(path, periods, output):
+    data = np.load(path, allow_pickle=False)
+    metadata = json.loads(path.with_suffix(".json").read_text())["metadata"]
+    cfg = Config(**metadata["config"])
+    spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
+    masks = spatial_masks(data, spec)
+    model = POAM.from_data(
+        data["initial_observation_positions"],
+        data["initial_observations"],
+        jax.random.PRNGKey(600000),
+        24,
+        noise_std=cfg.observation_std,
+        prior_std=cfg.wind_std,
+        spectral_count=cfg.poam_spectral_nodes,
+    )
+    initial_parameters = {k: np.array(v) for k, v in model.parameters.items()}
+    predict = jax.jit(lambda b: b.predict(jnp.asarray(data["cells"])))
+    snapshots = []
+    for i in range(max(periods) + 1):
+        if i in periods:
+            b = model.planning_belief()
+            mean, cov = predict(b)
+            std = np.sqrt(np.asarray(cov[:, 0, 0]))
+            np.testing.assert_allclose(mean, data["mean"][i], atol=3e-5, rtol=3e-5)
+            np.testing.assert_allclose(std, data["std"][i], atol=3e-5, rtol=3e-5)
+            x, y = np.asarray(model.data_x, float), np.asarray(model.data_y, float)
+            query = np.asarray(data["cells"], float)
+            parameters = {k: np.array(v) for k, v in model.parameters.items()}
+            k = lambda a, c: kernel(parameters, model.lengths, a, c)
+            ki = lambda a, c: kernel(initial_parameters, model.lengths, a, c)
+            kernel_error = float(
+                np.max(
+                    np.abs(k(x[:40], query[::40]) - np.asarray(model.kernel(x[:40], query[::40])))
+                )
+            )
+            assert kernel_error < 2e-6
+            amplitude = float(np.exp(np.asarray(model.parameters["log_amplitude"], float)))
+            ai = float(np.exp(np.asarray(initial_parameters["log_amplitude"], float)))
+            variants = {
+                "online_poam": (np.asarray(mean), std**2),
+                "batch_sparse_same_kernel_and_Z": batch_sparse(
+                    k, x, y, query, np.asarray(model.z, float), cfg.observation_std, amplitude
+                ),
+                "dense_same_learned_kernel": dense_predict(
+                    k, x, y, query, cfg.observation_std, amplitude
+                ),
+                "dense_initial_kernel_diagnostic": dense_predict(
+                    ki, x, y, query, cfg.observation_std, ai
+                ),
+            }
+            report = {
+                "period": i,
+                "time_s": i * cfg.stage_steps * cfg.dt,
+                "observations": len(x),
+                "independent_kernel_max_difference": kernel_error,
+                "variants": {},
+            }
+            arrays = {
+                "cells": query,
+                "physical_wind": data["physical_wind"],
+                "z": np.asarray(model.z),
+                "data_x": x,
+                "data_y": y,
+                "lengths": np.asarray(model.lengths),
+            }
+            arrays.update({"parameter_" + name: value for name, value in parameters.items()})
+            for name, (mu, var) in variants.items():
+                assert np.isfinite(mu).all() and np.isfinite(var).all()
+                assert np.min(var) > -1e-7, (name, np.min(var))
+                sd = np.sqrt(np.maximum(var, 0))
+                arrays[name + "_mean"], arrays[name + "_std"] = mu, sd
+                report["variants"][name] = {
+                    "minimum_variance": float(var.min()),
+                    "regional": {
+                        region: summary((mu - data["physical_wind"])[mask], sd[mask])
+                        for region, mask in masks.items()
+                    },
+                }
+            np.savez_compressed(output / f"{path.stem}_period_{i:02d}.npz", **arrays)
+            snapshots.append(report)
+            (output / f"{path.stem}.json").write_text(
+                json.dumps(
+                    {
+                        "input": str(path.relative_to(ROOT)),
+                        "input_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                        "source_sha256": source_hashes(),
+                        "snapshots": snapshots,
+                    },
+                    indent=2,
+                )
+                + "\n"
+            )
+            print(
+                path.stem,
+                i,
+                {
+                    k: round(v["regional"]["passage"]["rmse"], 4)
+                    for k, v in report["variants"].items()
+                },
+                flush=True,
+            )
+        if i < max(periods):
+            sl = slice(i * cfg.stage_steps, (i + 1) * cfg.stage_steps)
+            model.update(
+                data["observation_positions"][sl],
+                data["observations"][sl],
+                jax.random.fold_in(jax.random.PRNGKey(metadata["seed"]), 500000 + i),
+                train_steps=cfg.poam_train_steps,
+            )
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("directory", type=Path)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--periods", type=int, nargs="+", default=[0, 15, 30, 60])
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=False)
+    (args.output / "protocol.json").write_text(
+        json.dumps(
+            {
+                "snapshots": args.periods,
+                "arms": ["proposed", "current_belief"],
+                "variants": [
+                    "online_poam",
+                    "batch_sparse_same_kernel_and_Z",
+                    "dense_same_learned_kernel",
+                    "dense_initial_kernel_diagnostic",
+                ],
+                "scope": "Offline same-earned-data posterior diagnostics only. No optimization, no kernel tuning on truth, no new trajectory or method claim.",
+                "driver_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            },
+            indent=2,
+        )
+        + "\n"
+    )
+    for arm in ["proposed", "current_belief"]:
+        run((args.directory / f"{arm}.npz").resolve(), args.periods, args.output)

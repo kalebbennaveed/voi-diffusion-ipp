@@ -697,3 +697,105 @@ POAM residual if justified. Preserve fixed-kernel diagnostic as diagnostic, not
 production. Do not launch positive held-out sweeps based on the 18.8% contrast;
 original anticipation-only development gain is still 3.9%, with weak same-state
 causal evidence. The three original research acceptance cases remain open.
+
+
+### Inference diagnostics and active optimizer-budget check, October 17 UTC
+
+The dense/posterior, coarse-forecast residual and half-length-scale diagnostic replays completed; all results and executed-driver provenance are retained in docs/wind_dense_diagnosis_01, docs/forecast_residual_diagnosis_01 and docs/kernel_range_diagnosis_01. Main src/ and configs are unchanged. Detailed findings will follow the expanded-budget audit below.
+
+One new 120 s development wind-blind nominal mission is now declared in docs/two_region_design/safety_only_expanded_budget_protocol.json. It increases only proposals per MBD level from 8 to 256 (four levels, seven starts), testing optimizer effort as an explanation of the 18.8% combined comparison. Output results/budgeted_missions/persistent_two_region_safety_only_256_01; log results/persistent_two_region_safety_only_256_01.log. Preserve src/configs and driver while running; no duplicates or other heavy worker. This is expanded optimization budget, not assumed equal wall time and not an anticipation-only test. The previously published 120 s comparisons remain available.
+
+Completed inference diagnosis (same earned data, no changed physical trajectory):
+
+- Dense GP inference with the **same learned attentive kernel** does not repair the
+  spatial undercoverage. At 120 s, passage RMSE is 0.15139/0.16595 and mean sigma
+  0.03335/0.02486 for the proposed/current-belief histories; descriptive coverage
+  within ±1.96 sigma is 32.38%/23.81%. Online POAM was 31.90%/43.33%. Rebuilding
+  batch sparse statistics with the same kernel and inducing locations gives
+  36.67%/37.14%. Thus sparse capacity and old-statistic transport cannot by
+  themselves explain the confidence problem. These are correlated grid values,
+  not independent coverage trials or a posterior safety guarantee.
+- Dense inference with the INITIAL post-survey kernel, a diagnostic only, gives
+  100%/98.10% passage coverage at 120 s. This does not justify freezing real
+  production kernel learning or substituting a dense GP. It points to the learned
+  correlation model and adaptive spatial data coverage as remaining issues.
+- One prospectively recorded, geometry-based coarse forecast (elliptic Gaussian,
+  amplitude 1.0, widths 1.5/0.7, A-to-B direction, zero cross component) was tested
+  offline by subtracting it from every earned observation and adding it back to
+  predictive means. Full POAM training/relocation/residual covariance remained.
+  This is a DEVELOPMENT hypothesis after inspecting this scenario, not independently
+  obtained weather data. It improves initial passage RMSE from 0.787 to 0.534,
+  but final RMSE is 0.21228/0.15805 and coverage only 47.14%/38.57%. It does not
+  solve the calibration problem, so no forecast extension was promoted into src/.
+- A single declared half-length-scale POAM prior range (0.15, 0.4, 0.65, 0.9),
+  otherwise unchanged, improves final passage coverage to 69.05%/68.10%, with
+  RMSE 0.16337/0.17780 and sigma 0.08930/0.11077. The learned length weights
+  saturate near the upper limit 0.899. Both improvement and regressions remain;
+  this exploratory range is not a calibrated production setting.
+- All 600 next-batch sensor predictions are also retained. Mean marginal
+  prequential negative log density (lower is better): original -0.37189/-0.26850,
+  coarse-forecast residual -0.52564/-0.37462, half-range -0.30347/-0.28122.
+  The mixed pattern is another reason not to select a replacement solely from
+  the hidden-field grid. These are adaptive-policy histories, not held-out missions.
+
+The independent float64 attentive kernel agrees with production at selected
+snapshot queries to at most 1.71e-7; all eight original POAM snapshots replayed
+within 3e-5. Every new prediction and parameter remained finite, and diagnostic
+training sets were checked against exactly the earned data (minus the declared
+forecast in that diagnostic). Numeric arrays, protocols, old/new driver hashes
+and original executed driver text are saved. `scripts/report_wind_diagnosis.py`
+reproduces the combined report and the visually inspected figure:
+[calibration diagnosis](wind_dense_diagnosis_01/calibration_diagnosis.png).
+
+Do not add the coarse forecast merely to obtain an apparent learning gain.
+Further bounded investigation should separate correlation/geometry assumptions,
+limited posterior-contingent policy expressivity (current shift capped at 0.6 m),
+and sampling/optimizer noise. The seven geometric warm starts currently contain
+single transfers and staying, not a complete return trip; test improved common
+initializations as optimizer diagnostics rather than imposing alternation. The
+original three scientific acceptance cases still are not established.
+
+### Expanded nominal-MBD budget completed — current continuation entry point
+
+Session 46256 completed all 60 replans / 120 s. No heavy worker or source freeze
+remains. `safety_only_expanded_budget_results.json` contains matched-input checks,
+full dense audit, comparisons and raw SHA-256 manifests. The intended change was
+256 instead of 8 proposals at each of four MBD levels. A post-run matching check
+caught an additional candidate_chunk change (2 to 1). This unintended numerical
+batching deviation is retained in safety_only_expanded_budget_deviation.json;
+do NOT call this a strict single-parameter comparison. All other config fields,
+source hashes, seed, initial observations/state/clarity, physical field and
+geometry match. A same-state chunk-equivalence diagnostic follows below.
+
+Cost 3.46489096 versus original nominal 3.49864674: 0.965% improvement with 32 times
+as many sampled proposals. Seven A/B transfers, one fallback (versus eight/five
+originally), zero dense contacts, minimum clearance 0.101564 m. Independent state
+reintegration disagrees by at most 1.73e-7; all-grid clarity cost by 6.34e-8.
+Median/p95/max steady planning cycle 0.26395/0.27056/0.27691 s, no 2 s misses;
+first two cycles 2.11145/1.35961 s. This is still **not equal wall time** to the
+proposed 1.725 s median. A much larger proposal budget alone did not close the
+combined contrast in this development seed: proposed cost is 18.05% lower.
+This does NOT enlarge the isolated anticipation effect (still 3.9%). No new
+success claim or held-out sweep is justified. The original three interactive
+comparisons stay published; this additional optimizer sensitivity and all raw
+candidate histories are preserved separately rather than replacing the prior
+baseline or relabeling its provenance.
+
+The host restart had stopped the local demo server. It was restored at loopback
+port 8765 (exec session 98580) and its catalog verified to contain all three
+120 s records. No UI or mission export changed in this continuation. Git main
+had already been committed/pushed at 382ca22 in response to the user; the new
+work in this continuation consists of diagnostics, reports and one bounded
+optimizer sensitivity. Old stopped persistent/regime jobs must stay stopped.
+
+The batching diagnostic (session 27080, complete) compares chunk 1 and 2 on the
+same saved states at 0, 30 and 60 s, same 256 proposals, common keys and starts.
+Selected objective values are identical at all three states. Maximum selected
+vector discrepancy is 3.58e-7; all candidate-vector discrepancy 4.77e-7; finite
+candidate-cost discrepancy 8.95e-8; zero valid/invalid classification changes.
+This supports numerical equivalence at those states but does not erase the
+protocol deviation or prove identical full closed-loop missions. Both histories
+are retained in safety_only_expanded_budget_batching.npz.
+
+The heartbeat prompt now points to these completed findings and preserves the
+user's quiet-notification preference. No held-out success claim has been made.

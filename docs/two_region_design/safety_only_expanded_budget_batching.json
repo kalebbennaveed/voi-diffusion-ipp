@@ -1,0 +1,40 @@
+{
+  "input": "results/budgeted_missions/persistent_two_region_safety_only_256_01/wind_blind_planner.npz",
+  "periods": [
+    {
+      "period": 0,
+      "selected_costs": [
+        0.10799368470907211,
+        0.10799368470907211
+      ],
+      "selected_vector_max_abs_difference": 2.9802322387695312e-08,
+      "all_candidate_vectors_max_abs_difference": 4.76837158203125e-07,
+      "finite_candidate_cost_max_abs_difference": 4.470348358154297e-08,
+      "finite_classification_disagreements": 0
+    },
+    {
+      "period": 15,
+      "selected_costs": [
+        0.3525857627391815,
+        0.3525857627391815
+      ],
+      "selected_vector_max_abs_difference": 2.980232238769531e-07,
+      "all_candidate_vectors_max_abs_difference": 4.76837158203125e-07,
+      "finite_candidate_cost_max_abs_difference": 8.940696716308594e-08,
+      "finite_classification_disagreements": 0
+    },
+    {
+      "period": 30,
+      "selected_costs": [
+        0.2861780822277069,
+        0.2861780822277069
+      ],
+      "selected_vector_max_abs_difference": 3.5762786865234375e-07,
+      "all_candidate_vectors_max_abs_difference": 4.76837158203125e-07,
+      "finite_candidate_cost_max_abs_difference": 5.960464477539063e-08,
+      "finite_classification_disagreements": 0
+    }
+  ],
+  "driver_sha256": "0c10d095a5b3204b7d978d8d91658a969ee191dd8a101767422e76225818a0e5",
+  "limits": "Three selected states only; does not erase the recorded protocol deviation or prove closed-loop equivalence."
+}

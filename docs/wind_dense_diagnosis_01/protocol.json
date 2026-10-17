@@ -1,0 +1,20 @@
+{
+  "snapshots": [
+    0,
+    15,
+    30,
+    60
+  ],
+  "arms": [
+    "proposed",
+    "current_belief"
+  ],
+  "variants": [
+    "online_poam",
+    "batch_sparse_same_kernel_and_Z",
+    "dense_same_learned_kernel",
+    "dense_initial_kernel_diagnostic"
+  ],
+  "scope": "Offline same-earned-data posterior diagnostics only. No optimization, no kernel tuning on truth, no new trajectory or method claim.",
+  "driver_sha256": "d36baca2232ea7a6e89233ccaf4411d6f2c76aadba853d99b6a8095673d8d9fd"
+}

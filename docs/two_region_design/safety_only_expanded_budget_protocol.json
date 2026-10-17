@@ -1,0 +1,24 @@
+{
+  "label": "One development-seed optimizer-budget sensitivity, not held-out validation or an isolated learning comparison",
+  "seed": 8101,
+  "duration_s": 120,
+  "replans": 60,
+  "horizon_s": 10,
+  "executed_s": 2,
+  "method": "wind_blind_planner",
+  "comparison_records": [
+    "results/budgeted_missions/persistent_two_region_2s_01/proposed.npz",
+    "results/budgeted_missions/persistent_two_region_2s_01/current_belief.npz",
+    "results/budgeted_missions/persistent_two_region_safety_only_01/wind_blind_planner.npz"
+  ],
+  "change": "Increase nominal still-air MBD from 8 to 256 proposals at each of the same four diffusion levels. Retain all other settings and seven common geometric starts.",
+  "purpose": "Check whether the existing 18.8 percent combined contrast depends on allocating much less wall time to the wind-blind optimizer. Expanded rollout budget; equal wall time is not presumed.",
+  "proposals_per_level": 256,
+  "levels": 4,
+  "budget_s": 2,
+  "timing": "Report measured full planning-cycle median, p95, max and misses; startup separately. Do not tune this run after observing cost.",
+  "physics_and_estimator": "Same physical field, initial survey, seed, full POAM learning and continuous wind-aware spline RPCBF as original wind-blind baseline.",
+  "outcome_retention": "Keep all regressions, fallbacks and contacts. Independent 32-substep collision and all-grid clarity audit required.",
+  "output": "results/budgeted_missions/persistent_two_region_safety_only_256_01",
+  "driver_sha256": "c85e47b93db80bb1d0986c9347f81ac15df6dbee720598166601bcdb11063426"
+}

@@ -1,0 +1,2988 @@
+{
+  "input": "results/budgeted_missions/persistent_two_region_2s_01/proposed.npz",
+  "input_sha256": "908eb333fc601ace8bd613c8d2e002f2ce56527d7e4e3f0cae1cec38363957a3",
+  "source_sha256": {
+    "src/voi_diffusion_ipp/__init__.py": "8cc1e55939efbb83ca7af87e3c69abf111605c3377802b929032e33b7dad21bf",
+    "src/voi_diffusion_ipp/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/baselines/draft.py": "ad48de7e2dffc63b1f85644cb72eda16827c9067f45909e3c6f65d792d8c1eb1",
+    "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
+    "src/voi_diffusion_ipp/config.py": "d099da62dcafa99d352c2e3829d8ae1d5796e6a6d7298c378d5549553cc979b5",
+    "src/voi_diffusion_ipp/dynamics.py": "7b99b46fb45adc0cff005fa3a009518178df408aa2f201aa167a88fd5ce22544",
+    "src/voi_diffusion_ipp/environment.py": "ddad36cf27d4e5c682f434ebc2151cd03a5068892897036dbae9fa64b14cae52",
+    "src/voi_diffusion_ipp/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/experiments/checkpoint.py": "3fa3c71b9613be9fdd79002b1c595c7018c045d3764a0ea04f8e3d6bff00328f",
+    "src/voi_diffusion_ipp/experiments/persistence.py": "a2a334104e628be8743567ac009a7b1f9f9c5610a582360b6e5dd0fc1fd74904",
+    "src/voi_diffusion_ipp/experiments/run.py": "107db94d0cd43005ca6d910418f2cf905176a68b19d6478c72602bc22d95469e",
+    "src/voi_diffusion_ipp/experiments/scenarios.py": "5e05aae9bafe89be57f98e3378fc0c3884b491a58006f395a32192b32aaa6104",
+    "src/voi_diffusion_ipp/experiments/suite.py": "0c0ff8ef2b88d46a8de2214bf69429c16c0c4b9ef70aae4dd1ac00b57d0634c0",
+    "src/voi_diffusion_ipp/experiments/two_region.py": "98d274d9ff67cc1d4f5ab685a057b710090fce756bd443220dc93fdb81a91f9b",
+    "src/voi_diffusion_ipp/planning/__init__.py": "90c2781b42b77b8f1b9ad3d535b6f64d850c8158a69e6a6daa9e2acab02d306f",
+    "src/voi_diffusion_ipp/planning/budgeted.py": "a023974978990f30a6eb1c0ea1394c8acf878e078ea0874325dd93ed14247bfd",
+    "src/voi_diffusion_ipp/planning/mbd.py": "7314060715e61dedd8373fe28ce1a20e63406fee689cf81176fa7bf7a8b3cc93",
+    "src/voi_diffusion_ipp/planning/mpc.py": "12bc58c0c671b2372bc0a923186632e93ed4170365e81da2040e782174d0ba4f",
+    "src/voi_diffusion_ipp/planning/rollout.py": "eb51284c7951a87237549217e5e90b5775f6b043d71a6afe746cd1275404d05d",
+    "src/voi_diffusion_ipp/planning/two_stage.py": "dacf36acbd8156336f786ae1139d689e656ab564b9707f1d617187ad80c2705a",
+    "src/voi_diffusion_ipp/planning/wind_blind.py": "fe0dfb3c8937a6bab084a5127ed951e7a3f5c4ed4bcf5ad5ca36be790ffa5a0b",
+    "src/voi_diffusion_ipp/safety/__init__.py": "c00308ddb2d6c20920184172aa25a144dcff69b30e29074fd8a20f0764cd39ce",
+    "src/voi_diffusion_ipp/safety/qp.py": "fd3fda65e9cf952d9b502201751077a402547f75b2d202079436a9dc09b8768e",
+    "src/voi_diffusion_ipp/safety/rpcbf.py": "ea5f3db70a58cd33f2348811262b3f0f9f6d4110228b424fc9903845cbe3e26d",
+    "src/voi_diffusion_ipp/safety/spline.py": "4cd9f4814a78aa42c7f6f13270a6aed55cacb60dd50ebae4e58b245c586b6582",
+    "src/voi_diffusion_ipp/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/viz/demo_data.py": "a7c14ce32a81f0a3e7721af6fa7c1474ce51cec32e3db43b835e467aa0e87f2b",
+    "src/voi_diffusion_ipp/viz/demo_server.py": "87e79a3df71c6678394480988f0fb08d9eb1a079a2689d1c919c308e4f3d2772",
+    "src/voi_diffusion_ipp/viz/report.py": "15724940b26a9c5740b5f94bbbb834ee03c2266625f3460ae2be29e1d479d0b6",
+    "src/voi_diffusion_ipp/wind/__init__.py": "df7aaf8bf26ec5b0ee4469564aa08c8ee7badace32f0591f72107b057a183ec9",
+    "src/voi_diffusion_ipp/wind/cache.py": "31e5f2a8e01b8cb42fed67cc42006237e21707d7227159842f8620316bb8d0cd",
+    "src/voi_diffusion_ipp/wind/gp.py": "3d1feec0574a7e1f703bbb60c668f962246f1d2f57b8fb8bef423f9bf4c91aac",
+    "src/voi_diffusion_ipp/wind/oracle.py": "867800a0d1b0f9fa73866e0b8048e8e379e558175900d822f164b6c9fcaf7925",
+    "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70",
+    "src/voi_diffusion_ipp/wind/poam.py": "666b50f58e38797634713349f6f0d53698661ced86ae9957b9bd4b137b096275",
+    "src/voi_diffusion_ipp/wind/poam_belief.py": "a29a8160148784f801ee0dcbc0616b5dfa862e718b51e998d340280b3a4dbf7b"
+  },
+  "lengths": [
+    0.15,
+    0.4,
+    0.65,
+    0.9
+  ],
+  "prequential": {
+    "components": 1200,
+    "rmse": 0.15682514011859894,
+    "mean_sigma": 0.25026845932006836,
+    "coverage_1sigma": 0.8625,
+    "coverage_1p96sigma": 0.9708333333333333,
+    "standardized_rmse": 0.7642574310302734,
+    "max_absolute_z": 4.9165873527526855
+  },
+  "mean_marginal_prequential_nll": -0.3034745623043399,
+  "snapshots": [
+    {
+      "period": 0,
+      "time_s": 0.0,
+      "observations": 42,
+      "amplitude": 0.6337636709213257,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25182363390922546,
+          "mean_sigma": 0.6331133842468262,
+          "coverage_1sigma": 0.9374505146476643,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.3976767063140869,
+          "max_absolute_z": 1.7691935300827026,
+          "mean_kernel_length_weight": 0.5237435698509216
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8376260995864868,
+          "mean_sigma": 0.6422749757766724,
+          "coverage_1sigma": 0.29523809523809524,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.237646460533142,
+          "max_absolute_z": 1.7691935300827026,
+          "mean_kernel_length_weight": 0.5296211242675781
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.03171076625585556,
+          "mean_sigma": 0.6615896821022034,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.09038253873586655,
+          "max_absolute_z": 1.0371376276016235,
+          "mean_kernel_length_weight": 0.5263116955757141
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.15116405487060547,
+          "mean_sigma": 0.5123230218887329,
+          "coverage_1sigma": 0.9666666666666667,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.35844534635543823,
+          "max_absolute_z": 1.5901585817337036,
+          "mean_kernel_length_weight": 0.5183603763580322
+        }
+      }
+    },
+    {
+      "period": 1,
+      "time_s": 2.0,
+      "observations": 52,
+      "amplitude": 0.6278164982795715,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25282442569732666,
+          "mean_sigma": 0.6251004934310913,
+          "coverage_1sigma": 0.9350752177355502,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.4079921841621399,
+          "max_absolute_z": 1.8394650220870972,
+          "mean_kernel_length_weight": 0.5265070199966431
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8432541489601135,
+          "mean_sigma": 0.6339054703712463,
+          "coverage_1sigma": 0.2761904761904762,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2686272859573364,
+          "max_absolute_z": 1.8394650220870972,
+          "mean_kernel_length_weight": 0.535962700843811
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.03216114267706871,
+          "mean_sigma": 0.6545761823654175,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.09314656257629395,
+          "max_absolute_z": 1.0408085584640503,
+          "mean_kernel_length_weight": 0.5299328565597534
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14808575809001923,
+          "mean_sigma": 0.5004108548164368,
+          "coverage_1sigma": 0.9611111111111111,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.3685821294784546,
+          "max_absolute_z": 1.6012169122695923,
+          "mean_kernel_length_weight": 0.5188041925430298
+        }
+      }
+    },
+    {
+      "period": 2,
+      "time_s": 4.0,
+      "observations": 62,
+      "amplitude": 0.6221493482589722,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2525614798069,
+          "mean_sigma": 0.6059108376502991,
+          "coverage_1sigma": 0.934283452098179,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.4129231870174408,
+          "max_absolute_z": 1.9082691669464111,
+          "mean_kernel_length_weight": 0.5281728506088257
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8420398235321045,
+          "mean_sigma": 0.6294012069702148,
+          "coverage_1sigma": 0.2714285714285714,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2803030014038086,
+          "max_absolute_z": 1.9082691669464111,
+          "mean_kernel_length_weight": 0.5414469242095947
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.03506091237068176,
+          "mean_sigma": 0.6478950381278992,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.0998569130897522,
+          "max_absolute_z": 1.0422253608703613,
+          "mean_kernel_length_weight": 0.532661497592926
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14991344511508942,
+          "mean_sigma": 0.47670042514801025,
+          "coverage_1sigma": 0.9666666666666667,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.3586232364177704,
+          "max_absolute_z": 1.7040677070617676,
+          "mean_kernel_length_weight": 0.5177137851715088
+        }
+      }
+    },
+    {
+      "period": 3,
+      "time_s": 6.0,
+      "observations": 72,
+      "amplitude": 0.6167849898338318,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2515181005001068,
+          "mean_sigma": 0.5981594920158386,
+          "coverage_1sigma": 0.9334916864608076,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.41949477791786194,
+          "max_absolute_z": 1.943376064300537,
+          "mean_kernel_length_weight": 0.5275586247444153
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8383329510688782,
+          "mean_sigma": 0.6223140358924866,
+          "coverage_1sigma": 0.2619047619047619,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2892053127288818,
+          "max_absolute_z": 1.943376064300537,
+          "mean_kernel_length_weight": 0.5453274250030518
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.03606586158275604,
+          "mean_sigma": 0.6416835784912109,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.10536973923444748,
+          "max_absolute_z": 1.0394376516342163,
+          "mean_kernel_length_weight": 0.5337183475494385
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14690062403678894,
+          "mean_sigma": 0.4696732461452484,
+          "coverage_1sigma": 0.9638888888888889,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.3636798858642578,
+          "max_absolute_z": 1.7300595045089722,
+          "mean_kernel_length_weight": 0.5131179690361023
+        }
+      }
+    },
+    {
+      "period": 4,
+      "time_s": 8.0,
+      "observations": 82,
+      "amplitude": 0.6110939383506775,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2459331601858139,
+          "mean_sigma": 0.5843938589096069,
+          "coverage_1sigma": 0.9362628661916073,
+          "coverage_1p96sigma": 0.9992082343626286,
+          "standardized_rmse": 0.41824638843536377,
+          "max_absolute_z": 2.2991650104522705,
+          "mean_kernel_length_weight": 0.5272243618965149
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.81284099817276,
+          "mean_sigma": 0.6287772059440613,
+          "coverage_1sigma": 0.32857142857142857,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2215402126312256,
+          "max_absolute_z": 1.8302901983261108,
+          "mean_kernel_length_weight": 0.5490250587463379
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.048202697187662125,
+          "mean_sigma": 0.6285415887832642,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.12593214213848114,
+          "max_absolute_z": 1.0419719219207764,
+          "mean_kernel_length_weight": 0.5350898504257202
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14580552279949188,
+          "mean_sigma": 0.4531022906303406,
+          "coverage_1sigma": 0.9638888888888889,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.39600491523742676,
+          "max_absolute_z": 1.8195114135742188,
+          "mean_kernel_length_weight": 0.5088180303573608
+        }
+      }
+    },
+    {
+      "period": 5,
+      "time_s": 10.0,
+      "observations": 92,
+      "amplitude": 0.6050206422805786,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2473665028810501,
+          "mean_sigma": 0.5716155171394348,
+          "coverage_1sigma": 0.9338875692794932,
+          "coverage_1p96sigma": 0.9996041171813144,
+          "standardized_rmse": 0.4243537485599518,
+          "max_absolute_z": 2.0463223457336426,
+          "mean_kernel_length_weight": 0.5271876454353333
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.82401442527771,
+          "mean_sigma": 0.6214306354522705,
+          "coverage_1sigma": 0.28095238095238095,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2663580179214478,
+          "max_absolute_z": 1.90235435962677,
+          "mean_kernel_length_weight": 0.5524981021881104
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.043167244642972946,
+          "mean_sigma": 0.611819863319397,
+          "coverage_1sigma": 0.9978070175438597,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.14767733216285706,
+          "max_absolute_z": 1.4587682485580444,
+          "mean_kernel_length_weight": 0.5367202758789062
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14794114232063293,
+          "mean_sigma": 0.44882673025131226,
+          "coverage_1sigma": 0.9666666666666667,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.37009313702583313,
+          "max_absolute_z": 1.8455430269241333,
+          "mean_kernel_length_weight": 0.5049828290939331
+        }
+      }
+    },
+    {
+      "period": 6,
+      "time_s": 12.0,
+      "observations": 102,
+      "amplitude": 0.5979127883911133,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.24719294905662537,
+          "mean_sigma": 0.5737603306770325,
+          "coverage_1sigma": 0.9338875692794932,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.42448675632476807,
+          "max_absolute_z": 1.9545512199401855,
+          "mean_kernel_length_weight": 0.5316071510314941
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8228253126144409,
+          "mean_sigma": 0.6139219999313354,
+          "coverage_1sigma": 0.2714285714285714,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2845945358276367,
+          "max_absolute_z": 1.9545512199401855,
+          "mean_kernel_length_weight": 0.5583211183547974
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04552239179611206,
+          "mean_sigma": 0.6072200536727905,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.14024099707603455,
+          "max_absolute_z": 1.1703273057937622,
+          "mean_kernel_length_weight": 0.5429940819740295
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14805832505226135,
+          "mean_sigma": 0.4636686146259308,
+          "coverage_1sigma": 0.9638888888888889,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.36887985467910767,
+          "max_absolute_z": 1.9479999542236328,
+          "mean_kernel_length_weight": 0.5060638785362244
+        }
+      }
+    },
+    {
+      "period": 7,
+      "time_s": 14.0,
+      "observations": 112,
+      "amplitude": 0.5896226167678833,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.26402539014816284,
+          "mean_sigma": 0.5677911639213562,
+          "coverage_1sigma": 0.935471100554236,
+          "coverage_1p96sigma": 0.9992082343626286,
+          "standardized_rmse": 0.4203752875328064,
+          "max_absolute_z": 2.3201587200164795,
+          "mean_kernel_length_weight": 0.5430757999420166
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8772442936897278,
+          "mean_sigma": 0.6579237580299377,
+          "coverage_1sigma": 0.2761904761904762,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2834680080413818,
+          "max_absolute_z": 1.7961291074752808,
+          "mean_kernel_length_weight": 0.5686764121055603
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04299112409353256,
+          "mean_sigma": 0.6017953753471375,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.12401255965232849,
+          "max_absolute_z": 1.183680772781372,
+          "mean_kernel_length_weight": 0.5556315779685974
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1625727266073227,
+          "mean_sigma": 0.41066810488700867,
+          "coverage_1sigma": 0.9611111111111111,
+          "coverage_1p96sigma": 0.9972222222222222,
+          "standardized_rmse": 0.39883658289909363,
+          "max_absolute_z": 1.960214376449585,
+          "mean_kernel_length_weight": 0.516172468662262
+        }
+      }
+    },
+    {
+      "period": 8,
+      "time_s": 16.0,
+      "observations": 122,
+      "amplitude": 0.5812622308731079,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2576664984226227,
+          "mean_sigma": 0.5507835149765015,
+          "coverage_1sigma": 0.93784639746635,
+          "coverage_1p96sigma": 0.9992082343626286,
+          "standardized_rmse": 0.4206811785697937,
+          "max_absolute_z": 2.3173434734344482,
+          "mean_kernel_length_weight": 0.5579133629798889
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8574604988098145,
+          "mean_sigma": 0.6413305401802063,
+          "coverage_1sigma": 0.3047619047619048,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.277610421180725,
+          "max_absolute_z": 1.8111292123794556,
+          "mean_kernel_length_weight": 0.5806405544281006
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.043939363211393356,
+          "mean_sigma": 0.5885658264160156,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.12975190579891205,
+          "max_absolute_z": 1.2003557682037354,
+          "mean_kernel_length_weight": 0.5697765946388245
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14745695888996124,
+          "mean_sigma": 0.3716578185558319,
+          "coverage_1sigma": 0.9666666666666667,
+          "coverage_1p96sigma": 0.9972222222222222,
+          "standardized_rmse": 0.40559136867523193,
+          "max_absolute_z": 1.9692109823226929,
+          "mean_kernel_length_weight": 0.5330477952957153
+        }
+      }
+    },
+    {
+      "period": 9,
+      "time_s": 18.0,
+      "observations": 132,
+      "amplitude": 0.5734323263168335,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.24445641040802002,
+          "mean_sigma": 0.5332252383232117,
+          "coverage_1sigma": 0.9410134600158353,
+          "coverage_1p96sigma": 0.9992082343626286,
+          "standardized_rmse": 0.4100487232208252,
+          "max_absolute_z": 2.316476345062256,
+          "mean_kernel_length_weight": 0.57051020860672
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8122422695159912,
+          "mean_sigma": 0.6172267198562622,
+          "coverage_1sigma": 0.3476190476190476,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2320590019226074,
+          "max_absolute_z": 1.8271303176879883,
+          "mean_kernel_length_weight": 0.5915265083312988
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.045829351991415024,
+          "mean_sigma": 0.5766890048980713,
+          "coverage_1sigma": 0.9985380116959064,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.13693082332611084,
+          "max_absolute_z": 1.1835705041885376,
+          "mean_kernel_length_weight": 0.5813369154930115
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1329742819070816,
+          "mean_sigma": 0.33736151456832886,
+          "coverage_1sigma": 0.9638888888888889,
+          "coverage_1p96sigma": 0.9972222222222222,
+          "standardized_rmse": 0.3968886733055115,
+          "max_absolute_z": 1.967660665512085,
+          "mean_kernel_length_weight": 0.5477416515350342
+        }
+      }
+    },
+    {
+      "period": 10,
+      "time_s": 20.0,
+      "observations": 142,
+      "amplitude": 0.5667545199394226,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2420411854982376,
+          "mean_sigma": 0.5176764726638794,
+          "coverage_1sigma": 0.9406175771971497,
+          "coverage_1p96sigma": 0.9996041171813144,
+          "standardized_rmse": 0.41256532073020935,
+          "max_absolute_z": 2.3146474361419678,
+          "mean_kernel_length_weight": 0.5801955461502075
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8043363690376282,
+          "mean_sigma": 0.604332685470581,
+          "coverage_1sigma": 0.3523809523809524,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2354040145874023,
+          "max_absolute_z": 1.8486006259918213,
+          "mean_kernel_length_weight": 0.5999695658683777
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04437258839607239,
+          "mean_sigma": 0.5645918846130371,
+          "coverage_1sigma": 0.9992690058479532,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.13348732888698578,
+          "max_absolute_z": 1.0676945447921753,
+          "mean_kernel_length_weight": 0.5901581048965454
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13206343352794647,
+          "mean_sigma": 0.3107304573059082,
+          "coverage_1sigma": 0.9555555555555556,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.40980517864227295,
+          "max_absolute_z": 1.9586118459701538,
+          "mean_kernel_length_weight": 0.5591183304786682
+        }
+      }
+    },
+    {
+      "period": 11,
+      "time_s": 22.0,
+      "observations": 152,
+      "amplitude": 0.561251163482666,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.23975713551044464,
+          "mean_sigma": 0.5026261806488037,
+          "coverage_1sigma": 0.9406175771971497,
+          "coverage_1p96sigma": 0.9992082343626286,
+          "standardized_rmse": 0.41503003239631653,
+          "max_absolute_z": 2.309779644012451,
+          "mean_kernel_length_weight": 0.5875287055969238
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.7969536781311035,
+          "mean_sigma": 0.5941451191902161,
+          "coverage_1sigma": 0.3523809523809524,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2375046014785767,
+          "max_absolute_z": 1.8725452423095703,
+          "mean_kernel_length_weight": 0.6064724326133728
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04159592092037201,
+          "mean_sigma": 0.5490338802337646,
+          "coverage_1sigma": 0.9992690058479532,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.12468215078115463,
+          "max_absolute_z": 1.0706740617752075,
+          "mean_kernel_length_weight": 0.5969069004058838
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13143455982208252,
+          "mean_sigma": 0.2920198142528534,
+          "coverage_1sigma": 0.9555555555555556,
+          "coverage_1p96sigma": 0.9972222222222222,
+          "standardized_rmse": 0.42735740542411804,
+          "max_absolute_z": 1.9854933023452759,
+          "mean_kernel_length_weight": 0.5676435828208923
+        }
+      }
+    },
+    {
+      "period": 12,
+      "time_s": 24.0,
+      "observations": 162,
+      "amplitude": 0.5564032793045044,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.24447405338287354,
+          "mean_sigma": 0.4728989899158478,
+          "coverage_1sigma": 0.935471100554236,
+          "coverage_1p96sigma": 0.998812351543943,
+          "standardized_rmse": 0.44490596652030945,
+          "max_absolute_z": 2.2806766033172607,
+          "mean_kernel_length_weight": 0.5941448211669922
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8065008521080017,
+          "mean_sigma": 0.5870567560195923,
+          "coverage_1sigma": 0.32857142857142857,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2728253602981567,
+          "max_absolute_z": 1.9083489179611206,
+          "mean_kernel_length_weight": 0.6126108169555664
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.0513160414993763,
+          "mean_sigma": 0.5278280973434448,
+          "coverage_1sigma": 0.9992690058479532,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.1411195546388626,
+          "max_absolute_z": 1.0870085954666138,
+          "mean_kernel_length_weight": 0.6030756235122681
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13933652639389038,
+          "mean_sigma": 0.25614362955093384,
+          "coverage_1sigma": 0.9361111111111111,
+          "coverage_1p96sigma": 0.9944444444444445,
+          "standardized_rmse": 0.5135975480079651,
+          "max_absolute_z": 2.1859018802642822,
+          "mean_kernel_length_weight": 0.5751762390136719
+        }
+      }
+    },
+    {
+      "period": 13,
+      "time_s": 26.0,
+      "observations": 172,
+      "amplitude": 0.5516091585159302,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.23736077547073364,
+          "mean_sigma": 0.43918153643608093,
+          "coverage_1sigma": 0.9362628661916073,
+          "coverage_1p96sigma": 0.998812351543943,
+          "standardized_rmse": 0.437449187040329,
+          "max_absolute_z": 2.2896034717559814,
+          "mean_kernel_length_weight": 0.6006677746772766
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.7911213636398315,
+          "mean_sigma": 0.5721390247344971,
+          "coverage_1sigma": 0.32857142857142857,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 1.2830884456634521,
+          "max_absolute_z": 1.941559910774231,
+          "mean_kernel_length_weight": 0.6189358830451965
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04056813195347786,
+          "mean_sigma": 0.4661155343055725,
+          "coverage_1sigma": 0.9992690058479532,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.15490634739398956,
+          "max_absolute_z": 1.2724672555923462,
+          "mean_kernel_length_weight": 0.6091791987419128
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.12880030274391174,
+          "mean_sigma": 0.2693538963794708,
+          "coverage_1sigma": 0.9388888888888889,
+          "coverage_1p96sigma": 0.9944444444444445,
+          "standardized_rmse": 0.46903011202812195,
+          "max_absolute_z": 2.265946865081787,
+          "mean_kernel_length_weight": 0.582497239112854
+        }
+      }
+    },
+    {
+      "period": 14,
+      "time_s": 28.0,
+      "observations": 182,
+      "amplitude": 0.5468139052391052,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.23883141577243805,
+          "mean_sigma": 0.4299696385860443,
+          "coverage_1sigma": 0.9338875692794932,
+          "coverage_1p96sigma": 0.9984164687252574,
+          "standardized_rmse": 0.44886690378189087,
+          "max_absolute_z": 2.3511080741882324,
+          "mean_kernel_length_weight": 0.6083791851997375
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.7929842472076416,
+          "mean_sigma": 0.5660932064056396,
+          "coverage_1sigma": 0.3142857142857143,
+          "coverage_1p96sigma": 0.9952380952380953,
+          "standardized_rmse": 1.2988038063049316,
+          "max_absolute_z": 1.9950627088546753,
+          "mean_kernel_length_weight": 0.6267481446266174
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04855255410075188,
+          "mean_sigma": 0.455209881067276,
+          "coverage_1sigma": 0.9970760233918129,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.17391304671764374,
+          "max_absolute_z": 1.615770697593689,
+          "mean_kernel_length_weight": 0.6165674328804016
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.12844379246234894,
+          "mean_sigma": 0.2614700198173523,
+          "coverage_1sigma": 0.9388888888888889,
+          "coverage_1p96sigma": 0.9944444444444445,
+          "standardized_rmse": 0.4885209798812866,
+          "max_absolute_z": 2.3511080741882324,
+          "mean_kernel_length_weight": 0.5907608866691589
+        }
+      }
+    },
+    {
+      "period": 15,
+      "time_s": 30.0,
+      "observations": 192,
+      "amplitude": 0.5416134595870972,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2372257113456726,
+          "mean_sigma": 0.4214917719364166,
+          "coverage_1sigma": 0.933095803642122,
+          "coverage_1p96sigma": 0.9968329374505146,
+          "standardized_rmse": 0.4524209797382355,
+          "max_absolute_z": 2.470670461654663,
+          "mean_kernel_length_weight": 0.6180380582809448
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.7889278531074524,
+          "mean_sigma": 0.5577016472816467,
+          "coverage_1sigma": 0.30952380952380953,
+          "coverage_1p96sigma": 0.9761904761904762,
+          "standardized_rmse": 1.3119430541992188,
+          "max_absolute_z": 2.034240961074829,
+          "mean_kernel_length_weight": 0.6369790434837341
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.045565035194158554,
+          "mean_sigma": 0.44910913705825806,
+          "coverage_1sigma": 0.9978070175438597,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.16985288262367249,
+          "max_absolute_z": 1.3030145168304443,
+          "mean_kernel_length_weight": 0.6258512735366821
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1259235292673111,
+          "mean_sigma": 0.23947188258171082,
+          "coverage_1sigma": 0.9361111111111111,
+          "coverage_1p96sigma": 0.9944444444444445,
+          "standardized_rmse": 0.4867889881134033,
+          "max_absolute_z": 2.470670461654663,
+          "mean_kernel_length_weight": 0.6008869409561157
+        }
+      }
+    },
+    {
+      "period": 16,
+      "time_s": 32.0,
+      "observations": 202,
+      "amplitude": 0.5362721681594849,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.250026673078537,
+          "mean_sigma": 0.4070718288421631,
+          "coverage_1sigma": 0.9259699129057799,
+          "coverage_1p96sigma": 0.995249406175772,
+          "standardized_rmse": 0.4881344437599182,
+          "max_absolute_z": 2.6161587238311768,
+          "mean_kernel_length_weight": 0.6279397010803223
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8277774453163147,
+          "mean_sigma": 0.5755254626274109,
+          "coverage_1sigma": 0.2714285714285714,
+          "coverage_1p96sigma": 0.9571428571428572,
+          "standardized_rmse": 1.3724583387374878,
+          "max_absolute_z": 2.0872042179107666,
+          "mean_kernel_length_weight": 0.6479833722114563
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04740212485194206,
+          "mean_sigma": 0.4270302355289459,
+          "coverage_1sigma": 0.9970760233918129,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.18124254047870636,
+          "max_absolute_z": 1.2859954833984375,
+          "mean_kernel_length_weight": 0.6354511976242065
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1376640349626541,
+          "mean_sigma": 0.23387938737869263,
+          "coverage_1sigma": 0.925,
+          "coverage_1p96sigma": 0.9944444444444445,
+          "standardized_rmse": 0.5526251792907715,
+          "max_absolute_z": 2.6161587238311768,
+          "mean_kernel_length_weight": 0.6109843254089355
+        }
+      }
+    },
+    {
+      "period": 17,
+      "time_s": 34.0,
+      "observations": 212,
+      "amplitude": 0.5309072136878967,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2524060010910034,
+          "mean_sigma": 0.39446184039115906,
+          "coverage_1sigma": 0.9192399049881235,
+          "coverage_1p96sigma": 0.9928741092636579,
+          "standardized_rmse": 0.515167772769928,
+          "max_absolute_z": 2.648158311843872,
+          "mean_kernel_length_weight": 0.6375518441200256
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8323419690132141,
+          "mean_sigma": 0.5600981712341309,
+          "coverage_1sigma": 0.23333333333333334,
+          "coverage_1p96sigma": 0.9285714285714286,
+          "standardized_rmse": 1.424801230430603,
+          "max_absolute_z": 2.1958041191101074,
+          "mean_kernel_length_weight": 0.6596769094467163
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.0524795800447464,
+          "mean_sigma": 0.4151913821697235,
+          "coverage_1sigma": 0.9941520467836257,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.20819924771785736,
+          "max_absolute_z": 1.4905909299850464,
+          "mean_kernel_length_weight": 0.645235538482666
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1396179348230362,
+          "mean_sigma": 0.22463811933994293,
+          "coverage_1sigma": 0.9138888888888889,
+          "coverage_1p96sigma": 0.9944444444444445,
+          "standardized_rmse": 0.5868241786956787,
+          "max_absolute_z": 2.648158311843872,
+          "mean_kernel_length_weight": 0.6197258830070496
+        }
+      }
+    },
+    {
+      "period": 18,
+      "time_s": 36.0,
+      "observations": 222,
+      "amplitude": 0.5257961750030518,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25145387649536133,
+          "mean_sigma": 0.3874799907207489,
+          "coverage_1sigma": 0.9188440221694378,
+          "coverage_1p96sigma": 0.9912905779889153,
+          "standardized_rmse": 0.5211509466171265,
+          "max_absolute_z": 2.727172374725342,
+          "mean_kernel_length_weight": 0.6458696722984314
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8287440538406372,
+          "mean_sigma": 0.5518779754638672,
+          "coverage_1sigma": 0.23333333333333334,
+          "coverage_1p96sigma": 0.9095238095238095,
+          "standardized_rmse": 1.4427216053009033,
+          "max_absolute_z": 2.232771396636963,
+          "mean_kernel_length_weight": 0.6704645156860352
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.053379978984594345,
+          "mean_sigma": 0.4051778316497803,
+          "coverage_1sigma": 0.993421052631579,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.21968364715576172,
+          "max_absolute_z": 1.630200982093811,
+          "mean_kernel_length_weight": 0.6540756821632385
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13764208555221558,
+          "mean_sigma": 0.2264454960823059,
+          "coverage_1sigma": 0.9166666666666666,
+          "coverage_1p96sigma": 0.9944444444444445,
+          "standardized_rmse": 0.5751166343688965,
+          "max_absolute_z": 2.6716361045837402,
+          "mean_kernel_length_weight": 0.6264774799346924
+        }
+      }
+    },
+    {
+      "period": 19,
+      "time_s": 38.0,
+      "observations": 232,
+      "amplitude": 0.5209022760391235,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25265124440193176,
+          "mean_sigma": 0.3811693489551544,
+          "coverage_1sigma": 0.9172604908946952,
+          "coverage_1p96sigma": 0.9889152810768013,
+          "standardized_rmse": 0.5327067971229553,
+          "max_absolute_z": 2.65006160736084,
+          "mean_kernel_length_weight": 0.6535600423812866
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.832709789276123,
+          "mean_sigma": 0.5434451699256897,
+          "coverage_1sigma": 0.22380952380952382,
+          "coverage_1p96sigma": 0.8857142857142857,
+          "standardized_rmse": 1.4817454814910889,
+          "max_absolute_z": 2.310391664505005,
+          "mean_kernel_length_weight": 0.6807734966278076
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.053995098918676376,
+          "mean_sigma": 0.39693090319633484,
+          "coverage_1sigma": 0.993421052631579,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.23189043998718262,
+          "max_absolute_z": 1.661197304725647,
+          "mean_kernel_length_weight": 0.6624549627304077
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13901041448116302,
+          "mean_sigma": 0.222983255982399,
+          "coverage_1sigma": 0.9111111111111111,
+          "coverage_1p96sigma": 0.9888888888888889,
+          "standardized_rmse": 0.579664409160614,
+          "max_absolute_z": 2.488365888595581,
+          "mean_kernel_length_weight": 0.6322779655456543
+        }
+      }
+    },
+    {
+      "period": 20,
+      "time_s": 40.0,
+      "observations": 242,
+      "amplitude": 0.5160340666770935,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2507617473602295,
+          "mean_sigma": 0.3787105977535248,
+          "coverage_1sigma": 0.9152810768012668,
+          "coverage_1p96sigma": 0.9869358669833729,
+          "standardized_rmse": 0.5392248630523682,
+          "max_absolute_z": 2.714672803878784,
+          "mean_kernel_length_weight": 0.660811722278595
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8275269269943237,
+          "mean_sigma": 0.5350077748298645,
+          "coverage_1sigma": 0.21904761904761905,
+          "coverage_1p96sigma": 0.861904761904762,
+          "standardized_rmse": 1.501793622970581,
+          "max_absolute_z": 2.3778412342071533,
+          "mean_kernel_length_weight": 0.6906124949455261
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.052203383296728134,
+          "mean_sigma": 0.39349257946014404,
+          "coverage_1sigma": 0.9948830409356725,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.2273859977722168,
+          "max_absolute_z": 1.7252023220062256,
+          "mean_kernel_length_weight": 0.6705980896949768
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13791264593601227,
+          "mean_sigma": 0.22248490154743195,
+          "coverage_1sigma": 0.9,
+          "coverage_1p96sigma": 0.9888888888888889,
+          "standardized_rmse": 0.5967893600463867,
+          "max_absolute_z": 2.714672803878784,
+          "mean_kernel_length_weight": 0.6373269557952881
+        }
+      }
+    },
+    {
+      "period": 21,
+      "time_s": 42.0,
+      "observations": 252,
+      "amplitude": 0.5110775828361511,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25482505559921265,
+          "mean_sigma": 0.383828729391098,
+          "coverage_1sigma": 0.9136975455265242,
+          "coverage_1p96sigma": 0.9857482185273159,
+          "standardized_rmse": 0.5488125085830688,
+          "max_absolute_z": 2.9601500034332275,
+          "mean_kernel_length_weight": 0.6680338978767395
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8425097465515137,
+          "mean_sigma": 0.5347515940666199,
+          "coverage_1sigma": 0.21428571428571427,
+          "coverage_1p96sigma": 0.8523809523809524,
+          "standardized_rmse": 1.5291168689727783,
+          "max_absolute_z": 2.450086832046509,
+          "mean_kernel_length_weight": 0.7009238600730896
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04737814515829086,
+          "mean_sigma": 0.4091937839984894,
+          "coverage_1sigma": 0.9956140350877193,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.19596420228481293,
+          "max_absolute_z": 1.7464439868927002,
+          "mean_kernel_length_weight": 0.6792205572128296
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14077283442020416,
+          "mean_sigma": 0.21491074562072754,
+          "coverage_1sigma": 0.8944444444444445,
+          "coverage_1p96sigma": 0.9888888888888889,
+          "standardized_rmse": 0.6352697014808655,
+          "max_absolute_z": 2.9601500034332275,
+          "mean_kernel_length_weight": 0.6413066387176514
+        }
+      }
+    },
+    {
+      "period": 22,
+      "time_s": 44.0,
+      "observations": 262,
+      "amplitude": 0.5064772367477417,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25533005595207214,
+          "mean_sigma": 0.3778674006462097,
+          "coverage_1sigma": 0.9148851939825812,
+          "coverage_1p96sigma": 0.9837688044338876,
+          "standardized_rmse": 0.5523531436920166,
+          "max_absolute_z": 3.040644407272339,
+          "mean_kernel_length_weight": 0.6746629476547241
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8458350300788879,
+          "mean_sigma": 0.5294715762138367,
+          "coverage_1sigma": 0.20476190476190476,
+          "coverage_1p96sigma": 0.8238095238095238,
+          "standardized_rmse": 1.5533826351165771,
+          "max_absolute_z": 2.4854342937469482,
+          "mean_kernel_length_weight": 0.710750162601471
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04640507325530052,
+          "mean_sigma": 0.40302610397338867,
+          "coverage_1sigma": 0.9970760233918129,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.1948065608739853,
+          "max_absolute_z": 1.779614806175232,
+          "mean_kernel_length_weight": 0.6873905062675476
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13996146619319916,
+          "mean_sigma": 0.20885437726974487,
+          "coverage_1sigma": 0.9,
+          "coverage_1p96sigma": 0.9888888888888889,
+          "standardized_rmse": 0.635482907295227,
+          "max_absolute_z": 3.040644407272339,
+          "mean_kernel_length_weight": 0.6443708539009094
+        }
+      }
+    },
+    {
+      "period": 23,
+      "time_s": 46.0,
+      "observations": 272,
+      "amplitude": 0.5016985535621643,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2545401453971863,
+          "mean_sigma": 0.3766375482082367,
+          "coverage_1sigma": 0.9140934283452098,
+          "coverage_1p96sigma": 0.9833729216152018,
+          "standardized_rmse": 0.5545130372047424,
+          "max_absolute_z": 3.0083634853363037,
+          "mean_kernel_length_weight": 0.6817320585250854
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8445432186126709,
+          "mean_sigma": 0.5242083668708801,
+          "coverage_1sigma": 0.20476190476190476,
+          "coverage_1p96sigma": 0.819047619047619,
+          "standardized_rmse": 1.5652559995651245,
+          "max_absolute_z": 2.4988205432891846,
+          "mean_kernel_length_weight": 0.7214681506156921
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.042434677481651306,
+          "mean_sigma": 0.40261635184288025,
+          "coverage_1sigma": 0.9963450292397661,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.18467842042446136,
+          "max_absolute_z": 1.9459924697875977,
+          "mean_kernel_length_weight": 0.696297287940979
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13978493213653564,
+          "mean_sigma": 0.20796892046928406,
+          "coverage_1sigma": 0.8972222222222223,
+          "coverage_1p96sigma": 0.9861111111111112,
+          "standardized_rmse": 0.6366069912910461,
+          "max_absolute_z": 2.9801714420318604,
+          "mean_kernel_length_weight": 0.6471973657608032
+        }
+      }
+    },
+    {
+      "period": 24,
+      "time_s": 48.0,
+      "observations": 282,
+      "amplitude": 0.4971567690372467,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2559039890766144,
+          "mean_sigma": 0.3710726201534271,
+          "coverage_1sigma": 0.9121140142517815,
+          "coverage_1p96sigma": 0.9809976247030879,
+          "standardized_rmse": 0.5620861649513245,
+          "max_absolute_z": 2.8530023097991943,
+          "mean_kernel_length_weight": 0.6890174746513367
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8494911789894104,
+          "mean_sigma": 0.517764151096344,
+          "coverage_1sigma": 0.19047619047619047,
+          "coverage_1p96sigma": 0.7952380952380952,
+          "standardized_rmse": 1.59760582447052,
+          "max_absolute_z": 2.5460941791534424,
+          "mean_kernel_length_weight": 0.7324510216712952
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04133191332221031,
+          "mean_sigma": 0.395641028881073,
+          "coverage_1sigma": 0.9963450292397661,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.18521848320960999,
+          "max_absolute_z": 1.6864194869995117,
+          "mean_kernel_length_weight": 0.7055723667144775
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14101575314998627,
+          "mean_sigma": 0.20523561537265778,
+          "coverage_1sigma": 0.8944444444444445,
+          "coverage_1p96sigma": 0.9833333333333333,
+          "standardized_rmse": 0.6420472264289856,
+          "max_absolute_z": 2.8530023097991943,
+          "mean_kernel_length_weight": 0.6499025225639343
+        }
+      }
+    },
+    {
+      "period": 25,
+      "time_s": 50.0,
+      "observations": 292,
+      "amplitude": 0.4929504096508026,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25517287850379944,
+          "mean_sigma": 0.36584219336509705,
+          "coverage_1sigma": 0.9121140142517815,
+          "coverage_1p96sigma": 0.9817893903404592,
+          "standardized_rmse": 0.5635595321655273,
+          "max_absolute_z": 2.817835569381714,
+          "mean_kernel_length_weight": 0.6965055465698242
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8468316793441772,
+          "mean_sigma": 0.5150664448738098,
+          "coverage_1sigma": 0.19523809523809524,
+          "coverage_1p96sigma": 0.8047619047619048,
+          "standardized_rmse": 1.5956746339797974,
+          "max_absolute_z": 2.530672073364258,
+          "mean_kernel_length_weight": 0.7437804937362671
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.041851259768009186,
+          "mean_sigma": 0.38912272453308105,
+          "coverage_1sigma": 0.9963450292397661,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.19065813720226288,
+          "max_absolute_z": 1.7164440155029297,
+          "mean_kernel_length_weight": 0.7150535583496094
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1405637413263321,
+          "mean_sigma": 0.20080770552158356,
+          "coverage_1sigma": 0.8944444444444445,
+          "coverage_1p96sigma": 0.9833333333333333,
+          "standardized_rmse": 0.6456772089004517,
+          "max_absolute_z": 2.817835569381714,
+          "mean_kernel_length_weight": 0.6527025699615479
+        }
+      }
+    },
+    {
+      "period": 26,
+      "time_s": 52.0,
+      "observations": 302,
+      "amplitude": 0.4890744090080261,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2543966770172119,
+          "mean_sigma": 0.3592720329761505,
+          "coverage_1sigma": 0.9125098970704671,
+          "coverage_1p96sigma": 0.9802058590657166,
+          "standardized_rmse": 0.566643238067627,
+          "max_absolute_z": 2.8608031272888184,
+          "mean_kernel_length_weight": 0.7037400007247925
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8443493247032166,
+          "mean_sigma": 0.5082920789718628,
+          "coverage_1sigma": 0.19523809523809524,
+          "coverage_1p96sigma": 0.7904761904761904,
+          "standardized_rmse": 1.6099411249160767,
+          "max_absolute_z": 2.5513370037078857,
+          "mean_kernel_length_weight": 0.7546637654304504
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.046243973076343536,
+          "mean_sigma": 0.377151757478714,
+          "coverage_1sigma": 0.9956140350877193,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.20366999506950378,
+          "max_absolute_z": 1.7421557903289795,
+          "mean_kernel_length_weight": 0.7241320013999939
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13908420503139496,
+          "mean_sigma": 0.20886045694351196,
+          "coverage_1sigma": 0.8972222222222223,
+          "coverage_1p96sigma": 0.9805555555555555,
+          "standardized_rmse": 0.6345471143722534,
+          "max_absolute_z": 2.8608031272888184,
+          "mean_kernel_length_weight": 0.6555609703063965
+        }
+      }
+    },
+    {
+      "period": 27,
+      "time_s": 54.0,
+      "observations": 312,
+      "amplitude": 0.4853154420852661,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2548874616622925,
+          "mean_sigma": 0.35374942421913147,
+          "coverage_1sigma": 0.9101346001583531,
+          "coverage_1p96sigma": 0.9774346793349169,
+          "standardized_rmse": 0.5760769844055176,
+          "max_absolute_z": 2.894312620162964,
+          "mean_kernel_length_weight": 0.7107915282249451
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.844788670539856,
+          "mean_sigma": 0.5011334419250488,
+          "coverage_1sigma": 0.17142857142857143,
+          "coverage_1p96sigma": 0.7619047619047619,
+          "standardized_rmse": 1.6301562786102295,
+          "max_absolute_z": 2.5698883533477783,
+          "mean_kernel_length_weight": 0.7652329802513123
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.047283802181482315,
+          "mean_sigma": 0.37115854024887085,
+          "coverage_1sigma": 0.9956140350877193,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.20985567569732666,
+          "max_absolute_z": 1.7583850622177124,
+          "mean_kernel_length_weight": 0.7327688932418823
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1399477869272232,
+          "mean_sigma": 0.20275472104549408,
+          "coverage_1sigma": 0.8944444444444445,
+          "coverage_1p96sigma": 0.975,
+          "standardized_rmse": 0.6512854695320129,
+          "max_absolute_z": 2.894312620162964,
+          "mean_kernel_length_weight": 0.658746063709259
+        }
+      }
+    },
+    {
+      "period": 28,
+      "time_s": 56.0,
+      "observations": 322,
+      "amplitude": 0.4814970791339874,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.254726380109787,
+          "mean_sigma": 0.34809252619743347,
+          "coverage_1sigma": 0.9089469517022961,
+          "coverage_1p96sigma": 0.9762470308788599,
+          "standardized_rmse": 0.5837385058403015,
+          "max_absolute_z": 2.933763265609741,
+          "mean_kernel_length_weight": 0.7181925177574158
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.844054639339447,
+          "mean_sigma": 0.4930992126464844,
+          "coverage_1sigma": 0.1619047619047619,
+          "coverage_1p96sigma": 0.7476190476190476,
+          "standardized_rmse": 1.6505038738250732,
+          "max_absolute_z": 2.5909290313720703,
+          "mean_kernel_length_weight": 0.776218593120575
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04722381383180618,
+          "mean_sigma": 0.3642379939556122,
+          "coverage_1sigma": 0.9948830409356725,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.21359805762767792,
+          "max_absolute_z": 1.7808283567428589,
+          "mean_kernel_length_weight": 0.7416526079177856
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1397639811038971,
+          "mean_sigma": 0.20023849606513977,
+          "coverage_1sigma": 0.8944444444444445,
+          "coverage_1p96sigma": 0.9722222222222222,
+          "standardized_rmse": 0.6618607044219971,
+          "max_absolute_z": 2.933763265609741,
+          "mean_kernel_length_weight": 0.6624986529350281
+        }
+      }
+    },
+    {
+      "period": 29,
+      "time_s": 58.0,
+      "observations": 332,
+      "amplitude": 0.4778869152069092,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25509634613990784,
+          "mean_sigma": 0.342757910490036,
+          "coverage_1sigma": 0.9069675376088677,
+          "coverage_1p96sigma": 0.9742676167854315,
+          "standardized_rmse": 0.5928682088851929,
+          "max_absolute_z": 2.9592320919036865,
+          "mean_kernel_length_weight": 0.725038468837738
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8447171449661255,
+          "mean_sigma": 0.485416442155838,
+          "coverage_1sigma": 0.1523809523809524,
+          "coverage_1p96sigma": 0.7238095238095238,
+          "standardized_rmse": 1.6733908653259277,
+          "max_absolute_z": 2.6122798919677734,
+          "mean_kernel_length_weight": 0.7862618565559387
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.048590585589408875,
+          "mean_sigma": 0.35775697231292725,
+          "coverage_1sigma": 0.993421052631579,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.2251179814338684,
+          "max_absolute_z": 1.8084139823913574,
+          "mean_kernel_length_weight": 0.7496533989906311
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13971884548664093,
+          "mean_sigma": 0.19764994084835052,
+          "coverage_1sigma": 0.8888888888888888,
+          "coverage_1p96sigma": 0.9722222222222222,
+          "standardized_rmse": 0.6708484888076782,
+          "max_absolute_z": 2.9592320919036865,
+          "mean_kernel_length_weight": 0.6664848327636719
+        }
+      }
+    },
+    {
+      "period": 30,
+      "time_s": 60.0,
+      "observations": 342,
+      "amplitude": 0.47440800070762634,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2537154257297516,
+          "mean_sigma": 0.3370532691478729,
+          "coverage_1sigma": 0.9053840063341251,
+          "coverage_1p96sigma": 0.9734758511480601,
+          "standardized_rmse": 0.5973479747772217,
+          "max_absolute_z": 2.976944923400879,
+          "mean_kernel_length_weight": 0.7327777147293091
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8406571745872498,
+          "mean_sigma": 0.4768557548522949,
+          "coverage_1sigma": 0.14761904761904762,
+          "coverage_1p96sigma": 0.7142857142857143,
+          "standardized_rmse": 1.6901189088821411,
+          "max_absolute_z": 2.62121319770813,
+          "mean_kernel_length_weight": 0.7972747087478638
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04647199809551239,
+          "mean_sigma": 0.350810170173645,
+          "coverage_1sigma": 0.993421052631579,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.21595336496829987,
+          "max_absolute_z": 1.78322172164917,
+          "mean_kernel_length_weight": 0.7583193182945251
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.13999797403812408,
+          "mean_sigma": 0.19496795535087585,
+          "coverage_1sigma": 0.8833333333333333,
+          "coverage_1p96sigma": 0.9722222222222222,
+          "standardized_rmse": 0.6817029118537903,
+          "max_absolute_z": 2.976944923400879,
+          "mean_kernel_length_weight": 0.6718966364860535
+        }
+      }
+    },
+    {
+      "period": 31,
+      "time_s": 62.0,
+      "observations": 352,
+      "amplitude": 0.4710330069065094,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.26061132550239563,
+          "mean_sigma": 0.3182240128517151,
+          "coverage_1sigma": 0.89944576405384,
+          "coverage_1p96sigma": 0.9667458432304038,
+          "standardized_rmse": 0.6352443099021912,
+          "max_absolute_z": 3.0213260650634766,
+          "mean_kernel_length_weight": 0.7418510317802429
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.860698938369751,
+          "mean_sigma": 0.4612029194831848,
+          "coverage_1sigma": 0.10952380952380952,
+          "coverage_1p96sigma": 0.638095238095238,
+          "standardized_rmse": 1.7953866720199585,
+          "max_absolute_z": 2.822300434112549,
+          "mean_kernel_length_weight": 0.8091447949409485
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.04806151241064072,
+          "mean_sigma": 0.31771916151046753,
+          "coverage_1sigma": 0.993421052631579,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.24192501604557037,
+          "max_absolute_z": 1.8036391735076904,
+          "mean_kernel_length_weight": 0.7678484916687012
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1453499048948288,
+          "mean_sigma": 0.195820152759552,
+          "coverage_1sigma": 0.8666666666666667,
+          "coverage_1p96sigma": 0.9694444444444444,
+          "standardized_rmse": 0.7146309018135071,
+          "max_absolute_z": 3.0213260650634766,
+          "mean_kernel_length_weight": 0.6799880266189575
+        }
+      }
+    },
+    {
+      "period": 32,
+      "time_s": 64.0,
+      "observations": 362,
+      "amplitude": 0.46777212619781494,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2596168518066406,
+          "mean_sigma": 0.3112888038158417,
+          "coverage_1sigma": 0.895882818685669,
+          "coverage_1p96sigma": 0.9659540775930324,
+          "standardized_rmse": 0.6453643441200256,
+          "max_absolute_z": 2.9895405769348145,
+          "mean_kernel_length_weight": 0.75201016664505
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8563703298568726,
+          "mean_sigma": 0.44971486926078796,
+          "coverage_1sigma": 0.08571428571428572,
+          "coverage_1p96sigma": 0.6285714285714286,
+          "standardized_rmse": 1.8202515840530396,
+          "max_absolute_z": 2.8404316902160645,
+          "mean_kernel_length_weight": 0.821021318435669
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.05006091669201851,
+          "mean_sigma": 0.310258150100708,
+          "coverage_1sigma": 0.9941520467836257,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.2485564798116684,
+          "max_absolute_z": 1.8338818550109863,
+          "mean_kernel_length_weight": 0.7777866125106812
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1448879987001419,
+          "mean_sigma": 0.19132393598556519,
+          "coverage_1sigma": 0.8611111111111112,
+          "coverage_1p96sigma": 0.9694444444444444,
+          "standardized_rmse": 0.7222188711166382,
+          "max_absolute_z": 2.9895405769348145,
+          "mean_kernel_length_weight": 0.6911868453025818
+        }
+      }
+    },
+    {
+      "period": 33,
+      "time_s": 66.0,
+      "observations": 372,
+      "amplitude": 0.46454551815986633,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25818362832069397,
+          "mean_sigma": 0.30753958225250244,
+          "coverage_1sigma": 0.8942992874109263,
+          "coverage_1p96sigma": 0.9631828978622328,
+          "standardized_rmse": 0.6544369459152222,
+          "max_absolute_z": 2.9176363945007324,
+          "mean_kernel_length_weight": 0.7644264101982117
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8503703474998474,
+          "mean_sigma": 0.44021686911582947,
+          "coverage_1sigma": 0.08571428571428572,
+          "coverage_1p96sigma": 0.5952380952380952,
+          "standardized_rmse": 1.8325611352920532,
+          "max_absolute_z": 2.82468843460083,
+          "mean_kernel_length_weight": 0.8335754871368408
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.052108317613601685,
+          "mean_sigma": 0.3036215305328369,
+          "coverage_1sigma": 0.9919590643274854,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.2709541916847229,
+          "max_absolute_z": 1.8463233709335327,
+          "mean_kernel_length_weight": 0.7890684604644775
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14425671100616455,
+          "mean_sigma": 0.19219347834587097,
+          "coverage_1sigma": 0.8638888888888889,
+          "coverage_1p96sigma": 0.9694444444444444,
+          "standardized_rmse": 0.7204967737197876,
+          "max_absolute_z": 2.9176363945007324,
+          "mean_kernel_length_weight": 0.7074283361434937
+        }
+      }
+    },
+    {
+      "period": 34,
+      "time_s": 68.0,
+      "observations": 382,
+      "amplitude": 0.4615815281867981,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.255696564912796,
+          "mean_sigma": 0.3021765649318695,
+          "coverage_1sigma": 0.8911322248614411,
+          "coverage_1p96sigma": 0.9615993665874901,
+          "standardized_rmse": 0.6686399579048157,
+          "max_absolute_z": 2.918398380279541,
+          "mean_kernel_length_weight": 0.7760840654373169
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8408938646316528,
+          "mean_sigma": 0.426489919424057,
+          "coverage_1sigma": 0.08095238095238096,
+          "coverage_1p96sigma": 0.580952380952381,
+          "standardized_rmse": 1.8582786321640015,
+          "max_absolute_z": 2.843573570251465,
+          "mean_kernel_length_weight": 0.8438453078269958
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.05394522473216057,
+          "mean_sigma": 0.30237361788749695,
+          "coverage_1sigma": 0.9904970760233918,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.2727867364883423,
+          "max_absolute_z": 1.8777313232421875,
+          "mean_kernel_length_weight": 0.7991905808448792
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1433238536119461,
+          "mean_sigma": 0.17979663610458374,
+          "coverage_1sigma": 0.8527777777777777,
+          "coverage_1p96sigma": 0.9666666666666667,
+          "standardized_rmse": 0.7540650963783264,
+          "max_absolute_z": 2.918398380279541,
+          "mean_kernel_length_weight": 0.7240709066390991
+        }
+      }
+    },
+    {
+      "period": 35,
+      "time_s": 70.0,
+      "observations": 392,
+      "amplitude": 0.4585636258125305,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.25501152873039246,
+          "mean_sigma": 0.2965640723705292,
+          "coverage_1sigma": 0.886381631037213,
+          "coverage_1p96sigma": 0.9596199524940617,
+          "standardized_rmse": 0.6853044033050537,
+          "max_absolute_z": 2.930753707885742,
+          "mean_kernel_length_weight": 0.787792980670929
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8372542262077332,
+          "mean_sigma": 0.41370850801467896,
+          "coverage_1sigma": 0.07142857142857142,
+          "coverage_1p96sigma": 0.5619047619047619,
+          "standardized_rmse": 1.8952162265777588,
+          "max_absolute_z": 2.864955425262451,
+          "mean_kernel_length_weight": 0.8529320359230042
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.05524491146206856,
+          "mean_sigma": 0.29876112937927246,
+          "coverage_1sigma": 0.9897660818713451,
+          "coverage_1p96sigma": 1.0,
+          "standardized_rmse": 0.28078219294548035,
+          "max_absolute_z": 1.872741460800171,
+          "mean_kernel_length_weight": 0.8092698454856873
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1431683450937271,
+          "mean_sigma": 0.17348186671733856,
+          "coverage_1sigma": 0.8388888888888889,
+          "coverage_1p96sigma": 0.9666666666666667,
+          "standardized_rmse": 0.77767413854599,
+          "max_absolute_z": 2.930753707885742,
+          "mean_kernel_length_weight": 0.741152286529541
+        }
+      }
+    },
+    {
+      "period": 36,
+      "time_s": 72.0,
+      "observations": 402,
+      "amplitude": 0.4558374285697937,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.24901998043060303,
+          "mean_sigma": 0.28414735198020935,
+          "coverage_1sigma": 0.8796516231195566,
+          "coverage_1p96sigma": 0.9544734758511481,
+          "standardized_rmse": 0.7072618007659912,
+          "max_absolute_z": 3.13558292388916,
+          "mean_kernel_length_weight": 0.800968587398529
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8141148090362549,
+          "mean_sigma": 0.39454373717308044,
+          "coverage_1sigma": 0.06666666666666667,
+          "coverage_1p96sigma": 0.5238095238095238,
+          "standardized_rmse": 1.9262006282806396,
+          "max_absolute_z": 2.9085474014282227,
+          "mean_kernel_length_weight": 0.861305296421051
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.05976027995347977,
+          "mean_sigma": 0.28653907775878906,
+          "coverage_1sigma": 0.9861111111111112,
+          "coverage_1p96sigma": 0.9992690058479532,
+          "standardized_rmse": 0.3144106864929199,
+          "max_absolute_z": 2.025733232498169,
+          "mean_kernel_length_weight": 0.8199249505996704
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14108842611312866,
+          "mean_sigma": 0.16490793228149414,
+          "coverage_1sigma": 0.8166666666666667,
+          "coverage_1p96sigma": 0.9583333333333334,
+          "standardized_rmse": 0.8035512566566467,
+          "max_absolute_z": 2.8377771377563477,
+          "mean_kernel_length_weight": 0.7618203163146973
+        }
+      }
+    },
+    {
+      "period": 37,
+      "time_s": 74.0,
+      "observations": 412,
+      "amplitude": 0.4535556435585022,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2520599365234375,
+          "mean_sigma": 0.2667223811149597,
+          "coverage_1sigma": 0.8665874901029296,
+          "coverage_1p96sigma": 0.950910530482977,
+          "standardized_rmse": 0.7517947554588318,
+          "max_absolute_z": 3.350224733352661,
+          "mean_kernel_length_weight": 0.8147384524345398
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8175408840179443,
+          "mean_sigma": 0.37933349609375,
+          "coverage_1sigma": 0.05238095238095238,
+          "coverage_1p96sigma": 0.4857142857142857,
+          "standardized_rmse": 1.9919646978378296,
+          "max_absolute_z": 2.9932148456573486,
+          "mean_kernel_length_weight": 0.8684743046760559
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.06561677902936935,
+          "mean_sigma": 0.27654701471328735,
+          "coverage_1sigma": 0.9809941520467836,
+          "coverage_1p96sigma": 0.9985380116959064,
+          "standardized_rmse": 0.3481195569038391,
+          "max_absolute_z": 2.269526958465576,
+          "mean_kernel_length_weight": 0.8308477401733398
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14292553067207336,
+          "mean_sigma": 0.13702552020549774,
+          "coverage_1sigma": 0.7944444444444444,
+          "coverage_1p96sigma": 0.9583333333333334,
+          "standardized_rmse": 0.8746253848075867,
+          "max_absolute_z": 3.0622689723968506,
+          "mean_kernel_length_weight": 0.7834667563438416
+        }
+      }
+    },
+    {
+      "period": 38,
+      "time_s": 76.0,
+      "observations": 422,
+      "amplitude": 0.45177868008613586,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.24933119118213654,
+          "mean_sigma": 0.25425809621810913,
+          "coverage_1sigma": 0.8618368962787015,
+          "coverage_1p96sigma": 0.9477434679334917,
+          "standardized_rmse": 0.7670977711677551,
+          "max_absolute_z": 3.1291677951812744,
+          "mean_kernel_length_weight": 0.8281939029693604
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8087114691734314,
+          "mean_sigma": 0.3714221119880676,
+          "coverage_1sigma": 0.03333333333333333,
+          "coverage_1p96sigma": 0.44285714285714284,
+          "standardized_rmse": 2.031172752380371,
+          "max_absolute_z": 2.963453769683838,
+          "mean_kernel_length_weight": 0.8743504881858826
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.07133807986974716,
+          "mean_sigma": 0.25770512223243713,
+          "coverage_1sigma": 0.9649122807017544,
+          "coverage_1p96sigma": 0.9963450292397661,
+          "standardized_rmse": 0.41889452934265137,
+          "max_absolute_z": 2.814485549926758,
+          "mean_kernel_length_weight": 0.8413780331611633
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14323657751083374,
+          "mean_sigma": 0.13905461132526398,
+          "coverage_1sigma": 0.8,
+          "coverage_1p96sigma": 0.9583333333333334,
+          "standardized_rmse": 0.856676459312439,
+          "max_absolute_z": 3.1291677951812744,
+          "mean_kernel_length_weight": 0.8043423891067505
+        }
+      }
+    },
+    {
+      "period": 39,
+      "time_s": 78.0,
+      "observations": 432,
+      "amplitude": 0.45009568333625793,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2521052956581116,
+          "mean_sigma": 0.2427666336297989,
+          "coverage_1sigma": 0.8440221694378464,
+          "coverage_1p96sigma": 0.9394299287410927,
+          "standardized_rmse": 0.8257524967193604,
+          "max_absolute_z": 3.5253148078918457,
+          "mean_kernel_length_weight": 0.8431252241134644
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8163232207298279,
+          "mean_sigma": 0.3595166802406311,
+          "coverage_1sigma": 0.01904761904761905,
+          "coverage_1p96sigma": 0.3761904761904762,
+          "standardized_rmse": 2.1455514430999756,
+          "max_absolute_z": 2.9687747955322266,
+          "mean_kernel_length_weight": 0.8798300623893738
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.07314560562372208,
+          "mean_sigma": 0.2475178986787796,
+          "coverage_1sigma": 0.9597953216374269,
+          "coverage_1p96sigma": 0.9948830409356725,
+          "standardized_rmse": 0.44900766015052795,
+          "max_absolute_z": 2.7915780544281006,
+          "mean_kernel_length_weight": 0.8526846170425415
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.1502610594034195,
+          "mean_sigma": 0.13663573563098907,
+          "coverage_1sigma": 0.7861111111111111,
+          "coverage_1p96sigma": 0.9444444444444444,
+          "standardized_rmse": 0.9123134016990662,
+          "max_absolute_z": 3.4272959232330322,
+          "mean_kernel_length_weight": 0.8273675441741943
+        }
+      }
+    },
+    {
+      "period": 40,
+      "time_s": 80.0,
+      "observations": 442,
+      "amplitude": 0.4486306309700012,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.2476138323545456,
+          "mean_sigma": 0.23079833388328552,
+          "coverage_1sigma": 0.8444180522565321,
+          "coverage_1p96sigma": 0.9386381631037213,
+          "standardized_rmse": 0.8359127044677734,
+          "max_absolute_z": 3.6389176845550537,
+          "mean_kernel_length_weight": 0.8551324009895325
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.8044498562812805,
+          "mean_sigma": 0.34902703762054443,
+          "coverage_1sigma": 0.023809523809523808,
+          "coverage_1p96sigma": 0.3476190476190476,
+          "standardized_rmse": 2.188131809234619,
+          "max_absolute_z": 3.1139681339263916,
+          "mean_kernel_length_weight": 0.8837750554084778
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.06991223245859146,
+          "mean_sigma": 0.2352858930826187,
+          "coverage_1sigma": 0.9641812865497076,
+          "coverage_1p96sigma": 0.9978070175438597,
+          "standardized_rmse": 0.4345336854457855,
+          "max_absolute_z": 2.8772356510162354,
+          "mean_kernel_length_weight": 0.8616803288459778
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14613771438598633,
+          "mean_sigma": 0.12604638934135437,
+          "coverage_1sigma": 0.7722222222222223,
+          "coverage_1p96sigma": 0.9361111111111111,
+          "standardized_rmse": 0.9458605051040649,
+          "max_absolute_z": 3.3808298110961914,
+          "mean_kernel_length_weight": 0.8452475070953369
+        }
+      }
+    },
+    {
+      "period": 41,
+      "time_s": 82.0,
+      "observations": 452,
+      "amplitude": 0.4473867118358612,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.24295711517333984,
+          "mean_sigma": 0.22352451086044312,
+          "coverage_1sigma": 0.8368962787015044,
+          "coverage_1p96sigma": 0.935471100554236,
+          "standardized_rmse": 0.8531548380851746,
+          "max_absolute_z": 3.6636242866516113,
+          "mean_kernel_length_weight": 0.8640687465667725
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.7892541289329529,
+          "mean_sigma": 0.3410906195640564,
+          "coverage_1sigma": 0.02857142857142857,
+          "coverage_1p96sigma": 0.3380952380952381,
+          "standardized_rmse": 2.2101948261260986,
+          "max_absolute_z": 3.224308967590332,
+          "mean_kernel_length_weight": 0.886609673500061
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.07033196091651917,
+          "mean_sigma": 0.22899027168750763,
+          "coverage_1sigma": 0.9583333333333334,
+          "coverage_1p96sigma": 0.9970760233918129,
+          "standardized_rmse": 0.45497259497642517,
+          "max_absolute_z": 3.0410115718841553,
+          "mean_kernel_length_weight": 0.8684792518615723
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.14370474219322205,
+          "mean_sigma": 0.11875149607658386,
+          "coverage_1sigma": 0.7527777777777778,
+          "coverage_1p96sigma": 0.9333333333333333,
+          "standardized_rmse": 0.9822980165481567,
+          "max_absolute_z": 3.4142212867736816,
+          "mean_kernel_length_weight": 0.857879102230072
+        }
+      }
+    },
+    {
+      "period": 42,
+      "time_s": 84.0,
+      "observations": 462,
+      "amplitude": 0.44634589552879333,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.20735982060432434,
+          "mean_sigma": 0.20278385281562805,
+          "coverage_1sigma": 0.8293745051464766,
+          "coverage_1p96sigma": 0.9239904988123515,
+          "standardized_rmse": 0.9834557175636292,
+          "max_absolute_z": 5.19586706161499,
+          "mean_kernel_length_weight": 0.870983362197876
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.6710261702537537,
+          "mean_sigma": 0.2571195662021637,
+          "coverage_1sigma": 0.014285714285714285,
+          "coverage_1p96sigma": 0.2571428571428571,
+          "standardized_rmse": 2.6456458568573,
+          "max_absolute_z": 5.19586706161499,
+          "mean_kernel_length_weight": 0.888776957988739
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.07210242003202438,
+          "mean_sigma": 0.21900849044322968,
+          "coverage_1sigma": 0.9473684210526315,
+          "coverage_1p96sigma": 0.9948830409356725,
+          "standardized_rmse": 0.48907041549682617,
+          "max_absolute_z": 2.6007180213928223,
+          "mean_kernel_length_weight": 0.8737837672233582
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.11752690374851227,
+          "mean_sigma": 0.09849447757005692,
+          "coverage_1sigma": 0.7277777777777777,
+          "coverage_1p96sigma": 0.9055555555555556,
+          "standardized_rmse": 1.2057355642318726,
+          "max_absolute_z": 4.766724109649658,
+          "mean_kernel_length_weight": 0.8672744631767273
+        }
+      }
+    },
+    {
+      "period": 43,
+      "time_s": 86.0,
+      "observations": 472,
+      "amplitude": 0.4453703463077545,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12094120681285858,
+          "mean_sigma": 0.18814706802368164,
+          "coverage_1sigma": 0.8242280285035629,
+          "coverage_1p96sigma": 0.9556611243072051,
+          "standardized_rmse": 0.8526736497879028,
+          "max_absolute_z": 5.490921974182129,
+          "mean_kernel_length_weight": 0.8768587708473206
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16422411799430847,
+          "mean_sigma": 0.10769607871770859,
+          "coverage_1sigma": 0.46190476190476193,
+          "coverage_1p96sigma": 0.7952380952380952,
+          "standardized_rmse": 1.5611144304275513,
+          "max_absolute_z": 5.490921974182129,
+          "mean_kernel_length_weight": 0.8906102776527405
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.11195641756057739,
+          "mean_sigma": 0.21399153769016266,
+          "coverage_1sigma": 0.8961988304093568,
+          "coverage_1p96sigma": 0.9919590643274854,
+          "standardized_rmse": 0.6462787389755249,
+          "max_absolute_z": 3.298323631286621,
+          "mean_kernel_length_weight": 0.8783528208732605
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.07167140394449234,
+          "mean_sigma": 0.1103970855474472,
+          "coverage_1sigma": 0.8527777777777777,
+          "coverage_1p96sigma": 0.9666666666666667,
+          "standardized_rmse": 0.7891416549682617,
+          "max_absolute_z": 3.99987530708313,
+          "mean_kernel_length_weight": 0.8749501705169678
+        }
+      }
+    },
+    {
+      "period": 44,
+      "time_s": 88.0,
+      "observations": 482,
+      "amplitude": 0.44445499777793884,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12246231734752655,
+          "mean_sigma": 0.17801766097545624,
+          "coverage_1sigma": 0.8095803642121931,
+          "coverage_1p96sigma": 0.94972288202692,
+          "standardized_rmse": 0.8894213438034058,
+          "max_absolute_z": 5.4820990562438965,
+          "mean_kernel_length_weight": 0.8812587261199951
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.1584194153547287,
+          "mean_sigma": 0.10353357344865799,
+          "coverage_1sigma": 0.44285714285714284,
+          "coverage_1p96sigma": 0.7952380952380952,
+          "standardized_rmse": 1.5810096263885498,
+          "max_absolute_z": 5.4820990562438965,
+          "mean_kernel_length_weight": 0.8920282125473022
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.11549993604421616,
+          "mean_sigma": 0.2111431360244751,
+          "coverage_1sigma": 0.8874269005847953,
+          "coverage_1p96sigma": 0.9912280701754386,
+          "standardized_rmse": 0.6601991057395935,
+          "max_absolute_z": 3.3281309604644775,
+          "mean_kernel_length_weight": 0.8818694949150085
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.0704728439450264,
+          "mean_sigma": 0.09521874040365219,
+          "coverage_1sigma": 0.8222222222222222,
+          "coverage_1p96sigma": 0.9583333333333334,
+          "standardized_rmse": 0.8661394715309143,
+          "max_absolute_z": 4.039930820465088,
+          "mean_kernel_length_weight": 0.8804728388786316
+        }
+      }
+    },
+    {
+      "period": 45,
+      "time_s": 90.0,
+      "observations": 492,
+      "amplitude": 0.44362062215805054,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12119592726230621,
+          "mean_sigma": 0.17436277866363525,
+          "coverage_1sigma": 0.8064133016627079,
+          "coverage_1p96sigma": 0.9469517022961204,
+          "standardized_rmse": 0.9040242433547974,
+          "max_absolute_z": 5.476115703582764,
+          "mean_kernel_length_weight": 0.8843567967414856
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.1607378125190735,
+          "mean_sigma": 0.10001489520072937,
+          "coverage_1sigma": 0.44285714285714284,
+          "coverage_1p96sigma": 0.7666666666666667,
+          "standardized_rmse": 1.6533538103103638,
+          "max_absolute_z": 5.476115703582764,
+          "mean_kernel_length_weight": 0.8930956721305847
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.11523023992776871,
+          "mean_sigma": 0.20750704407691956,
+          "coverage_1sigma": 0.8764619883040936,
+          "coverage_1p96sigma": 0.9926900584795322,
+          "standardized_rmse": 0.6678315997123718,
+          "max_absolute_z": 3.335289239883423,
+          "mean_kernel_length_weight": 0.8844595551490784
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06695284694433212,
+          "mean_sigma": 0.09277398884296417,
+          "coverage_1sigma": 0.8361111111111111,
+          "coverage_1p96sigma": 0.9555555555555556,
+          "standardized_rmse": 0.8641055226325989,
+          "max_absolute_z": 4.054357528686523,
+          "mean_kernel_length_weight": 0.8841944932937622
+        }
+      }
+    },
+    {
+      "period": 46,
+      "time_s": 92.0,
+      "observations": 502,
+      "amplitude": 0.44279828667640686,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12275092303752899,
+          "mean_sigma": 0.17124100029468536,
+          "coverage_1sigma": 0.7901821060965954,
+          "coverage_1p96sigma": 0.9429928741092637,
+          "standardized_rmse": 0.9365266561508179,
+          "max_absolute_z": 5.604029178619385,
+          "mean_kernel_length_weight": 0.8866198062896729
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.1594235748052597,
+          "mean_sigma": 0.09772703796625137,
+          "coverage_1sigma": 0.44285714285714284,
+          "coverage_1p96sigma": 0.7619047619047619,
+          "standardized_rmse": 1.6719764471054077,
+          "max_absolute_z": 5.604029178619385,
+          "mean_kernel_length_weight": 0.8939365148544312
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.11915834248065948,
+          "mean_sigma": 0.2049040049314499,
+          "coverage_1sigma": 0.8464912280701754,
+          "coverage_1p96sigma": 0.9890350877192983,
+          "standardized_rmse": 0.705545961856842,
+          "max_absolute_z": 3.3337461948394775,
+          "mean_kernel_length_weight": 0.8864370584487915
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06356248259544373,
+          "mean_sigma": 0.08803722262382507,
+          "coverage_1sigma": 0.8472222222222222,
+          "coverage_1p96sigma": 0.9611111111111111,
+          "standardized_rmse": 0.8581487536430359,
+          "max_absolute_z": 4.102566242218018,
+          "mean_kernel_length_weight": 0.8868080377578735
+        }
+      }
+    },
+    {
+      "period": 47,
+      "time_s": 94.0,
+      "observations": 512,
+      "amplitude": 0.44202765822410583,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12335925549268723,
+          "mean_sigma": 0.16796466708183289,
+          "coverage_1sigma": 0.782264449722882,
+          "coverage_1p96sigma": 0.9414093428345209,
+          "standardized_rmse": 0.9519293308258057,
+          "max_absolute_z": 5.695151329040527,
+          "mean_kernel_length_weight": 0.8882919549942017
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16173873841762543,
+          "mean_sigma": 0.09687016159296036,
+          "coverage_1sigma": 0.4095238095238095,
+          "coverage_1p96sigma": 0.7619047619047619,
+          "standardized_rmse": 1.7081574201583862,
+          "max_absolute_z": 5.695151329040527,
+          "mean_kernel_length_weight": 0.8945908546447754
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.11916764080524445,
+          "mean_sigma": 0.20310133695602417,
+          "coverage_1sigma": 0.8457602339181286,
+          "coverage_1p96sigma": 0.9883040935672515,
+          "standardized_rmse": 0.7156606912612915,
+          "max_absolute_z": 3.346240758895874,
+          "mean_kernel_length_weight": 0.8879644274711609
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06302795559167862,
+          "mean_sigma": 0.08766672760248184,
+          "coverage_1sigma": 0.825,
+          "coverage_1p96sigma": 0.9583333333333334,
+          "standardized_rmse": 0.8677144646644592,
+          "max_absolute_z": 4.141875743865967,
+          "mean_kernel_length_weight": 0.8886564373970032
+        }
+      }
+    },
+    {
+      "period": 48,
+      "time_s": 96.0,
+      "observations": 522,
+      "amplitude": 0.44130179286003113,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12488238513469696,
+          "mean_sigma": 0.16316644847393036,
+          "coverage_1sigma": 0.7648456057007126,
+          "coverage_1p96sigma": 0.9418052256532067,
+          "standardized_rmse": 0.9524450898170471,
+          "max_absolute_z": 5.6942830085754395,
+          "mean_kernel_length_weight": 0.8895419239997864
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16197402775287628,
+          "mean_sigma": 0.09738440811634064,
+          "coverage_1sigma": 0.4142857142857143,
+          "coverage_1p96sigma": 0.7571428571428571,
+          "standardized_rmse": 1.688929796218872,
+          "max_absolute_z": 5.6942830085754395,
+          "mean_kernel_length_weight": 0.8951040506362915
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.12255364656448364,
+          "mean_sigma": 0.19372136890888214,
+          "coverage_1sigma": 0.8150584795321637,
+          "coverage_1p96sigma": 0.9846491228070176,
+          "standardized_rmse": 0.7496716380119324,
+          "max_absolute_z": 3.3511760234832764,
+          "mean_kernel_length_weight": 0.8891333937644958
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06335324794054031,
+          "mean_sigma": 0.08877300471067429,
+          "coverage_1sigma": 0.8305555555555556,
+          "coverage_1p96sigma": 0.9611111111111111,
+          "standardized_rmse": 0.8468904495239258,
+          "max_absolute_z": 4.194121360778809,
+          "mean_kernel_length_weight": 0.8900080323219299
+        }
+      }
+    },
+    {
+      "period": 49,
+      "time_s": 98.0,
+      "observations": 532,
+      "amplitude": 0.4405798017978668,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12045285850763321,
+          "mean_sigma": 0.16127413511276245,
+          "coverage_1sigma": 0.7688044338875692,
+          "coverage_1p96sigma": 0.9386381631037213,
+          "standardized_rmse": 0.967252790927887,
+          "max_absolute_z": 6.059505462646484,
+          "mean_kernel_length_weight": 0.8905623555183411
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16238117218017578,
+          "mean_sigma": 0.09711278229951859,
+          "coverage_1sigma": 0.4,
+          "coverage_1p96sigma": 0.7619047619047619,
+          "standardized_rmse": 1.7413464784622192,
+          "max_absolute_z": 6.059505462646484,
+          "mean_kernel_length_weight": 0.8955357074737549
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.11396196484565735,
+          "mean_sigma": 0.19082489609718323,
+          "coverage_1sigma": 0.8150584795321637,
+          "coverage_1p96sigma": 0.9802631578947368,
+          "standardized_rmse": 0.765344500541687,
+          "max_absolute_z": 4.06148099899292,
+          "mean_kernel_length_weight": 0.8901117444038391
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06515417248010635,
+          "mean_sigma": 0.09138927608728409,
+          "coverage_1sigma": 0.8416666666666667,
+          "coverage_1p96sigma": 0.9583333333333334,
+          "standardized_rmse": 0.8366384506225586,
+          "max_absolute_z": 3.9503822326660156,
+          "mean_kernel_length_weight": 0.8910825848579407
+        }
+      }
+    },
+    {
+      "period": 50,
+      "time_s": 100.0,
+      "observations": 542,
+      "amplitude": 0.4398721158504486,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.11916997283697128,
+          "mean_sigma": 0.15635749697685242,
+          "coverage_1sigma": 0.771575613618369,
+          "coverage_1p96sigma": 0.93784639746635,
+          "standardized_rmse": 0.9817767143249512,
+          "max_absolute_z": 6.108032703399658,
+          "mean_kernel_length_weight": 0.8914579153060913
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16346223652362823,
+          "mean_sigma": 0.09599261730909348,
+          "coverage_1sigma": 0.38571428571428573,
+          "coverage_1p96sigma": 0.7523809523809524,
+          "standardized_rmse": 1.7786095142364502,
+          "max_absolute_z": 6.108032703399658,
+          "mean_kernel_length_weight": 0.8959190249443054
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.1116003692150116,
+          "mean_sigma": 0.18770304322242737,
+          "coverage_1sigma": 0.831140350877193,
+          "coverage_1p96sigma": 0.9839181286549707,
+          "standardized_rmse": 0.749841570854187,
+          "max_absolute_z": 3.8960182666778564,
+          "mean_kernel_length_weight": 0.8909836411476135
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06479541957378387,
+          "mean_sigma": 0.08304428309202194,
+          "coverage_1sigma": 0.8416666666666667,
+          "coverage_1p96sigma": 0.9555555555555556,
+          "standardized_rmse": 0.8539048433303833,
+          "max_absolute_z": 4.0597381591796875,
+          "mean_kernel_length_weight": 0.8920084834098816
+        }
+      }
+    },
+    {
+      "period": 51,
+      "time_s": 102.0,
+      "observations": 552,
+      "amplitude": 0.4391248822212219,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.1213214099407196,
+          "mean_sigma": 0.14366447925567627,
+          "coverage_1sigma": 0.7759303246239113,
+          "coverage_1p96sigma": 0.9255740300870943,
+          "standardized_rmse": 1.0354729890823364,
+          "max_absolute_z": 6.219567775726318,
+          "mean_kernel_length_weight": 0.8923103213310242
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.1659199297428131,
+          "mean_sigma": 0.09958015382289886,
+          "coverage_1sigma": 0.4095238095238095,
+          "coverage_1p96sigma": 0.7333333333333333,
+          "standardized_rmse": 1.8361550569534302,
+          "max_absolute_z": 6.219567775726318,
+          "mean_kernel_length_weight": 0.8962854743003845
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.10837189853191376,
+          "mean_sigma": 0.162058025598526,
+          "coverage_1sigma": 0.8611111111111112,
+          "coverage_1p96sigma": 0.9780701754385965,
+          "standardized_rmse": 0.7486274838447571,
+          "max_absolute_z": 4.415131568908691,
+          "mean_kernel_length_weight": 0.8918347954750061
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.07749724388122559,
+          "mean_sigma": 0.08415642380714417,
+          "coverage_1sigma": 0.8055555555555556,
+          "coverage_1p96sigma": 0.9444444444444444,
+          "standardized_rmse": 0.9257856607437134,
+          "max_absolute_z": 4.238627910614014,
+          "mean_kernel_length_weight": 0.8928619623184204
+        }
+      }
+    },
+    {
+      "period": 52,
+      "time_s": 104.0,
+      "observations": 562,
+      "amplitude": 0.438314825296402,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12067268788814545,
+          "mean_sigma": 0.14270955324172974,
+          "coverage_1sigma": 0.7767220902612827,
+          "coverage_1p96sigma": 0.9267616785431513,
+          "standardized_rmse": 1.030518651008606,
+          "max_absolute_z": 6.233016014099121,
+          "mean_kernel_length_weight": 0.8930776119232178
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16505827009677887,
+          "mean_sigma": 0.09948521852493286,
+          "coverage_1sigma": 0.4095238095238095,
+          "coverage_1p96sigma": 0.7380952380952381,
+          "standardized_rmse": 1.8228168487548828,
+          "max_absolute_z": 6.233016014099121,
+          "mean_kernel_length_weight": 0.8966184854507446
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.10826520621776581,
+          "mean_sigma": 0.16058561205863953,
+          "coverage_1sigma": 0.8552631578947368,
+          "coverage_1p96sigma": 0.9773391812865497,
+          "standardized_rmse": 0.7517789602279663,
+          "max_absolute_z": 4.374942779541016,
+          "mean_kernel_length_weight": 0.8926066756248474
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.07660979777574539,
+          "mean_sigma": 0.08408041298389435,
+          "coverage_1sigma": 0.8083333333333333,
+          "coverage_1p96sigma": 0.9472222222222222,
+          "standardized_rmse": 0.9165148735046387,
+          "max_absolute_z": 4.282317638397217,
+          "mean_kernel_length_weight": 0.8936235308647156
+        }
+      }
+    },
+    {
+      "period": 53,
+      "time_s": 106.0,
+      "observations": 572,
+      "amplitude": 0.4374520480632782,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12175078690052032,
+          "mean_sigma": 0.14060227572917938,
+          "coverage_1sigma": 0.781076801266825,
+          "coverage_1p96sigma": 0.9271575613618369,
+          "standardized_rmse": 1.029015302658081,
+          "max_absolute_z": 6.248843669891357,
+          "mean_kernel_length_weight": 0.8937215209007263
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.1637934297323227,
+          "mean_sigma": 0.09821093082427979,
+          "coverage_1sigma": 0.4095238095238095,
+          "coverage_1p96sigma": 0.7333333333333333,
+          "standardized_rmse": 1.827750563621521,
+          "max_absolute_z": 6.248843669891357,
+          "mean_kernel_length_weight": 0.8969065546989441
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.10944437235593796,
+          "mean_sigma": 0.15928883850574493,
+          "coverage_1sigma": 0.8581871345029239,
+          "coverage_1p96sigma": 0.9809941520467836,
+          "standardized_rmse": 0.7471040487289429,
+          "max_absolute_z": 4.440353870391846,
+          "mean_kernel_length_weight": 0.8932620882987976
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.07623099535703659,
+          "mean_sigma": 0.08572239428758621,
+          "coverage_1sigma": 0.8166666666666667,
+          "coverage_1p96sigma": 0.9472222222222222,
+          "standardized_rmse": 0.8990350961685181,
+          "max_absolute_z": 4.294416427612305,
+          "mean_kernel_length_weight": 0.8942541480064392
+        }
+      }
+    },
+    {
+      "period": 54,
+      "time_s": 108.0,
+      "observations": 582,
+      "amplitude": 0.43658339977264404,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.12191557139158249,
+          "mean_sigma": 0.14051981270313263,
+          "coverage_1sigma": 0.7779097387173397,
+          "coverage_1p96sigma": 0.9303246239113222,
+          "standardized_rmse": 1.0339505672454834,
+          "max_absolute_z": 6.261871814727783,
+          "mean_kernel_length_weight": 0.8942859768867493
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.1638750284910202,
+          "mean_sigma": 0.09943638741970062,
+          "coverage_1sigma": 0.42857142857142855,
+          "coverage_1p96sigma": 0.7285714285714285,
+          "standardized_rmse": 1.8248807191848755,
+          "max_absolute_z": 6.261871814727783,
+          "mean_kernel_length_weight": 0.8971590399742126
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.10981293022632599,
+          "mean_sigma": 0.15627038478851318,
+          "coverage_1sigma": 0.8538011695906432,
+          "coverage_1p96sigma": 0.9788011695906432,
+          "standardized_rmse": 0.7484659552574158,
+          "max_absolute_z": 4.44649076461792,
+          "mean_kernel_length_weight": 0.8938347101211548
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.0777999609708786,
+          "mean_sigma": 0.08734261244535446,
+          "coverage_1sigma": 0.8027777777777778,
+          "coverage_1p96sigma": 0.95,
+          "standardized_rmse": 0.9121396541595459,
+          "max_absolute_z": 4.332428932189941,
+          "mean_kernel_length_weight": 0.8948095440864563
+        }
+      }
+    },
+    {
+      "period": 55,
+      "time_s": 110.0,
+      "observations": 592,
+      "amplitude": 0.4357141852378845,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.1100466400384903,
+          "mean_sigma": 0.1390189528465271,
+          "coverage_1sigma": 0.7980997624703088,
+          "coverage_1p96sigma": 0.9251781472684085,
+          "standardized_rmse": 1.0633660554885864,
+          "max_absolute_z": 6.385505676269531,
+          "mean_kernel_length_weight": 0.8947893381118774
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16257509589195251,
+          "mean_sigma": 0.09467299282550812,
+          "coverage_1sigma": 0.43333333333333335,
+          "coverage_1p96sigma": 0.6714285714285714,
+          "standardized_rmse": 1.9459478855133057,
+          "max_absolute_z": 6.371059894561768,
+          "mean_kernel_length_weight": 0.8973852396011353
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.09925766289234161,
+          "mean_sigma": 0.15933290123939514,
+          "coverage_1sigma": 0.8801169590643275,
+          "coverage_1p96sigma": 0.9846491228070176,
+          "standardized_rmse": 0.7085093259811401,
+          "max_absolute_z": 4.341842174530029,
+          "mean_kernel_length_weight": 0.8943452835083008
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.07006752490997314,
+          "mean_sigma": 0.08436734229326248,
+          "coverage_1sigma": 0.825,
+          "coverage_1p96sigma": 0.95,
+          "standardized_rmse": 0.8580486178398132,
+          "max_absolute_z": 3.8087661266326904,
+          "mean_kernel_length_weight": 0.8953046202659607
+        }
+      }
+    },
+    {
+      "period": 56,
+      "time_s": 112.0,
+      "observations": 602,
+      "amplitude": 0.4347802400588989,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.10927950590848923,
+          "mean_sigma": 0.13904301822185516,
+          "coverage_1sigma": 0.8036421219319082,
+          "coverage_1p96sigma": 0.9263657957244655,
+          "standardized_rmse": 1.0623530149459839,
+          "max_absolute_z": 6.5803985595703125,
+          "mean_kernel_length_weight": 0.8952196836471558
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16261526942253113,
+          "mean_sigma": 0.09430110454559326,
+          "coverage_1sigma": 0.42857142857142855,
+          "coverage_1p96sigma": 0.6714285714285714,
+          "standardized_rmse": 1.981885552406311,
+          "max_absolute_z": 6.561650276184082,
+          "mean_kernel_length_weight": 0.8975843191146851
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.09852991998195648,
+          "mean_sigma": 0.15722236037254333,
+          "coverage_1sigma": 0.8764619883040936,
+          "coverage_1p96sigma": 0.9831871345029239,
+          "standardized_rmse": 0.7219827175140381,
+          "max_absolute_z": 4.258101463317871,
+          "mean_kernel_length_weight": 0.8947893381118774
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06965657323598862,
+          "mean_sigma": 0.08804401755332947,
+          "coverage_1sigma": 0.8583333333333333,
+          "coverage_1p96sigma": 0.95,
+          "standardized_rmse": 0.83487468957901,
+          "max_absolute_z": 3.852738857269287,
+          "mean_kernel_length_weight": 0.8957200050354004
+        }
+      }
+    },
+    {
+      "period": 57,
+      "time_s": 114.0,
+      "observations": 612,
+      "amplitude": 0.43381211161613464,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.10910829156637192,
+          "mean_sigma": 0.13791488111019135,
+          "coverage_1sigma": 0.8044338875692795,
+          "coverage_1p96sigma": 0.9255740300870943,
+          "standardized_rmse": 1.0679905414581299,
+          "max_absolute_z": 6.741740703582764,
+          "mean_kernel_length_weight": 0.8956007957458496
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16323305666446686,
+          "mean_sigma": 0.09376285970211029,
+          "coverage_1sigma": 0.41904761904761906,
+          "coverage_1p96sigma": 0.6714285714285714,
+          "standardized_rmse": 2.0150551795959473,
+          "max_absolute_z": 6.741740703582764,
+          "mean_kernel_length_weight": 0.8977645039558411
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.09885518997907639,
+          "mean_sigma": 0.15678001940250397,
+          "coverage_1sigma": 0.8801169590643275,
+          "coverage_1p96sigma": 0.9846491228070176,
+          "standardized_rmse": 0.7112279534339905,
+          "max_absolute_z": 4.278290271759033,
+          "mean_kernel_length_weight": 0.8951857089996338
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.0690581202507019,
+          "mean_sigma": 0.08675108850002289,
+          "coverage_1sigma": 0.8555555555555555,
+          "coverage_1p96sigma": 0.9472222222222222,
+          "standardized_rmse": 0.8401936888694763,
+          "max_absolute_z": 3.9086296558380127,
+          "mean_kernel_length_weight": 0.8960844874382019
+        }
+      }
+    },
+    {
+      "period": 58,
+      "time_s": 116.0,
+      "observations": 622,
+      "amplitude": 0.43283405900001526,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.1099831685423851,
+          "mean_sigma": 0.13712476193904877,
+          "coverage_1sigma": 0.7984956452889944,
+          "coverage_1p96sigma": 0.9208234362628662,
+          "standardized_rmse": 1.0754015445709229,
+          "max_absolute_z": 7.080827236175537,
+          "mean_kernel_length_weight": 0.8959386944770813
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.1600418984889984,
+          "mean_sigma": 0.09278330206871033,
+          "coverage_1sigma": 0.43333333333333335,
+          "coverage_1p96sigma": 0.6714285714285714,
+          "standardized_rmse": 1.9263980388641357,
+          "max_absolute_z": 6.7903594970703125,
+          "mean_kernel_length_weight": 0.8979246616363525
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.09942492842674255,
+          "mean_sigma": 0.15602561831474304,
+          "coverage_1sigma": 0.8764619883040936,
+          "coverage_1p96sigma": 0.9831871345029239,
+          "standardized_rmse": 0.7232680320739746,
+          "max_absolute_z": 4.369168281555176,
+          "mean_kernel_length_weight": 0.8955401182174683
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06763070076704025,
+          "mean_sigma": 0.0860365480184555,
+          "coverage_1sigma": 0.8555555555555555,
+          "coverage_1p96sigma": 0.9416666666666667,
+          "standardized_rmse": 0.8413780927658081,
+          "max_absolute_z": 4.219597816467285,
+          "mean_kernel_length_weight": 0.8964038491249084
+        }
+      }
+    },
+    {
+      "period": 59,
+      "time_s": 118.0,
+      "observations": 632,
+      "amplitude": 0.4319179356098175,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.10971759259700775,
+          "mean_sigma": 0.13654688000679016,
+          "coverage_1sigma": 0.7992874109263658,
+          "coverage_1p96sigma": 0.9216152019002375,
+          "standardized_rmse": 1.0809705257415771,
+          "max_absolute_z": 7.263406276702881,
+          "mean_kernel_length_weight": 0.8962153196334839
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16020917892456055,
+          "mean_sigma": 0.09235282987356186,
+          "coverage_1sigma": 0.44285714285714284,
+          "coverage_1p96sigma": 0.6714285714285714,
+          "standardized_rmse": 1.9674102067947388,
+          "max_absolute_z": 7.263406276702881,
+          "mean_kernel_length_weight": 0.8980581164360046
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.09949097782373428,
+          "mean_sigma": 0.155425563454628,
+          "coverage_1sigma": 0.875,
+          "coverage_1p96sigma": 0.9839181286549707,
+          "standardized_rmse": 0.7240002751350403,
+          "max_absolute_z": 4.352774143218994,
+          "mean_kernel_length_weight": 0.8958325982093811
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.067775197327137,
+          "mean_sigma": 0.08551423996686935,
+          "coverage_1sigma": 0.8583333333333333,
+          "coverage_1p96sigma": 0.9416666666666667,
+          "standardized_rmse": 0.8468089699745178,
+          "max_absolute_z": 4.216242790222168,
+          "mean_kernel_length_weight": 0.8966624140739441
+        }
+      }
+    },
+    {
+      "period": 60,
+      "time_s": 120.0,
+      "observations": 642,
+      "amplitude": 0.4309905767440796,
+      "regional": {
+        "free_field": {
+          "components": 2526,
+          "rmse": 0.1149328425526619,
+          "mean_sigma": 0.13567854464054108,
+          "coverage_1sigma": 0.784639746634996,
+          "coverage_1p96sigma": 0.9121140142517815,
+          "standardized_rmse": 1.1310988664627075,
+          "max_absolute_z": 7.444655895233154,
+          "mean_kernel_length_weight": 0.8964629173278809
+        },
+        "passage": {
+          "components": 210,
+          "rmse": 0.16337265074253082,
+          "mean_sigma": 0.08930476754903793,
+          "coverage_1sigma": 0.36666666666666664,
+          "coverage_1p96sigma": 0.6904761904761905,
+          "standardized_rmse": 1.9828020334243774,
+          "max_absolute_z": 6.529126167297363,
+          "mean_kernel_length_weight": 0.89817875623703
+        },
+        "outer": {
+          "components": 1368,
+          "rmse": 0.10310875624418259,
+          "mean_sigma": 0.154948428273201,
+          "coverage_1sigma": 0.8633040935672515,
+          "coverage_1p96sigma": 0.97953216374269,
+          "standardized_rmse": 0.7544007301330566,
+          "max_absolute_z": 4.761753082275391,
+          "mean_kernel_length_weight": 0.8960967659950256
+        },
+        "monitored_regions": {
+          "components": 360,
+          "rmse": 0.06488398462533951,
+          "mean_sigma": 0.0843033492565155,
+          "coverage_1sigma": 0.8611111111111112,
+          "coverage_1p96sigma": 0.9444444444444444,
+          "standardized_rmse": 0.8343587517738342,
+          "max_absolute_z": 4.392926216125488,
+          "mean_kernel_length_weight": 0.8968911170959473
+        }
+      }
+    }
+  ]
+}

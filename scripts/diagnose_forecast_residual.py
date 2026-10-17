@@ -1,0 +1,177 @@
+"""Offline full-POAM replay with one declared coarse weather prior mean.
+
+This experiment is not a new planner or a performance result. It tests whether a
+shared rough prior for a known windy passage helps calibration on the existing
+observation histories. The forecast is declared before replay, uses geometry,
+and is never fitted to hidden wind values. Its design follows inspection of the
+development scenario and is therefore not independently validated weather data.
+"""
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+import jax
+import jax.numpy as jnp
+import numpy as np
+import yaml
+from diagnose_wind_calibration import spatial_masks, summary
+
+from voi_diffusion_ipp.config import Config
+from voi_diffusion_ipp.experiments.checkpoint import source_hashes
+from voi_diffusion_ipp.wind.poam import POAM, attention_weights
+
+ROOT = Path(__file__).resolve().parents[1]
+FORECAST = {
+    "amplitude": 1.0,
+    "axial_width": 1.5,
+    "lateral_width": 0.7,
+    "cross_fraction": 0.0,
+    "shape": "elliptic Gaussian, centered at the A/B midpoint, along A-to-B",
+}
+
+
+def coarse_forecast(positions, spec):
+    a, b = jnp.array(spec["region_a"]), jnp.array(spec["region_b"])
+    tangent = (b - a) / jnp.linalg.norm(b - a)
+    normal = jnp.array([-tangent[1], tangent[0]])
+    centered = jnp.atleast_2d(positions) - (a + b) / 2
+    envelope = jnp.exp(
+        -0.5
+        * (
+            (centered @ tangent / FORECAST["axial_width"]) ** 2
+            + (centered @ normal / FORECAST["lateral_width"]) ** 2
+        )
+    )
+    return (
+        FORECAST["amplitude"] * envelope[:, None] * (tangent + FORECAST["cross_fraction"] * normal)
+    )
+
+
+def run(path, output):
+    data = np.load(path, allow_pickle=False)
+    metadata = json.loads(path.with_suffix(".json").read_text())["metadata"]
+    cfg = Config(**metadata["config"])
+    spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
+    masks = spatial_masks(data, spec)
+    forecast = lambda x: coarse_forecast(x, spec)
+    initial_x, initial_y = data["initial_observation_positions"], data["initial_observations"]
+    residual_y = initial_y - forecast(initial_x)
+    model = POAM.from_data(
+        initial_x,
+        residual_y,
+        jax.random.PRNGKey(600000),
+        24,
+        noise_std=cfg.observation_std,
+        prior_std=cfg.wind_std,
+        spectral_count=cfg.poam_spectral_nodes,
+    )
+    cells = jnp.asarray(data["cells"])
+    field_forecast = np.asarray(forecast(cells))
+    predict = jax.jit(lambda b: b.predict(cells))
+    observation_predict = jax.jit(lambda b, x: b.predict(x))
+    means, stds, innovations, noise_stds, snapshots = [], [], [], [], []
+    parameters = []
+    periods = len(data["mean"]) - 1
+    for i in range(periods + 1):
+        belief = model.planning_belief()
+        residual_mean, covariance = predict(belief)
+        mean = np.asarray(residual_mean) + field_forecast
+        std = np.sqrt(np.asarray(covariance[:, 0, 0]))
+        assert np.isfinite(mean).all() and np.isfinite(std).all()
+        assert float(np.asarray(covariance).min()) >= 0
+        means.append(mean)
+        stds.append(std)
+        parameters.append({k: np.asarray(v) for k, v in model.parameters.items()})
+        weights = np.asarray(attention_weights(model.parameters, cells)) ** 2
+        weighted_lengths = weights @ np.asarray(model.lengths)
+        snapshots.append(
+            {
+                "period": i,
+                "time_s": i * cfg.stage_steps * cfg.dt,
+                "observations": len(model.data_x),
+                "amplitude": float(jnp.exp(model.parameters["log_amplitude"])),
+                "regional": {
+                    name: {
+                        **summary((mean - data["physical_wind"])[mask], std[mask]),
+                        "mean_kernel_length_weight": float(weighted_lengths[mask].mean()),
+                    }
+                    for name, mask in masks.items()
+                },
+            }
+        )
+        if i in (0, 15, 30, periods):
+            print(path.stem, i, snapshots[-1]["regional"]["passage"], flush=True)
+        if i == periods:
+            break
+        sl = slice(i * cfg.stage_steps, (i + 1) * cfg.stage_steps)
+        x, y = data["observation_positions"][sl], data["observations"][sl]
+        mu, cov = observation_predict(belief, x)
+        innovations.append(np.asarray(mu) + np.asarray(forecast(x)) - y)
+        noise_stds.append(np.sqrt(np.asarray(cov[:, 0, 0]) + cfg.observation_std**2))
+        model.update(
+            x,
+            y - forecast(x),
+            jax.random.fold_in(jax.random.PRNGKey(metadata["seed"]), 500000 + i),
+            train_steps=cfg.poam_train_steps,
+        )
+    # The entire retained data set is exactly the actually collected stream with
+    # the same deterministic forecast subtracted, without pseudo-observations.
+    all_x = np.concatenate((initial_x, data["observation_positions"]))
+    all_y = np.concatenate((initial_y, data["observations"]))
+    np.testing.assert_allclose(model.data_x, all_x, atol=0, rtol=0)
+    np.testing.assert_allclose(model.data_y, all_y - forecast(all_x), atol=2e-7, rtol=2e-7)
+    observation_error, observation_std = np.concatenate(innovations), np.concatenate(noise_stds)
+    report = {
+        "input": str(path.relative_to(ROOT)),
+        "input_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "source_sha256": source_hashes(),
+        "forecast": FORECAST,
+        "prequential": summary(observation_error, observation_std),
+        "snapshots": snapshots,
+        "interpretation": "Descriptive replay on two adaptively collected histories in one development field, not new-policy or held-out evidence.",
+    }
+    (output / f"{path.stem}.json").write_text(json.dumps(report, indent=2) + "\n")
+    arrays = {
+        "cells": data["cells"],
+        "physical_wind": data["physical_wind"],
+        "forecast": field_forecast,
+        "mean": np.asarray(means),
+        "std": np.asarray(stds),
+        "observation_error": observation_error,
+        "observation_std": observation_std,
+        "lengths": np.asarray(model.lengths),
+    }
+    arrays.update({"parameter_" + k: np.stack([p[k] for p in parameters]) for k in parameters[0]})
+    np.savez_compressed(output / f"{path.stem}.npz", **arrays)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("directory", type=Path)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=False)
+    (args.output / "protocol.json").write_text(
+        json.dumps(
+            {
+                "arms": ["proposed", "current_belief"],
+                "forecast": FORECAST,
+                "forecast_provenance": "One geometry-based development hypothesis declared before replay; no fitting to hidden field values. Not an independently obtained weather forecast.",
+                "inference": "Unmodified full POAM applied to real observations minus deterministic forecast; forecast added to all diagnostic predictive means. Full conditional covariance, online kernel adaptation and inducing relocation retained.",
+                "scope": "Offline inference diagnosis only. No changed trajectory, optimizer, reward, safety or demonstration. Integration into planning has not been implemented.",
+                "checks": [
+                    "Finite predictions at every real update",
+                    "Saved training data exactly equals earned observations minus forecast",
+                    "Report all periods and both arms, including regressions",
+                    "Compare spatial uncertainty with previous zero-mean replay and dense-kernel diagnosis",
+                ],
+                "driver_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            },
+            indent=2,
+        )
+        + "\n"
+    )
+    for arm in ["proposed", "current_belief"]:
+        run((args.directory / f"{arm}.npz").resolve(), args.output)
