@@ -1050,3 +1050,40 @@ case buttons, paired actual MBD levels 1→4, executed playback advancing beyond
 16 s, and no console errors. Screenshots and all numerical outputs are retained.
 No 3D files changed. All failed criteria and regressions are documented in
 README.md and JSON reports under docs/wind_route_study.
+
+### User-requested Safe-MPD comparison (active foreground, October 17)
+
+New user request authorizes testing Safe-MPD instead of RPCBF and careful JAX
+porting. Read the reference checkout and paper; details/limitations in
+docs/safe_mpd_comparison.md. Original scenario, RPCBF default and all demos remain.
+No automations resumed. Five shield/score tests pass; the original budgeted and
+MBD tests passed in the same run (16 passed, one initial new-test failure).
+The failure was RK4 vs exact exponential at 0.2s: 5.16e-6 exceeds a 4e-6 assertion;
+the repaired test uses the analytical fourth-order remainder, not a changed
+integrator. Failure log retained. All five new tests now pass.
+
+The completed 8-second pilot has four formulations. Original compact RPCBF
+reproduces its archived states and cost EXACTLY over all four replans.
+No pilot contacts. Median full cycles: compact RPCBF1.649s, compact sampled
+shield1.714s, full-control RPCBF0.844s, full-control Safe-MPD adaptation1.412s.
+Pilot durations are too short to judge persistent behavior.
+
+Current ACTIVE coordinator session58813 runs scripts/run_safe_mpd_study.py with
+docs/safe_mpd_study/mission_protocol_01.json. Six 120-second original-environment
+development missions, one heavy JAX worker: compact RPCBF/proposed, compact
+shield/proposed, full-control RPCBF/current-belief, full-control shield without
+transformed score/current-belief, full Safe-MPD/current-belief, and discrete
+monitor Safe-MPD/current-belief (1 vs4 monitor substeps). All forecast horizons10s,
+actual replans2s, seed8101, same survey/physical field. Protocol frozen hashes
+cover ALL src, configs, mission/audit/coordinator drivers. Do not edit them while
+active. Status results/safe_mpd_mission_01_status.json; logs named by job.
+No duplicates. All failures must be retained. Unknown-wind terminal low-speed
+test is empirical and not the certified invariant set assumed by the paper.
+
+After completion: report all jobs with scripts/report_safe_mpd_study.py, inspect
+plots and dense physics audits. A prepared scripts/benchmark_safe_mpd_jax.py
+does same-state chunk1/2/8 timing with explicit lower/compile and synchronized
+warm calls. It is NOT started while missions run. Can then test justified
+bounded sensitivities. Full-control Safe-MPD freezes hypothetical belief; it is
+not an anticipated-learning implementation. The shield-only compact arm retains
+causal hypothetical POAM but not the transformed-control score; label separately.

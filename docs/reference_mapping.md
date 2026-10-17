@@ -26,6 +26,22 @@ MBD is Apache-2.0; vg-dip and its POAM vendor carry MIT licenses. Copies are ret
 
 Passing software tests alone does not establish a useful VoI effect or empirical safety.
 
+## Separate Safe-MPD investigation (October 17, 2026)
+
+User-authorized alternative; original RPCBF remains default. See
+[reference audit and adaptation](safe_mpd_comparison.md). Kim et al.,
+https://arxiv.org/html/2512.06261v1, Algorithm 2 maps to
+`safety/mpd_shield.py` and the latch in `planning/budgeted.py`. Algorithm 3 maps
+to `planning/safe_mpd.py`: actual shielded controls enter the score, and final
+output is shielded. Full-control experiment freezes hypothetical belief while
+retaining real online POAM. The shield-only causal-policy ablation is separately
+labeled and does not claim to implement the complete Safe-MPD update.
+
+The sampled unknown-wind adaptation uses an empirical terminal low-speed test;
+no robust invariant terminal set has been proven. The deterministic paper's
+guarantee is not transferred. Reference code was read, not copied/imported;
+no reference dependencies or files changed.
+
 ## Historical POAM adapter after prototype validation (superseded below)
 
 Primary source: Chen, Liu and Khardon, RSS 2024, https://www.roboticsproceedings.org/rss20/p019.pdf,

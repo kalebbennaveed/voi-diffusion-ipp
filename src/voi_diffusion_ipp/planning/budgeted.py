@@ -16,6 +16,7 @@ from scipy.interpolate import CubicSpline
 
 from .. import clarity
 from ..dynamics import step
+from ..safety.mpd_shield import filter_control as shield_control
 from ..safety.rpcbf import design_policy, filter_control
 from ..wind import InnerFields, WorldField
 from .mbd import optimize
@@ -30,6 +31,7 @@ class Segment(NamedTuple):
     correction: jax.Array
     slack: jax.Array
     clearance: jax.Array
+    shield_active: jax.Array
 
 
 def reference_matrices(seconds, steps, knots=5):
@@ -57,11 +59,13 @@ def segment(
     backup=False,
     nominal_wind_aware=True,
     apply_safety=True,
+    shield_latched=False,
+    actuator_controls=False,
 ):
     wind = lambda p: world.at(p)[0]
 
     def tick(carry, item):
-        x, q, cost = carry
+        x, q, cost, latched = carry
         reference, eps = item
         mean = controller_belief.mean_at(x[:2])[0] if nominal_wind_aware else jnp.zeros(2)
         if tracking:
@@ -70,8 +74,13 @@ def segment(
         else:
             desired = reference
         nominal = jnp.clip(desired + cfg.linear_drag * x[2:] - mean, -cfg.umax, cfg.umax)
+        if actuator_controls:
+            nominal = jnp.clip(reference, -cfg.umax, cfg.umax)
         nominal = jnp.where(backup, design_policy(x, controller_belief, cfg), nominal)
-        if apply_safety:
+        if apply_safety and cfg.safety_filter == "sampled_mpd_shield":
+            safe, info = shield_control(x, nominal, controller_belief, inner, env, cfg, latched)
+            correction, slack, latched = info.correction, jnp.array(0.0), info.active
+        elif apply_safety:
             safe, info = filter_control(x, nominal, controller_belief, inner, env, cfg)
             correction, slack = info.correction, info.slack
         else:
@@ -88,7 +97,7 @@ def segment(
             cfg.dt * jnp.array([0.25, 0.5, 0.75, 1.0])
         )
         gap = jnp.min(jax.vmap(env.clearance)(mids))
-        return (xn, qn, cost + incurred), (
+        return (xn, qn, cost + incurred, latched), (
             xn,
             qn,
             observation,
@@ -96,10 +105,11 @@ def segment(
             correction,
             slack,
             gap,
+            latched,
         )
 
-    (_, _, cost), (xs, qs, obs, us, corrections, slacks, gaps) = jax.lax.scan(
-        tick, (x0, q0, jnp.array(0.0)), (references, noise)
+    (_, _, cost, _), (xs, qs, obs, us, corrections, slacks, gaps, shields) = jax.lax.scan(
+        tick, (x0, q0, jnp.array(0.0), jnp.asarray(shield_latched)), (references, noise)
     )
     return Segment(
         jnp.concatenate((x0[None], xs)),
@@ -110,6 +120,7 @@ def segment(
         corrections,
         slacks,
         gaps,
+        shields,
     )
 
 
@@ -187,7 +198,7 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
         periods = cfg.future_steps // interval
 
         def future_period(carry, index):
-            xf, qf, bf = carry
+            xf, qf, bf, latched = carry
             if exact:
                 future_mean, all_future = bf, bf.inner_fields(eps)
             else:
@@ -204,7 +215,10 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
             ns = jax.lax.dynamic_slice_in_dim(
                 observation_noise, cfg.stage_steps + index * interval, interval
             )
-            out = segment(xf, qf, reference, future_mean, future_inner, world, ns, env, cfg, True)
+            out = segment(
+                xf, qf, reference, future_mean, future_inner, world, ns, env, cfg, True,
+                shield_latched=latched,
+            )
             if anticipate and periods > 1:
                 bf = jax.lax.cond(
                     index < periods - 1,
@@ -214,11 +228,11 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
                     lambda old_b: old_b,
                     bf,
                 )
-            return (out.x[-1], out.q[-1], bf), out
+            return (out.x[-1], out.q[-1], bf, out.shield_active[-1]), out
 
         _, parts = jax.lax.scan(
             future_period,
-            (first.x[-1], first.q[-1], posterior),
+            (first.x[-1], first.q[-1], posterior, first.shield_active[-1]),
             jnp.arange(periods),
         )
         flatten = lambda a: a.reshape((-1, *a.shape[2:]))
@@ -231,6 +245,7 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
             flatten(parts.correction),
             flatten(parts.slack),
             flatten(parts.clearance),
+            flatten(parts.shield_active),
         )
         cost = first.cost + future.cost
         valid = jnp.isfinite(cost)

@@ -42,6 +42,9 @@ class Config:
     shared_future: bool = False
     independent_cells: bool = False
     spline: str = "full"
+    safety_filter: str = "rpcbf"  # experimental alternative: sampled_mpd_shield
+    shield_terminal_speed: float = 0.2  # empirical recovery test, NOT invariant-set proof
+    shield_substeps: int = 4
     wind_backend: str = "feature"
     poam_train_steps: int = 10
     hypothetical_relocation: bool = False
@@ -69,6 +72,10 @@ class Config:
     methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
     def __post_init__(self):
+        if self.safety_filter not in ("rpcbf", "sampled_mpd_shield"):
+            raise ValueError("Unknown safety filter")
+        if self.shield_terminal_speed <= 0 or self.shield_substeps < 1:
+            raise ValueError("Positive shield terminal speed and substeps required")
         if self.budgeted_policy not in ("compact", "branches"):
             raise ValueError("Unknown budgeted feedback policy")
         if self.budgeted_update_steps < 0 or (

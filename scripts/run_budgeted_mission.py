@@ -21,6 +21,7 @@ from voi_diffusion_ipp.config import config_dict, load_config
 from voi_diffusion_ipp.experiments.checkpoint import source_hashes
 from voi_diffusion_ipp.experiments.two_region import make_two_region, outer_survey_positions
 from voi_diffusion_ipp.experiments.wind_cases import WIND_CASES, physical_wind, wind_case_spec
+from voi_diffusion_ipp.planning import safe_mpd
 from voi_diffusion_ipp.planning.budgeted import (
     evaluate,
     make_planner,
@@ -66,7 +67,14 @@ def run(
     wind_case="original",
     task_path=None,
     outer_sampling="iid",
+    planner_form="compact",
 ):
+    if planner_form not in ("compact", "control_mpd", "safe_mpd"):
+        raise ValueError("Unknown planner form")
+    if planner_form != "compact" and method != "current_belief":
+        raise ValueError("Full-control experiment freezes forecast belief; use current_belief")
+    if planner_form == "safe_mpd" and cfg.safety_filter != "sampled_mpd_shield":
+        raise ValueError("Safe-MPD requires its shield")
     n_exec = round(cfg.stage_steps * cfg.dt / 0.05)
     stride = round(cfg.dt / 0.05)
     observation_indices = jnp.arange(stride - 1, n_exec, stride)
@@ -115,6 +123,11 @@ def run(
     verify = jax.jit(
         lambda y, x, q, b, e, n: evaluate(y, x, q, b, None, n, env, cfg, anticipate, True, e)
     )
+    if planner_form != "compact":
+        plan = safe_mpd.make_planner(cfg, objective_cells, transformed=planner_form == "safe_mpd")
+        verify = jax.jit(
+            lambda y, x, q, b, e, n: safe_mpd.evaluate(y, x, q, b, None, n, env, cfg, True, e)
+        )
     if wind_blind:
         plan = make_nominal_planner(cfg, objective_cells)
         verify = jax.jit(lambda y, x, q: evaluate_nominal(y, x, q, env, cfg))
@@ -122,7 +135,13 @@ def run(
         lambda y, x, q, b, e, n, backup: segment(
             x,
             q,
-            split_vector(y, actual_cfg)[0],
+            (
+                split_vector(y, actual_cfg)[0]
+                if planner_form == "compact"
+                else jnp.repeat(
+                    cfg.umax * jnp.clip(y.reshape(-1, 2)[: cfg.stage_steps], -1, 1), stride, axis=0
+                )
+            ),
             b,
             b.inner_fields(e),
             truth,
@@ -132,6 +151,7 @@ def run(
             False,
             backup,
             nominal_wind_aware=not wind_blind,
+            actuator_controls=planner_form != "compact",
         )
     )
     snapshot = jax.jit(lambda b: b.predict(env.cells))
@@ -153,6 +173,7 @@ def run(
     start = time.perf_counter()
     total_cost = 0.0
     metadata = {
+        "planner_form": planner_form,
         "outer_sampling": outer_sampling,
         "method": method,
         "seed": seed,
@@ -171,7 +192,11 @@ def run(
         "source_sha256": source_hashes(),
         "label": "Short development diagnostic, not statistical validation",
         "planning_wind": "zero; no safety in objective" if wind_blind else "current POAM belief",
-        "execution_safety": "full POAM wind-aware spline RPCBF at 20 Hz",
+        "execution_safety": (
+            "full POAM wind-aware spline RPCBF at 20 Hz"
+            if cfg.safety_filter == "rpcbf"
+            else "sampled Safe-MPD backup shield at 20 Hz; empirical terminal recovery"
+        ),
         "initial_poam_update_s": initial_update,
         "initial_snapshot_s": initial_snapshot,
     }
@@ -240,6 +265,7 @@ def run(
             "backup_used": backup,
             "minimum_clearance": float(executed.clearance.min()),
             "max_slack": float(executed.slack.max()),
+            "shield_active_fraction": float(executed.shield_active.mean()),
             "cache_s": cache_s,
             "plan_s": plan_s,
             "verify_s": verify_s,
@@ -337,6 +363,12 @@ def main():
     p.add_argument("--wind-case", choices=list(WIND_CASES), default="original")
     p.add_argument("--outer-sampling", choices=["iid", "antithetic"], default="iid")
     p.add_argument("--policy", choices=["compact", "branches"], default="compact")
+    p.add_argument("--safety-filter", choices=["rpcbf", "sampled_mpd_shield"], default="rpcbf")
+    p.add_argument(
+        "--planner-form", choices=["compact", "control_mpd", "safe_mpd"], default="compact"
+    )
+    p.add_argument("--shield-terminal-speed", type=float, default=0.2)
+    p.add_argument("--shield-substeps", type=int, default=4)
     p.add_argument("--task", type=Path, default=ROOT / "configs/two_region_design.yaml")
     args = p.parse_args()
     if args.policy == "branches" and "wind_blind_planner" in args.methods:
@@ -354,6 +386,9 @@ def main():
         budgeted_update_steps=args.future_update_steps,
         candidate_chunk=args.chunk,
         proposals=args.proposals,
+        safety_filter=args.safety_filter,
+        shield_terminal_speed=args.shield_terminal_speed,
+        shield_substeps=args.shield_substeps,
     )
     args.output.mkdir(parents=True, exist_ok=False)
     for method in args.methods:
@@ -371,6 +406,7 @@ def main():
             args.wind_case,
             args.task,
             args.outer_sampling,
+            args.planner_form,
         )
 
 
