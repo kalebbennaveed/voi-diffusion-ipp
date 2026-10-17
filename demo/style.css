@@ -1369,3 +1369,11 @@ main {
 
 .contact-banner { margin:16px; padding:12px 16px; border:1px solid #b65a55; border-radius:8px; background:#fff2ef; color:#863a35; line-height:1.55; font-size:13px; }
 .contact-banner button { display:block; margin-top:6px; }
+
+.fresh-wind-evidence { margin: 18px 0; padding: 14px 18px; border: 1px solid var(--line, #d9e2e5); border-radius: 10px; background: #f6f8f8; }
+.fresh-wind-evidence summary { cursor: pointer; font-weight: 650; color: #72542d; }
+.evidence-table-scroll { overflow-x: auto; }
+.fresh-wind-evidence table { border-collapse: collapse; width: 100%; max-width: 720px; font-variant-numeric: tabular-nums; }
+.fresh-wind-evidence caption { text-align: left; padding: 8px 0; }
+.fresh-wind-evidence th, .fresh-wind-evidence td { text-align: right; border-bottom: 1px solid #d9e2e5; padding: 7px 12px; }
+.fresh-wind-evidence th:first-child, .fresh-wind-evidence td:first-child { text-align: left; }

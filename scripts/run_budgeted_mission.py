@@ -28,6 +28,7 @@ from voi_diffusion_ipp.planning.budgeted import (
     split_vector,
     warm_starts,
 )
+from voi_diffusion_ipp.planning.sampling import couple_outer_samples
 from voi_diffusion_ipp.planning.wind_blind import evaluate_nominal, make_nominal_planner
 from voi_diffusion_ipp.viz.demo_data import serializable
 from voi_diffusion_ipp.wind.cache import build_prior_cache
@@ -64,6 +65,7 @@ def run(
     prior_regime="cold",
     wind_case="original",
     task_path=None,
+    outer_sampling="iid",
 ):
     n_exec = round(cfg.stage_steps * cfg.dt / 0.05)
     stride = round(cfg.dt / 0.05)
@@ -151,6 +153,7 @@ def run(
     start = time.perf_counter()
     total_cost = 0.0
     metadata = {
+        "outer_sampling": outer_sampling,
         "method": method,
         "seed": seed,
         "config": config_dict(cfg),
@@ -178,6 +181,7 @@ def run(
         keys = jax.random.split(jax.random.fold_in(root, 100 + i), 4)
         eps = jax.random.normal(keys[0], (cfg.worlds + cfg.inner_samples, *belief.sample_shape))
         noise = jax.random.normal(keys[1], (cfg.worlds, cfg.stage_steps + cfg.future_steps, 2))
+        eps, noise = couple_outer_samples(eps, noise, cfg.worlds, outer_sampling)
         initials = warm_starts(x, env, cfg, rapid)
         if wind_blind:
             cache_s = 0.0
@@ -331,6 +335,7 @@ def main():
         "--prior-regime", choices=["cold", "outer-survey", "routes-survey"], default="cold"
     )
     p.add_argument("--wind-case", choices=list(WIND_CASES), default="original")
+    p.add_argument("--outer-sampling", choices=["iid", "antithetic"], default="iid")
     p.add_argument("--policy", choices=["compact", "branches"], default="compact")
     p.add_argument("--task", type=Path, default=ROOT / "configs/two_region_design.yaml")
     args = p.parse_args()
@@ -365,6 +370,7 @@ def main():
             args.prior_regime,
             args.wind_case,
             args.task,
+            args.outer_sampling,
         )
 
 

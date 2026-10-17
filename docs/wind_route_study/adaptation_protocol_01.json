@@ -1,0 +1,54 @@
+{
+  "created_utc": "2026-10-17T10:34:57.048663+00:00",
+  "label": "Predeclared offline full-POAM adaptation diagnostic; no changed mission or model promotion",
+  "motivation": "Earlier dense inference with the learned kernel also undercovered the wind passage, while the initial kernel had better spatial coverage. Test slower hyperparameter adaptation and increased minibatch coverage, preserving full online POAM.",
+  "variants": [
+    {
+      "name": "baseline",
+      "lr": 0.001,
+      "batch_size": 32
+    },
+    {
+      "name": "slow_adaptation",
+      "lr": 0.0001,
+      "batch_size": 32
+    },
+    {
+      "name": "larger_batch",
+      "lr": 0.001,
+      "batch_size": 128
+    }
+  ],
+  "jobs": [
+    {
+      "label": "reversed_proposed",
+      "input": "results/budgeted_missions/reversed_wind_01/proposed.npz",
+      "periods": 60
+    },
+    {
+      "label": "crosswind_comparator_before_contact",
+      "input": "results/budgeted_missions/crosswind_wind_01/current_belief.npz",
+      "periods": 37
+    },
+    {
+      "label": "offroute_proposed",
+      "input": "results/budgeted_missions/offroute_wind_01/proposed.npz",
+      "periods": 60
+    }
+  ],
+  "primary_diagnostics": [
+    "Marginal predictive negative log likelihood of actual next-batch observations, scored before assimilation",
+    "Predictive observation coverage",
+    "Median and p95 POAM update runtime, raw and after shape-compilation transient"
+  ],
+  "secondary_diagnostics": "Spatial physical-field error/coverage for diagnosis only; correlated grid components are not independent confidence samples. Never use hidden physical wind as training data.",
+  "checks": [
+    "Reconstruct baseline POAM means and sigma within original tolerances at every retained period",
+    "All variants assimilate exactly the same earned data",
+    "Full neural/amplitude learning, inducing relocation, transported statistics, posterior residual retained",
+    "Crosswind data stop at 74 seconds, before contact at 75.9 seconds",
+    "Retain every variant and tradeoff; no automatic winner selection"
+  ],
+  "limits": "Fixed earned observation histories are not replanned trials. Prequential observation scores are conditioned on those adaptively collected locations, and do not guarantee calibration in unvisited space.",
+  "driver_sha256": "e90295c06263cf27583584a87c12411277592c9007caf713ca9326c8bdc85d6f"
+}

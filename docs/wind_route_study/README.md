@@ -4,7 +4,8 @@ The original two-region scenario and all earlier recordings are retained. This
 study changes and verifies the **2D** demo only. Research automations remain paused.
 All comparisons below use 120-second missions, 10-second forecasts, 2-second
 planning intervals, full online POAM, actual MBD, and sampled spline RPCBF.
-These are development results for seed 8101, not statistical validation.
+The playable development cases use seed 8101. A separate eight-fresh-seed
+confirmation is reported below; its declared low-value criterion did not pass.
 
 ## Executed results
 
@@ -154,6 +155,136 @@ for 10 s lookahead and 2.54 s for 14 s at the tested warm state; startup is abou
 19 s. These are saved-state measurements, not mission latency guarantees. The
 longer horizon and extra seeds remain diagnostic options, not promoted defaults.
 
+## Fresh-seed confirmation and additional diagnoses
+
+All eight prospectively declared low-value pairs completed: **16 × 120 seconds**,
+with no contact in the independent dense audit. Mean paired relative regret is
+**+2.736%**, with paired 90% t interval **[−3.549%, +9.022%]**. The same upper
+endpoint is the one-sided 95% bound, exceeding the declared +5% margin. Thus
+neither noninferiority nor equivalence was established. Individual paired regrets
+range from −10.534% to +19.189%; reporting only the mean would hide instability.
+In the worst-regret seed, proposed takes five bypasses in eighteen transfers,
+versus one bypass in twenty for current belief. This is a post hoc description
+of a retained failure, not a seed-selection rule for future testing.
+Every outcome is in `low_value_confirmation_results_01.json`, with raw input
+hashes, numerical clarity replay checks, route records and timing. The first
+fresh seed is not substituted for the development demonstration.
+
+![All eight paired low-value outcomes](low_value_confirmation_01.png)
+
+Every proposed arm's steady cycle was below 2 seconds; medians range from 1.453
+to 1.483 s, generating a 10 s forecast. The first two startup cycles are reported
+separately. This is offline closed-loop simulation with measured computation,
+not a controller that compensates for asynchronous computation delay in flight.
+
+The predeclared early-decision check evaluates earned states at **2, 4, 6 and
+8 seconds**, rather than just the earlier 0/30/60 s snapshots. The original
+selected uncached objective and trajectory reproduce exactly at every state.
+Reversed wind changes the averaged candidate at 2 s only; its held-bank benefit
+is small and mixed. At 4/6/8 s the averaged selections agree. In contrast, the
+**surveyed narrow passage with wind elsewhere** changes the averaged selection
+at 2, 4 and 8 s. Of sixteen leave-one-bank-out checks across the four states,
+nine favor the anticipation-selected policy and seven are equal; none favors
+the frozen choice under the independently sampled anticipated objective.
+This is a development causal signal, not independent experimental trials or
+proof of lower realized cost: the shared candidate pool contains that mission's
+MBD candidates and geometric alternatives, and scoring uses the fitted model.
+This narrow gap can retain value of reducing wind uncertainty even when actual
+wind on the main route is small. Consequently it is not a clean low-value control.
+Numerical details are in `early_reversed_01` and `early_surveyed_offroute_01`.
+
+Full-POAM adaptation sensitivity reconstructs the same earned observations with
+baseline learning rate 0.001, slower 0.0001, and minibatch 128 instead of 32.
+Slower adaptation improves next-batch RMSE slightly and widens uncertainty, but
+worsens average next-batch marginal negative log likelihood in all three frozen
+histories. In reversed wind the final passage's marginal 95% coverage rises
+from 52.4% to 97.6%, while passage RMSE worsens from 0.152 to 0.218 m/s². Before
+the crosswind contact, coverage rises from 41.0% to 75.2%, still inadequate.
+A larger minibatch does not solve the issue. Grid coverage is spatially correlated
+descriptive data, not a binomial confidence interval. No variant was promoted
+by selecting the most favorable hidden-truth result. See `adaptation_diagnosis_01`.
+
+A further approximation conditions once after the first 2 s and holds the
+posterior fixed over the remaining exploitation stage. This is motivated by
+finite dual/exploitation-stage planning, as in
+[Arcari et al.](https://arxiv.org/abs/1911.03728); it does not reproduce that paper's
+entire algorithm. Actual MBD with all 21 common initializations takes about
+1.19–1.24 s for a 10 s forecast and 1.54–1.63 s for 14 s at one saved state.
+Startup is about 18 s. Omitting later learning opportunities can overvalue early
+learning; this approximation is not silently substituted into the method.
+Both objectives still choose the same averaged candidate at all six examined
+state/horizon combinations. See `dual_split_diagnosis_01`.
+
+These tests leave a concrete limitation: the current two-second method shows
+only a small isolated anticipation gain in reversed wind; fitting and calibrating
+wind, Monte Carlo selection, and useful future policy choices still need joint
+validation. The 21.06% reversed-field gain against the user-requested wind-blind
+nominal planner remains a valid development contrast with a broader interpretation.
+
+## Sampling stability
+
+`sampling_protocol_01.json` declares a
+saved-state test that actually runs both MBD objectives on the **same** earned
+state, training draws, proposal noise and geometry starts. Four optimizer runs
+at each of two states produce eight paired choices. Six pairs choose exactly
+the same policy; the other two active choices have lower cost on twelve independent
+IID evaluation banks under the anticipated objective. This reinforces the need
+to distinguish weak differences in expected decisions from large path-dependent
+variation in executed monitoring cost.
+
+The same diagnostic compares ordinary IID outer fields with antithetic pairs
+(ε, −ε), pairing hypothetical measurement noise similarly. Each outer world
+retains its correct Gaussian marginal. Inner RPCBF samples remain independent
+and exactly unchanged; actual observation noise is untouched. Antithetic pairing
+is unbiased for each fixed candidate's expectation but does not generally
+reduce nonlinear-integrand variance or remove optimizer-selection bias.
+Here, mean fixed-candidate variance is 0.297 and 0.266 of IID at the two states;
+median per-candidate ratios are 0.321 and 0.572. These summaries cover 11/15 and
+13/15 candidates finite in all banks; all infeasible outputs remain in the NPZs.
+Candidates share samples, so these ratios are descriptive, not independent trials.
+
+`--outer-sampling antithetic` is an opt-in setting; IID remains the default.
+Twenty-six component tests pass. `antithetic_protocol_01.json` prospectively
+declares two 120-second development pairs with the original reversed passage and
+the open off-route control, before their results are inspected. Do not pool this
+new exploratory setting with the completed fresh-seed confirmation.
+
+## Antithetic mission outcomes and numerical verification
+
+Both new 120 s pairs are complete and published separately in 2D:
+
+| Development case | Proposed | Current belief | Proposed relative cost | Dense contacts |
+|---|---:|---:|---:|---|
+| Reversed wind, antithetic outer samples | 3.05430 | 3.03479 | +0.643% | Neither |
+| Open passage, off-route wind, antithetic outer samples | 1.95237 | 2.03353 | −3.991% | Neither |
+
+Against its original IID run, proposed costs 1.12% more in reversed wind and
+4.58% less in the open passage. These are two development examples, not a
+confirmation that variance reduction improves closed-loop performance. Both
+proposed runs remain below 2 seconds after startup; median/p95 are 1.488/1.552 s
+and 1.465/1.498 s. Full clarity, matching-input and dense collision audits are
+in `antithetic_results_01.json`. IID remains the default.
+
+The reversed proposed run uses its backup once: at 16 s the cached selected
+forecast is finite, but the uncached forecast predicts a −0.000717 m minimum
+clearance in a sampled world. The checker rejects it; actual execution remains
+clear of obstacles. This is **forecast contact**, not physical contact in the
+mission. `cache_rejection_01` reproduces the same observation history, objective
+and selected full trajectory. The 129-wide cache predicts +0.02912 m clearance;
+257 and 513-wide caches give +0.00143 and +0.00038 m, still missing the sign.
+The largest warm cache build alone takes 2.46 s. Simply enlarging the cache is
+therefore not a justified budget-compatible fix, and removing the uncached check
+would conceal a real numerical limitation. No clearance tolerance was relaxed.
+
+`rejection_alternatives_01` checks the next three distinct, finite MBD proposals
+in cached-cost order at this one failed state. All three pass continuous
+verification. The first has +0.03969 m forecast clearance and cost 0.28021; its
+warm verification takes 0.292 s. Adding this to the originally recorded cycle
+gives **1.837 s**. This is a sum of saved-state measurements, not a new controller
+latency benchmark. A sensible next bounded refinement is to verify one alternate
+MBD proposal before backing up. It has not been enabled or tested in a replanned
+mission, and no original output was replaced.
+
 ## Reproduction and interactive records
 
 The first screen is declared in `protocol_01.json`; subsequent historical-survey
@@ -168,3 +299,9 @@ MBD denoising, whole-field clarity and the original scenario. All new replay
 means and standard deviations are checked against their original POAM snapshots.
 The raw numeric archives remain under `results/budgeted_missions/`; published
 replays remain under `results/demo/live/`. No 3D files were modified.
+
+Direct 2D links: [original](http://127.0.0.1:8765/?run=budgeted_persistent_two_region_2s_01_proposed_8101&baseline=wind_blind_planner),
+[reversed](http://127.0.0.1:8765/?run=budgeted_reversed_wind_01_proposed_8101&baseline=current_belief),
+[open passage](http://127.0.0.1:8765/?run=budgeted_open_passage_wind_01_proposed_8101&baseline=current_belief).
+The homepage also exposes the separate experimental sampling settings and every
+fresh-seed outcome. Core tests: 26 passed; 2D playback/model tests: 11 passed.

@@ -64,10 +64,12 @@ const environments = [
 const windStudies = [
   {prefix:'budgeted_persistent_two_region_2s_01_', name:'Original wind · A → B', detail:'Original recording retained. Tailwind through the middle toward B; opposing flow on the return.'},
   {prefix:'budgeted_reversed_wind_01_', name:'Reversed wind · B → A', detail:'Exact sign reversal. Does the robot reverse its preferred middle-passage direction?'},
+  {prefix:'budgeted_antithetic_reversed_01_', name:'Reversed · paired wind samples', detail:'Experimental antithetic outer samples, same MBD budget and objective. Original IID comparison remains available.'},
   {prefix:'budgeted_reversed_branches_01_', name:'Reversed · two-route policy', detail:'Experimental posterior-gated future routes. A retained regression: anticipation costs more in this development pair.'},
   {prefix:'budgeted_crosswind_wind_01_', name:'Crosswind in the passage', detail:'Wind pushes across the narrow gap. Test whether earned observations change route choice.'},
   {prefix:'budgeted_offroute_surveyed_wind_01_', name:'Surveyed route · wind elsewhere', detail:'Both receive the same noisy historical survey of the main route. Tests low remaining value of learning.'},
   {prefix:'budgeted_open_passage_wind_01_', name:'Open passage · wind elsewhere', detail:'A wider passage and common noisy route survey. Both can use the direct route; tests whether anticipating learning adds little.'},
+  {prefix:'budgeted_antithetic_open_01_', name:'Open passage · paired wind samples', detail:'Exploratory variance-reduction test. Separate from the eight fresh IID seeds; no validation claim.'},
   {prefix:'budgeted_offroute_wind_01_', name:'Wind away from the route', detail:'Localized wind in the southeast corner, away from the direct A–B route. Low-value-learning candidate.'}
 ];
 

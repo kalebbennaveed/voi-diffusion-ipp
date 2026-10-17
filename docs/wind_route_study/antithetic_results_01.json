@@ -1,0 +1,2932 @@
+{
+  "label": "Two exploratory development pairs; not held-out confirmation",
+  "cases": [
+    {
+      "name": "antithetic_reversed_01",
+      "paired_proposed_regret_percent": 0.6426586678237145,
+      "methods": {
+        "proposed": {
+          "audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.21999999999999997,
+              "bypass_inner_edge_m": 1.22
+            },
+            "input": "results/budgeted_missions/antithetic_reversed_01/proposed.npz",
+            "method": "proposed",
+            "wind_case": "reversed",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 3.054295539855957,
+            "integrated_roi_deficit": 22.958121474583944,
+            "recorded_cost_disagreement": 1.1222437024116516e-07,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.0858361839349635,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.4088679467505472e-07,
+            "peak_control": 1.6000001430511475,
+            "backup_periods": 1,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 7.550000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 8.700000000000001,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 10.65,
+                "duration_s": 1.3
+              },
+              {
+                "region": "A",
+                "entry_s": 13.600000000000001,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 20.650000000000002,
+                "duration_s": 2.0
+              },
+              {
+                "region": "A",
+                "entry_s": 28.8,
+                "duration_s": 2.9000000000000004
+              },
+              {
+                "region": "A",
+                "entry_s": 32.7,
+                "duration_s": 4.55
+              },
+              {
+                "region": "B",
+                "entry_s": 42.050000000000004,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 47.25,
+                "duration_s": 1.0
+              },
+              {
+                "region": "A",
+                "entry_s": 56.0,
+                "duration_s": 0.65
+              },
+              {
+                "region": "B",
+                "entry_s": 60.1,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 65.25,
+                "duration_s": 0.9
+              },
+              {
+                "region": "B",
+                "entry_s": 69.95,
+                "duration_s": 1.75
+              },
+              {
+                "region": "A",
+                "entry_s": 74.95,
+                "duration_s": 0.9500000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 80.10000000000001,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 86.2,
+                "duration_s": 0.75
+              },
+              {
+                "region": "A",
+                "entry_s": 88.85000000000001,
+                "duration_s": 2.1
+              },
+              {
+                "region": "B",
+                "entry_s": 97.30000000000001,
+                "duration_s": 4.05
+              },
+              {
+                "region": "A",
+                "entry_s": 103.25,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 107.0,
+                "duration_s": 0.55
+              },
+              {
+                "region": "B",
+                "entry_s": 113.25,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 117.25,
+                "duration_s": 1.4500000000000002
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 15.05,
+                "arrival_s": 20.650000000000002,
+                "seconds": 5.6000000000000005,
+                "midplane_lateral_m": -1.6050351765594584,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 22.650000000000002,
+                "arrival_s": 27.200000000000003,
+                "seconds": 4.55,
+                "midplane_lateral_m": 1.517558316352141,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 37.25,
+                "arrival_s": 42.050000000000004,
+                "seconds": 4.800000000000001,
+                "midplane_lateral_m": 2.0134275535077206,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 48.25,
+                "arrival_s": 51.5,
+                "seconds": 3.25,
+                "midplane_lateral_m": 1.6771658965359824,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 56.650000000000006,
+                "arrival_s": 60.1,
+                "seconds": 3.45,
+                "midplane_lateral_m": 1.3671940607233353,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 61.2,
+                "arrival_s": 65.25,
+                "seconds": 4.05,
+                "midplane_lateral_m": -2.1347108913389805,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 66.15,
+                "arrival_s": 69.95,
+                "seconds": 3.8000000000000003,
+                "midplane_lateral_m": 1.763667373014813,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 71.7,
+                "arrival_s": 74.95,
+                "seconds": 3.25,
+                "midplane_lateral_m": -1.5149649562529899,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 75.9,
+                "arrival_s": 80.10000000000001,
+                "seconds": 4.2,
+                "midplane_lateral_m": 1.9916478304930854,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 81.5,
+                "arrival_s": 86.2,
+                "seconds": 4.7,
+                "midplane_lateral_m": -1.7999328001839712,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 90.95,
+                "arrival_s": 97.30000000000001,
+                "seconds": 6.3500000000000005,
+                "midplane_lateral_m": 0.06667505281059591,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 101.35000000000001,
+                "arrival_s": 103.25,
+                "seconds": 1.9000000000000001,
+                "midplane_lateral_m": -0.03407745176420285,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 109.10000000000001,
+                "arrival_s": 113.25,
+                "seconds": 4.15,
+                "midplane_lateral_m": -1.4806216439601774,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 114.35000000000001,
+                "arrival_s": 117.25,
+                "seconds": 2.9000000000000004,
+                "midplane_lateral_m": 1.5776723198335856,
+                "route": "outer"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 7,
+                "route_counts": {
+                  "middle": 1,
+                  "outer": 6,
+                  "other": 0
+                },
+                "mean_seconds": 4.621428571428572
+              },
+              "B_to_A": {
+                "count": 7,
+                "route_counts": {
+                  "middle": 1,
+                  "outer": 6,
+                  "other": 0
+                },
+                "mean_seconds": 3.5142857142857147
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.9014275074005127,
+              0.12117323279380798
+            ],
+            "passage_std_initial_final": [
+              0.48942631483078003,
+              0.031094463542103767
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A"
+            ],
+            "startup_cycle_s": [
+              14.330301625002903,
+              2.5809217499991064
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 1.4878424369962886,
+              "p95": 1.5518105188033586,
+              "max": 1.6449732079963724
+            },
+            "cycle_1s_miss_fraction": 1.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.6591211557388306,
+              "B": 0.44801875948905945
+            },
+            "initialization": "outer-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "iid_audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.21999999999999997,
+              "bypass_inner_edge_m": 1.22
+            },
+            "input": "results/budgeted_missions/reversed_wind_01/proposed.npz",
+            "method": "proposed",
+            "wind_case": "reversed",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 3.020460605621338,
+            "integrated_roi_deficit": 22.703795552253723,
+            "recorded_cost_disagreement": 1.6903504729270935e-07,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.16524560407728106,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.2252635239740073e-07,
+            "peak_control": 1.6000019311904907,
+            "backup_periods": 0,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 7.550000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 8.65,
+                "duration_s": 1.9000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 12.9,
+                "duration_s": 3.5500000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 16.8,
+                "duration_s": 2.4000000000000004
+              },
+              {
+                "region": "A",
+                "entry_s": 21.25,
+                "duration_s": 0.8500000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 24.6,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 29.8,
+                "duration_s": 1.7000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 33.95,
+                "duration_s": 1.0
+              },
+              {
+                "region": "A",
+                "entry_s": 38.400000000000006,
+                "duration_s": 1.35
+              },
+              {
+                "region": "B",
+                "entry_s": 44.35,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 50.050000000000004,
+                "duration_s": 4.8500000000000005
+              },
+              {
+                "region": "A",
+                "entry_s": 55.1,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 60.0,
+                "duration_s": 1.05
+              },
+              {
+                "region": "A",
+                "entry_s": 65.0,
+                "duration_s": 1.25
+              },
+              {
+                "region": "B",
+                "entry_s": 69.65,
+                "duration_s": 0.5
+              },
+              {
+                "region": "A",
+                "entry_s": 74.10000000000001,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 78.85000000000001,
+                "duration_s": 1.05
+              },
+              {
+                "region": "A",
+                "entry_s": 83.65,
+                "duration_s": 1.25
+              },
+              {
+                "region": "A",
+                "entry_s": 87.80000000000001,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 91.95,
+                "duration_s": 1.3
+              },
+              {
+                "region": "A",
+                "entry_s": 96.75,
+                "duration_s": 1.25
+              },
+              {
+                "region": "B",
+                "entry_s": 101.10000000000001,
+                "duration_s": 2.8000000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 107.4,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 114.4,
+                "duration_s": 1.35
+              },
+              {
+                "region": "A",
+                "entry_s": 119.15,
+                "duration_s": 0.8500000000000001
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 26.05,
+                "arrival_s": 29.8,
+                "seconds": 3.75,
+                "midplane_lateral_m": 1.4307019383582102,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 34.95,
+                "arrival_s": 38.400000000000006,
+                "seconds": 3.45,
+                "midplane_lateral_m": 1.553729669422291,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 39.75,
+                "arrival_s": 44.35,
+                "seconds": 4.6000000000000005,
+                "midplane_lateral_m": -1.836012798236971,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 45.45,
+                "arrival_s": 48.900000000000006,
+                "seconds": 3.45,
+                "midplane_lateral_m": 1.6220089632791013,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 56.150000000000006,
+                "arrival_s": 60.0,
+                "seconds": 3.85,
+                "midplane_lateral_m": 1.557614000521328,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 61.050000000000004,
+                "arrival_s": 65.0,
+                "seconds": 3.95,
+                "midplane_lateral_m": -1.998948585725169,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 66.25,
+                "arrival_s": 69.65,
+                "seconds": 3.4000000000000004,
+                "midplane_lateral_m": 1.7286863031389164,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 70.15,
+                "arrival_s": 74.10000000000001,
+                "seconds": 3.95,
+                "midplane_lateral_m": -1.6662059931155488,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 75.3,
+                "arrival_s": 78.85000000000001,
+                "seconds": 3.5500000000000003,
+                "midplane_lateral_m": 1.7423340189756624,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 79.9,
+                "arrival_s": 83.65,
+                "seconds": 3.75,
+                "midplane_lateral_m": -1.992850707329627,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 89.0,
+                "arrival_s": 91.95,
+                "seconds": 2.95,
+                "midplane_lateral_m": -1.6782736770622915,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 93.25,
+                "arrival_s": 96.75,
+                "seconds": 3.5,
+                "midplane_lateral_m": 1.6944943292179195,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 98.0,
+                "arrival_s": 101.10000000000001,
+                "seconds": 3.1,
+                "midplane_lateral_m": -1.659783286659137,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 103.9,
+                "arrival_s": 107.4,
+                "seconds": 3.5,
+                "midplane_lateral_m": 0.04206756516311126,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 108.45,
+                "arrival_s": 114.4,
+                "seconds": 5.95,
+                "midplane_lateral_m": 1.779281915246873,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 115.75,
+                "arrival_s": 119.15,
+                "seconds": 3.4000000000000004,
+                "midplane_lateral_m": -1.51621413925801,
+                "route": "outer"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 8,
+                "route_counts": {
+                  "middle": 0,
+                  "outer": 8,
+                  "other": 0
+                },
+                "mean_seconds": 3.8937500000000003
+              },
+              "B_to_A": {
+                "count": 8,
+                "route_counts": {
+                  "middle": 1,
+                  "outer": 7,
+                  "other": 0
+                },
+                "mean_seconds": 3.6187500000000004
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.9014275074005127,
+              0.1519603133201599
+            ],
+            "passage_std_initial_final": [
+              0.48942631483078003,
+              0.046498626470565796
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A"
+            ],
+            "startup_cycle_s": [
+              22.826332167000146,
+              2.6428105009999854
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 1.5885377925005741,
+              "p95": 1.6749086686498231,
+              "max": 1.7291477090002445
+            },
+            "cycle_1s_miss_fraction": 1.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.6752070784568787,
+              "B": 0.5210555791854858
+            },
+            "initialization": "outer-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "clarity_replay_max_error": 4.725386487658412e-07,
+          "antithetic_relative_to_iid_percent": 1.1201912109580103,
+          "input_sha256": "95b9b7f2cfe275375c302b961c24fa020fbf0ea38ce5f735690729720cc4b5a5"
+        },
+        "current_belief": {
+          "audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.21999999999999997,
+              "bypass_inner_edge_m": 1.22
+            },
+            "input": "results/budgeted_missions/antithetic_reversed_01/current_belief.npz",
+            "method": "current_belief",
+            "wind_case": "reversed",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 3.034792184829712,
+            "integrated_roi_deficit": 22.81152125597,
+            "recorded_cost_disagreement": 1.4668330550193787e-07,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.09177918624504511,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.3921250929804785e-07,
+            "peak_control": 1.6000001430511475,
+            "backup_periods": 0,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 1.9500000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 2.45,
+                "duration_s": 4.9
+              },
+              {
+                "region": "A",
+                "entry_s": 8.700000000000001,
+                "duration_s": 2.95
+              },
+              {
+                "region": "A",
+                "entry_s": 20.950000000000003,
+                "duration_s": 1.05
+              },
+              {
+                "region": "A",
+                "entry_s": 23.650000000000002,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 28.35,
+                "duration_s": 1.25
+              },
+              {
+                "region": "B",
+                "entry_s": 32.0,
+                "duration_s": 1.1500000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 37.2,
+                "duration_s": 1.1
+              },
+              {
+                "region": "B",
+                "entry_s": 41.85,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 47.650000000000006,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 52.95,
+                "duration_s": 1.0
+              },
+              {
+                "region": "A",
+                "entry_s": 57.650000000000006,
+                "duration_s": 0.75
+              },
+              {
+                "region": "A",
+                "entry_s": 61.150000000000006,
+                "duration_s": 1.55
+              },
+              {
+                "region": "B",
+                "entry_s": 65.8,
+                "duration_s": 1.25
+              },
+              {
+                "region": "A",
+                "entry_s": 73.45,
+                "duration_s": 1.1500000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 81.30000000000001,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 83.65,
+                "duration_s": 1.6
+              },
+              {
+                "region": "A",
+                "entry_s": 87.75,
+                "duration_s": 1.05
+              },
+              {
+                "region": "A",
+                "entry_s": 90.95,
+                "duration_s": 1.5
+              },
+              {
+                "region": "B",
+                "entry_s": 97.05000000000001,
+                "duration_s": 1.9000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 102.65,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 105.45,
+                "duration_s": 2.1
+              },
+              {
+                "region": "B",
+                "entry_s": 112.10000000000001,
+                "duration_s": 1.9000000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 115.15,
+                "duration_s": 2.25
+              },
+              {
+                "region": "A",
+                "entry_s": 119.35000000000001,
+                "duration_s": 0.65
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 24.85,
+                "arrival_s": 28.35,
+                "seconds": 3.5,
+                "midplane_lateral_m": -1.4934742021294616,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 33.15,
+                "arrival_s": 37.2,
+                "seconds": 4.05,
+                "midplane_lateral_m": -1.87053183886142,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 38.300000000000004,
+                "arrival_s": 41.85,
+                "seconds": 3.5500000000000003,
+                "midplane_lateral_m": 1.7815080664077787,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 43.050000000000004,
+                "arrival_s": 47.650000000000006,
+                "seconds": 4.6000000000000005,
+                "midplane_lateral_m": -1.9734264656400446,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 48.7,
+                "arrival_s": 52.95,
+                "seconds": 4.25,
+                "midplane_lateral_m": 1.9512329617437665,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 53.95,
+                "arrival_s": 57.650000000000006,
+                "seconds": 3.7,
+                "midplane_lateral_m": -1.945005773628301,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 62.7,
+                "arrival_s": 65.8,
+                "seconds": 3.1,
+                "midplane_lateral_m": -1.647335943241432,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 67.05,
+                "arrival_s": 70.4,
+                "seconds": 3.35,
+                "midplane_lateral_m": 1.8012810047903274,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 74.60000000000001,
+                "arrival_s": 81.30000000000001,
+                "seconds": 6.7,
+                "midplane_lateral_m": 0.03911365455407953,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 85.25,
+                "arrival_s": 87.75,
+                "seconds": 2.5,
+                "midplane_lateral_m": 0.07265862882475711,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 92.45,
+                "arrival_s": 97.05000000000001,
+                "seconds": 4.6000000000000005,
+                "midplane_lateral_m": 1.3481635236869423,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 98.95,
+                "arrival_s": 102.65,
+                "seconds": 3.7,
+                "midplane_lateral_m": -0.09804241689813625,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 107.55000000000001,
+                "arrival_s": 112.10000000000001,
+                "seconds": 4.55,
+                "midplane_lateral_m": 0.056247035917823235,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 117.4,
+                "arrival_s": 119.35000000000001,
+                "seconds": 1.9500000000000002,
+                "midplane_lateral_m": -0.05452732269725788,
+                "route": "middle"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 7,
+                "route_counts": {
+                  "middle": 2,
+                  "outer": 5,
+                  "other": 0
+                },
+                "mean_seconds": 4.321428571428572
+              },
+              "B_to_A": {
+                "count": 7,
+                "route_counts": {
+                  "middle": 3,
+                  "outer": 4,
+                  "other": 0
+                },
+                "mean_seconds": 3.4071428571428575
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.9014275074005127,
+              0.14442677795886993
+            ],
+            "passage_std_initial_final": [
+              0.48942631483078003,
+              0.0316774807870388
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A"
+            ],
+            "startup_cycle_s": [
+              11.330342165998445,
+              0.815956249996816
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 0.7790364999982557,
+              "p95": 0.8403407571528078,
+              "max": 0.9092329170016455
+            },
+            "cycle_1s_miss_fraction": 0.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.6962922215461731,
+              "B": 0.5984407067298889
+            },
+            "initialization": "outer-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "iid_audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.21999999999999997,
+              "bypass_inner_edge_m": 1.22
+            },
+            "input": "results/budgeted_missions/reversed_wind_01/current_belief.npz",
+            "method": "current_belief",
+            "wind_case": "reversed",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 3.0597779750823975,
+            "integrated_roi_deficit": 22.999331112702688,
+            "recorded_cost_disagreement": 5.9138983488082886e-08,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.037135527947571134,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.208062401225618e-07,
+            "peak_control": 1.6000001430511475,
+            "backup_periods": 0,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 7.4
+              },
+              {
+                "region": "A",
+                "entry_s": 8.700000000000001,
+                "duration_s": 1.35
+              },
+              {
+                "region": "A",
+                "entry_s": 12.5,
+                "duration_s": 3.85
+              },
+              {
+                "region": "A",
+                "entry_s": 23.35,
+                "duration_s": 1.25
+              },
+              {
+                "region": "B",
+                "entry_s": 28.0,
+                "duration_s": 4.800000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 33.6,
+                "duration_s": 2.35
+              },
+              {
+                "region": "B",
+                "entry_s": 36.7,
+                "duration_s": 3.8000000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 43.650000000000006,
+                "duration_s": 1.25
+              },
+              {
+                "region": "B",
+                "entry_s": 48.35,
+                "duration_s": 1.6500000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 50.6,
+                "duration_s": 1.6500000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 55.95,
+                "duration_s": 3.6
+              },
+              {
+                "region": "B",
+                "entry_s": 62.95,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 68.85000000000001,
+                "duration_s": 1.8
+              },
+              {
+                "region": "A",
+                "entry_s": 73.2,
+                "duration_s": 3.9000000000000004
+              },
+              {
+                "region": "B",
+                "entry_s": 80.55000000000001,
+                "duration_s": 1.9000000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 93.95,
+                "duration_s": 2.15
+              },
+              {
+                "region": "A",
+                "entry_s": 100.05000000000001,
+                "duration_s": 1.1
+              },
+              {
+                "region": "B",
+                "entry_s": 105.60000000000001,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 110.95,
+                "duration_s": 1.35
+              },
+              {
+                "region": "B",
+                "entry_s": 115.45,
+                "duration_s": 1.55
+              },
+              {
+                "region": "B",
+                "entry_s": 119.15,
+                "duration_s": 0.8500000000000001
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 24.6,
+                "arrival_s": 28.0,
+                "seconds": 3.4000000000000004,
+                "midplane_lateral_m": 1.5092134030203728,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 40.5,
+                "arrival_s": 43.650000000000006,
+                "seconds": 3.1500000000000004,
+                "midplane_lateral_m": 1.6602542398145763,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 44.900000000000006,
+                "arrival_s": 48.35,
+                "seconds": 3.45,
+                "midplane_lateral_m": -1.7762908229823073,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 52.25,
+                "arrival_s": 55.95,
+                "seconds": 3.7,
+                "midplane_lateral_m": -1.5533889868653263,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 59.550000000000004,
+                "arrival_s": 62.95,
+                "seconds": 3.4000000000000004,
+                "midplane_lateral_m": -1.36455987350787,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 64.05,
+                "arrival_s": 68.85000000000001,
+                "seconds": 4.800000000000001,
+                "midplane_lateral_m": 1.69953723451902,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 77.10000000000001,
+                "arrival_s": 80.55000000000001,
+                "seconds": 3.45,
+                "midplane_lateral_m": -1.4628123733402585,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 96.10000000000001,
+                "arrival_s": 100.05000000000001,
+                "seconds": 3.95,
+                "midplane_lateral_m": -1.408212616755619,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 101.15,
+                "arrival_s": 105.60000000000001,
+                "seconds": 4.45,
+                "midplane_lateral_m": 1.8519620533124437,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 106.80000000000001,
+                "arrival_s": 110.95,
+                "seconds": 4.15,
+                "midplane_lateral_m": -1.7024523764895914,
+                "route": "outer"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 112.30000000000001,
+                "arrival_s": 115.45,
+                "seconds": 3.1500000000000004,
+                "midplane_lateral_m": 1.4531126825839595,
+                "route": "outer"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 6,
+                "route_counts": {
+                  "middle": 0,
+                  "outer": 6,
+                  "other": 0
+                },
+                "mean_seconds": 3.5499999999999994
+              },
+              "B_to_A": {
+                "count": 5,
+                "route_counts": {
+                  "middle": 0,
+                  "outer": 5,
+                  "other": 0
+                },
+                "mean_seconds": 3.95
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.9014275074005127,
+              0.2499411404132843
+            ],
+            "passage_std_initial_final": [
+              0.48942631483078003,
+              0.06817489862442017
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B"
+            ],
+            "startup_cycle_s": [
+              17.96873108300133,
+              0.8515557499995339
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 0.8202576875009981,
+              "p95": 0.8801179983498514,
+              "max": 0.9260097079986735
+            },
+            "cycle_1s_miss_fraction": 0.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.40548351407051086,
+              "B": 0.7476844787597656
+            },
+            "initialization": "outer-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "clarity_replay_max_error": 4.880617689995148e-07,
+          "antithetic_relative_to_iid_percent": -0.8165883425581777,
+          "input_sha256": "ecaf3f70bcd0e3312cd4cc03a51302c73082f09b9735467c59c251c1db7770fc"
+        }
+      }
+    },
+    {
+      "name": "antithetic_open_01",
+      "paired_proposed_regret_percent": -3.991106578721215,
+      "methods": {
+        "proposed": {
+          "audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.7,
+              "bypass_inner_edge_m": 1.2
+            },
+            "input": "results/budgeted_missions/antithetic_open_01/proposed.npz",
+            "method": "proposed",
+            "wind_case": "offroute",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 1.952365756034851,
+            "integrated_roi_deficit": 14.67528259952863,
+            "recorded_cost_disagreement": 1.4994293451309204e-07,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.20094527275874308,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.2065749510625778e-07,
+            "peak_control": 1.6000001430511475,
+            "backup_periods": 0,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 1.55
+              },
+              {
+                "region": "B",
+                "entry_s": 3.45,
+                "duration_s": 1.8
+              },
+              {
+                "region": "A",
+                "entry_s": 9.75,
+                "duration_s": 2.15
+              },
+              {
+                "region": "A",
+                "entry_s": 14.200000000000001,
+                "duration_s": 1.6
+              },
+              {
+                "region": "A",
+                "entry_s": 17.0,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 19.85,
+                "duration_s": 1.6
+              },
+              {
+                "region": "B",
+                "entry_s": 22.1,
+                "duration_s": 1.85
+              },
+              {
+                "region": "A",
+                "entry_s": 25.6,
+                "duration_s": 3.1
+              },
+              {
+                "region": "B",
+                "entry_s": 30.400000000000002,
+                "duration_s": 3.0500000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 36.5,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 39.0,
+                "duration_s": 1.85
+              },
+              {
+                "region": "B",
+                "entry_s": 42.45,
+                "duration_s": 3.7
+              },
+              {
+                "region": "B",
+                "entry_s": 46.95,
+                "duration_s": 2.0500000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 50.800000000000004,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 53.650000000000006,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 56.650000000000006,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 59.5,
+                "duration_s": 1.7000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 62.85,
+                "duration_s": 1.3
+              },
+              {
+                "region": "A",
+                "entry_s": 66.10000000000001,
+                "duration_s": 1.1
+              },
+              {
+                "region": "B",
+                "entry_s": 68.9,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 70.95,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 73.9,
+                "duration_s": 2.5
+              },
+              {
+                "region": "B",
+                "entry_s": 77.95,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 80.9,
+                "duration_s": 1.05
+              },
+              {
+                "region": "A",
+                "entry_s": 83.65,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 86.45,
+                "duration_s": 2.95
+              },
+              {
+                "region": "B",
+                "entry_s": 91.0,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 94.4,
+                "duration_s": 1.85
+              },
+              {
+                "region": "A",
+                "entry_s": 98.0,
+                "duration_s": 3.6
+              },
+              {
+                "region": "B",
+                "entry_s": 103.10000000000001,
+                "duration_s": 1.3
+              },
+              {
+                "region": "B",
+                "entry_s": 107.05000000000001,
+                "duration_s": 1.6
+              },
+              {
+                "region": "A",
+                "entry_s": 110.25,
+                "duration_s": 2.4000000000000004
+              },
+              {
+                "region": "B",
+                "entry_s": 114.2,
+                "duration_s": 1.7000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 117.5,
+                "duration_s": 1.25
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 1.55,
+                "arrival_s": 3.45,
+                "seconds": 1.9000000000000001,
+                "midplane_lateral_m": -0.07343608243268945,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 6.9,
+                "arrival_s": 9.75,
+                "seconds": 2.85,
+                "midplane_lateral_m": 0.019202422652427102,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 18.05,
+                "arrival_s": 19.85,
+                "seconds": 1.8,
+                "midplane_lateral_m": -0.09297802855038478,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 23.950000000000003,
+                "arrival_s": 25.6,
+                "seconds": 1.6500000000000001,
+                "midplane_lateral_m": 0.002302649935110401,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 28.700000000000003,
+                "arrival_s": 30.400000000000002,
+                "seconds": 1.7000000000000002,
+                "midplane_lateral_m": 0.033561274706419286,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 33.45,
+                "arrival_s": 36.5,
+                "seconds": 3.0500000000000003,
+                "midplane_lateral_m": 0.2817282802285024,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 40.85,
+                "arrival_s": 42.45,
+                "seconds": 1.6,
+                "midplane_lateral_m": -0.0193171051686071,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 49.0,
+                "arrival_s": 50.800000000000004,
+                "seconds": 1.8,
+                "midplane_lateral_m": 0.0871385638746804,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 55.050000000000004,
+                "arrival_s": 56.650000000000006,
+                "seconds": 1.6,
+                "midplane_lateral_m": -0.038881804909561515,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 61.2,
+                "arrival_s": 62.85,
+                "seconds": 1.6500000000000001,
+                "midplane_lateral_m": 0.06461511447258889,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 67.2,
+                "arrival_s": 68.9,
+                "seconds": 1.7000000000000002,
+                "midplane_lateral_m": -0.05155355244077647,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 72.35000000000001,
+                "arrival_s": 73.9,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.028024430872169305,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 76.4,
+                "arrival_s": 77.95,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.03819706078858257,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 81.95,
+                "arrival_s": 83.65,
+                "seconds": 1.7000000000000002,
+                "midplane_lateral_m": 0.12597282382353553,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 89.4,
+                "arrival_s": 91.0,
+                "seconds": 1.6,
+                "midplane_lateral_m": 0.0055899761376223284,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 96.25,
+                "arrival_s": 98.0,
+                "seconds": 1.75,
+                "midplane_lateral_m": 0.12034238601011191,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 101.60000000000001,
+                "arrival_s": 103.10000000000001,
+                "seconds": 1.5,
+                "midplane_lateral_m": -0.003088557429521561,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 108.65,
+                "arrival_s": 110.25,
+                "seconds": 1.6,
+                "midplane_lateral_m": -0.0713150091551848,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 112.65,
+                "arrival_s": 114.2,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.052315169121869294,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 115.9,
+                "arrival_s": 117.5,
+                "seconds": 1.6,
+                "midplane_lateral_m": 0.03863672785179601,
+                "route": "middle"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 10,
+                "route_counts": {
+                  "middle": 10,
+                  "outer": 0,
+                  "other": 0
+                },
+                "mean_seconds": 1.65
+              },
+              "B_to_A": {
+                "count": 10,
+                "route_counts": {
+                  "middle": 10,
+                  "outer": 0,
+                  "other": 0
+                },
+                "mean_seconds": 1.9200000000000004
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.04018063098192215,
+              0.020482638850808144
+            ],
+            "passage_std_initial_final": [
+              0.28483736515045166,
+              0.052674371749162674
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A"
+            ],
+            "startup_cycle_s": [
+              9.699185041998135,
+              1.507665500004805
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 1.465476313002,
+              "p95": 1.4975475605522661,
+              "max": 1.5325991249992512
+            },
+            "cycle_1s_miss_fraction": 1.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.689502477645874,
+              "B": 0.49452367424964905
+            },
+            "initialization": "routes-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "iid_audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.7,
+              "bypass_inner_edge_m": 1.2
+            },
+            "input": "results/budgeted_missions/open_passage_wind_01/proposed.npz",
+            "method": "proposed",
+            "wind_case": "offroute",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 2.045994281768799,
+            "integrated_roi_deficit": 15.379057017962138,
+            "recorded_cost_disagreement": 1.126900315284729e-07,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.22544752972262305,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.200747190566176e-07,
+            "peak_control": 1.6000001430511475,
+            "backup_periods": 0,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 1.55
+              },
+              {
+                "region": "B",
+                "entry_s": 3.45,
+                "duration_s": 1.75
+              },
+              {
+                "region": "B",
+                "entry_s": 6.3500000000000005,
+                "duration_s": 1.9500000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 9.8,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 17.25,
+                "duration_s": 2.5
+              },
+              {
+                "region": "B",
+                "entry_s": 21.150000000000002,
+                "duration_s": 1.55
+              },
+              {
+                "region": "A",
+                "entry_s": 24.3,
+                "duration_s": 3.8000000000000003
+              },
+              {
+                "region": "B",
+                "entry_s": 29.85,
+                "duration_s": 1.1
+              },
+              {
+                "region": "B",
+                "entry_s": 32.0,
+                "duration_s": 2.1
+              },
+              {
+                "region": "A",
+                "entry_s": 35.65,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 38.5,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 41.6,
+                "duration_s": 4.45
+              },
+              {
+                "region": "B",
+                "entry_s": 46.800000000000004,
+                "duration_s": 2.4000000000000004
+              },
+              {
+                "region": "B",
+                "entry_s": 50.45,
+                "duration_s": 0.9
+              },
+              {
+                "region": "A",
+                "entry_s": 54.050000000000004,
+                "duration_s": 3.85
+              },
+              {
+                "region": "B",
+                "entry_s": 59.45,
+                "duration_s": 2.1
+              },
+              {
+                "region": "B",
+                "entry_s": 62.550000000000004,
+                "duration_s": 0.9500000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 64.60000000000001,
+                "duration_s": 0.65
+              },
+              {
+                "region": "A",
+                "entry_s": 67.45,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 71.45,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 74.3,
+                "duration_s": 3.3000000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 79.15,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 80.9,
+                "duration_s": 2.0500000000000003
+              },
+              {
+                "region": "B",
+                "entry_s": 84.9,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 86.60000000000001,
+                "duration_s": 2.0
+              },
+              {
+                "region": "A",
+                "entry_s": 90.05000000000001,
+                "duration_s": 1.35
+              },
+              {
+                "region": "A",
+                "entry_s": 92.60000000000001,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 95.55000000000001,
+                "duration_s": 1.6500000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 99.4,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 102.5,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 105.7,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 108.9,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 112.45,
+                "duration_s": 0.9500000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 115.15,
+                "duration_s": 1.35
+              },
+              {
+                "region": "A",
+                "entry_s": 118.5,
+                "duration_s": 0.9
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 1.55,
+                "arrival_s": 3.45,
+                "seconds": 1.9000000000000001,
+                "midplane_lateral_m": -0.07343608243268945,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 8.3,
+                "arrival_s": 9.8,
+                "seconds": 1.5,
+                "midplane_lateral_m": -0.024041188858105966,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 13.75,
+                "arrival_s": 17.25,
+                "seconds": 3.5,
+                "midplane_lateral_m": -0.03632284481357942,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 22.700000000000003,
+                "arrival_s": 24.3,
+                "seconds": 1.6,
+                "midplane_lateral_m": 0.0381174560495297,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 28.1,
+                "arrival_s": 29.85,
+                "seconds": 1.75,
+                "midplane_lateral_m": -0.04655345894297097,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 34.1,
+                "arrival_s": 35.65,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.015311808288524001,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 39.900000000000006,
+                "arrival_s": 41.6,
+                "seconds": 1.7000000000000002,
+                "midplane_lateral_m": -0.0848113754396803,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 51.35,
+                "arrival_s": 54.050000000000004,
+                "seconds": 2.7,
+                "midplane_lateral_m": 0.13446104989124116,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 57.900000000000006,
+                "arrival_s": 59.45,
+                "seconds": 1.55,
+                "midplane_lateral_m": -0.032929987400946395,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 65.25,
+                "arrival_s": 67.45,
+                "seconds": 2.2,
+                "midplane_lateral_m": 0.18977937624509666,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 72.5,
+                "arrival_s": 74.3,
+                "seconds": 1.8,
+                "midplane_lateral_m": -0.06489469435359775,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 77.60000000000001,
+                "arrival_s": 79.15,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.049165694970988494,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 82.95,
+                "arrival_s": 84.9,
+                "seconds": 1.9500000000000002,
+                "midplane_lateral_m": 0.13142925828676433,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 88.60000000000001,
+                "arrival_s": 90.05000000000001,
+                "seconds": 1.4500000000000002,
+                "midplane_lateral_m": -0.016345806586922897,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 93.80000000000001,
+                "arrival_s": 95.55000000000001,
+                "seconds": 1.75,
+                "midplane_lateral_m": -0.15346139719687693,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 100.80000000000001,
+                "arrival_s": 102.5,
+                "seconds": 1.7000000000000002,
+                "midplane_lateral_m": 0.09355636180056764,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 106.9,
+                "arrival_s": 108.9,
+                "seconds": 2.0,
+                "midplane_lateral_m": -0.23177450177088826,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 113.4,
+                "arrival_s": 115.15,
+                "seconds": 1.75,
+                "midplane_lateral_m": 0.12354854193312227,
+                "route": "middle"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 9,
+                "route_counts": {
+                  "middle": 9,
+                  "outer": 0,
+                  "other": 0
+                },
+                "mean_seconds": 1.9888888888888892
+              },
+              "B_to_A": {
+                "count": 9,
+                "route_counts": {
+                  "middle": 9,
+                  "outer": 0,
+                  "other": 0
+                },
+                "mean_seconds": 1.7777777777777777
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.04018063098192215,
+              0.0337664969265461
+            ],
+            "passage_std_initial_final": [
+              0.28483736515045166,
+              0.05590680241584778
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A"
+            ],
+            "startup_cycle_s": [
+              20.457006041000568,
+              2.4838314990010986
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 1.484550915498403,
+              "p95": 1.5110920604982312,
+              "max": 1.8120695000034175
+            },
+            "cycle_1s_miss_fraction": 1.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.6993438005447388,
+              "B": 0.4185554087162018
+            },
+            "initialization": "routes-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "clarity_replay_max_error": 4.6923886565242157e-07,
+          "antithetic_relative_to_iid_percent": -4.576187067981651,
+          "input_sha256": "4411a1b7c895647bf2c2e90db325a9bc14f7dee661f8051fff159e111156d783"
+        },
+        "current_belief": {
+          "audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.7,
+              "bypass_inner_edge_m": 1.2
+            },
+            "input": "results/budgeted_missions/antithetic_open_01/current_belief.npz",
+            "method": "current_belief",
+            "wind_case": "offroute",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 2.0335259437561035,
+            "integrated_roi_deficit": 15.285336677233378,
+            "recorded_cost_disagreement": 5.8673322200775146e-08,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.275859968935817,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.1932749321985625e-07,
+            "peak_control": 1.6000001430511475,
+            "backup_periods": 0,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 1.55
+              },
+              {
+                "region": "B",
+                "entry_s": 3.45,
+                "duration_s": 4.05
+              },
+              {
+                "region": "A",
+                "entry_s": 9.15,
+                "duration_s": 2.9000000000000004
+              },
+              {
+                "region": "A",
+                "entry_s": 13.8,
+                "duration_s": 2.5500000000000003
+              },
+              {
+                "region": "B",
+                "entry_s": 19.6,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 22.35,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 25.35,
+                "duration_s": 3.1500000000000004
+              },
+              {
+                "region": "B",
+                "entry_s": 30.75,
+                "duration_s": 1.3
+              },
+              {
+                "region": "B",
+                "entry_s": 33.35,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 36.5,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 39.6,
+                "duration_s": 1.35
+              },
+              {
+                "region": "B",
+                "entry_s": 42.75,
+                "duration_s": 1.0
+              },
+              {
+                "region": "B",
+                "entry_s": 45.650000000000006,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 49.35,
+                "duration_s": 1.3
+              },
+              {
+                "region": "A",
+                "entry_s": 51.800000000000004,
+                "duration_s": 2.5500000000000003
+              },
+              {
+                "region": "B",
+                "entry_s": 56.6,
+                "duration_s": 1.1
+              },
+              {
+                "region": "B",
+                "entry_s": 60.150000000000006,
+                "duration_s": 1.0
+              },
+              {
+                "region": "A",
+                "entry_s": 63.0,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 65.8,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 68.8,
+                "duration_s": 1.1
+              },
+              {
+                "region": "B",
+                "entry_s": 71.05,
+                "duration_s": 1.35
+              },
+              {
+                "region": "A",
+                "entry_s": 73.95,
+                "duration_s": 2.45
+              },
+              {
+                "region": "B",
+                "entry_s": 78.0,
+                "duration_s": 4.1000000000000005
+              },
+              {
+                "region": "A",
+                "entry_s": 83.60000000000001,
+                "duration_s": 1.1
+              },
+              {
+                "region": "A",
+                "entry_s": 86.35000000000001,
+                "duration_s": 3.0
+              },
+              {
+                "region": "B",
+                "entry_s": 90.9,
+                "duration_s": 1.05
+              },
+              {
+                "region": "B",
+                "entry_s": 94.2,
+                "duration_s": 0.75
+              },
+              {
+                "region": "A",
+                "entry_s": 97.7,
+                "duration_s": 2.9000000000000004
+              },
+              {
+                "region": "B",
+                "entry_s": 102.15,
+                "duration_s": 3.0500000000000003
+              },
+              {
+                "region": "B",
+                "entry_s": 106.95,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 110.75,
+                "duration_s": 1.9000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 114.5,
+                "duration_s": 1.5
+              },
+              {
+                "region": "A",
+                "entry_s": 116.80000000000001,
+                "duration_s": 1.35
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 1.55,
+                "arrival_s": 3.45,
+                "seconds": 1.9000000000000001,
+                "midplane_lateral_m": -0.07343608243268945,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 7.5,
+                "arrival_s": 9.15,
+                "seconds": 1.6500000000000001,
+                "midplane_lateral_m": 0.03298612692196538,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 16.35,
+                "arrival_s": 19.6,
+                "seconds": 3.25,
+                "midplane_lateral_m": -0.3099748104473112,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 23.55,
+                "arrival_s": 25.35,
+                "seconds": 1.8,
+                "midplane_lateral_m": 0.08880014106792855,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 28.5,
+                "arrival_s": 30.75,
+                "seconds": 2.25,
+                "midplane_lateral_m": -0.26654911564573414,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 34.550000000000004,
+                "arrival_s": 36.5,
+                "seconds": 1.9500000000000002,
+                "midplane_lateral_m": 0.13052301309222322,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 40.95,
+                "arrival_s": 42.75,
+                "seconds": 1.8,
+                "midplane_lateral_m": -0.05625300275640636,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 47.1,
+                "arrival_s": 49.35,
+                "seconds": 2.25,
+                "midplane_lateral_m": 0.04344525145923091,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 54.35,
+                "arrival_s": 56.6,
+                "seconds": 2.25,
+                "midplane_lateral_m": -0.13525606317136765,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 61.150000000000006,
+                "arrival_s": 63.0,
+                "seconds": 1.85,
+                "midplane_lateral_m": 0.03288292160175159,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 67.25,
+                "arrival_s": 68.8,
+                "seconds": 1.55,
+                "midplane_lateral_m": -0.010144559077790383,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 72.4,
+                "arrival_s": 73.95,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.05641446197766918,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 76.4,
+                "arrival_s": 78.0,
+                "seconds": 1.6,
+                "midplane_lateral_m": -0.02860083050600233,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 82.10000000000001,
+                "arrival_s": 83.60000000000001,
+                "seconds": 1.5,
+                "midplane_lateral_m": -0.029030529093128997,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 89.35000000000001,
+                "arrival_s": 90.9,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.0016778091887539662,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 96.2,
+                "arrival_s": 97.7,
+                "seconds": 1.5,
+                "midplane_lateral_m": -0.0923220749686191,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 100.60000000000001,
+                "arrival_s": 102.15,
+                "seconds": 1.55,
+                "midplane_lateral_m": -0.005966945116697004,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 108.15,
+                "arrival_s": 110.75,
+                "seconds": 2.6,
+                "midplane_lateral_m": -0.26148497390644065,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 118.15,
+                "arrival_s": 119.80000000000001,
+                "seconds": 1.6500000000000001,
+                "midplane_lateral_m": -0.05068679909913722,
+                "route": "middle"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 10,
+                "route_counts": {
+                  "middle": 10,
+                  "outer": 0,
+                  "other": 0
+                },
+                "mean_seconds": 1.9349999999999998
+              },
+              "B_to_A": {
+                "count": 9,
+                "route_counts": {
+                  "middle": 9,
+                  "outer": 0,
+                  "other": 0
+                },
+                "mean_seconds": 1.8500000000000003
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.04018063098192215,
+              0.01792016066610813
+            ],
+            "passage_std_initial_final": [
+              0.28483736515045166,
+              0.059661850333213806
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A"
+            ],
+            "startup_cycle_s": [
+              8.834709457998542,
+              1.8701786249985162
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 0.7893162079999456,
+              "p95": 0.8262479625489504,
+              "max": 0.9000356250035111
+            },
+            "cycle_1s_miss_fraction": 0.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.6467269659042358,
+              "B": 0.4712347984313965
+            },
+            "initialization": "routes-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "iid_audit": {
+            "route_classifier": {
+              "middle_half_width_m": 0.7,
+              "bypass_inner_edge_m": 1.2
+            },
+            "input": "results/budgeted_missions/open_passage_wind_01/current_belief.npz",
+            "method": "current_belief",
+            "wind_case": "offroute",
+            "complete": true,
+            "duration_s": 120.0,
+            "integrated_whole_grid_deficit": 1.996063232421875,
+            "integrated_roi_deficit": 15.003741963704426,
+            "recorded_cost_disagreement": 6.798654794692993e-08,
+            "dense_substeps": 32,
+            "minimum_dense_clearance": 0.22714014225422874,
+            "contact_intervals": 0,
+            "first_contact_interval_start_s": null,
+            "max_local_state_error": 1.218019938242776e-07,
+            "peak_control": 1.6000001430511475,
+            "backup_periods": 0,
+            "visits": [
+              {
+                "region": "A",
+                "entry_s": 0.0,
+                "duration_s": 1.55
+              },
+              {
+                "region": "B",
+                "entry_s": 3.45,
+                "duration_s": 4.0
+              },
+              {
+                "region": "A",
+                "entry_s": 8.9,
+                "duration_s": 3.45
+              },
+              {
+                "region": "B",
+                "entry_s": 14.15,
+                "duration_s": 3.5500000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 19.400000000000002,
+                "duration_s": 1.55
+              },
+              {
+                "region": "A",
+                "entry_s": 22.900000000000002,
+                "duration_s": 0.6000000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 26.1,
+                "duration_s": 3.45
+              },
+              {
+                "region": "A",
+                "entry_s": 31.55,
+                "duration_s": 1.7000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 34.800000000000004,
+                "duration_s": 1.6500000000000001
+              },
+              {
+                "region": "B",
+                "entry_s": 38.300000000000004,
+                "duration_s": 1.6
+              },
+              {
+                "region": "A",
+                "entry_s": 44.1,
+                "duration_s": 3.4000000000000004
+              },
+              {
+                "region": "B",
+                "entry_s": 49.0,
+                "duration_s": 1.3
+              },
+              {
+                "region": "B",
+                "entry_s": 52.550000000000004,
+                "duration_s": 0.8
+              },
+              {
+                "region": "A",
+                "entry_s": 55.25,
+                "duration_s": 1.1500000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 58.1,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 61.2,
+                "duration_s": 1.35
+              },
+              {
+                "region": "B",
+                "entry_s": 63.800000000000004,
+                "duration_s": 1.5
+              },
+              {
+                "region": "A",
+                "entry_s": 67.10000000000001,
+                "duration_s": 1.2000000000000002
+              },
+              {
+                "region": "A",
+                "entry_s": 69.9,
+                "duration_s": 1.4500000000000002
+              },
+              {
+                "region": "B",
+                "entry_s": 72.95,
+                "duration_s": 1.1
+              },
+              {
+                "region": "B",
+                "entry_s": 76.35000000000001,
+                "duration_s": 1.6
+              },
+              {
+                "region": "A",
+                "entry_s": 79.55000000000001,
+                "duration_s": 2.5500000000000003
+              },
+              {
+                "region": "B",
+                "entry_s": 85.75,
+                "duration_s": 1.8
+              },
+              {
+                "region": "B",
+                "entry_s": 90.2,
+                "duration_s": 1.35
+              },
+              {
+                "region": "B",
+                "entry_s": 93.05000000000001,
+                "duration_s": 2.8000000000000003
+              },
+              {
+                "region": "A",
+                "entry_s": 97.35000000000001,
+                "duration_s": 3.3000000000000003
+              },
+              {
+                "region": "B",
+                "entry_s": 102.15,
+                "duration_s": 2.6500000000000004
+              },
+              {
+                "region": "B",
+                "entry_s": 106.95,
+                "duration_s": 1.4000000000000001
+              },
+              {
+                "region": "A",
+                "entry_s": 110.10000000000001,
+                "duration_s": 2.75
+              },
+              {
+                "region": "B",
+                "entry_s": 114.4,
+                "duration_s": 4.15
+              }
+            ],
+            "transfers": [
+              {
+                "direction": "A_to_B",
+                "departure_s": 1.55,
+                "arrival_s": 3.45,
+                "seconds": 1.9000000000000001,
+                "midplane_lateral_m": -0.07343608243268945,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 7.45,
+                "arrival_s": 8.9,
+                "seconds": 1.4500000000000002,
+                "midplane_lateral_m": 0.00371832990580574,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 12.350000000000001,
+                "arrival_s": 14.15,
+                "seconds": 1.8,
+                "midplane_lateral_m": 0.007620930347678513,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 17.7,
+                "arrival_s": 19.400000000000002,
+                "seconds": 1.7000000000000002,
+                "midplane_lateral_m": 0.05606239917508408,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 23.5,
+                "arrival_s": 26.1,
+                "seconds": 2.6,
+                "midplane_lateral_m": -0.22433331771628448,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 29.55,
+                "arrival_s": 31.55,
+                "seconds": 2.0,
+                "midplane_lateral_m": 0.17315924010956774,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 36.45,
+                "arrival_s": 38.300000000000004,
+                "seconds": 1.85,
+                "midplane_lateral_m": -0.12870738770909124,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 41.300000000000004,
+                "arrival_s": 44.1,
+                "seconds": 2.8000000000000003,
+                "midplane_lateral_m": -0.2389571660512398,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 47.5,
+                "arrival_s": 49.0,
+                "seconds": 1.5,
+                "midplane_lateral_m": 0.07609322659561518,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 53.35,
+                "arrival_s": 55.25,
+                "seconds": 1.9000000000000001,
+                "midplane_lateral_m": 0.13779939369765437,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 59.550000000000004,
+                "arrival_s": 61.2,
+                "seconds": 1.6500000000000001,
+                "midplane_lateral_m": -0.03353376029410172,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 65.3,
+                "arrival_s": 67.10000000000001,
+                "seconds": 1.8,
+                "midplane_lateral_m": 0.025770928213859987,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 71.35000000000001,
+                "arrival_s": 72.95,
+                "seconds": 1.6,
+                "midplane_lateral_m": -0.019835585915147932,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 77.95,
+                "arrival_s": 79.55000000000001,
+                "seconds": 1.6,
+                "midplane_lateral_m": 0.025093188595647603,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 82.10000000000001,
+                "arrival_s": 85.75,
+                "seconds": 3.6500000000000004,
+                "midplane_lateral_m": 1.6957722465804659,
+                "route": "outer"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 95.85000000000001,
+                "arrival_s": 97.35000000000001,
+                "seconds": 1.5,
+                "midplane_lateral_m": -0.04240758743551303,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 100.65,
+                "arrival_s": 102.15,
+                "seconds": 1.5,
+                "midplane_lateral_m": 0.025557613974094166,
+                "route": "middle"
+              },
+              {
+                "direction": "B_to_A",
+                "departure_s": 108.35000000000001,
+                "arrival_s": 110.10000000000001,
+                "seconds": 1.75,
+                "midplane_lateral_m": -0.16887003414418372,
+                "route": "middle"
+              },
+              {
+                "direction": "A_to_B",
+                "departure_s": 112.85000000000001,
+                "arrival_s": 114.4,
+                "seconds": 1.55,
+                "midplane_lateral_m": 0.11873304987982455,
+                "route": "middle"
+              }
+            ],
+            "directional_routes": {
+              "A_to_B": {
+                "count": 10,
+                "route_counts": {
+                  "middle": 9,
+                  "outer": 1,
+                  "other": 0
+                },
+                "mean_seconds": 1.9600000000000002
+              },
+              "B_to_A": {
+                "count": 9,
+                "route_counts": {
+                  "middle": 9,
+                  "outer": 0,
+                  "other": 0
+                },
+                "mean_seconds": 1.8333333333333333
+              }
+            },
+            "passage_rmse_initial_final": [
+              0.04018063098192215,
+              0.032788049429655075
+            ],
+            "passage_std_initial_final": [
+              0.28483736515045166,
+              0.051320381462574005
+            ],
+            "visit_sequence": [
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B",
+              "A",
+              "B"
+            ],
+            "startup_cycle_s": [
+              16.02485845800038,
+              0.8340777919984248
+            ],
+            "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+            "steady_cycle_s": {
+              "median": 0.7695111039993208,
+              "p95": 0.7990742991032675,
+              "max": 0.8105222080012027
+            },
+            "cycle_1s_miss_fraction": 0.0,
+            "cycle_2s_miss_fraction": 0.0,
+            "final_mean_clarity": {
+              "A": 0.4129652976989746,
+              "B": 0.71485835313797
+            },
+            "initialization": "routes-survey",
+            "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+          },
+          "clarity_replay_max_error": 4.954485781638596e-07,
+          "antithetic_relative_to_iid_percent": 1.8768298882382517,
+          "input_sha256": "3f44e4ed8d56ba1746ef10fc1ec3557972ed659606899c48d7b738904e267454"
+        }
+      }
+    }
+  ]
+}

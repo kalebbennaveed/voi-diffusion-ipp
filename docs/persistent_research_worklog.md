@@ -953,3 +953,100 @@ and field under stochastic seeds, not a population of environments. All source,
 configs, mission/audit drivers, report and coordinator are frozen against that
 protocol while active. All original scenarios and 3D remain unchanged.
 Automations stay paused; this is a bounded user-requested foreground study.
+
+Additional read-only diagnoses are prepared but NOT started while the eight-seed
+study runs: scripts/diagnose_poam_adaptation.py with adaptation_protocol_01.json
+compares baseline, 10x slower kernel learning and larger minibatches on frozen
+earned histories. The crosswind history stops before physical contact.
+The diagnostic scripts/diagnose_planning_horizon.py now accepts --protocol and
+--output; its earlier executed revision is preserved in commit 4b5df56. A new
+dual_split_protocol_01.json declares 10/14 s lookahead with a single first-stage
+hypothetical update followed by fixed-posterior exploitation, motivated by
+Arcari et al. (https://arxiv.org/abs/1911.03728). This remains an approximation
+and can overvalue early learning by omitting later opportunities; no promotion
+or new mission yet. Also run scripts/report_wind_route_extensions.py after
+heavy timing measurements finish. Production source/configs remain frozen.
+
+### Fresh-seed result and bounded variance-reduction screen (2026-10-17)
+
+The eight low-value pairs finished, all 120 s with no dense contact. Mean paired
+regret is +2.736%, 90% paired-t interval [-3.549%, +9.022%]. The +5% one-sided
+noninferiority target FAILED; equivalence also failed. All eight outcomes and
+input hashes are retained in low_value_confirmation_results_01.json. All steady
+proposed cycles were <2 s. The 2D page exposes every seed, without relabeling the
+8101 development demo as fresh evidence. No source/config freeze from that
+completed study remains active. Do not repeat or add seeds post hoc.
+
+Post-confirmation coordinator completed: extended report, full-POAM adaptation
+sensitivity, and dual/exploitation split. Slower adaptation improves coverage but
+worsens next-batch marginal NLL; larger batches do not fix passage calibration.
+Neither variant is promoted. Single-update 14 s lookahead took 1.54–1.63 s at a
+saved state but changed no averaged route choices in six state/horizon checks.
+This remains a diagnostic approximation. All raw predictions and timings saved.
+
+Early-choice protocol completed at 2/4/6/8 s. Every original uncached selected
+objective/path reproduces EXACTLY despite the optional branch source extension.
+Reversed anticipation changes the averaged winner only at 2 s, with small mixed
+held-bank differences. Surveyed narrow off-route case changes winner in three
+states; nine held-bank comparisons favor active selection, seven tie, none oppose.
+These are dependent development model scores, not independent missions. Main-route
+wind can be weak while uncertainty in a narrow gap still has decision value.
+
+Sampling protocol 01 completed on two fixed development states. Actual paired
+MBD optimizers are identical in six of eight comparisons; the two different
+active choices have smaller independently estimated active cost. Pairing opposite
+Gaussian outer field AND observation-noise draws leaves each marginal unchanged,
+with independent inner RPCBF draws unchanged. Across candidates finite in all
+banks, mean variance is 0.297 and 0.266 of iid; every infeasibility is retained.
+This suggests a variance-reduction option, not a demonstrated mission gain.
+
+An optional --outer-sampling antithetic flag is now implemented in the mission
+runner and genuine forecast exporter. Default iid is unchanged; source helper
+planning/sampling.py does not alter MBD, POAM, RPCBF, the reward or actual noise.
+26 component tests pass, including Gaussian second-moment and inner-sample
+invariance checks. The declared two-pair development screen is NOW ACTIVE in
+session 24191; coordinator scripts/run_antithetic_screen.py, status
+results/antithetic_screen_status_01.json, main log antithetic_screen_01.log.
+Each pair is 120 s, seed 8101: reversed original geometry and off-route open
+passage; arm order alternates. Check per-job logs antithetic_reversed_01.log and
+antithetic_open_01.log. One heavy JAX worker only. Freeze all source/configs and
+mission/export/audit/coordinator drivers in antithetic_protocol_01.json until
+both missions, audits and exports finish. Do not duplicate. Keep any regression.
+
+No 3D changes. No automation resumed. The original and seven development cases
+remain in the 2D catalog, with actual denoising and execution. New antithetic
+cases should be separately labeled if published, never replace the iid originals.
+
+### Bounded investigation completed; no active research worker
+
+Both antithetic pairs, independent audits and genuine exports finished successfully.
+Reversed: proposed 3.05430 vs current 3.03479 (+0.643% regret), no contacts;
+open off-route: 1.95237 vs 2.03353 (-3.991%), no contacts. Steady proposed cycles
+remain below 2 s. Both development cases are separate playable 2D buttons; the
+nine cases include the original. IID remains default. No strong isolated learning
+validation or low-value statistical noninferiority has been established.
+
+One reversed antithetic forecast at 16 s passed the cache but failed the full
+continuous checker (sampled forecast clearance -0.000717 m). The executed backup
+had no physical contact. cache_rejection_01 reproduces it: enlarging the cache
+129→257→513 does not recover the clearance sign, and the largest warm cache build
+alone costs 2.46 s. Keep the full checker. rejection_alternatives_01 is a post hoc
+same-state diagnostic: the next three finite, distinct cached-ranked MBD proposals
+all pass full evaluation. The first has +0.039685 m minimum forecast clearance,
+full task cost 0.280212, and a 0.292 s warm check; adding that to the originally
+measured cycle gives 1.837 s. This is an ESTIMATED sum at one saved state, not a
+new mission or implementation of fallback selection. A justified next bounded
+change is to check one next-ranked actual MBD proposal before backing up, with
+explicit provenance in the demo and a fully replanned comparison. No tolerance
+was relaxed and no original trajectory changed.
+
+All research jobs launched in this foreground request are complete, including
+sessions 24965, 34048, 94939, 82883, 24191, 58812 and 36576. Source freezes from
+these jobs are lifted. Do not resume any old stopped study or paused automation.
+The user's usage-reserve limit is near: meter last read 54% consumed (46% left).
+Do not launch additional experiments in this turn. Core tests: 26 pass; 2D model
+playback tests: 11 pass; Ruff and JS syntax pass. Browser verified nine enabled
+case buttons, paired actual MBD levels 1→4, executed playback advancing beyond
+16 s, and no console errors. Screenshots and all numerical outputs are retained.
+No 3D files changed. All failed criteria and regressions are documented in
+README.md and JSON reports under docs/wind_route_study.

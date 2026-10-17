@@ -23,6 +23,7 @@ from voi_diffusion_ipp.experiments.checkpoint import source_hashes
 from voi_diffusion_ipp.experiments.two_region import make_two_region
 from voi_diffusion_ipp.experiments.wind_cases import CASE_LABELS, physical_wind, wind_case_spec
 from voi_diffusion_ipp.planning.budgeted import evaluate
+from voi_diffusion_ipp.planning.sampling import couple_outer_samples
 from voi_diffusion_ipp.planning.wind_blind import evaluate_nominal
 from voi_diffusion_ipp.viz.demo_data import serializable
 from voi_diffusion_ipp.wind.cache import build_prior_cache
@@ -177,8 +178,12 @@ def export(path, pair_with=None):
         )
         keys = jax.random.split(jax.random.fold_in(root, 100 + i), 4)
         all_eps = jax.random.normal(keys[0], (cfg.worlds + cfg.inner_samples, *b.sample_shape))
+        all_noise = jax.random.normal(keys[1], (cfg.worlds, cfg.stage_steps + cfg.future_steps, 2))
+        all_eps, all_noise = couple_outer_samples(
+            all_eps, all_noise, cfg.worlds, meta.get("outer_sampling", "iid")
+        )
         eps = jnp.concatenate((all_eps[:1], all_eps[cfg.worlds :]))
-        noise = jax.random.normal(keys[1], (cfg.worlds, cfg.stage_steps + cfg.future_steps, 2))[:1]
+        noise = all_noise[:1]
         hist = row["history"]
         # In reverse order, ab[i-1] = ab[i]/alpha[i], including ab[-1]=1 at last step.
         means = (
@@ -327,6 +332,8 @@ def export(path, pair_with=None):
         "Candidate curves are cached-field RPCBF forecasts in planning world 1; selected curves "
         "are original uncached checks. Export/replay work is separate from planning latency."
     )
+    if meta.get("outer_sampling") == "antithetic":
+        note += " Antithetic outer wind and hypothetical measurement-noise pairs; inner RPCBF draws remain independent. Experimental sampling setting, not a changed objective."
     if cfg.budgeted_policy == "branches":
         note += " Two separately optimized future routes share an observation-only posterior gate, reevaluated at causal belief boundaries. Only references switch; physical state and clarity never reset. This is a development policy-class refinement."
     if meta["prior_regime"] == "routes-survey":

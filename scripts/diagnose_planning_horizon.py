@@ -5,6 +5,7 @@ diagnostic, not an executed mission or replacement for MBD. The timing check at
 30 s additionally runs actual MBD and its uncached selected-policy verification.
 """
 
+import argparse
 import hashlib
 import json
 import time
@@ -29,10 +30,9 @@ from voi_diffusion_ipp.wind.poam import POAM
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def main():
-    protocol = json.loads((ROOT / "docs/wind_route_study/horizon_protocol_01.json").read_text())
+def main(protocol_path, output):
+    protocol = json.loads(protocol_path.read_text())
     path = ROOT / protocol["input"]
-    output = ROOT / "docs/wind_route_study/horizon_diagnosis_01"
     output.mkdir(exist_ok=False)
     raw = json.loads(path.with_suffix(".json").read_text())
     meta = raw["metadata"]
@@ -232,4 +232,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--protocol", type=Path, default=ROOT / "docs/wind_route_study/horizon_protocol_01.json"
+    )
+    parser.add_argument(
+        "--output", type=Path, default=ROOT / "docs/wind_route_study/horizon_diagnosis_01"
+    )
+    arguments = parser.parse_args()
+    main(arguments.protocol, arguments.output)

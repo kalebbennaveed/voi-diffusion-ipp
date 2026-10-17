@@ -57,13 +57,27 @@ def round_trip_seeds(x, env, cfg):
     return jnp.stack(vectors), labels
 
 
-def diagnose(path, periods, output, worlds=4, banks=4):
+def diagnose(path, periods, output, worlds=4, banks=4, verify_compact_compatibility=False):
     with np.load(path, allow_pickle=False) as source:
         data = {k: source[k] for k in source.files}
     raw = json.loads(path.with_suffix(".json").read_text())
     meta = raw["metadata"]
-    assert meta["source_sha256"] == source_hashes()
     cfg = Config(**meta["config"])
+    current_source = source_hashes()
+    changed_source = sorted(
+        k
+        for k in set(current_source) | set(meta["source_sha256"])
+        if current_source.get(k) != meta["source_sha256"].get(k)
+    )
+    if changed_source:
+        # The optional branch representation is bypassed in compact mode.
+        # Do not silently accept any broader numerical source change. Verify
+        # the original uncached selected forecast at every analyzed state below.
+        assert verify_compact_compatibility and cfg.budgeted_policy == "compact"
+        assert set(changed_source) <= {
+            "src/voi_diffusion_ipp/config.py",
+            "src/voi_diffusion_ipp/planning/budgeted.py",
+        }, changed_source
     check_cfg = replace(cfg, worlds=worlds)
     env, template, _, _, _ = make_two_region(meta["task_spec"], cfg)
     model = POAM.from_data(
@@ -79,6 +93,11 @@ def diagnose(path, periods, output, worlds=4, banks=4):
     root = jax.random.PRNGKey(meta["seed"])
     build = jax.jit(lambda b, e: build_prior_cache(b, e, 129, True))
     snapshot = jax.jit(lambda b: b.predict(env.cells))
+    reproduce = jax.jit(
+        lambda y, x, q, b, e, n: evaluate(
+            y, x, q, b, None, n, env, cfg, meta["method"] == "proposed", True, e
+        )
+    )
 
     def scorer(anticipate, config):
         @jax.jit
@@ -114,6 +133,9 @@ def diagnose(path, periods, output, worlds=4, banks=4):
         "worlds": worlds,
         "banks": banks,
         "label": "Offline development diagnosis; no new executed mission",
+        "recorded_source_sha256": meta["source_sha256"],
+        "diagnostic_source_sha256": current_source,
+        "changed_source_files": changed_source,
         "rows": [],
     }
     for i in range(max(periods) + 1):
@@ -125,6 +147,22 @@ def diagnose(path, periods, output, worlds=4, banks=4):
             x = jnp.asarray(data["x"][i * stride])
             q = jnp.asarray(data["q"][i * stride])
             row = raw["periods"][i]
+            compatibility = None
+            if changed_source:
+                keys = jax.random.split(jax.random.fold_in(root, 100 + i), 4)
+                ep = jax.random.normal(keys[0], (cfg.worlds + cfg.inner_samples, *b.sample_shape))
+                ns = jax.random.normal(keys[1], (cfg.worlds, cfg.stage_steps + cfg.future_steps, 2))
+                cost, (first, future) = reproduce(jnp.asarray(row["vector"]), x, q, b, ep, ns)
+                original_path = np.asarray(row["selected_model_path"])
+                replayed = np.concatenate((np.asarray(first.x[0]), np.asarray(future.x[0, 1:])))
+                np.testing.assert_allclose(replayed, original_path, atol=3e-5, rtol=3e-5)
+                expected_cost = np.inf if row["full_objective"] is None else row["full_objective"]
+                np.testing.assert_allclose(cost, expected_cost, atol=3e-5, rtol=3e-5)
+                compatibility = {
+                    "forecast_max_state_error": float(np.max(np.abs(replayed - original_path))),
+                    "uncached_objective": float(cost),
+                    "recorded_uncached_objective": expected_cost,
+                }
             initials = warm_starts(x, env, cfg, True)
             dimension = len(row["vector"])
             if cfg.budgeted_policy == "branches":
@@ -226,6 +264,7 @@ def diagnose(path, periods, output, worlds=4, banks=4):
                 {
                     "period": i,
                     "time_s": i * cfg.stage_steps * cfg.dt,
+                    "compact_source_compatibility": compatibility,
                     "labels": labels,
                     "existing_count": existing,
                     "active": summarize(sa),
@@ -257,5 +296,13 @@ if __name__ == "__main__":
     p.add_argument("--periods", nargs="+", type=int, default=[0, 15, 30])
     p.add_argument("--worlds", type=int, default=4)
     p.add_argument("--banks", type=int, default=4)
+    p.add_argument("--verify-compact-compatibility", action="store_true")
     a = p.parse_args()
-    diagnose(a.path.resolve(), a.periods, a.output.resolve(), a.worlds, a.banks)
+    diagnose(
+        a.path.resolve(),
+        a.periods,
+        a.output.resolve(),
+        a.worlds,
+        a.banks,
+        a.verify_compact_compatibility,
+    )
