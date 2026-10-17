@@ -45,7 +45,9 @@ const colors = {
 };
 const summaryCache = new WeakMap();
 const persistenceCache = new WeakMap();
+const regionalCache = new WeakMap();
 const environments = [
+  {id:'two_region_shuttle', name:'Two large regions · windy passage', duration:120, detail:'A ↔ B monitoring · strong Q decay · two obstacles · development comparison'},
   {id:'field_vortices', name:'Vortex field', duration:18, detail:'Three obstacles · seven distributed demand peaks'},
   {id:'field_shear', name:'Shear flow', duration:18, detail:'Staggered obstacles · opposing flow across the field'},
   {id:'field_mixed', name:'Mixed flow', duration:18, detail:'Vortices and shear · distributed monitoring demand'},
@@ -57,7 +59,7 @@ const environments = [
 ];
 
 function environmentRecord(environment) {
-  const candidates = state.records.filter(r => (r.scenario === environment.id || r.id.startsWith(`${environment.id}_`)) && r.method === 'proposed');
+  const candidates = state.records.filter(r => (r.scenario === environment.id || r.id.startsWith(`${environment.id}_`)) && r.method === 'proposed').sort((a,b)=>(b.available_seconds||0)-(a.available_seconds||0) || (b.published_at||0)-(a.published_at||0));
   return candidates.find(r => r.kind !== 'mission_preview' && pairedRecord(state.records,r)) || candidates.find(r => pairedRecord(state.records,r)) || candidates.find(r => r.kind === 'mission_preview');
 }
 
@@ -106,6 +108,18 @@ function summary(data) {
   return summaryCache.get(data);
 }
 
+function regionClarity(data, region) {
+  if (!regionalCache.has(data)) {
+    const e=data.environment, half=e.region_size.map(v=>v/2);
+    const rows=[e.roi_a,e.roi_b].map(center=>{
+      const cells=e.cells.flatMap((p,i)=>p.every((v,k)=>Math.abs(v-center[k])<=half[k])?[i]:[]);
+      return data.mission.q.map((q,i)=>[i*data.config.dt,cells.reduce((s,k)=>s+q[k],0)/cells.length]);
+    });
+    regionalCache.set(data,rows);
+  }
+  return regionalCache.get(data)[region];
+}
+
 function status(text, kind = 'ready') {
   $('status').textContent = text;
   $('status-dot').className = 'dot' + (kind === 'busy' ? ' busy' : kind === 'error' ? ' error' :
@@ -139,10 +153,14 @@ function path(g, points, xy, color, width = 1, dash = []) {
   g.lineWidth = width;
   g.setLineDash(dash);
   g.beginPath();
-  points.forEach((p, i) => {
+  let connected = false;
+  points.forEach(p => {
+    if (!p || !Number.isFinite(p[0]) || !Number.isFinite(p[1])) { connected=false; return; }
     const [x, y] = xy(p);
-    if (i) g.lineTo(x, y);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) { connected=false; return; }
+    if (connected) g.lineTo(x, y);
     else g.moveTo(x, y);
+    connected=true;
   });
   g.stroke();
   g.setLineDash([]);
@@ -181,6 +199,18 @@ function active() {
     t: state.mode === 'result' ? d.mission.x.length - 1 : state.mode === 'mission' ? state.step :
       state.period * H
   };
+}
+
+function drawRegions(g, e, xy, scale) {
+  if (!e.region_size) return;
+  for (const [name, center] of [['A',e.roi_a],['B',e.roi_b]]) {
+    const [rw,rh] = e.region_size;
+    const p = xy([center[0]-rw/2,center[1]+rh/2]);
+    g.save(); g.setLineDash([4,3]); g.strokeStyle='#304c5d'; g.lineWidth=1;
+    g.strokeRect(p[0],p[1],rw*scale,rh*scale); g.setLineDash([]);
+    label(g, `Region ${name}`, p[0]+6,p[1]+14,'#203c4d',11,'left');
+    g.restore();
+  }
 }
 
 function drawMap() {
@@ -253,7 +283,7 @@ function drawMap() {
   const q = d.mission.q[t];
   e.cells.forEach((c, i) => {
     const a = xy(c),
-      v = clamp(q[i] / e.targets[i], 0, 1);
+      v = e.targets[i] > 0 ? clamp(q[i] / e.targets[i], 0, 1) : 0.08 * q[i];
     const cw = d.config.whole_field ? scale * (b[1][0] - b[0][0]) / d.config.grid_nx : 12;
     const ch = d.config.whole_field ? scale * (b[1][1] - b[0][1]) / d.config.grid_ny : 12;
     g.fillStyle =
@@ -272,6 +302,7 @@ function drawMap() {
     g.strokeStyle = '#a6b3bd';
     g.stroke();
   });
+  drawRegions(g,e,xy,scale);
   if ($('compare').checked && state.comparison) {
     const c = state.comparison;
     const otherColor = c.metrics.method === 'current_belief' ? colors.amber : colors.teal;
@@ -302,7 +333,7 @@ function drawMap() {
       .teal,
       2.7);
     const selected = l === d.config.diffusion_steps - 1 ? p.selected_path : p.incumbent_paths[l];
-    const boundary = xy(selected[H]);
+    const boundary = xy(selected[p.stage_boundary_index ?? H]);
     g.fillStyle = '#fff';
     g.strokeStyle = colors.teal;
     g.lineWidth = 1.5;
@@ -540,11 +571,12 @@ function drawResultMap(id, d, color, seconds = null, layer = $('field-layer').va
     g.stroke();
   });
   const passes = layer === 'visits' ? persistence(d).passHistory[frame.index] : null;
+  const processMax=Math.max(.1,...(e.process_noise || [d.config.clarity_decay]));
   e.cells.forEach((c, i) => {
     const a = xy(c),
       value = layer === 'clarity' ? frame.q[i] : layer === 'target' ? e.targets[i] : layer === 'process' ? (e.process_noise?.[i] ?? d.config.clarity_decay) : layer === 'visits' ? passes[i] : Math.max(e
         .targets[i] - frame.q[i], 0);
-    const v = clamp(value / (layer === 'deficit' ? .8 : layer === 'process' ? .1 : layer === 'visits' ? 4 : 1), 0, 1);
+    const v = clamp(value / (layer === 'deficit' ? .8 : layer === 'process' ? processMax : layer === 'visits' ? 4 : 1), 0, 1);
     const cw = d.config.whole_field ? scale * (b[1][0] - b[0][0]) / d.config.grid_nx : 7;
     const ch = d.config.whole_field ? scale * (b[1][1] - b[0][1]) / d.config.grid_ny : 7;
     g.fillStyle = heatColor(v);
@@ -558,12 +590,18 @@ function drawResultMap(id, d, color, seconds = null, layer = $('field-layer').va
     g.strokeStyle = '#81909a';
     g.stroke();
   });
+  drawRegions(g,e,xy,scale);
   const visiblePath = d.mission.x.slice(0, frame.index + 1);
   visiblePath.push(frame.x);
-  path(g, visiblePath, xy, color, 2.5);
+  const longMission=summary(d).duration>30;
+  g.globalAlpha=longMission ? .35 : 1;
+  path(g, visiblePath, xy, color, longMission?1.5:2.5);
+  g.globalAlpha=1;
+  if (longMission && moving) path(g,visiblePath.slice(-Math.round(4/d.config.dt)),xy,color,2.5);
   // Observation boundaries are actual executed states, not forecast waypoints.
-  for (let i = d.config.stage_steps; d.config.measurements && i <= frame.index; i += d
-    .config.stage_steps) {
+  const markerStride=Math.max(1,Math.ceil(d.planning.length/16));
+  for (let i = d.config.stage_steps*markerStride; d.config.measurements && i <= frame.index; i += d
+    .config.stage_steps*markerStride) {
     const a = xy(d.mission.x[i]);
     g.beginPath();
     g.arc(...a, 3, 0, 7);
@@ -608,7 +646,7 @@ function drawResultMap(id, d, color, seconds = null, layer = $('field-layer').va
     label(g, `ROI ${name}`, a[0], a[1] + (name === 'B' ? 20 : -20), '#40545f', 10, 'center');
   }
   label(g, moving ? `t = ${Math.min(seconds, summary(d).duration).toFixed(2)} s` : d.config
-    .measurements ? '○ belief update     ■ final position' : '■ final position', w /
+    .measurements ? `○ every ${markerStride} update${markerStride>1?'s':''}   ■ final` : '■ final position', w /
     2, h - 5, '#6e7e88', 9, 'center');
   if (state.cell !== null && e.cells[state.cell]) {
     const selected = xy(e.cells[state.cell]);
@@ -645,7 +683,7 @@ function renderComparison() {
       const currentCost = cost[f.index] + f.mix * (cost[f.next] - cost[f.index]);
       $(`result-cost-${side}`).textContent = `Cost so far ${currentCost.toFixed(3)}`;
       $(`result-note-${side}`).textContent =
-        `Mean deficit ${deficit(f.q, d.environment.targets).toFixed(3)} · ${f.q.length} monitored cells`;
+        `Mean deficit ${deficit(f.q, d.environment.targets).toFixed(3)} · ${f.q.length} evolving cells`;
       $(`result-map-${side}`).setAttribute('aria-label',
         `Animated executed trajectory: ${methodLabel(d)}`);
     } else {
@@ -657,8 +695,8 @@ function renderComparison() {
   let message = b ?
     'Both robots execute on the same clock. Watch their routes and accumulated cost.' :
     'Unpaired recording: watch the robot and its accumulated task cost.';
-  message = 'Every cell contributes to the task cost. Compare the maps and deficit curves below.';
-  if (time >= duration) message = a.preview ? a.preview.stopped ? 'End of recorded preview. Expensive experiments were stopped for the one-second planner redesign.' : 'End of recorded preview. Reload for newer execution.' : $('comparison-loop').checked && state.playing ?
+  message = a.environment.region_size ? 'Both large regions contribute to the task. Watch clarity fall between visits and recover when the robot returns.' : 'Every cell contributes to the task cost. Compare the maps and deficit curves below.';
+  if (time >= duration) message = a.preview ? a.preview.stopped ? 'End of recorded preview. This older experiment was stopped for the faster planner redesign.' : 'End of recorded preview. Reload for newer execution.' : $('comparison-loop').checked && state.playing ?
     'Replay complete. Restarting automatically…' :
     'Replay complete. Open Final result for the full comparison.';
   if ($('comparison-event').textContent !== message) $('comparison-event').textContent = message;
@@ -728,6 +766,16 @@ function renderResults() {
     ['Integrated barrier slack', s => s.integratedSlack.toFixed(4)],
     ['Physical collision', s => s.collision ? 'Observed' : 'None observed']
   ];
+  if (a.research_audit && (!b || b.research_audit)) {
+    sa.audit=a.research_audit;
+    if (sb) sb.audit=b.research_audit;
+    rows.push(
+      ['A ↔ B transfers', s=>`${s.audit.transfers.length}`],
+      ['Steady planning time · median / 95th percentile', s=>`${s.audit.steady_cycle_s.median.toFixed(2)} / ${s.audit.steady_cycle_s.p95.toFixed(2)} s`],
+      ['Planning cycles exceeding 2 s', s=>`${(100*s.audit.cycle_2s_miss_fraction).toFixed(1)}%`],
+      ['Dense physical clearance · 32 substeps', s=>`${s.audit.minimum_dense_clearance.toFixed(3)} m`]
+    );
+  }
   if (a.config.whole_field) {
     sa.persistence = persistence(a);
     if (sb) sb.persistence = persistence(b);
@@ -754,6 +802,7 @@ function renderResults() {
 
 function update() {
   if (!state.data) return;
+  $('persistent-progress').classList.toggle('hidden', !state.persistent?.jobs?.length || state.data.config.scenario==='two_region_shuttle');
   $('result-tab').textContent = state.data.preview ? 'Latest recorded state' : 'Final result';
   $('preview-banner').classList.toggle('hidden', !state.data.preview);
   if (state.data.preview) $('preview-banner').textContent = `${state.data.preview.stopped ? 'STOPPED FOR RUNTIME REDESIGN' : 'IN PROGRESS'}: ${state.data.preview.available_seconds.toFixed(1)} of ${state.data.preview.planned_seconds.toFixed(1)} s recorded (${state.data.preview.completed_periods}/${state.data.preview.planned_periods} periods). Actual execution, POAM updates and MBD denoising are playable. This is not a final result.`;
@@ -857,13 +906,13 @@ function update() {
       .method === 'mppi' ? 'cost weights → weighted policy update' :
       'sample → simulate → weight → reverse update';
     $('forecast-note').textContent =
-      'Paths show planning world 1. Costs use all outer worlds. The purple denoised mean may be infeasible; execution uses the best evaluated policy.';
+      d.forecast_note || 'Paths show planning world 1. Costs use all outer worlds. The purple denoised mean may be infeasible; execution uses the best evaluated policy.';
     $('legend').innerHTML =
       '<span><i class="line teal"></i>Best evaluated</span><span><i class="line purple dashed"></i>Denoised mean</span><span><i class="line gray"></i>Sampled policies</span><span><i class="square"></i>Monitoring clarity</span>';
     if (state.hover >= 0) {
       const i = state.hover;
       $('candidate-detail').textContent =
-        `Policy ${i+1} · cost ${metricText(p.costs[l][i])} · weight ${p.weights[l][i].toFixed(4)} · branch ${p.candidate_branches[l][i]+1}`;
+        `Policy ${i+1} · cost ${metricText(p.costs[l][i])} · weight ${p.weights[l][i].toFixed(4)} · ${p.policy_type || `branch ${p.candidate_branches[l][i]+1}`}`;
     } else $('candidate-detail').textContent =
       `Score norm ${Math.hypot(...p.score[l]).toFixed(2)} · costs include the complete stochastic objective.`;
   } else {
@@ -999,6 +1048,8 @@ async function replay(id) {
     $('compare').disabled = !state.comparison;
     $('record-type').textContent = data.config.whole_field ? 'Full-field POAM' :
       'Legacy ROI model';
+    $('research-details').hidden = !data.research_note;
+    $('research-note').textContent = data.research_note || '';
     document.querySelector('.intro > div > p:last-child').textContent = data.config.whole_field ?
       'Full-field clarity deficit · online POAM wind estimates · actual diffusion rollouts.' :
       'Archived 13-cell experiment · finite-feature GP · select a full-field POAM recording for the new model.';
@@ -1288,7 +1339,8 @@ async function initialize() {
     }
     const requested = new URLSearchParams(location.search).get('run');
     const resolved = state.records.find(r => r.id === requested) || state.records.find(r => r.id === requested?.replace(/^preview_/, ''));
-    await replay(resolved ? resolved.id : state.records[0].id);
+    const featured=environmentRecord(environments.find(e=>e.id==='two_region_shuttle'));
+    await replay(resolved ? resolved.id : featured?.id || state.records[0].id);
   } catch (e) {
     status(e.message, 'error');
   }
@@ -1328,8 +1380,9 @@ function drawWindMap(id, d, time, truth = false) {
   } = surface(id);
   if (!d) return;
   const bounds = d.environment.bounds,
-    scale = Math.min((w - 10) / 4.8, (h - 24) / 3.7);
-  const xy = p => [(w - 4.8 * scale) / 2 + (p[0] - bounds[0][0]) * scale, 8 + (bounds[1][1] - p[
+    width = bounds[1][0]-bounds[0][0], height = bounds[1][1]-bounds[0][1],
+    scale = Math.min((w - 10) / width, (h - 24) / height);
+  const xy = p => [(w - width * scale) / 2 + (p[0] - bounds[0][0]) * scale, 8 + (bounds[1][1] - p[
     1]) * scale];
   const bi = beliefIndex(Math.floor(time / d.config.dt + 1e-6), d.config.stage_steps, d.beliefs
     .length);
@@ -1344,13 +1397,14 @@ function drawWindMap(id, d, time, truth = false) {
     const val = truth ? Math.hypot(...vectors[i]) : error ? Math.hypot(...belief.mean[i].map((v,
       k) => v - d.physical_wind[i][k])) : belief.std[i];
     g.fillStyle = heatColor(val / range);
-    g.fillRect(a[0] - scale * 4.8 / nx / 2, a[1] - scale * 3.7 / ny / 2, scale * 4.8 / nx + .3,
-      scale * 3.7 / ny + .3);
+    g.fillRect(a[0] - scale * width / nx / 2, a[1] - scale * height / ny / 2, scale * width / nx + .3,
+      scale * height / ny + .3);
     if (i % nx % 3 === 1 && Math.floor(i / nx) % 3 === 1) arrow(g, a, xy([p[0] + vectors[i][0] *
       .3, p[1] + vectors[i][1] * .3
     ]), '#1c323e', .8);
   });
-  if (!truth && d.config.measurements) d.mission.x.slice(1, Math.floor(time / d.config.dt) + 1).forEach(p => {
+  const observed = d.mission.observation_positions ? d.mission.observation_positions.filter((_,i)=>d.mission.observation_times[i]<=time) : d.mission.x.slice(1, Math.floor(time / d.config.dt) + 1);
+  if (!truth && d.config.measurements) observed.forEach(p => {
     const a = xy(p);
     g.beginPath();
     g.arc(...a, 1.3, 0, 7);
@@ -1377,12 +1431,17 @@ function drawFieldDiagnostics(a, b, time) {
   const decayTime = q => ((1/.6-1/.8)/q).toFixed(1);
   $('decay-summary').textContent = `This recording: ${summary(a).duration.toFixed(1)} s · Qₚ ${qmin.toFixed(3)}${qmax-qmin>1e-6?'–'+qmax.toFixed(3):''}. ${qmax>0 ? `Without sensing, clarity 0.8 falls to 0.6 in ${decayTime(qmax)}${qmin>0 && qmax-qmin>1e-6?'–'+decayTime(qmin):''} seconds. The unsensed reference uses q(t)=q₀/(1+Qₚq₀t).` : 'Process-noise decay is disabled in this recording.'}`;
   $('field-key').textContent = $('field-layer').value === 'deficit' ?
-    'Light: 0 · Dark: 0.8 deficit · lower is better' : $('field-layer').value === 'process' ? 'Light: 0 · Dark: 0.1 process noise Qₚ' : $('field-layer').value === 'visits' ? 'Light: 0 · Dark: ≥4 distinct sensing passes' : 'Light: 0 · Dark: 1 clarity';
+    'Light: 0 · Dark: 0.8 deficit · lower is better' : $('field-layer').value === 'process' ? `Light: 0 · Dark: ${Math.max(.1,qmax).toFixed(2)} process noise Qₚ` : $('field-layer').value === 'visits' ? 'Light: 0 · Dark: ≥4 distinct sensing passes' : 'Light: 0 · Dark: 1 clarity';
   pairedCurve('field-deficit-chart', a, b, d => d.mission.q.map((q, i) => [i * d.config.dt, deficit(
     q, d.environment.targets)]), time);
   pairedCurve('field-cost-chart', a, b, d => summary(d).costHistory.map((v, i) => [i * d.config.dt,
     v
   ]), time);
+  $('regional-clarity').hidden = !a.environment.region_size;
+  if (a.environment.region_size) {
+    pairedCurve('region-a-clarity',a,b,d=>regionClarity(d,0),time,1);
+    pairedCurve('region-b-clarity',a,b,d=>regionClarity(d,1),time,1);
+  }
   drawCellDiagnostic(a, b, time);
   drawFieldEvolution('evolution-a', a, time);
   drawFieldEvolution('evolution-b', b, time);
@@ -1432,12 +1491,13 @@ function drawPairedDenoising() {
     const p = d.planning[Math.min(state.period, d.planning.length - 1)],
       l = Math.min(state.level, p.candidate_paths.length - 1);
     const bounds = d.environment.bounds,
-      scale = Math.min((w - 24) / 4.8, (h - 24) / 3.7);
-    const xy = v => [(w - 4.8 * scale) / 2 + (v[0] - bounds[0][0]) * scale, 12 + (bounds[1][1] - v[
+      width = bounds[1][0]-bounds[0][0], height = bounds[1][1]-bounds[0][1],
+      scale = Math.min((w - 24) / width, (h - 24) / height);
+    const xy = v => [(w - width * scale) / 2 + (v[0] - bounds[0][0]) * scale, 12 + (bounds[1][1] - v[
       1]) * scale];
     if (d.config.whole_field) {
       const q = d.mission.q[p.period * d.config.stage_steps];
-      const cw = scale * 4.8 / d.config.grid_nx, ch = scale * 3.7 / d.config.grid_ny;
+      const cw = scale * width / d.config.grid_nx, ch = scale * height / d.config.grid_ny;
       g.globalAlpha = .4;
       d.environment.cells.forEach((cell, i) => {
         const a = xy(cell);
@@ -1452,6 +1512,7 @@ function drawPairedDenoising() {
       g.fillStyle = '#d9dfe3';
       g.fill();
     });
+    drawRegions(g,d.environment,xy,scale);
     p.candidate_paths[l].forEach((points, i) => path(g, points, xy,
       `rgba(80,105,120,${.12+.55*p.weights[l][i]})`, 1));
     path(g, p.mean_paths[l], xy, colors.violet, 1.5, [3, 3]);
@@ -1524,7 +1585,7 @@ async function persistentProgress() {
     const missing = environments.some(e => !environmentRecord(e) && jobs.filter(j => j.scenario === e.id && j.status === 'complete').length === 2);
     if (missing || !state.loading) await catalog();
     renderEnvironments();
-    $('persistent-progress').classList.toggle('hidden', !jobs.length);
+    $('persistent-progress').classList.toggle('hidden', !jobs.length || state.data?.config.scenario==='two_region_shuttle');
     if (jobs.length) {
       const stale = Date.now()/1000 - progress.updated_at > 120;
       const complete = jobs.filter(j => j.status === 'complete').length;
@@ -1546,7 +1607,7 @@ async function persistentProgress() {
 }
 $('refresh-recordings').onclick = async () => {
   await catalog();
-  const newest = state.records.find(r => r.id.startsWith('persistent_') && r.method === 'proposed') || state.records.find(r=>r.kind==='mission_preview' && r.method==='proposed') || state.records[0];
+  const newest = state.records.filter(r=>r.scenario==='two_region_shuttle' && r.method==='proposed').sort((a,b)=>(b.available_seconds||0)-(a.available_seconds||0))[0] || state.records.find(r => r.id.startsWith('persistent_') && r.method === 'proposed') || state.records.find(r=>r.kind==='mission_preview' && r.method==='proposed') || state.records[0];
   if (newest) await replay(newest.id);
 };
 $('open-long').onclick = async () => {
@@ -1554,10 +1615,15 @@ $('open-long').onclick = async () => {
   document.querySelector('.visual-panel').scrollIntoView({behavior:'smooth',block:'start'});
 };
 $('open-regions').onclick = async () => {
-  await replay('308f4f304d0fadc7');
+  await catalog();
+  const newest = environmentRecord(environments.find(e=>e.id==='two_region_shuttle'));
+  await replay(newest?.id || '308f4f304d0fadc7');
   document.querySelector('.visual-panel').scrollIntoView({behavior:'smooth',block:'start'});
 };
-$('all-environments').onclick = () => $('environments').scrollIntoView({behavior:'smooth', block:'start'});
+$('all-environments').onclick = () => {
+  $('environment-gallery').open=true;
+  $('environments').scrollIntoView({behavior:'smooth', block:'start'});
+};
 persistentProgress();
 
 // Separate from replanned learning comparisons: actual matched-policy safety replay.

@@ -1,51 +1,54 @@
 # Value of Information Informative path planning using model based diffusion
 
+A self-contained JAX implementation of causal value-of-information planning for
+persistent monitoring under an unknown spatial wind field. It includes actual
+MBD reverse diffusion, sampled spline RPCBF with a soft constrained QP, full POAM
+wind inference, whole-grid clarity dynamics and interactive recorded comparisons.
 
-The current whole-field implementation is described in [docs/field_poam_method.md](docs/field_poam_method.md).
-Use `configs/field_poam.yaml` for **475 monitoring cells and full POAM predictive covariance**.
-The previous ROI/finite-feature experiments are historical controls; their percentage
-improvements do not establish performance for the new model. The local demo is
-available at `http://127.0.0.1:8765/` while `demo_server` is running.
+The current development case monitors **two large regions A and B for 120 seconds**.
+A narrow windy passage and two outer routes connect them. All 1,353 clarity cells
+evolve with Q=0.16; the 180 cells in A/B have positive targets. Without sensing,
+clarity 0.8 falls to 0.6 in 2.60 seconds. Both planners learn from real measurements;
+only the proposed planner anticipates how later measurements affect future motion.
 
-The [persistent-monitoring configurations](docs/persistent_monitoring.md) extend
-execution to **122.4 seconds** across obstacle islands, staggered channels and
-a distributed demand mosaic. They include spatial QoI process noise, repeated
-visits, clarity recovery and recoverable full-POAM experiment recordings.
-Run `JAX_PLATFORMS=cpu uv run python scripts/run_persistent_suite.py --workers 3`;
-completed paired recordings appear in the demo automatically. These offline CPU
-runs can take hours; the progress panel distinguishes them from completed results.
+The compact causal feedback-policy variant generates a **10-second trajectory**.
+On the M3 CPU, the latest proposed development mission measured 1.41 s median,
+1.46 s 95th percentile and 1.68 s maximum steady planning time, including belief
+update, cache preparation and a full uncached check. Startup compilation is
+reported separately. These are synchronized solver timings, not a deployed
+real-time controller: this recording replans every simulated second, and a
+wall-clock-consistent two-second execution cadence remains to be tested.
 
-A self-contained JAX research implementation of causal two-stage value-of-information
-planning for persistent monitoring under a fixed unknown spatial wind field.
-It includes paper-equation model-based diffusion (MBD), sampled spline RPCBF with
-a constrained QP, online POAM wind inference, baselines,
-paired experiments, plots, and offline HTML replays.
+| 120-second development pair, seed 8101 | Proposed | No anticipated learning |
+|---|---:|---:|
+| Integrated whole-grid clarity deficit | 2.8538 | 3.0218 |
+| Completed A/B transfers | 20 | 15 |
+| Physical contacts, independent dense audit | 0 | 0 |
+| Median / 95th percentile planning time | 1.41 / 1.46 s | 0.80 / 0.85 s |
 
-**Current research status:** whole-field monitoring and full POAM inference are
-implemented and component-tested on the M3 CPU. The new experiments evaluate
-three predeclared paired development cases with distributed clarity demand,
-independent physical wind, and soft RPCBF constraints. They are not a statistical
-superiority study. Diffusion's advantage over matched-budget CEM/MPPI and broad
-mission-level superiority still require validation.
+This is **5.56% lower cost in one development pair**, not a validated substantial
+learning advantage. Both arms receive the same declared noisy historical survey
+of the outer routes. The passage is initially unobserved. The first 6-proposal
+long comparison failed numerically after 75 seconds in its comparator; its raw
+outputs remain available. Equivalent square-root POAM statistics repaired the
+float32 failure and passed independent algebra and observation-replay checks.
+See [the frozen protocol](docs/two_region_design/persistent_root_protocol.json),
+[the research worklog](docs/persistent_research_worklog.md), and
+[reference mapping](docs/reference_mapping.md).
 
-The completed [18-second full-POAM comparisons](docs/field_poam_findings.md) gave
-6.38% lower cost in mixed flow, but 4.52% and 2.29% higher cost in vortices and
-shear. All six runs are retained in the demo. This mixed outcome is the current
-evidence; the longer persistent study is running separately.
+The budgeted planner uses a restricted continuous posterior-feedback policy and
+two outer planning worlds. It retains the full POAM conditional residual, actual
+MBD updates and sampled spline RPCBF. Candidate field evaluation uses a tested
+continuous interpolation cache; the winning 10-second plan is checked uncached.
+Larger scenario-bank checks, substantial held-out learning benefit, a low-value
+control and a matched wind-ignored safety case remain research work.
 
-The [wind-in-RPCBF ablation](docs/wind_safety_validation/findings.md) completed
-24 fresh physical wind seeds with matched fixed waypoint policies. It found
-one collision with wind-aware filtering and two when the filter ignored wind
-(paired exact p = 1.0). Individual contact examples are available in the demo,
-but this batch does not establish a collision-rate advantage. Stronger-decay
-90-second development cases are queued; the three requested research claims
-remain under investigation.
-
-Earlier ROI/finite-feature experiments reported gains, including 28.1% against
-frozen future belief, but those numbers apply **only to the historical model**.
-They are archived in [multistage findings](docs/multistage_findings.md),
-[recourse findings](docs/recourse_findings.md), and
-[original findings](docs/experimental_findings.md).
+The older [18-second full-POAM comparisons](docs/field_poam_findings.md) and
+[fixed-policy wind-safety study](docs/wind_safety_validation/findings.md) remain
+available, including all regressions. The earlier expensive 122-second study was
+stopped with unfinished recordings preserved. The 90-second regime screen was
+also stopped; **do not resume those old queues**. Earlier finite-feature ROI gains
+apply only to that historical model, not the current full-POAM method.
 
 ## Interactive research demo
 

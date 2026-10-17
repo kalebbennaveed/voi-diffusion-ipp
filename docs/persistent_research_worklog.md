@@ -505,3 +505,82 @@ results/budgeted_missions/persistent_two_region_root_01. Preserve src/ and confi
 while active. Still no validated substantial learning benefit. Exporter and UI
 are being completed independently; publish only complete numeric runs with
 posterior-reconstruction checks and genuine recorded-MBD replay.
+
+
+### Fresh root-statistic pair completed; export and causal audit
+
+Session 32295 finished both 120 s arms. Proposed cost 2.85379934, comparator
+3.02178144: 5.559% lower, one development seed. Dense independent 32-substep
+audits found zero contacts in both, proposed minimum clearance 0.12452 m.
+Proposed 20 transfers versus comparator 15. Steady proposed planning median
+1.410 s, p95 1.462 s, maximum 1.681 s; no >2 s steady cycles. Startup separate.
+This satisfies the solver-latency target but the recording replans every one
+simulated second, so it is NOT a wall-clock-real-time control deployment. Next
+test should use --first-stage 2 --future-update-steps 10 for a 2+8 s horizon with
+updates at 2,4,6,8 s, preserving actual 20 Hz control and 5 Hz observations.
+Config.__post_init__ already rejects a future-update interval that does not
+divide future_steps; this was verified before any new cadence experiment.
+
+Exporter first attempt checked eager rather than jitted posterior predictions,
+failing a 3e-5 std tolerance on one cell (3.445e-5 difference) at period 5. It now
+uses exactly the mission's jitted snapshot; first forecasts and log are retained
+under results/demo/failed_forecasts/nonjitted_snapshot_persistent_two_region_root_01.
+Retry session 69803, results/export_persistent_two_region_root_01_retry.log, has
+completed the proposed export and is exporting the comparator. Do not duplicate.
+All source remains frozen until export and same-source diagnostic finish.
+
+New scripts/diagnose_budgeted_choice.py (not yet run) reconstructs actual POAM
+and evaluates identical recorded candidates at the same state/clarity under both
+causal objectives, using three independent banks of eight outer fields. It checks
+that first-stage states agree and logs signed continuation effects, not a clipped
+reward. Default periods 18 and 26 examine passage approach/return in the proposed
+record. Use this before launching fresh-seed sweeps; 5.6% is below the declared
+substantial-benefit threshold. UI adds A/B regional clarity curves and measured
+planning times; still needs browser verification after both exports complete.
+
+
+### Same-state causal diagnostic and interactive verification
+
+Session 12599 completed docs/budgeted_planner/causal_choice_root_01.json. At
+periods 18 and 26, three independent eight-world banks selected the same candidate
+under anticipated and frozen-future-belief objectives. Signed future-cost changes
+for the executed selection were roughly -0.00047 to +0.00053 at period 18 and
+-0.00012 to +0.000084 at period 26, against costs around 0.23–0.26. First-stage
+states agree. Thus these two decision points DO NOT establish a robust deliberate
+learning mechanism; the 5.6% mission difference alone is insufficient. Do not
+launch a superiority sweep based solely on this example.
+
+Both 120 s records are now exported and served at
+http://127.0.0.1:8765/?run=budgeted_persistent_two_region_root_01_proposed_8101 .
+Every real POAM snapshot was reconstructed and checked. Execution playback,
+four actual diffusion levels, final selected path, final results table, all-grid
+clarity and wind diagnostics were inspected in the browser. UI has A/B regional
+clarity curves; older galleries/provenance are collapsed and the new pair is the
+default for a fresh page. Final long paths are faded and update markers thinned
+with an explicit legend, while all numeric samples remain available.
+
+Scientific next diagnosis: unknown zero-mean GP versus a known windy-passage
+motivation, controller authority relative to peak disturbance (1.6 versus 1.8),
+short-lookahead value and sampling error. A common imperfect coarse weather
+forecast as a declared GP prior mean, with full POAM learning its residual, is a
+possible justified refinement, not yet implemented or validated. Any such mean
+must be specified independently of physical truth and used consistently in
+prediction, coherent sampling, conditioning, RPCBF and cache checks. Never leak
+truth or discard the conditional residual. Larger inner/outer sample diagnostics
+and a two-second execution cadence should precede stronger acceptance claims.
+
+
+### Active two-second cadence check
+
+User's two-second/ten-second request is being checked at a matching simulated
+replanning cadence as well: session 15458 runs the two full 120 s arms serially
+(60 replans), --first-stage 2 --future-update-steps 10, same eight proposals/two
+outer worlds and same task/prior. Protocol: persistent_2s_protocol.json; log:
+results/persistent_two_region_2s_01.log. Early steady cycles are ~1.5 s. Do not
+start duplicates or change src/configs. Existing root_01 1 s-cadence demo stays
+available; publish this new pair only after completion/audit/POAM reconstruction.
+Exporter now derives belief-update times from config and writes publication time;
+new records are distinguished by their replanning cadence. Final display still
+uses original uncached selected paths. Previous exporter source checks prevent
+accidental reuse of incompatible forecast checkpoints; completed old replays
+need not be regenerated after a label-only exporter update.
