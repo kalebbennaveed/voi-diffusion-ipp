@@ -5,6 +5,30 @@ import numpy as np
 from voi_diffusion_ipp.wind.poam import POAM
 
 
+def test_square_root_statistics_and_variational_update_against_float64():
+    from voi_diffusion_ipp.wind.poam import transport_statistic_root, variational_from_root
+
+    rng = np.random.default_rng(8401)
+    n = 24
+    U, _ = np.linalg.qr(rng.normal(size=(n, n)))
+    K = (U * np.geomspace(0.001, 3, n)) @ U.T
+    root = rng.normal(size=(n, n))
+    P = rng.normal(size=(n, n)) / np.sqrt(n)
+    Kuf = rng.normal(size=(n, 5))
+    updated = np.asarray(transport_statistic_root(jnp.array(root), jnp.array(P), jnp.array(Kuf)))
+    expected_B = P.T @ root @ root.T @ P + Kuf @ Kuf.T
+    np.testing.assert_allclose(updated @ updated.T, expected_B, atol=3e-5, rtol=3e-5)
+    # Data-consistent sufficient statistic, and independent dense float64 solve.
+    a = updated @ rng.normal(size=(n, 2))
+    mean, S = variational_from_root(jnp.array(K), jnp.array(a), jnp.array(updated), 0.1)
+    A = K + expected_B / 0.01 + 1e-6 * np.eye(n)
+    expected_mean = K @ np.linalg.solve(A, a) / 0.01
+    expected_S = K @ np.linalg.solve(A, K)
+    np.testing.assert_allclose(mean, expected_mean, atol=5e-4, rtol=5e-4)
+    np.testing.assert_allclose(S, expected_S, atol=2e-5, rtol=2e-3)
+    assert np.linalg.eigvalsh(np.array(S, dtype=float)).min() > 0
+
+
 def test_poam_kernel_psd_batch_statistics_and_projection():
     z = jnp.array([[-1.0, 0.0], [-0.3, 0.2], [0.4, -0.2], [1.0, 0.0]])
     x = z

@@ -50,6 +50,34 @@ def chol_solve(A, b):
     return jsp.linalg.cho_solve((L, True), b)
 
 
+def transport_statistic_root(root, P, Kuf):
+    """Square-root form of B_new = P.T B_old P + Kuf Kuf.T.
+
+    QR compresses the concatenated factor without subtracting positive matrices.
+    This is the same full unweighted POAM statistic, not a covariance reset.
+    """
+    factors = jnp.concatenate((P.T @ root, Kuf), axis=1)
+    _, R = jnp.linalg.qr(factors.T, mode="reduced")
+    return R.T
+
+
+def variational_from_root(K, a, root, noise_std):
+    """POAM Eqs. 7–8 in whitened square-root algebra, with existing K jitter.
+
+    Forming K+B/sigma² directly can lose positive definiteness in float32 after
+    many transports. Whiten the factor and solve I+FF.T/sigma² instead. Computing
+    S as V.T V also avoids an asymmetric K @ solve(A,K) covariance product.
+    """
+    Lk = jnp.linalg.cholesky((K + K.T) / 2 + 1e-6 * jnp.eye(len(K)))
+    whiten = lambda y: jsp.linalg.solve_triangular(Lk, y, lower=True)
+    F = whiten(root) / noise_std
+    C = jnp.eye(len(K)) + F @ F.T
+    Lc = jnp.linalg.cholesky((C + C.T) / 2)
+    V = jsp.linalg.solve_triangular(Lc, whiten(K), lower=True)
+    v = jsp.linalg.solve_triangular(Lc, whiten(a), lower=True) / noise_std**2
+    return V.T @ v, V.T @ V
+
+
 def select_inducing(params, candidates, lengths, count):
     """Pivoted Cholesky; storage and work depend on M+new batch, not history."""
     K = np.asarray(attentive_kernel(params, candidates, candidates, lengths), dtype=np.float64)
@@ -182,6 +210,7 @@ class POAM:
         n = len(centers)
         self.a = jnp.zeros((n, 2))
         self.B = jnp.zeros((n, n))
+        self.root_B = jnp.zeros((n, n))
         self.old_K = self.kernel(self.z, self.z)
         self.mean = jnp.zeros((n, 2))
         self.covariance = self.old_K
@@ -206,11 +235,9 @@ class POAM:
         K = self.kernel(z, z)
         Kuf = self.kernel(z, x)
         self.a = P.T @ self.a + Kuf @ y
-        self.B = P.T @ self.B @ P + Kuf @ Kuf.T
-        A = K + self.B / self.noise_std**2
-        self.mean = K @ chol_solve(A, self.a) / self.noise_std**2
-        self.covariance = K @ chol_solve(A, K)
-        self.covariance = (self.covariance + self.covariance.T) * 0.5
+        self.root_B = transport_statistic_root(self.root_B, P, Kuf)
+        self.B = self.root_B @ self.root_B.T
+        self.mean, self.covariance = variational_from_root(K, self.a, self.root_B, self.noise_std)
         self.z = z
         self.old_K = K
         self.data_x = jnp.concatenate((self.data_x, x))
@@ -297,4 +324,5 @@ class POAM:
             self.B,
             self.old_K,
             jnp.array(self.noise_std),
+            self.root_B,
         )

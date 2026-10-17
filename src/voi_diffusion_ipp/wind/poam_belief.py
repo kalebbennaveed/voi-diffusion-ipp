@@ -114,6 +114,7 @@ class POAMBelief(NamedTuple):
     B: jax.Array
     old_K: jax.Array
     noise_std: jax.Array
+    root_B: jax.Array
 
     @property
     def sample_shape(self):
@@ -146,7 +147,13 @@ class POAMBelief(NamedTuple):
         return A @ self.mean, jnp.maximum(var, 0)[:, None, None] * jnp.eye(2)[None]
 
     def condition(self, positions, measured_wind, relocate=False):
-        from .poam import attention_weights, chol_solve, select_inducing_jax
+        from .poam import (
+            attention_weights,
+            chol_solve,
+            select_inducing_jax,
+            transport_statistic_root,
+            variational_from_root,
+        )
 
         z = self.basis.centers
         if relocate:
@@ -157,10 +164,9 @@ class POAMBelief(NamedTuple):
         P = chol_solve(self.old_K, self.kernel(self.basis.centers, z))
         Kuf = self.kernel(z, positions)
         a = P.T @ self.a + Kuf @ measured_wind
-        B = P.T @ self.B @ P + Kuf @ Kuf.T
-        A = K + B / self.noise_std**2
-        mean = K @ chol_solve(A, a) / self.noise_std**2
-        cov = K @ chol_solve(A, K)
+        root_B = transport_statistic_root(self.root_B, P, Kuf)
+        B = root_B @ root_B.T
+        mean, cov = variational_from_root(K, a, root_B, self.noise_std)
         basis = self.basis._replace(
             centers=z, center_weights=attention_weights(self.basis.parameters, z)
         )
@@ -170,6 +176,7 @@ class POAMBelief(NamedTuple):
             covariance=(cov + cov.T) / 2,
             a=a,
             B=B,
+            root_B=root_B,
             old_K=K,
             inverse=chol_solve(K, jnp.eye(len(z))),
         )

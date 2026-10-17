@@ -476,3 +476,32 @@ The four-call benchmark was ~1.14–1.16 s cache+MBD+full check; actual mission
 cycles including POAM/input preparation are ~1.25 s. Startup compilation is
 separate and remains substantial. Relevant 21 numerical/causality/cache/drag
 tests and 10 frontend model tests passed.
+
+
+### Square-root POAM repair and fresh 120-second pair
+
+The original 6-proposal proposed run completed 120 s (cost 2.77085, 17 A/B
+transfers, dense clearance 0.06293 m, zero contacts). The comparator failed after
+75 s: accumulated B lost PSD under repeated float32 transport (min eig -3.9e-5),
+causing K+B/noise² Cholesky failure. Raw partial run and numeric failure fixtures
+remain in results/budgeted_missions/persistent_two_region_01 and
+docs/budgeted_planner/poam_failure_period_*.npz. This is not a completed pair.
+
+New exact square-root form transports B with QR of [P.T L_B, K_uf]. Variational
+updates whiten by Cholesky(K+jitter I) and solve I+F F.T; S is formed as V.T V.
+No covariance reset, forgetting, or information reward. Both real and hypothetical
+updates use this algebra. Thirteen POAM/hypothetical/planner tests and an additional
+independent NumPy float64 algebra test passed. Replaying all retained 75 comparator
+and 120 proposed observation updates is finite with positive variational spectra.
+Evidence: docs/budgeted_planner/poam_square_root_long_replay.json. First replay
+script hit a relative-path output bug after successfully checking 75 updates;
+retry log retained separately. Driver now records finite-belief status and stops
+immediately after saving any invalid posterior, rather than proceeding another cycle.
+
+Fresh frozen protocol: docs/two_region_design/persistent_root_protocol.json.
+Same task, seed 8101, same prior survey and 10 s horizon; restore 8 proposals
+because the user now accepts ~2 s. Run both full 120 s arms serially into
+results/budgeted_missions/persistent_two_region_root_01. Preserve src/ and configs
+while active. Still no validated substantial learning benefit. Exporter and UI
+are being completed independently; publish only complete numeric runs with
+posterior-reconstruction checks and genuine recorded-MBD replay.

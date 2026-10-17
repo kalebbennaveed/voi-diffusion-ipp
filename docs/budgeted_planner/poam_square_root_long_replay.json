@@ -1,0 +1,1184 @@
+[
+  {
+    "input": "results/budgeted_missions/persistent_two_region_01/current_belief.npz",
+    "all_finite": true,
+    "periods": [
+      {
+        "period": 0,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0018050326363123319,
+        "wind_rmse": 0.2466704249382019
+      },
+      {
+        "period": 1,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0011686340871066275,
+        "wind_rmse": 0.24284988641738892
+      },
+      {
+        "period": 2,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0009380070228191687,
+        "wind_rmse": 0.24768248200416565
+      },
+      {
+        "period": 3,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0009264291318094109,
+        "wind_rmse": 0.25700655579566956
+      },
+      {
+        "period": 4,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0009185734988942544,
+        "wind_rmse": 0.2557937800884247
+      },
+      {
+        "period": 5,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0008504229956494782,
+        "wind_rmse": 0.2588996887207031
+      },
+      {
+        "period": 6,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0006807212909697533,
+        "wind_rmse": 0.25091981887817383
+      },
+      {
+        "period": 7,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0006451362319728757,
+        "wind_rmse": 0.2586432993412018
+      },
+      {
+        "period": 8,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000535171288949624,
+        "wind_rmse": 0.2601664364337921
+      },
+      {
+        "period": 9,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005350402296916517,
+        "wind_rmse": 0.2623971700668335
+      },
+      {
+        "period": 10,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005349057336434492,
+        "wind_rmse": 0.2645237445831299
+      },
+      {
+        "period": 11,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000534595198824828,
+        "wind_rmse": 0.2629322111606598
+      },
+      {
+        "period": 12,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005394681440291266,
+        "wind_rmse": 0.26132386922836304
+      },
+      {
+        "period": 13,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005371772263371888,
+        "wind_rmse": 0.25753334164619446
+      },
+      {
+        "period": 14,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005348589663536551,
+        "wind_rmse": 0.2471139281988144
+      },
+      {
+        "period": 15,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005332722367759622,
+        "wind_rmse": 0.23714306950569153
+      },
+      {
+        "period": 16,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000529481947271677,
+        "wind_rmse": 0.23113913834095
+      },
+      {
+        "period": 17,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005270685308795968,
+        "wind_rmse": 0.23658742010593414
+      },
+      {
+        "period": 18,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000419561258417144,
+        "wind_rmse": 0.2599150538444519
+      },
+      {
+        "period": 19,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004203724163241789,
+        "wind_rmse": 0.25806161761283875
+      },
+      {
+        "period": 20,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00042008829597956496,
+        "wind_rmse": 0.2375597059726715
+      },
+      {
+        "period": 21,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041992778226349357,
+        "wind_rmse": 0.2382497489452362
+      },
+      {
+        "period": 22,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041977309316805917,
+        "wind_rmse": 0.24021503329277039
+      },
+      {
+        "period": 23,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004196286940473842,
+        "wind_rmse": 0.24136464297771454
+      },
+      {
+        "period": 24,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00042336207526561155,
+        "wind_rmse": 0.24573040008544922
+      },
+      {
+        "period": 25,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041786885665544206,
+        "wind_rmse": 0.2421342432498932
+      },
+      {
+        "period": 26,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00039182283704722814,
+        "wind_rmse": 0.23399648070335388
+      },
+      {
+        "period": 27,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003843574588661283,
+        "wind_rmse": 0.23130729794502258
+      },
+      {
+        "period": 28,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003827737349876193,
+        "wind_rmse": 0.23106972873210907
+      },
+      {
+        "period": 29,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003822842509670738,
+        "wind_rmse": 0.23202969133853912
+      },
+      {
+        "period": 30,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00038177203073039,
+        "wind_rmse": 0.2289232462644577
+      },
+      {
+        "period": 31,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003446783293750842,
+        "wind_rmse": 0.22984476387500763
+      },
+      {
+        "period": 32,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00032326154465346586,
+        "wind_rmse": 0.23925566673278809
+      },
+      {
+        "period": 33,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00032268110887206946,
+        "wind_rmse": 0.23927807807922363
+      },
+      {
+        "period": 34,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003184071940823272,
+        "wind_rmse": 0.23972107470035553
+      },
+      {
+        "period": 35,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00031841703209340756,
+        "wind_rmse": 0.22394339740276337
+      },
+      {
+        "period": 36,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00032356103140489777,
+        "wind_rmse": 0.18556001782417297
+      },
+      {
+        "period": 37,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003227184353822309,
+        "wind_rmse": 0.18470759689807892
+      },
+      {
+        "period": 38,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003218788405790635,
+        "wind_rmse": 0.1933579444885254
+      },
+      {
+        "period": 39,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00029827278693204723,
+        "wind_rmse": 0.20121736824512482
+      },
+      {
+        "period": 40,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002693433625467274,
+        "wind_rmse": 0.20500792562961578
+      },
+      {
+        "period": 41,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002659376455762108,
+        "wind_rmse": 0.22558601200580597
+      },
+      {
+        "period": 42,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000262751259380215,
+        "wind_rmse": 0.22056986391544342
+      },
+      {
+        "period": 43,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00027376320798873534,
+        "wind_rmse": 0.2170906662940979
+      },
+      {
+        "period": 44,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00027299278956660795,
+        "wind_rmse": 0.21587851643562317
+      },
+      {
+        "period": 45,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002521929196484478,
+        "wind_rmse": 0.21546223759651184
+      },
+      {
+        "period": 46,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00024153425954636347,
+        "wind_rmse": 0.21465547382831573
+      },
+      {
+        "period": 47,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00024138249194835456,
+        "wind_rmse": 0.2165452092885971
+      },
+      {
+        "period": 48,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00023897944674916634,
+        "wind_rmse": 0.21059313416481018
+      },
+      {
+        "period": 49,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00022981923687487389,
+        "wind_rmse": 0.2050589770078659
+      },
+      {
+        "period": 50,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002150988846889315,
+        "wind_rmse": 0.20129068195819855
+      },
+      {
+        "period": 51,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00021643432452995534,
+        "wind_rmse": 0.19505742192268372
+      },
+      {
+        "period": 52,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00017881718931761885,
+        "wind_rmse": 0.18990616500377655
+      },
+      {
+        "period": 53,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00016965093547700007,
+        "wind_rmse": 0.1852761209011078
+      },
+      {
+        "period": 54,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0001657036852994972,
+        "wind_rmse": 0.18699568510055542
+      },
+      {
+        "period": 55,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00016413248611695219,
+        "wind_rmse": 0.18714657425880432
+      },
+      {
+        "period": 56,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018039325111853587,
+        "wind_rmse": 0.19233424961566925
+      },
+      {
+        "period": 57,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018304197899527525,
+        "wind_rmse": 0.19895021617412567
+      },
+      {
+        "period": 58,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00017997957320835497,
+        "wind_rmse": 0.1952039897441864
+      },
+      {
+        "period": 59,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018097896564041722,
+        "wind_rmse": 0.19090163707733154
+      },
+      {
+        "period": 60,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00020783235131671202,
+        "wind_rmse": 0.18129190802574158
+      },
+      {
+        "period": 61,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00019519031028717554,
+        "wind_rmse": 0.17592105269432068
+      },
+      {
+        "period": 62,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00019891405845130222,
+        "wind_rmse": 0.16879256069660187
+      },
+      {
+        "period": 63,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00016562575386927983,
+        "wind_rmse": 0.16540010273456573
+      },
+      {
+        "period": 64,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00016396929707240997,
+        "wind_rmse": 0.16538140177726746
+      },
+      {
+        "period": 65,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00015768645298555532,
+        "wind_rmse": 0.16160047054290771
+      },
+      {
+        "period": 66,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00015890386848279076,
+        "wind_rmse": 0.1579347550868988
+      },
+      {
+        "period": 67,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000149201267761807,
+        "wind_rmse": 0.15037411451339722
+      },
+      {
+        "period": 68,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00014739332562901895,
+        "wind_rmse": 0.14595487713813782
+      },
+      {
+        "period": 69,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0001523602892025617,
+        "wind_rmse": 0.13704752922058105
+      },
+      {
+        "period": 70,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0001533611793676264,
+        "wind_rmse": 0.1385829597711563
+      },
+      {
+        "period": 71,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00015426255494176068,
+        "wind_rmse": 0.13748453557491302
+      },
+      {
+        "period": 72,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00015447194897329246,
+        "wind_rmse": 0.13446247577667236
+      },
+      {
+        "period": 73,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0001555931614594759,
+        "wind_rmse": 0.13125142455101013
+      },
+      {
+        "period": 74,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000155794557799629,
+        "wind_rmse": 0.12938398122787476
+      }
+    ]
+  },
+  {
+    "input": "results/budgeted_missions/persistent_two_region_01/proposed.npz",
+    "all_finite": true,
+    "periods": [
+      {
+        "period": 0,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0018050326363123319,
+        "wind_rmse": 0.2466704249382019
+      },
+      {
+        "period": 1,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0011686340871066275,
+        "wind_rmse": 0.24284988641738892
+      },
+      {
+        "period": 2,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0009380070228191687,
+        "wind_rmse": 0.24768248200416565
+      },
+      {
+        "period": 3,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0009267404684627831,
+        "wind_rmse": 0.25712260603904724
+      },
+      {
+        "period": 4,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0009189819766162166,
+        "wind_rmse": 0.2558743953704834
+      },
+      {
+        "period": 5,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0008539390712534792,
+        "wind_rmse": 0.26092180609703064
+      },
+      {
+        "period": 6,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0006810050172807303,
+        "wind_rmse": 0.24477244913578033
+      },
+      {
+        "period": 7,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004875950646069817,
+        "wind_rmse": 0.241483673453331
+      },
+      {
+        "period": 8,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000485759215229496,
+        "wind_rmse": 0.25009885430336
+      },
+      {
+        "period": 9,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00048537489044862164,
+        "wind_rmse": 0.2520865201950073
+      },
+      {
+        "period": 10,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00048511227301278794,
+        "wind_rmse": 0.25249630212783813
+      },
+      {
+        "period": 11,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004849362682789538,
+        "wind_rmse": 0.25258103013038635
+      },
+      {
+        "period": 12,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00048444454287396567,
+        "wind_rmse": 0.25068047642707825
+      },
+      {
+        "period": 13,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005360462043391695,
+        "wind_rmse": 0.25375252962112427
+      },
+      {
+        "period": 14,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005338184433878391,
+        "wind_rmse": 0.24805711209774017
+      },
+      {
+        "period": 15,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005244456766327528,
+        "wind_rmse": 0.24130181968212128
+      },
+      {
+        "period": 16,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005156072552475013,
+        "wind_rmse": 0.24446327984333038
+      },
+      {
+        "period": 17,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005121243730729944,
+        "wind_rmse": 0.23750518262386322
+      },
+      {
+        "period": 18,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0005114997211626667,
+        "wind_rmse": 0.2525700032711029
+      },
+      {
+        "period": 19,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00044038858171520145,
+        "wind_rmse": 0.2533625066280365
+      },
+      {
+        "period": 20,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000419784300680286,
+        "wind_rmse": 0.25118616223335266
+      },
+      {
+        "period": 21,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041939808060806175,
+        "wind_rmse": 0.2510901093482971
+      },
+      {
+        "period": 22,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041765754094653506,
+        "wind_rmse": 0.24975310266017914
+      },
+      {
+        "period": 23,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041721125119018585,
+        "wind_rmse": 0.24734993278980255
+      },
+      {
+        "period": 24,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004168245025970591,
+        "wind_rmse": 0.2462090700864792
+      },
+      {
+        "period": 25,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004162939987252268,
+        "wind_rmse": 0.19970254600048065
+      },
+      {
+        "period": 26,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041585084252160977,
+        "wind_rmse": 0.19321730732917786
+      },
+      {
+        "period": 27,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041481531171503434,
+        "wind_rmse": 0.1974635273218155
+      },
+      {
+        "period": 28,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041413588347452015,
+        "wind_rmse": 0.2006826549768448
+      },
+      {
+        "period": 29,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004140363762552583,
+        "wind_rmse": 0.20410078763961792
+      },
+      {
+        "period": 30,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041365529798961917,
+        "wind_rmse": 0.20807912945747375
+      },
+      {
+        "period": 31,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0004131433208120063,
+        "wind_rmse": 0.20568646490573883
+      },
+      {
+        "period": 32,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00041147274747697633,
+        "wind_rmse": 0.20853427052497864
+      },
+      {
+        "period": 33,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00039417006684933916,
+        "wind_rmse": 0.21059809625148773
+      },
+      {
+        "period": 34,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00034292124608397426,
+        "wind_rmse": 0.21106521785259247
+      },
+      {
+        "period": 35,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0003451396397786283,
+        "wind_rmse": 0.21081440150737762
+      },
+      {
+        "period": 36,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00034346034286601864,
+        "wind_rmse": 0.2133990377187729
+      },
+      {
+        "period": 37,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002680318194510788,
+        "wind_rmse": 0.19739170372486115
+      },
+      {
+        "period": 38,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00026802484798673845,
+        "wind_rmse": 0.19578653573989868
+      },
+      {
+        "period": 39,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002606422276460961,
+        "wind_rmse": 0.19684620201587677
+      },
+      {
+        "period": 40,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00026061113911975646,
+        "wind_rmse": 0.18654219806194305
+      },
+      {
+        "period": 41,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002574701323486508,
+        "wind_rmse": 0.18063606321811676
+      },
+      {
+        "period": 42,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002542425906380915,
+        "wind_rmse": 0.17783665657043457
+      },
+      {
+        "period": 43,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002518050655694043,
+        "wind_rmse": 0.18096396327018738
+      },
+      {
+        "period": 44,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00023591622505378124,
+        "wind_rmse": 0.1827392727136612
+      },
+      {
+        "period": 45,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00021056547321737939,
+        "wind_rmse": 0.1818362921476364
+      },
+      {
+        "period": 46,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00021062343210876067,
+        "wind_rmse": 0.17581342160701752
+      },
+      {
+        "period": 47,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00021049258755496557,
+        "wind_rmse": 0.17630499601364136
+      },
+      {
+        "period": 48,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002103503078002156,
+        "wind_rmse": 0.17537465691566467
+      },
+      {
+        "period": 49,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00021030221255933916,
+        "wind_rmse": 0.17431560158729553
+      },
+      {
+        "period": 50,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002102359108006912,
+        "wind_rmse": 0.1894889622926712
+      },
+      {
+        "period": 51,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002105324332027803,
+        "wind_rmse": 0.18448619544506073
+      },
+      {
+        "period": 52,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0002099284466769493,
+        "wind_rmse": 0.1829909384250641
+      },
+      {
+        "period": 53,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00020835056338421257,
+        "wind_rmse": 0.1849817931652069
+      },
+      {
+        "period": 54,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00020128996290425487,
+        "wind_rmse": 0.18880166113376617
+      },
+      {
+        "period": 55,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018446527658837035,
+        "wind_rmse": 0.1883888989686966
+      },
+      {
+        "period": 56,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018361183544754868,
+        "wind_rmse": 0.18843048810958862
+      },
+      {
+        "period": 57,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000183545694582416,
+        "wind_rmse": 0.18833284080028534
+      },
+      {
+        "period": 58,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0001835242151550601,
+        "wind_rmse": 0.18796518445014954
+      },
+      {
+        "period": 59,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018350227007646482,
+        "wind_rmse": 0.18520930409431458
+      },
+      {
+        "period": 60,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018348654460233007,
+        "wind_rmse": 0.18511457741260529
+      },
+      {
+        "period": 61,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00018454619673905463,
+        "wind_rmse": 0.1840437799692154
+      },
+      {
+        "period": 62,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00017516825679192704,
+        "wind_rmse": 0.1835566908121109
+      },
+      {
+        "period": 63,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00017153708932940675,
+        "wind_rmse": 0.1835561990737915
+      },
+      {
+        "period": 64,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00015883413461469675,
+        "wind_rmse": 0.18219025433063507
+      },
+      {
+        "period": 65,
+        "finite": true,
+        "min_variational_eigenvalue": 0.000145349738145685,
+        "wind_rmse": 0.1806047558784485
+      },
+      {
+        "period": 66,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00014015573572114,
+        "wind_rmse": 0.1798185557126999
+      },
+      {
+        "period": 67,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0001396393357461062,
+        "wind_rmse": 0.17881478369235992
+      },
+      {
+        "period": 68,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00011005471295123375,
+        "wind_rmse": 0.16767263412475586
+      },
+      {
+        "period": 69,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00010330433832254665,
+        "wind_rmse": 0.17047391831874847
+      },
+      {
+        "period": 70,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00010407101342463728,
+        "wind_rmse": 0.17107848823070526
+      },
+      {
+        "period": 71,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00010413725058094122,
+        "wind_rmse": 0.17048068344593048
+      },
+      {
+        "period": 72,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00010409724204678514,
+        "wind_rmse": 0.16753290593624115
+      },
+      {
+        "period": 73,
+        "finite": true,
+        "min_variational_eigenvalue": 0.0001039909166258286,
+        "wind_rmse": 0.16501203179359436
+      },
+      {
+        "period": 74,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00010378247136689122,
+        "wind_rmse": 0.16237030923366547
+      },
+      {
+        "period": 75,
+        "finite": true,
+        "min_variational_eigenvalue": 0.00010345242942098289,
+        "wind_rmse": 0.16600219905376434
+      },
+      {
+        "period": 76,
+        "finite": true,
+        "min_variational_eigenvalue": 7.747015713253118e-05,
+        "wind_rmse": 0.17327360808849335
+      },
+      {
+        "period": 77,
+        "finite": true,
+        "min_variational_eigenvalue": 7.601157183762542e-05,
+        "wind_rmse": 0.18511858582496643
+      },
+      {
+        "period": 78,
+        "finite": true,
+        "min_variational_eigenvalue": 6.263203351211864e-05,
+        "wind_rmse": 0.1930800974369049
+      },
+      {
+        "period": 79,
+        "finite": true,
+        "min_variational_eigenvalue": 6.564861895865953e-05,
+        "wind_rmse": 0.20400406420230865
+      },
+      {
+        "period": 80,
+        "finite": true,
+        "min_variational_eigenvalue": 6.58063901284096e-05,
+        "wind_rmse": 0.20844368636608124
+      },
+      {
+        "period": 81,
+        "finite": true,
+        "min_variational_eigenvalue": 6.670343061465057e-05,
+        "wind_rmse": 0.2075963020324707
+      },
+      {
+        "period": 82,
+        "finite": true,
+        "min_variational_eigenvalue": 7.042805472703788e-05,
+        "wind_rmse": 0.24509762227535248
+      },
+      {
+        "period": 83,
+        "finite": true,
+        "min_variational_eigenvalue": 6.946685119757202e-05,
+        "wind_rmse": 0.2662819027900696
+      },
+      {
+        "period": 84,
+        "finite": true,
+        "min_variational_eigenvalue": 7.872347580679103e-05,
+        "wind_rmse": 0.2592274248600006
+      },
+      {
+        "period": 85,
+        "finite": true,
+        "min_variational_eigenvalue": 8.178269103966009e-05,
+        "wind_rmse": 0.255573570728302
+      },
+      {
+        "period": 86,
+        "finite": true,
+        "min_variational_eigenvalue": 8.200441441861215e-05,
+        "wind_rmse": 0.25261321663856506
+      },
+      {
+        "period": 87,
+        "finite": true,
+        "min_variational_eigenvalue": 8.145390036994458e-05,
+        "wind_rmse": 0.24998819828033447
+      },
+      {
+        "period": 88,
+        "finite": true,
+        "min_variational_eigenvalue": 8.158059912634318e-05,
+        "wind_rmse": 0.24734777212142944
+      },
+      {
+        "period": 89,
+        "finite": true,
+        "min_variational_eigenvalue": 9.462116388614858e-05,
+        "wind_rmse": 0.24480131268501282
+      },
+      {
+        "period": 90,
+        "finite": true,
+        "min_variational_eigenvalue": 9.455095922320531e-05,
+        "wind_rmse": 0.24477645754814148
+      },
+      {
+        "period": 91,
+        "finite": true,
+        "min_variational_eigenvalue": 9.32287752570508e-05,
+        "wind_rmse": 0.24513225257396698
+      },
+      {
+        "period": 92,
+        "finite": true,
+        "min_variational_eigenvalue": 9.249640658462066e-05,
+        "wind_rmse": 0.245418518781662
+      },
+      {
+        "period": 93,
+        "finite": true,
+        "min_variational_eigenvalue": 9.30721238541424e-05,
+        "wind_rmse": 0.25414958596229553
+      },
+      {
+        "period": 94,
+        "finite": true,
+        "min_variational_eigenvalue": 9.343329640964893e-05,
+        "wind_rmse": 0.24803940951824188
+      },
+      {
+        "period": 95,
+        "finite": true,
+        "min_variational_eigenvalue": 9.176263554291098e-05,
+        "wind_rmse": 0.249284029006958
+      },
+      {
+        "period": 96,
+        "finite": true,
+        "min_variational_eigenvalue": 9.025963156700607e-05,
+        "wind_rmse": 0.2445172667503357
+      },
+      {
+        "period": 97,
+        "finite": true,
+        "min_variational_eigenvalue": 9.03948260264439e-05,
+        "wind_rmse": 0.25171685218811035
+      },
+      {
+        "period": 98,
+        "finite": true,
+        "min_variational_eigenvalue": 9.046233929120946e-05,
+        "wind_rmse": 0.2596539556980133
+      },
+      {
+        "period": 99,
+        "finite": true,
+        "min_variational_eigenvalue": 9.023590787362799e-05,
+        "wind_rmse": 0.25641268491744995
+      },
+      {
+        "period": 100,
+        "finite": true,
+        "min_variational_eigenvalue": 9.007407227160616e-05,
+        "wind_rmse": 0.2548248767852783
+      },
+      {
+        "period": 101,
+        "finite": true,
+        "min_variational_eigenvalue": 9.026430431296028e-05,
+        "wind_rmse": 0.2515408992767334
+      },
+      {
+        "period": 102,
+        "finite": true,
+        "min_variational_eigenvalue": 9.03120637245174e-05,
+        "wind_rmse": 0.249332994222641
+      },
+      {
+        "period": 103,
+        "finite": true,
+        "min_variational_eigenvalue": 9.0429383479976e-05,
+        "wind_rmse": 0.2458406239748001
+      },
+      {
+        "period": 104,
+        "finite": true,
+        "min_variational_eigenvalue": 9.038815003349862e-05,
+        "wind_rmse": 0.24376726150512695
+      },
+      {
+        "period": 105,
+        "finite": true,
+        "min_variational_eigenvalue": 9.017469393280275e-05,
+        "wind_rmse": 0.2407953441143036
+      },
+      {
+        "period": 106,
+        "finite": true,
+        "min_variational_eigenvalue": 9.035939924054054e-05,
+        "wind_rmse": 0.23972685635089874
+      },
+      {
+        "period": 107,
+        "finite": true,
+        "min_variational_eigenvalue": 9.035995670989065e-05,
+        "wind_rmse": 0.24012820422649384
+      },
+      {
+        "period": 108,
+        "finite": true,
+        "min_variational_eigenvalue": 8.973952216408915e-05,
+        "wind_rmse": 0.23392359912395477
+      },
+      {
+        "period": 109,
+        "finite": true,
+        "min_variational_eigenvalue": 8.108238106737567e-05,
+        "wind_rmse": 0.2497924566268921
+      },
+      {
+        "period": 110,
+        "finite": true,
+        "min_variational_eigenvalue": 8.145172623472189e-05,
+        "wind_rmse": 0.24164526164531708
+      },
+      {
+        "period": 111,
+        "finite": true,
+        "min_variational_eigenvalue": 8.105259849483016e-05,
+        "wind_rmse": 0.23744922876358032
+      },
+      {
+        "period": 112,
+        "finite": true,
+        "min_variational_eigenvalue": 8.06426713024913e-05,
+        "wind_rmse": 0.23559725284576416
+      },
+      {
+        "period": 113,
+        "finite": true,
+        "min_variational_eigenvalue": 8.028627484427886e-05,
+        "wind_rmse": 0.23703274130821228
+      },
+      {
+        "period": 114,
+        "finite": true,
+        "min_variational_eigenvalue": 7.528644073462044e-05,
+        "wind_rmse": 0.23780176043510437
+      },
+      {
+        "period": 115,
+        "finite": true,
+        "min_variational_eigenvalue": 8.734952519708227e-05,
+        "wind_rmse": 0.23423361778259277
+      },
+      {
+        "period": 116,
+        "finite": true,
+        "min_variational_eigenvalue": 8.875414432790832e-05,
+        "wind_rmse": 0.23239852488040924
+      },
+      {
+        "period": 117,
+        "finite": true,
+        "min_variational_eigenvalue": 8.870150054774007e-05,
+        "wind_rmse": 0.23056994378566742
+      },
+      {
+        "period": 118,
+        "finite": true,
+        "min_variational_eigenvalue": 8.873759402424763e-05,
+        "wind_rmse": 0.22735930979251862
+      },
+      {
+        "period": 119,
+        "finite": true,
+        "min_variational_eigenvalue": 8.867530781542892e-05,
+        "wind_rmse": 0.22731254994869232
+      }
+    ]
+  }
+]

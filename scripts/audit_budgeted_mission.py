@@ -28,6 +28,12 @@ def audit(path, substeps=32):
     minimum = np.full(len(x), np.inf)
     obstacles, bounds = d["obstacles"], d["bounds"]
 
+    # Refuse to silently apply this study-specific field to another recording.
+    cells = np.asarray(d["cells"], dtype=float)
+    envelope = np.exp(-0.5 * ((cells @ tangent / 1.1) ** 4 + (cells @ normal / 0.35) ** 2))
+    expected_wind = 1.8 * envelope[:, None] * (tangent + 0.2 * normal)
+    np.testing.assert_allclose(d["physical_wind"], expected_wind, atol=2e-6, rtol=2e-6)
+
     def derivative(x):
         p = x[:, :2]
         axial, lateral = p @ tangent, p @ normal
@@ -136,6 +142,7 @@ def audit(path, substeps=32):
             k: float(np.quantile(times, q)) for k, q in [("median", 0.5), ("p95", 0.95), ("max", 1)]
         },
         "cycle_1s_miss_fraction": float(np.mean(np.array(times) > 1)),
+        "cycle_2s_miss_fraction": float(np.mean(np.array(times) > 2)),
         "final_mean_clarity": {
             name: float(q[-1, mask[:, i]].mean()) for i, name in enumerate(["A", "B"])
         },

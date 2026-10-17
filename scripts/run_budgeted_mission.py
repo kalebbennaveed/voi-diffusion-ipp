@@ -154,7 +154,7 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
             execute, best.vector, x, q, belief, eps[cfg.worlds :], actual_noise, jnp.array(backup)
         )
         if method != "oracle":
-            _, update_s = timed(
+            losses, update_s = timed(
                 lambda executed=executed, i=i: poam.update(
                     executed.x[observation_indices + 1, :2],
                     executed.observations[observation_indices],
@@ -163,8 +163,12 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
                 )
             )
             belief, snapshot_s = timed(poam.planning_belief)
+            finite_belief = all(
+                np.isfinite(np.asarray(v)).all() for v in jax.tree.leaves((belief, losses))
+            )
         else:
             update_s, snapshot_s = 0.0, 0.0
+            finite_belief = True
         x, q = executed.x[-1], executed.q[-1]
         total_cost += float(executed.cost)
         mean, cov = snapshot(belief)
@@ -200,6 +204,8 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
             "planning_cycle_s": planning_cycle,
             "generation_wall_s": generation_wall_s,
             "deadline_1s_missed": planning_cycle > 1.0,
+            "deadline_2s_missed": planning_cycle > 2.0,
+            "finite_belief": finite_belief,
             "wall_period_s": time.perf_counter() - period_start,
             "wind_rmse": float(jnp.sqrt(jnp.mean((mean - truth.at(env.cells)) ** 2))),
             "vector": np.array(best.vector),
@@ -257,13 +263,15 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
                 {
                     "metadata": metadata,
                     "periods": records,
-                    "complete": i == periods - 1,
+                    "complete": i == periods - 1 and finite_belief,
                     "wall_s": time.perf_counter() - start,
                 },
                 indent=2,
             )
             + "\n"
         )
+        if not finite_belief:
+            raise FloatingPointError(f"Nonfinite POAM after period {i}; partial data preserved")
 
 
 def main():
