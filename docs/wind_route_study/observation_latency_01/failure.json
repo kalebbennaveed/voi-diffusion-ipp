@@ -1,0 +1,5 @@
+{
+  "phase": "Initial posterior reproduction before any counterfactual execution",
+  "reason": "Unjitted prediction evaluation differs from archived jitted prediction by max 4.37e-5 in near-zero standard deviations at two grid points; means passed. Restore exact jitted snapshot path instead of relaxing tolerances.",
+  "counterfactuals_executed": false
+}

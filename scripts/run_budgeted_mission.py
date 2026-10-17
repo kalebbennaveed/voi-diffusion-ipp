@@ -2,7 +2,7 @@
 
 Both arms update full POAM on real observations. Actual controls use uncached
 spline RPCBF every 0.05 s. The 10-second sampled plan is verified uncached before
-executing one second; failed verification invokes the declared backup policy.
+executing the configured first stage; failed verification invokes the backup policy.
 """
 
 import argparse
@@ -20,6 +20,7 @@ import yaml
 from voi_diffusion_ipp.config import config_dict, load_config
 from voi_diffusion_ipp.experiments.checkpoint import source_hashes
 from voi_diffusion_ipp.experiments.two_region import make_two_region, outer_survey_positions
+from voi_diffusion_ipp.experiments.wind_cases import WIND_CASES, physical_wind, wind_case_spec
 from voi_diffusion_ipp.planning.budgeted import (
     evaluate,
     make_planner,
@@ -36,24 +37,39 @@ from voi_diffusion_ipp.wind.poam import POAM
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def survey_positions(env, prior_regime):
+    """Common historical noisy survey, never a hidden-field prior mean."""
+    outer = outer_survey_positions(env)
+    if prior_regime == "outer-survey":
+        return outer
+    if prior_regime == "routes-survey":
+        main = jnp.linspace(env.roi_a, env.roi_b, 21)
+        return jnp.concatenate((outer, main))
+    raise ValueError(prior_regime)
+
+
 def timed(fn, *args):
     start = time.perf_counter()
     result = jax.block_until_ready(fn(*args))
     return result, time.perf_counter() - start
 
 
-def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold"):
+def run(
+    method, periods, seed, directory, cfg, rapid=False, prior_regime="cold", wind_case="original"
+):
     n_exec = round(cfg.stage_steps * cfg.dt / 0.05)
     stride = round(cfg.dt / 0.05)
     observation_indices = jnp.arange(stride - 1, n_exec, stride)
     actual_cfg = replace(cfg, dt=0.05, stage_steps=n_exec)
     spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
     env, poam, x, q, truth = make_two_region(spec, cfg)
+    field_spec = wind_case_spec(wind_case)
+    truth = physical_wind(env, field_spec)
     root = jax.random.PRNGKey(seed)
     positions = jnp.tile(x[:2], (8, 1))
     measurements = truth.at(positions) + cfg.observation_std * jax.random.normal(root, (8, 2))
-    if prior_regime == "outer-survey":
-        positions = outer_survey_positions(env)
+    if prior_regime in ("outer-survey", "routes-survey"):
+        positions = survey_positions(env, prior_regime)
         survey_key = jax.random.PRNGKey(610000 + seed)
         measurements = truth.at(positions) + cfg.observation_std * jax.random.normal(
             survey_key, positions.shape
@@ -132,6 +148,9 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
         "observation_dt": cfg.dt,
         "rapid_shared_initializations": rapid,
         "prior_regime": prior_regime,
+        "wind_case": wind_case,
+        "physical_wind_spec": field_spec,
+        "task_spec": spec,
         "candidate_objective_cells": len(objective_cells),
         "driver_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "task_sha256": hashlib.sha256(
@@ -299,7 +318,10 @@ def main():
     p.add_argument("--chunk", type=int, default=1)
     p.add_argument("--proposals", type=int, default=8)
     p.add_argument("--first-stage", type=float, default=1.0)
-    p.add_argument("--prior-regime", choices=["cold", "outer-survey"], default="cold")
+    p.add_argument(
+        "--prior-regime", choices=["cold", "outer-survey", "routes-survey"], default="cold"
+    )
+    p.add_argument("--wind-case", choices=list(WIND_CASES), default="original")
     args = p.parse_args()
     cfg = load_config(ROOT / "configs/two_region_budgeted.yaml")
     n = round(args.first_stage / cfg.dt)
@@ -317,7 +339,16 @@ def main():
         if method not in ("proposed", "current_belief", "oracle", "wind_blind_planner"):
             raise ValueError(method)
         print("METHOD", method, flush=True)
-        run(method, args.periods, args.seed, args.output, cfg, args.rapid, args.prior_regime)
+        run(
+            method,
+            args.periods,
+            args.seed,
+            args.output,
+            cfg,
+            args.rapid,
+            args.prior_regime,
+            args.wind_case,
+        )
 
 
 if __name__ == "__main__":

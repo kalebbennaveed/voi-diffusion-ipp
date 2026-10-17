@@ -21,6 +21,7 @@ import yaml
 from voi_diffusion_ipp.config import Config, config_dict
 from voi_diffusion_ipp.experiments.checkpoint import source_hashes
 from voi_diffusion_ipp.experiments.two_region import make_two_region
+from voi_diffusion_ipp.experiments.wind_cases import CASE_LABELS, physical_wind, wind_case_spec
 from voi_diffusion_ipp.planning.budgeted import evaluate
 from voi_diffusion_ipp.planning.wind_blind import evaluate_nominal
 from voi_diffusion_ipp.viz.demo_data import serializable
@@ -69,6 +70,8 @@ def export(path, pair_with=None):
         ]:
             if meta[key] != reference_meta[key]:
                 raise ValueError(f"Cannot pair different {key}")
+        if meta.get("physical_wind_spec") != reference_meta.get("physical_wind_spec"):
+            raise ValueError("Cannot pair different physical wind specifications")
         with np.load(pair_with, allow_pickle=False) as reference:
             for key in [
                 "physical_wind",
@@ -95,10 +98,20 @@ def export(path, pair_with=None):
             "group": reference_record["group"],
             "scope": "Same task/config/prior/seed/wind/initial states; additive baseline source revision. Not an anticipation-only ablation.",
         }
-    spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
+    spec = meta.get("task_spec") or yaml.safe_load(
+        (ROOT / "configs/two_region_design.yaml").read_text()
+    )
     env, model, _, _, _ = make_two_region(spec, cfg)
+    wind_case = meta.get("wind_case", "original")
+    field_spec = meta.get("physical_wind_spec", wind_case_spec("original"))
+    np.testing.assert_allclose(
+        physical_wind(env, field_spec).at(env.cells), d["physical_wind"], atol=2e-6, rtol=2e-6
+    )
+    case_label = CASE_LABELS[wind_case]
+    if meta["prior_regime"] == "routes-survey":
+        case_label += " · main route surveyed"
     root = jax.random.PRNGKey(seed)
-    if meta["prior_regime"] == "outer-survey":
+    if meta["prior_regime"] in ("outer-survey", "routes-survey"):
         model = POAM.from_data(
             d["initial_observation_positions"],
             d["initial_observations"],
@@ -309,6 +322,11 @@ def export(path, pair_with=None):
         "Candidate curves are cached-field RPCBF forecasts in planning world 1; selected curves "
         "are original uncached checks. Export/replay work is separate from planning latency."
     )
+    if meta["prior_regime"] == "routes-survey":
+        note = note.replace(
+            "same archived noisy survey of the two outer routes; the passage is unobserved initially.",
+            "same archived noisy survey of the two outer routes plus 21 main-passage locations. This tests low remaining route uncertainty, not a physical-wind-only intervention.",
+        )
     if wind_blind:
         note = (
             "Additional development baseline: nominal MBD assumes zero wind and does not include "
@@ -322,7 +340,7 @@ def export(path, pair_with=None):
         )
     payload = {
         "schema": 2,
-        "title": "Two-region persistent monitoring · development",
+        "title": f"{case_label} · two-region persistent monitoring · development",
         "metrics": metrics,
         "config": ui_cfg,
         "mission": mission,
@@ -333,7 +351,7 @@ def export(path, pair_with=None):
         "planning": planning,
         "wind_model": "Full POAM · data-supported inducing initialization",
         "forecast_note": note,
-        "research_note": note,
+        "research_note": f"{case_label}. " + note,
         "source_sha256": meta["source_sha256"],
         "display_precision": "Clarity/field snapshots rounded to 5 decimals, paths to 6; raw archives and reported metrics retain full precision.",
         "research_audit": audit,
@@ -344,7 +362,12 @@ def export(path, pair_with=None):
     file.write_text(json.dumps(serializable(payload), separators=(",", ":"), allow_nan=False))
     group = hashlib.sha256(
         json.dumps(
-            {k: meta[k] for k in ["config", "prior_regime", "source_sha256"]}, sort_keys=True
+            {
+                **{k: meta[k] for k in ["config", "prior_regime", "source_sha256"]},
+                "physical_wind_spec": field_spec,
+                "duration_s": audit["duration_s"],
+            },
+            sort_keys=True,
         ).encode()
     ).hexdigest()[:16]
     record = {
@@ -354,7 +377,7 @@ def export(path, pair_with=None):
         "method": method,
         "seed": seed,
         "group": pairing["group"] if pairing else f"budgeted-{group}",
-        "label": f"Two large regions · {audit['duration_s']:.0f} s · {period_s:g} s replanning · {method} · development",
+        "label": f"{case_label} · {audit['duration_s']:.0f} s · {method} · development",
         "available_seconds": audit["duration_s"],
         "file": str(file.relative_to(ROOT)),
         "live": False,

@@ -10,6 +10,7 @@
  <div class="environment-heading"><h3 id="environment-heading">Choose an environment</h3><span id="environment-count">Loading comparisons…</span></div>
  <p>Play actual execution and denoising now. Unfinished missions show the completed portion, clearly marked as a preview. Completed pairs show final results.</p>
  <div class="comparison-buttons"><button id="open-long" class="primary-button">▶ Play latest long mission</button><button id="open-regions" class="quick-secondary">▶ Two large regions · A ↔ B</button></div>
+ <h4>Two-region wind comparisons · 120 seconds</h4><p>Same monitoring task and planner. Change the physical wind; keep the original case. Each is a development experiment.</p><div id="wind-case-grid" class="environment-grid"></div>
  <details id="environment-gallery"><summary>All environments and historical recordings</summary><div id="environment-grid" class="environment-grid"></div></details>
 </section>
 <details id="safety-study" class="safety-study panel hidden">
@@ -34,6 +35,7 @@
 <section id="persistent-progress" class="persistent-progress hidden" aria-label="Persistent experiment progress"><details><summary id="persistent-progress-summary">Persistent monitoring · 122.4 seconds per mission</summary><p id="persistent-progress-text" role="status"></p><button id="refresh-recordings" class="text-button">Load completed persistent comparison →</button></details></section>
 <div class="workspace">
 <section class="visual-panel panel">
+ <div id="contact-banner" class="contact-banner hidden" role="status"><span id="contact-message"></span><button id="inspect-contact" class="text-button">Inspect first contact →</button></div>
  <div id="preview-banner" class="preview-banner hidden" role="status"></div>
  <div class="environment-return"><button id="all-environments" class="text-button">↑ All environments</button><span id="active-environment"></span></div>
  <div class="panel-top"><div class="tabs" role="tablist" aria-label="Playback mode"><button id="comparison-tab" class="tab active" role="tab" aria-selected="true">Compare &amp; play</button><button id="result-tab" class="tab" role="tab" aria-selected="false">Final result</button><button id="diffusion-tab" class="tab" role="tab" aria-selected="false">Denoising</button><button id="mission-tab" class="tab" role="tab" aria-selected="false">Details</button></div><div class="scene-label"><span id="scene-label">Localized wind · corridor</span><span class="tag" id="variant-tag">Two-stage</span></div></div>
@@ -46,7 +48,8 @@
    <div class="comparison-event"><span id="comparison-event" role="status">Starting together</span><button id="comparison-moment" class="text-button">Jump to largest cost gap</button></div>
   </div>
   <div id="result-heading" class="result-heading"><p id="result-scope" class="eyebrow">COMPLETED MISSIONS · SAME WIND AND START</p><h3 id="result-verdict">Loading final results</h3><p id="result-context"></p></div>
-  <div class="field-toolbar"><label>Field layer <select id="field-layer"><option value="deficit">Clarity deficit</option><option value="clarity">Clarity</option><option value="target">Clarity target</option><option value="process">Process noise Qₚ</option><option value="visits">Sensing passes</option></select></label><span id="field-key">Light: 0 · Dark: 0.8 deficit · lower is better</span><button id="show-wind" class="text-button">Wind estimation ↓</button></div>
+  <div class="field-toolbar"><label>Field layer <select id="field-layer"><option value="deficit">Clarity deficit</option><option value="clarity">Clarity</option><option value="target">Clarity target</option><option value="process">Process noise Qₚ</option><option value="visits">Sensing passes</option></select></label><label>Wind arrows <select id="comparison-wind"><option value="physical">Physical wind · reference</option><option value="estimate">POAM estimate</option><option value="none">Off</option></select></label><span id="field-key">Light: 0 · Dark: 0.8 deficit · lower is better</span><button id="show-wind" class="text-button">Wind estimation ↓</button></div>
+  <p class="help" id="wind-case-note">Physical wind arrows are a diagnostic overlay, hidden from both planners. Arrow displacement = 0.3 × acceleration.</p>
   <div class="result-pair">
    <article class="result-card"><div class="result-card-heading"><strong id="result-name-a"></strong><span id="result-cost-a"></span></div><canvas id="result-map-a" aria-label="Completed trajectory of the proposed planner"></canvas><p id="result-note-a"></p><button id="inspect-a" class="text-button">Inspect this planner's denoising →</button></article>
    <article class="result-card"><div class="result-card-heading"><strong id="result-name-b"></strong><span id="result-cost-b"></span></div><canvas id="result-map-b" aria-label="Completed trajectory without anticipated learning"></canvas><p id="result-note-b"></p><button id="inspect-b" class="text-button">Inspect this planner's denoising →</button></article>

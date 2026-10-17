@@ -1,0 +1,38 @@
+[
+  {
+    "folder": "persistent_two_region_2s_01",
+    "method": "proposed",
+    "initial_selected_count": 30,
+    "periods": 60,
+    "feedback_gain_norm_median": 0.45456879298133146,
+    "cached_uncached_objective_max_abs_difference": 0.001489683985710144,
+    "mean_effective_sample_size": 6.211876615385214
+  },
+  {
+    "folder": "persistent_two_region_2s_01",
+    "method": "current_belief",
+    "initial_selected_count": 31,
+    "periods": 60,
+    "feedback_gain_norm_median": 0.0,
+    "cached_uncached_objective_max_abs_difference": 0.0008477270603179932,
+    "mean_effective_sample_size": 6.082029945154985
+  },
+  {
+    "folder": "reversed_wind_01",
+    "method": "proposed",
+    "initial_selected_count": 34,
+    "periods": 60,
+    "feedback_gain_norm_median": 0.0,
+    "cached_uncached_objective_max_abs_difference": 0.00030562281608581543,
+    "mean_effective_sample_size": 6.423718625803788
+  },
+  {
+    "folder": "reversed_wind_01",
+    "method": "current_belief",
+    "initial_selected_count": 34,
+    "periods": 60,
+    "feedback_gain_norm_median": 0.0,
+    "cached_uncached_objective_max_abs_difference": 0.0006680786609649658,
+    "mean_effective_sample_size": 6.106991063058376
+  }
+]

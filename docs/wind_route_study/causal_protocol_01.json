@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-10-17T09:37:24.486788+00:00",
+  "scope": "Offline diagnosis of weak reversed-wind anticipation gain, plus predeclared off-route candidate. No mission tuning or truth input to deployable arms.",
+  "cases": [
+    "reversed",
+    "offroute"
+  ],
+  "method_history": "proposed",
+  "periods": [
+    0,
+    15,
+    30
+  ],
+  "times_seconds": [
+    0,
+    30,
+    60
+  ],
+  "independent_banks": 4,
+  "worlds_per_bank": 4,
+  "new_geometric_seeds": 14,
+  "existing_candidates": 40,
+  "new_seeds": "Both region goals, middle and two bypasses in outward/return combinations. Staying and all original candidates retained. No forced alternation or information reward.",
+  "tests": [
+    "Earned POAM reconstruction matches archived means/stds",
+    "First-stage states identical under both objectives",
+    "Compare with/without hypothetical future learning using identical banks",
+    "Leave-one-bank-out choice assessment",
+    "Privileged known-wind forecast only to diagnose optimization/policy representation"
+  ],
+  "claim_limit": "Forecast/objective mechanism diagnostics, not executed benefit or held-out validation. Round-trip seeds not promoted unless they address a demonstrated limitation and survive executed timing checks.",
+  "driver_sha256": "747258e8dcdc7ab1cfd19bf534d3d7cc5375cb631b55cffea9db3f03d70b6e03"
+}

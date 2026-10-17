@@ -799,3 +799,102 @@ are retained in safety_only_expanded_budget_batching.npz.
 
 The heartbeat prompt now points to these completed findings and preserves the
 user's quiet-notification preference. No held-out success claim has been made.
+
+### User-directed wind reversal study — October 17, active
+
+The user requested opposite wind and route-relevant/irrelevant wind cases, then
+explicitly limited this work to the 2D demo and required retaining the original.
+Research automations remain paused; none were resumed. The account meter started
+at 37% used (63% remaining); stop bounded investigation by 55% used (45% remaining).
+
+`docs/wind_route_study/protocol_01.json` prospectively declares 120 s seed-8101
+reversal (three arms), crosswind (two wind-aware arms), and off-route wind (two
+wind-aware arms). Only physical truth changes; the planner receives earned noisy
+measurements, never the case specification. Original is exactly preserved and
+reversed wind is its exact negative. Eight independent-field/equivalence tests
+passed. Source, task config, driver, exporter and audit hashes are frozen in that
+protocol. Do not change src/configs or those scripts until missions and forecasts
+finish. New numerical files contain the resolved physical field and task specs.
+Session 72281 runs the reversal sequentially; log results/reversed_wind_01.log.
+No duplicate or parallel heavy JAX workers. Old stopped missions stay stopped.
+
+Only demo/app.js and demo/index.html are being enhanced for explicit wind-case
+selection, direction-specific route summaries and physical/estimated wind arrows.
+Existing 3D files and original recordings are untouched. Additional analysis
+scripts do not alter the frozen production source. All outcomes, including
+negative results, will be kept; this is development, not held-out validation.
+
+First wind-route screen and all seven 120 s replay exports completed successfully
+(coordinator 59752; results/wind_route_study_status.json complete). Freeze for that
+screen is lifted; src/ remains unchanged. Original replay retained. Reversal gives
+1.285% proposed cost improvement versus current belief, 21.063% versus wind-blind
+nominal planning; proposed's one middle transfer reverses to B→A, with 15 bypasses.
+Zero dense contacts. Crosswind: proposed cost 3.04879 versus 2.85073, but comparator
+contacts at 75.90 s, minimum -0.06261 m (26 control intervals). Proposed has zero
+contacts. Its higher raw cost is retained; cost after physical contact is only a
+no-impact-response simulation diagnostic. The 2D UI now warns and pauses at first
+contact; this was visibly checked at 75.95 s. This is NOT a no-wind-safety ablation.
+Off-route field: costs 2.64237 / 2.86059, 7.629% development improvement, zero contacts.
+This is not a clean no-learning-value case: the quiet middle route starts unknown.
+All independent whole-field clarity replays pass; numeric field checks and
+32-substep contact audits are in docs/wind_route_study/results_01.json.
+
+A separate low-value common historical main-route survey is prospectively declared
+in low_value_prior_protocol_01.json. The mission driver/exporter are being extended
+with routes-survey (the original 42 noisy locations plus 21 noisy passage locations),
+with no production method changes. Earlier driver text and all first-screen hashes
+remain archived. Do not rerun the original coordinator after this driver revision:
+its frozen hash check should now reject it.
+
+Active session 57041 runs scripts/diagnose_observation_latency.py, log
+results/observation_latency_01.log. It reproduces 74–80 s of the crosswind comparator
+before testing additional earned 5 Hz conditioning within the existing 2 s kernel-
+adaptation intervals. This is a fixed nominal-policy filter diagnostic, not replanning.
+One heavy worker only. The declared same-state multi-bank round-trip-seed diagnosis
+in causal_protocol_01.json has NOT started yet. Automations remain paused; 3D untouched.
+
+Follow-up coordinator session 83287 is active, status in
+results/wind_route_followup_status.json, with a new frozen manifest in
+followup_source_manifest.json. Source/configs, mission driver, exporter and the two
+diagnostic drivers must stay frozen until this coordinator finishes. It sequentially
+runs observation-latency diagnosis, the 120 s surveyed-main-route pair plus exports,
+and the declared four-bank/four-world causal candidate diagnoses. Nine physical-
+field/survey tests pass; the original 42 survey locations are exactly preserved.
+
+The initial observation-latency diagnostic failed before any counterfactual
+execution because an unjitted snapshot differed from the archived jitted standard
+deviation by 4.37e-5 at two near-zero cells. Failure log, executed driver and protocol
+are retained in observation_latency_01. Rerunning with the original jitted snapshot
+path (same tolerance) in observation_latency_02 reproduces the original 74–80 s
+trajectory **exactly**. Original boundary updates: minimum dense clearance -0.06261,
+26 contact intervals. Additional earned 5 Hz conditioning: +0.04241 m, zero contact.
+Independent local physical reintegration errors <6.1e-8. Full POAM kernel/inducing
+updates still occur at 2 s boundaries; only fixed-kernel earned-data conditioning is
+added between them. This is one fixed-policy local diagnostic, NOT a replanned
+mission, general safety result, or newly validated proposed method. It supports
+investigating shorter observation latency before changing path optimization.
+
+The POAM primary paper was rechecked at https://arxiv.org/html/2406.03669v1,
+Sec. IV-C (incremental variational updates) and IV-D (minibatches from all data and
+slower hyperparameter adaptation). It supports separating inference and parameter
+adaptation; it does not validate this control cadence or establish safety here.
+
+Scope clarification for the latency result: the archived **nominal reference
+policies** are fixed, but their wind-mean compensation and RPCBF both receive the
+updated belief. Thus this diagnoses controller observation latency; it does NOT
+isolate RPCBF alone or hold actuator commands fixed. scope_clarification.json is
+stored alongside the result. Any promotion must evaluate both components and
+match the forecasting approximation to the faster execution updates.
+
+Follow-up coordinator 83287 is complete; its source freeze is lifted. All five
+wind-case 2D comparisons are published, including the original. The surveyed-main-
+route case gives costs 2.43553 / 2.67378 (8.91% development gain), so it too fails
+to establish negligible value. Its initial passage sigma remains 0.183 m/s².
+Four-bank causal checks at six saved states show the same best averaged candidate
+in five states, and no robust held-bank advantage in the remaining state. None of
+14 added round-trip seeds wins; do not promote those seeds. See the full study
+README and retained numeric outputs. Next bounded refinement should address the
+compact policy's limited route-conditioned representation (0.6 m per-coordinate
+knot shift) and separately the demonstrated observation latency. Do not call
+single-seed development contrasts validation. All three original acceptance
+cases remain open in their strong scientific form.

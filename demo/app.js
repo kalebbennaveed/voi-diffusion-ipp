@@ -61,12 +61,57 @@ const environments = [
   {id:'survey_basin', name:'Quiet survey basin', duration:90, detail:'Six islands · strong Q decay · low-value wind learning control'}
 ];
 
+const windStudies = [
+  {prefix:'budgeted_persistent_two_region_2s_01_', name:'Original wind · A → B', detail:'Original recording retained. Tailwind through the middle toward B; opposing flow on the return.'},
+  {prefix:'budgeted_reversed_wind_01_', name:'Reversed wind · B → A', detail:'Exact sign reversal. Does the robot reverse its preferred middle-passage direction?'},
+  {prefix:'budgeted_crosswind_wind_01_', name:'Crosswind in the passage', detail:'Wind pushes across the narrow gap. Test whether earned observations change route choice.'},
+  {prefix:'budgeted_offroute_surveyed_wind_01_', name:'Known route · wind elsewhere', detail:'Both receive the same noisy historical survey of the main route. Tests low remaining value of learning.'},
+  {prefix:'budgeted_offroute_wind_01_', name:'Wind away from the route', detail:'Localized wind in the southeast corner, away from the direct A–B route. Low-value-learning candidate.'}
+];
+
+function renderWindStudies() {
+  $('wind-case-grid').replaceChildren(...windStudies.map(study => {
+    const record = state.records.find(r => r.id.startsWith(study.prefix) && r.method === 'proposed');
+    const paired = record && pairedRecord(state.records, record, 'current_belief');
+    const button = document.createElement('button');
+    button.className = 'quick-secondary wind-case-button' + (state.record?.id.startsWith(study.prefix) ? ' selected' : '');
+    button.disabled = !paired || state.loading;
+    button.textContent = study.name + (paired ? ' · ▶ Play' : ' · preparing');
+    button.title = study.detail;
+    button.setAttribute('aria-label', `Play ${study.name}`);
+    button.onclick = async () => {
+      state.comparisonMethod = 'current_belief';
+      await replay(record.id);
+      document.querySelector('.visual-panel').scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    return button;
+  }));
+}
+
+function missionContact(data) {
+  if (!data?.metrics.collision) return null;
+  const auditTime = data.research_audit?.first_contact_interval_start_s;
+  if (Number.isFinite(auditTime)) return auditTime;
+  const index = data.mission.clearance.findIndex(v=>v<0);
+  return index >= 0 ? index*data.config.dt : null;
+}
+function firstMissionContact() {
+  const times = [state.data,state.comparison].map(missionContact).filter(Number.isFinite);
+  return times.length ? Math.min(...times) : null;
+}
+
+function directionalRoutes(audit, direction) {
+  const transfers = audit.transfers.filter(t => t.direction === direction);
+  return ['middle','outer','other'].map(route => `${transfers.filter(t=>t.route===route).length} ${route === 'outer' ? 'bypass' : route}`).join(' / ');
+}
+
 function environmentRecord(environment) {
   const candidates = state.records.filter(r => (r.scenario === environment.id || r.id.startsWith(`${environment.id}_`)) && r.method === 'proposed').sort((a,b)=>(b.available_seconds||0)-(a.available_seconds||0) || (b.published_at||0)-(a.published_at||0));
   return candidates.find(r => r.kind !== 'mission_preview' && pairedRecord(state.records,r)) || candidates.find(r => pairedRecord(state.records,r)) || candidates.find(r => r.kind === 'mission_preview');
 }
 
 function renderEnvironments() {
+  renderWindStudies();
   const available = environments.filter(environmentRecord).length;
   $('environment-count').textContent = `${available} playable, including previews · ${environments.length - available} without recordings`;
   const stale = !state.persistent || Date.now()/1000 - state.persistent.updated_at > 120;
@@ -98,7 +143,7 @@ function renderEnvironments() {
     card.querySelector('.environment-job-status').textContent = record ? record.kind === 'mission_preview' ? `${record.stopped ? 'STOPPED FOR REDESIGN' : 'IN PROGRESS'} · ${record.available_seconds.toFixed(1)} s recorded · ${pairedRecord(state.records,record) ? 'paired at the same duration' : 'proposed only; comparator unavailable'}` : 'Ready · full POAM · both planners' :
       jobs.length > 2 ? `${jobs.filter(j=>j.status==='complete').length}/${jobs.length} missions complete · ${jobs.filter(j=>j.status==='running').length} running · ${jobs.filter(j=>j.status==='queued').length} queued` : jobs.length ? jobs.map(j => `${j.method === 'proposed' ? 'Proposed' : 'Comparator'}: ${j.status === 'running' ? `${j.completed_periods || 0}/${j.total_periods} periods${stale ? ' · last known' : ' · running'}` : j.status}`).join(' · ') : 'No completed recording yet';
   }
-  $('active-environment').textContent = environments.find(e => e.id === state.data?.config.scenario)?.name || 'Recorded experiment';
+  $('active-environment').textContent = windStudies.find(e=>state.record?.id.startsWith(e.prefix))?.name || environments.find(e => e.id === state.data?.config.scenario)?.name || 'Recorded experiment';
 }
 
 function persistence(data) {
@@ -593,6 +638,18 @@ function drawResultMap(id, d, color, seconds = null, layer = $('field-layer').va
     g.stroke();
   });
   drawRegions(g,e,xy,scale);
+  const windLayer = $('comparison-wind').value;
+  if (windLayer !== 'none') {
+    const bi = beliefIndex(frame.index, d.config.stage_steps, d.beliefs.length);
+    const vectors = windLayer === 'physical' ? d.physical_wind : d.beliefs[bi].mean;
+    const nx = d.config.whole_field ? d.config.grid_nx : 25;
+    d.wind_grid.forEach((p,i) => {
+      const v = vectors[i];
+      if (i % nx % 3 !== 1 || Math.floor(i/nx) % 3 !== 1 || Math.hypot(...v) < .035) return;
+      if (e.obstacles.some(o=>Math.hypot(p[0]-o[0],p[1]-o[1]) < o[2])) return;
+      arrow(g, xy(p), xy([p[0]+.3*v[0],p[1]+.3*v[1]]), windLayer === 'physical' ? '#6e5a95bb' : '#386d88bb', 1);
+    });
+  }
   const visiblePath = d.mission.x.slice(0, frame.index + 1);
   visiblePath.push(frame.x);
   const longMission=summary(d).duration>30;
@@ -745,6 +802,11 @@ function renderResults() {
     $('result-context').textContent =
       `Seed ${a.metrics.seed} · ${sa.duration.toFixed(1)} seconds · ${a.planning.length} replans. A paired benefit cannot be calculated from one run.`;
   }
+  if (a.metrics.collision || b?.metrics.collision) {
+    $('result-verdict').textContent = 'Physical contact observed · full-duration costs are diagnostic';
+    $('result-verdict').style.color = colors.red;
+    $('result-context').textContent += ' Motion after contact is integrated without impact response; these are not two successful completed missions.';
+  }
   if (a.preview) {
     $('result-verdict').textContent = `Recorded through ${sa.duration.toFixed(1)} s · mission unfinished`;
     $('result-context').textContent = 'Costs, clarity and safety below cover only the recorded portion. They are not final mission results.';
@@ -767,6 +829,8 @@ function renderResults() {
     if (sb) sb.audit=b.research_audit;
     rows.push(
       ['A ↔ B transfers', s=>`${s.audit.transfers.length}`],
+      ['A → B routes', s=>directionalRoutes(s.audit,'A_to_B')],
+      ['B → A routes', s=>directionalRoutes(s.audit,'B_to_A')],
       ['Planning periods using fallback', s=>`${s.audit.backup_periods}`],
       ['Steady planning time · median / 95th percentile', s=>`${s.audit.steady_cycle_s.median.toFixed(2)} / ${s.audit.steady_cycle_s.p95.toFixed(2)} s`],
       ['Planning cycles exceeding 2 s', s=>`${(100*s.audit.cycle_2s_miss_fraction).toFixed(1)}%`],
@@ -1040,6 +1104,11 @@ async function replay(id) {
       summary =
         `<strong>${Math.abs(improvement).toFixed(1)}% ${improvement>=0?'lower':'higher'} ${data.preview ? 'cost so far' : 'mission cost'}</strong> ${comparisonClaim(baseline)}.<br>Same physical wind · seed ${data.metrics.seed}${data.preview ? ' · unfinished comparison' : ''}`;
     }
+    const contacts = [data,state.comparison].filter(d=>d?.metrics.collision);
+    if (contacts.length) summary = '<strong>Physical contact observed.</strong> ' + summary + '<br>Full-duration cost includes post-contact simulation.';
+    $('contact-banner').classList.toggle('hidden', !contacts.length);
+    $('contact-message').textContent = contacts.map(d=>`${methodLabel(d)}: physical contact${missionContact(d)!==null ? ` near ${missionContact(d).toFixed(2)} s` : ''}.`).join(' ') + ' Playback pauses at first contact. Continuing shows diagnostic motion without impact-response physics.';
+    $('inspect-contact').disabled = firstMissionContact()===null;
     $('comparison-summary').innerHTML = summary;
     const [main, secondary] = comparisonPair(data, state.comparison);
     const mainRecord = state.records.find(r=>r.group===record.group && r.seed===record.seed && r.method==='proposed');
@@ -1259,6 +1328,11 @@ $('comparison-baseline').onchange = async () => {
   const proposed = state.records.find(r=>r.group===state.record.group && r.seed===state.record.seed && r.method==='proposed');
   if (proposed) await replay(proposed.id);
 };
+$('inspect-contact').onclick = () => {
+  const contact = firstMissionContact();
+  if (contact===null) return;
+  state.mode='comparison'; state.comparisonClock=contact+.05; state.playing=false; update();
+};
 $('recording').onchange = () => replay($('recording').value);
 $('run').onclick = run;
 for (const id of ['compare', 'uncertainty', 'wind', 'observations', 'truth']) $(id).onchange =
@@ -1303,8 +1377,13 @@ function animate(now) {
   if (state.playing && state.data && state.mode === 'comparison') {
     const next = advanceComparison(state.comparisonClock, elapsed, Number($('comparison-speed')
       .value), summary(state.data).duration, $('comparison-loop').checked);
-    state.comparisonClock = next.clock;
-    state.playing = next.playing;
+    const contact = firstMissionContact();
+    if (contact !== null && state.comparisonClock < contact && next.clock >= contact) {
+      state.comparisonClock=contact+.05; state.playing=false;
+    } else {
+      state.comparisonClock = next.clock;
+      state.playing = next.playing;
+    }
     renderComparison();
     requestAnimationFrame(animate);
     return;
@@ -1538,6 +1617,7 @@ function drawPairedDenoising() {
       `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · ${d.metrics.method === 'wind_blind_planner' ? 'unfiltered zero-wind forecast; execution uses wind-aware RPCBF · ' : ''}${p.backup_used ? 'selected plan failed feasibility checking; execution used backup. Red: rejected forecast.' : 'bold: best evaluated; purple: denoised mean'}${d.config.whole_field ? '; background: current clarity deficit' : ''}`;
   }
 }
+$('comparison-wind').onchange = () => { update(); };
 $('field-layer').onchange = () => {
   diagnosticFrame = '';
   update();

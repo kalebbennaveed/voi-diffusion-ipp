@@ -10,11 +10,44 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def physical_wind_numpy(positions, task_spec, field_spec=None):
+    """Independent float64 field equation, including archived legacy recordings."""
+    field_spec = field_spec or {
+        "family": "localized_passage_jet_v1",
+        "amplitude": 1.8,
+        "axial_fraction": 1.0,
+        "cross_fraction": 0.2,
+        "center": [0.0, 0.0],
+        "longitudinal_width": 1.1,
+        "transverse_width": 0.35,
+    }
+    if field_spec["family"] != "localized_passage_jet_v1":
+        raise ValueError("Unknown archived physical field")
+    tangent = np.array(task_spec["region_b"], dtype=float) - task_spec["region_a"]
+    tangent /= np.linalg.norm(tangent)
+    normal = np.array([-tangent[1], tangent[0]])
+    p = np.atleast_2d(np.asarray(positions, dtype=float)) - field_spec["center"]
+    envelope = np.exp(
+        -0.5
+        * (
+            (p @ tangent / field_spec["longitudinal_width"]) ** 4
+            + (p @ normal / field_spec["transverse_width"]) ** 2
+        )
+    )
+    return (
+        field_spec["amplitude"]
+        * envelope[:, None]
+        * (field_spec["axial_fraction"] * tangent + field_spec["cross_fraction"] * normal)
+    )
+
+
 def audit(path, substeps=32):
     doc = json.loads(path.with_suffix(".json").read_text())
     meta = doc["metadata"]
     d = np.load(path, allow_pickle=False)
-    spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
+    spec = meta.get("task_spec") or yaml.safe_load(
+        (ROOT / "configs/two_region_design.yaml").read_text()
+    )
     a, b = np.array(spec["region_a"]), np.array(spec["region_b"])
     tangent = (b - a) / np.linalg.norm(b - a)
     normal = np.array([-tangent[1], tangent[0]])
@@ -30,15 +63,11 @@ def audit(path, substeps=32):
 
     # Refuse to silently apply this study-specific field to another recording.
     cells = np.asarray(d["cells"], dtype=float)
-    envelope = np.exp(-0.5 * ((cells @ tangent / 1.1) ** 4 + (cells @ normal / 0.35) ** 2))
-    expected_wind = 1.8 * envelope[:, None] * (tangent + 0.2 * normal)
+    expected_wind = physical_wind_numpy(cells, spec, meta.get("physical_wind_spec"))
     np.testing.assert_allclose(d["physical_wind"], expected_wind, atol=2e-6, rtol=2e-6)
 
     def derivative(x):
-        p = x[:, :2]
-        axial, lateral = p @ tangent, p @ normal
-        env = np.exp(-0.5 * ((axial / 1.1) ** 4 + (lateral / 0.35) ** 2))
-        wind = 1.8 * env[:, None] * (tangent + 0.2 * normal)
+        wind = physical_wind_numpy(x[:, :2], spec, meta.get("physical_wind_spec"))
         return np.concatenate((x[:, 2:], controls - drag * x[:, 2:] + wind), axis=1)
 
     h = dt / substeps
@@ -120,6 +149,7 @@ def audit(path, substeps=32):
     result = {
         "input": str(path.relative_to(ROOT)),
         "method": meta["method"],
+        "wind_case": meta.get("wind_case", "original"),
         "complete": doc["complete"],
         "duration_s": (len(recorded) - 1) * dt,
         "integrated_whole_grid_deficit": integrated,
@@ -128,11 +158,27 @@ def audit(path, substeps=32):
         "dense_substeps": substeps,
         "minimum_dense_clearance": float(minimum.min()),
         "contact_intervals": int(np.sum(minimum < 0)),
+        "first_contact_interval_start_s": float(np.flatnonzero(minimum < 0)[0] * dt)
+        if np.any(minimum < 0)
+        else None,
         "max_local_state_error": float(np.max(np.abs(x - recorded[1:]))),
         "peak_control": float(np.abs(controls).max()),
         "backup_periods": sum(p["backup_used"] for p in periods),
         "visits": visits,
         "transfers": transfers,
+        "directional_routes": {
+            direction: {
+                "count": len(selected := [v for v in transfers if v["direction"] == direction]),
+                "route_counts": {
+                    route: sum(v["route"] == route for v in selected)
+                    for route in ["middle", "outer", "other"]
+                },
+                "mean_seconds": float(np.mean([v["seconds"] for v in selected]))
+                if selected
+                else None,
+            }
+            for direction in ["A_to_B", "B_to_A"]
+        },
         "passage_rmse_initial_final": [float(passage_rmse[0]), float(passage_rmse[-1])],
         "passage_std_initial_final": [float(passage_std[0]), float(passage_std[-1])],
         "visit_sequence": sequence,
