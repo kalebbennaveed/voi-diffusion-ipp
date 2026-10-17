@@ -56,7 +56,8 @@ export function missionSummary(data) {
     collision: Boolean(data.metrics.collision),
     accessTime: data.metrics.roi_a_access ? data.metrics.roi_a_time : null,
     duration: (m.x.length - 1) * c.dt,
-    costHistory: cost
+    costHistory: cost,
+    deficitHistory: m.q.map((q,i)=>[i*c.dt,deficit(q,e.targets)])
   };
 }
 

@@ -560,7 +560,7 @@ default for a fresh page. Final long paths are faded and update markers thinned
 with an explicit legend, while all numeric samples remain available.
 
 Scientific next diagnosis: unknown zero-mean GP versus a known windy-passage
-motivation, controller authority relative to peak disturbance (1.6 versus 1.8),
+motivation, controller authority relative to componentwise disturbance,
 short-lookahead value and sampling error. A common imperfect coarse weather
 forecast as a declared GP prior mean, with full POAM learning its residual, is a
 possible justified refinement, not yet implemented or validated. Any such mean
@@ -584,3 +584,63 @@ new records are distinguished by their replanning cadence. Final display still
 uses original uncached selected paths. Previous exporter source checks prevent
 accidental reuse of incompatible forecast checkpoints; completed old replays
 need not be regenerated after a label-only exporter update.
+
+
+Do not compare jet amplitude 1.8 directly with componentwise actuation bound 1.6:
+the center disturbance is approximately (-1.36,-1.23), so known wind can be
+cancelled by the box-bounded controls. The more relevant prior issue is that
+the current initially zero-mean passage posterior often predicts a milder wind
+than reality; learning a strong mean can offset the benefit of smaller variance.
+A declared common imperfect prior mean for a KNOWN windy passage is a scientifically
+reasonable next diagnostic. Reference mapping now records Hewing et al. nominal
+model + GP residual (Eqs. 1–2) and Klenske/Hennig's causal dual-control example
+(Eqs. 7–9). These sources ground the investigation; no performance/safety
+guarantees are imported and no forecast extension is implemented yet.
+
+
+### Two-second cadence completed and published — continuation entry point
+
+All heavy jobs in this turn finished (15458, 56390); no experiment source freeze
+remains. Both full 120 s arms at 2 s cadence completed, were independently audited
+at 32 physical substeps and exported with every POAM snapshot reconstructed.
+Current playable pair:
+http://127.0.0.1:8765/?run=budgeted_persistent_two_region_2s_01_proposed_8101
+The earlier one-second-cadence pair remains separately selectable.
+
+Proposed cost 2.83932948 versus comparator 2.95490885: 3.911% lower in one
+development seed. Transfers 16 versus 14, dense minimum clearance 0.08991 m
+versus 0.12724 m, zero contacts. Proposed steady generation cycles: median
+1.72538 s, p95 1.98404 s, max 2.03845 s; 2/58 exceeded 2 s. Startup cycles
+25.84 s and 3.11 s plus initial POAM setup 3.19 s, reported separately. Actual
+40-control simulation per 2 s period averaged 0.121 s CPU after startup. This is
+a solver/cadence benchmark, not deployed asynchronous real-time control.
+
+Important retained limitation: the comparator's period 6 winning cached plan
+failed the full uncached check and used the backup. Actual execution remained
+contact-free. The demo explicitly shows this rejected forecast in red with a
+backup explanation. Post-export display_annotation.json records the annotation
+change and before/after replay hashes; numeric data are unchanged. Maximum
+cached replay versus full selected-path displacement: 0.202 m proposed, 0.137 m
+comparator over 10 s; finite objective disagreement max 0.601% / 0.278%, p95
+0.0289% / 0.0163%. Retain uncached selected-plan checks; do not call the cache
+exact. Three current cache/gradient/conditioning tests passed in 7.58 s.
+
+Browser verification: 120 s paired playback, 10 s forecast/2 s executed label,
+four denoising levels, final paths/costs/timing, period-6 rejection label, POAM
+wind plots, regional clarity oscillations and whole-grid histories. No browser
+console warnings/errors. UI caches the full deficit history to avoid repeatedly
+processing millions of clarity samples per animation frame. Ten frontend tests
+pass; both live exports also passed independent duration/array/cost checks.
+Screenshots: results/demo/persistent_two_region_2s_demo.jpg (current result),
+results/demo/persistent_two_region_clarity.jpg (earlier cadence clarity histories).
+
+Research is NOT complete: 3.9%/5.6% development gains and the weak same-state
+causal result do not establish substantial learning value. The 2 s pair's final
+whole-field POAM RMSE is ~0.219/0.201 while mean sigma ~0.068/0.072, suggesting
+miscalibration to investigate spatially (global averages alone are not a formal
+coverage test). Next bounded work should inspect posterior calibration, common
+imperfect passage-weather prior means with full POAM residual learning, and
+independent-bank decision stability. Read the primary references just added in
+reference_mapping.md. Preserve every prior/cadence regime and failure. Do not
+launch fresh-seed superiority sweeps until an observable causal decision benefit
+is robust to sampling. The original three acceptance claims remain open.

@@ -329,8 +329,7 @@ function drawMap() {
         state.hover === i ? 2.5 : .8 + 1.3 * weights[i] / max);
     });
     path(g, p.mean_paths[l], xy, colors.violet, 1.8, [5, 4]);
-    path(g, l === d.config.diffusion_steps - 1 ? p.selected_path : p.incumbent_paths[l], xy, colors
-      .teal,
+    path(g, l === d.config.diffusion_steps - 1 ? p.selected_path : p.incumbent_paths[l], xy, p.backup_used && l === d.config.diffusion_steps - 1 ? colors.red : colors.teal,
       2.7);
     const selected = l === d.config.diffusion_steps - 1 ? p.selected_path : p.incumbent_paths[l];
     const boundary = xy(selected[p.stage_boundary_index ?? H]);
@@ -914,7 +913,7 @@ function update() {
       $('candidate-detail').textContent =
         `Policy ${i+1} · cost ${metricText(p.costs[l][i])} · weight ${p.weights[l][i].toFixed(4)} · ${p.policy_type || `branch ${p.candidate_branches[l][i]+1}`}`;
     } else $('candidate-detail').textContent =
-      `Score norm ${Math.hypot(...p.score[l]).toFixed(2)} · costs include the complete stochastic objective.`;
+      p.backup_used ? 'The uncached check rejected this forecast. Actual execution used the backup policy.' : `Score norm ${Math.hypot(...p.score[l]).toFixed(2)} · costs include the complete stochastic objective.`;
   } else {
     const idx = state.step - 1,
       fail = idx >= 0 && !d.mission.feasible[idx];
@@ -1432,8 +1431,7 @@ function drawFieldDiagnostics(a, b, time) {
   $('decay-summary').textContent = `This recording: ${summary(a).duration.toFixed(1)} s · Qₚ ${qmin.toFixed(3)}${qmax-qmin>1e-6?'–'+qmax.toFixed(3):''}. ${qmax>0 ? `Without sensing, clarity 0.8 falls to 0.6 in ${decayTime(qmax)}${qmin>0 && qmax-qmin>1e-6?'–'+decayTime(qmin):''} seconds. The unsensed reference uses q(t)=q₀/(1+Qₚq₀t).` : 'Process-noise decay is disabled in this recording.'}`;
   $('field-key').textContent = $('field-layer').value === 'deficit' ?
     'Light: 0 · Dark: 0.8 deficit · lower is better' : $('field-layer').value === 'process' ? `Light: 0 · Dark: ${Math.max(.1,qmax).toFixed(2)} process noise Qₚ` : $('field-layer').value === 'visits' ? 'Light: 0 · Dark: ≥4 distinct sensing passes' : 'Light: 0 · Dark: 1 clarity';
-  pairedCurve('field-deficit-chart', a, b, d => d.mission.q.map((q, i) => [i * d.config.dt, deficit(
-    q, d.environment.targets)]), time);
+  pairedCurve('field-deficit-chart', a, b, d => summary(d).deficitHistory, time);
   pairedCurve('field-cost-chart', a, b, d => summary(d).costHistory.map((v, i) => [i * d.config.dt,
     v
   ]), time);
@@ -1516,10 +1514,10 @@ function drawPairedDenoising() {
     p.candidate_paths[l].forEach((points, i) => path(g, points, xy,
       `rgba(80,105,120,${.12+.55*p.weights[l][i]})`, 1));
     path(g, p.mean_paths[l], xy, colors.violet, 1.5, [3, 3]);
-    path(g, l === p.candidate_paths.length - 1 ? p.selected_path : p.incumbent_paths[l], xy, color,
+    path(g, l === p.candidate_paths.length - 1 ? p.selected_path : p.incumbent_paths[l], xy, p.backup_used && l === p.candidate_paths.length - 1 ? colors.red : color,
       2.5);
     $(`denoising-note-${side}`).textContent =
-      `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · bold: best evaluated; purple: denoised mean${d.config.whole_field ? '; background: current clarity deficit' : ''}`;
+      `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · ${p.backup_used ? 'full check rejected the selected policy; execution used backup. Red: rejected forecast.' : 'bold: best evaluated; purple: denoised mean'}${d.config.whole_field ? '; background: current clarity deficit' : ''}`;
   }
 }
 $('field-layer').onchange = () => {

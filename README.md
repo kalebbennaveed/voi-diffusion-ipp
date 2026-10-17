@@ -12,27 +12,28 @@ clarity 0.8 falls to 0.6 in 2.60 seconds. Both planners learn from real measurem
 only the proposed planner anticipates how later measurements affect future motion.
 
 The compact causal feedback-policy variant generates a **10-second trajectory**.
-On the M3 CPU, the latest proposed development mission measured 1.41 s median,
-1.46 s 95th percentile and 1.68 s maximum steady planning time, including belief
-update, cache preparation and a full uncached check. Startup compilation is
-reported separately. These are synchronized solver timings, not a deployed
-real-time controller: this recording replans every simulated second, and a
-wall-clock-consistent two-second execution cadence remains to be tested.
+On the M3 CPU, the two-second replanning development mission measured **1.73 s
+median, 1.98 s 95th percentile and 2.04 s maximum** steady planning time, including
+belief update, cache preparation and a full uncached check. Two of 58 steady
+cycles exceeded 2 s. Startup is separate: 25.84 s for the first planning cycle,
+3.11 s for the second, plus initial POAM setup. This is an offline simulation
+with two-second execution periods, not a deployed asynchronous flight controller.
 
-| 120-second development pair, seed 8101 | Proposed | No anticipated learning |
+| 120-second development pair, seed 8101, two-second replanning | Proposed | No anticipated learning |
 |---|---:|---:|
-| Integrated whole-grid clarity deficit | 2.8538 | 3.0218 |
-| Completed A/B transfers | 20 | 15 |
+| Integrated whole-grid clarity deficit | 2.8393 | 2.9549 |
+| Completed A/B transfers | 16 | 14 |
 | Physical contacts, independent dense audit | 0 | 0 |
-| Median / 95th percentile planning time | 1.41 / 1.46 s | 0.80 / 0.85 s |
+| Median / 95th percentile planning time | 1.73 / 1.98 s | 0.77 / 0.83 s |
 
-This is **5.56% lower cost in one development pair**, not a validated substantial
-learning advantage. Both arms receive the same declared noisy historical survey
+This is **3.91% lower cost in one development pair**, not a validated substantial
+learning advantage. The earlier one-second-cadence pair achieved 5.56% lower cost;
+both versions and the weak same-state causal diagnostic are retained. Both arms receive the same declared noisy historical survey
 of the outer routes. The passage is initially unobserved. The first 6-proposal
 long comparison failed numerically after 75 seconds in its comparator; its raw
 outputs remain available. Equivalent square-root POAM statistics repaired the
 float32 failure and passed independent algebra and observation-replay checks.
-See [the frozen protocol](docs/two_region_design/persistent_root_protocol.json),
+See [the frozen protocol](docs/two_region_design/persistent_2s_protocol.json),
 [the research worklog](docs/persistent_research_worklog.md), and
 [reference mapping](docs/reference_mapping.md).
 
@@ -69,10 +70,22 @@ weights, score updates and selected trajectories, then play the executed mission
 clarity, wind belief, safety diagnostics and a paired comparator. Full-field POAM
 recordings are listed first. Ten legacy recordings remain explicitly labeled for
 historical reproduction, including regressions and a no-measurement control.
-The interface can launch new JAX runs with different seeds and settings. It has
+The collapsed older-environment controls launch the earlier, expensive planner.
+The fast two-region command is shown below. The interface has
 no frontend dependencies or external assets. See [demo instructions and
 provenance](docs/interactive_demo.md). The original MBD playground was used only
 as an interaction reference; numerical planning remains in this repository.
+
+The current fast two-region experiment is reproducible with a **new** output
+directory (existing results are never overwritten):
+
+```sh
+JAX_PLATFORMS=cpu uv run --no-sync python scripts/run_budgeted_mission.py \
+  --periods 60 --seed 8101 --output results/budgeted_missions/my_two_region_run \
+  --methods proposed current_belief --rapid --relocate \
+  --first-stage 2 --future-update-steps 10 --chunk 2 --proposals 8 \
+  --prior-regime outer-survey
+```
 
 ## Setup on Apple Silicon
 

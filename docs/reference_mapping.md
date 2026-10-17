@@ -125,3 +125,20 @@ training inputs. `POAM.from_data` uses the available initial data with pivoted
 Cholesky selection rather than spending sparse capacity on unobserved uniform
 centers. It requires M distinct observed positions. This is used only in the
 explicit common historical-survey regime; old cold-prior studies are preserved.
+
+## Next prior-model diagnostic (not yet implemented)
+
+Hewing, Kabzan and Zeilinger, *Cautious Model Predictive Control using Gaussian
+Process Regression*, Sec. II-B–C, Eqs. (1)–(2), combines a known nominal model
+with a learned GP residual and permits a specified mean function:
+https://arxiv.org/html/1705.10702v4#S2 . This supports investigating an explicitly
+declared imperfect weather forecast plus a full POAM residual. It does not justify
+using the physical hidden field as that forecast, nor does its chance-constraint
+formulation establish safety for our sampled RPCBF.
+
+Klenske and Hennig, *Dual Control for Approximate Bayesian Reinforcement
+Learning*, the scalar example in Eqs. (7)–(9) and Sec. 7, distinguish control-dependent learning
+from merely cautious control and discuss finite-horizon exploration value:
+https://jmlr.org/papers/volume17/15-162/15-162.pdf . Our same-state diagnostic
+therefore compares actual continuation costs and first decisions under both
+objectives; a posterior uncertainty decrease alone is not evidence of useful VoI.

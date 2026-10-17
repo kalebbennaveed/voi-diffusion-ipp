@@ -159,6 +159,7 @@ def export(path):
                 "initial_path": paths[-2],
                 "selected_path": original,
                 "selected_cost": row["full_objective"],
+                "backup_used": row["backup_used"],
                 "policy_type": "continuous posterior feedback",
                 "stage_boundary_index": cfg.stage_steps,
                 "cached_replay_full_path_max_distance": mismatch,
