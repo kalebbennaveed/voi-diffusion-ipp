@@ -55,13 +55,23 @@ def timed(fn, *args):
 
 
 def run(
-    method, periods, seed, directory, cfg, rapid=False, prior_regime="cold", wind_case="original"
+    method,
+    periods,
+    seed,
+    directory,
+    cfg,
+    rapid=False,
+    prior_regime="cold",
+    wind_case="original",
+    task_path=None,
 ):
     n_exec = round(cfg.stage_steps * cfg.dt / 0.05)
     stride = round(cfg.dt / 0.05)
     observation_indices = jnp.arange(stride - 1, n_exec, stride)
     actual_cfg = replace(cfg, dt=0.05, stage_steps=n_exec)
-    spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
+    task_path = (task_path or ROOT / "configs/two_region_design.yaml").resolve()
+    task_path.relative_to(ROOT)
+    spec = yaml.safe_load(task_path.read_text())
     env, poam, x, q, truth = make_two_region(spec, cfg)
     field_spec = wind_case_spec(wind_case)
     truth = physical_wind(env, field_spec)
@@ -151,11 +161,10 @@ def run(
         "wind_case": wind_case,
         "physical_wind_spec": field_spec,
         "task_spec": spec,
+        "task_file": str(task_path.relative_to(ROOT)),
         "candidate_objective_cells": len(objective_cells),
         "driver_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        "task_sha256": hashlib.sha256(
-            (ROOT / "configs/two_region_design.yaml").read_bytes()
-        ).hexdigest(),
+        "task_sha256": hashlib.sha256(task_path.read_bytes()).hexdigest(),
         "source_sha256": source_hashes(),
         "label": "Short development diagnostic, not statistical validation",
         "planning_wind": "zero; no safety in objective" if wind_blind else "current POAM belief",
@@ -322,11 +331,18 @@ def main():
         "--prior-regime", choices=["cold", "outer-survey", "routes-survey"], default="cold"
     )
     p.add_argument("--wind-case", choices=list(WIND_CASES), default="original")
+    p.add_argument("--policy", choices=["compact", "branches"], default="compact")
+    p.add_argument("--task", type=Path, default=ROOT / "configs/two_region_design.yaml")
     args = p.parse_args()
+    if args.policy == "branches" and "wind_blind_planner" in args.methods:
+        raise ValueError(
+            "The wind-blind comparator uses its original compact nominal parameterization"
+        )
     cfg = load_config(ROOT / "configs/two_region_budgeted.yaml")
     n = round(args.first_stage / cfg.dt)
     cfg = replace(
         cfg,
+        budgeted_policy=args.policy,
         stage_steps=n,
         future_steps=round(10 / cfg.dt) - n,
         hypothetical_relocation=args.relocate,
@@ -348,6 +364,7 @@ def main():
             args.rapid,
             args.prior_regime,
             args.wind_case,
+            args.task,
         )
 
 

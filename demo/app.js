@@ -64,12 +64,16 @@ const environments = [
 const windStudies = [
   {prefix:'budgeted_persistent_two_region_2s_01_', name:'Original wind · A → B', detail:'Original recording retained. Tailwind through the middle toward B; opposing flow on the return.'},
   {prefix:'budgeted_reversed_wind_01_', name:'Reversed wind · B → A', detail:'Exact sign reversal. Does the robot reverse its preferred middle-passage direction?'},
+  {prefix:'budgeted_reversed_branches_01_', name:'Reversed · two-route policy', detail:'Experimental posterior-gated future routes. A retained regression: anticipation costs more in this development pair.'},
   {prefix:'budgeted_crosswind_wind_01_', name:'Crosswind in the passage', detail:'Wind pushes across the narrow gap. Test whether earned observations change route choice.'},
-  {prefix:'budgeted_offroute_surveyed_wind_01_', name:'Known route · wind elsewhere', detail:'Both receive the same noisy historical survey of the main route. Tests low remaining value of learning.'},
+  {prefix:'budgeted_offroute_surveyed_wind_01_', name:'Surveyed route · wind elsewhere', detail:'Both receive the same noisy historical survey of the main route. Tests low remaining value of learning.'},
+  {prefix:'budgeted_open_passage_wind_01_', name:'Open passage · wind elsewhere', detail:'A wider passage and common noisy route survey. Both can use the direct route; tests whether anticipating learning adds little.'},
   {prefix:'budgeted_offroute_wind_01_', name:'Wind away from the route', detail:'Localized wind in the southeast corner, away from the direct A–B route. Low-value-learning candidate.'}
 ];
 
 function renderWindStudies() {
+  const selectedStudy = windStudies.find(s => state.record?.id.startsWith(s.prefix));
+  $('wind-study-summary').textContent = selectedStudy ? `${selectedStudy.name}. ${selectedStudy.detail}` : 'Choose a recorded comparison. Play shows actual execution; Denoising shows genuine sampled forecasts.';
   $('wind-case-grid').replaceChildren(...windStudies.map(study => {
     const record = state.records.find(r => r.id.startsWith(study.prefix) && r.method === 'proposed');
     const paired = record && pairedRecord(state.records, record, 'current_belief');
@@ -1685,7 +1689,7 @@ async function persistentProgress() {
     if (jobs.length) {
       const stale = Date.now()/1000 - progress.updated_at > 120;
       const complete = jobs.filter(j => j.status === 'complete').length;
-      $('persistent-progress-summary').textContent = `122 s persistent study · ${complete}/${jobs.length} complete · ${jobs.filter(j => j.status === 'running').length} running`;
+      $('persistent-progress-summary').textContent = progress.stopped_reason ? 'Historical study · stopped for runtime redesign' : `122 s persistent study · ${complete}/${jobs.length} complete · ${jobs.filter(j => j.status === 'running').length} running`;
       const running = jobs.filter(j => j.status === 'running').map(j =>
         `${j.scenario.replace('persistent_','')} / ${j.method === 'proposed' ? 'proposed' : 'no anticipated learning'}: ${j.completed_periods || 0}/${j.total_periods} periods`);
       const failed = jobs.filter(j => j.status === 'failed').length;

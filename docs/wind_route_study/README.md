@@ -25,9 +25,10 @@ inspect the retained diagnostic continuation. This comparator is wind aware;
 it is not the separate ablation that removes wind from safety.
 
 The wind-blind nominal planner plus wind-aware execution safety has reversed-field
-cost 3.82642 (21.06% above proposed when expressed as proposed's reduction from
-that comparator). This contrast combines wind-aware planning and anticipation;
-it does not establish the isolated value of anticipating learning.
+cost 3.82642; proposed cost is 21.06% lower than that comparator. This contrast
+combines wind-aware planning, nominal wind compensation and anticipation. The
+wind-blind comparator uses wind only in its execution safety filter. It does not
+establish the isolated value of anticipating learning.
 
 In the original proposed run, one of sixteen transfers uses the middle, toward B.
 Under reversed wind, one of sixteen uses the middle, toward A. The other fifteen
@@ -94,6 +95,64 @@ motion, not on a spline's complete trajectory or the safety filter's deflection.
 It motivates checking a policy with separately parameterized middle/bypass
 continuations, selected only from earned posterior information, rather than
 increasing an arbitrary information reward or adding more of the failed seeds.
+
+## Further bounded tests
+
+The optional `budgeted_policy: branches` representation optimizes two independent
+future routes and a four-coefficient affine gate on the passage posterior's mean
+and standard deviation. Its first-stage controls remain common across worlds;
+only earned hypothetical observations can change the gate. A switch changes the
+reference curve, never the physical state or clarity. Full POAM, actual MBD and
+sampled spline RPCBF are retained. The original compact policy remains default.
+Twenty-three component tests passed, including causal observation timing.
+
+On the reversed 120 s development mission, this representation costs **3.08719
+versus 2.89869**, or **6.50% regret** from anticipation, with no dense contacts.
+It is not promoted. Its paired arms share initializations; comparison with the
+older compact experiment additionally changes the parameter dimension and seed
+representation, so it is not an isolated parameter-count comparison. The
+independent four-bank check again finds the same best averaged candidate at all
+three tested states. One held-bank selection at 30 s favors anticipation, while
+the other eleven comparisons are equal. All numerical outputs are retained in
+`branch_causal_01` and `branch_policy_results_01`.
+
+An additional open-passage control keeps the large regions, rapid Q decay,
+off-route wind and common noisy route survey, but changes the obstacle radius
+to 0.25 m and normal offset to 0.95 m. The middle half-gap is 0.70 m; the
+historical outer survey still has at least 0.298 m geometric clearance. The
+development pair costs **2.04599 versus 1.99606**, or **2.50% regret**. Proposed
+uses the middle on all 18 transfers; the comparator uses it on 18 of 19. Neither
+contacts an obstacle. Proposed cycle median/p95 are 1.48/1.51 s, with no steady
+2 s misses. This is a candidate low-value case, not a statistical conclusion.
+
+The first open-passage audit retained the original fixed route thresholds; it
+misclassified one middle crossing as "other" and used the original narrow
+passage for local wind summaries. The audit now derives these thresholds from
+the archived geometry. Its previous output and driver are preserved in
+`open_passage_classification_correction`. Physical clearance, contacts, executed
+trajectories and all-grid cost were unaffected. The 2D replay was refreshed.
+
+`low_value_confirmation_protocol_01.json` declares eight fresh paired seeds
+18101–18108, excluding the development seed, before execution. The primary
+criterion is a one-sided 95% paired-t upper regret bound below 5%, with all pairs
+complete and no dense contacts; secondary equivalence requires the 90% interval
+within ±5%. This tests randomness in one fixed physical environment and prior.
+It does not establish equivalence over arbitrary wind fields or environments.
+
+The privileged fully informed reversed-wind planner costs **2.71153**, with no
+contacts. It knows the complete wind for planning, compensation and safety, so
+it is a finite-budget information reference, not a deployable method, optimal
+cost bound, or demonstration of what POAM will learn.
+
+The ten-second horizon is shorter than the approximately 12.45 s favorable-
+crossing/opposing-bypass round trip in the restricted rest-to-rest family. A
+prospective 10 versus 14 s sensitivity at earned states in `horizon_diagnosis_01`
+finds a round-trip seed becomes best at 60 s with the longer forecast—but for
+**both** anticipated and frozen-belief objectives. No robust isolated learning
+advantage emerges. Actual MBD with 21 common initializations takes about 1.80 s
+for 10 s lookahead and 2.54 s for 14 s at the tested warm state; startup is about
+19 s. These are saved-state measurements, not mission latency guarantees. The
+longer horizon and extra seeds remain diagnostic options, not promoted defaults.
 
 ## Reproduction and interactive records
 

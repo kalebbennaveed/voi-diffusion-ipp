@@ -107,6 +107,8 @@ def audit(path, substeps=32):
         if not sequence or sequence[-1] != v["region"]:
             sequence.append(v["region"])
     transfers = []
+    middle_edge = spec["obstacle_normal_offset"] - spec["obstacle_radius"]
+    outer_edge = spec["obstacle_normal_offset"] + spec["obstacle_radius"]
     previous = None
     last_inside = 0
     for i, state in enumerate(recorded):
@@ -131,15 +133,15 @@ def audit(path, substeps=32):
                         "seconds": (i - last_inside) * dt,
                         "midplane_lateral_m": lateral,
                         "route": "middle"
-                        if abs(lateral) < 0.22
+                        if abs(lateral) < middle_edge
                         else "outer"
-                        if abs(lateral) > 1.22
+                        if abs(lateral) > outer_edge
                         else "other",
                     }
                 )
             previous = region
             last_inside = i
-    passage = (np.abs(cells @ tangent) < 1.1) & (np.abs(cells @ normal) < 0.22)
+    passage = (np.abs(cells @ tangent) < 1.1) & (np.abs(cells @ normal) < middle_edge)
     passage_rmse = np.sqrt(
         np.mean((d["mean"][:, passage] - d["physical_wind"][passage]) ** 2, axis=(1, 2))
     )
@@ -147,6 +149,7 @@ def audit(path, substeps=32):
     periods = doc["periods"]
     times = [p["planning_cycle_s"] for p in periods[2:]]
     result = {
+        "route_classifier": {"middle_half_width_m": middle_edge, "bypass_inner_edge_m": outer_edge},
         "input": str(path.relative_to(ROOT)),
         "method": meta["method"],
         "wind_case": meta.get("wind_case", "original"),

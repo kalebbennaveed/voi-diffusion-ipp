@@ -1,0 +1,5 @@
+{
+  "issue": "Route classifier used original fixed 0.22m middle and 1.22m bypass thresholds; open-passage task requires its own 0.70m and 1.20m boundaries. Wind passage summaries also used the old central width.",
+  "affected": "Route labels and passage-only RMSE/sigma summaries; physical clearance, contacts, trajectories, all-grid clarity and cost unchanged.",
+  "correction": "Derive thresholds from archived task obstacle geometry. Preserve old summaries and recompute the audits. Existing genuine MBD forecast files remain unchanged."
+}

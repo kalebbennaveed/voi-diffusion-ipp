@@ -119,6 +119,8 @@ def split_vector(vector, cfg):
     controls = jax.vmap(
         lambda u: jnp.interp(grid, jnp.array([0.0, 1.0]), u), in_axes=1, out_axes=1
     )(first)
+    if cfg.budgeted_policy == "branches":
+        return controls, jnp.tanh(vector[4:20].reshape(2, 4, 2)), vector[20:24]
     future = jnp.tanh(vector[4:12].reshape(4, 2))
     gain = vector[12:].reshape(2, 3)
     return controls, future, gain
@@ -129,7 +131,14 @@ def future_reference(vector, terminal, posterior, env, matrices, cfg):
     mean, cov = posterior.predict(env.probe)
     features = jnp.r_[mean[0] / cfg.wind_std, jnp.sqrt(cov[0, 0, 0]) / cfg.wind_std]
     # Same learned function for every scenario. No access to world identity.
-    shift = 0.6 * jnp.tanh(gain @ features)
+    if cfg.budgeted_policy == "branches":
+        # A discrete route choice is valid for gradient-free MBD. Only the
+        # desired reference switches; actual robot and clarity states continue.
+        branch = (gain @ jnp.r_[1.0, features] > 0).astype(jnp.int32)
+        normalized = normalized[branch]
+        shift = jnp.zeros(2)
+    else:
+        shift = 0.6 * jnp.tanh(gain @ features)
     midpoint = 0.5 * (env.bounds[0] + env.bounds[1])
     scale = 0.5 * (env.bounds[1] - env.bounds[0]) - 0.12
     positions = (
@@ -291,4 +300,27 @@ def warm_starts(x, env, cfg, rapid=False):
             accel = 0.6 * direction + 0.15 * jnp.sign(offset) * normal
             first = jnp.tile(jnp.arctanh(accel), (2, 1)).ravel()
             candidates.append(jnp.r_[first, latent.ravel(), jnp.zeros(6)])
-    return jnp.stack(candidates)
+    compact = jnp.stack(candidates)
+    if cfg.budgeted_policy == "compact":
+        return compact
+    # Seven common starts, as before; two independently adjustable route
+    # continuations replace a bounded shift. No route is compulsory.
+    branches = []
+    separation = jnp.linalg.norm(env.obstacles[0, :2] - env.obstacles[1, :2]) / 2
+    free_half_width = jnp.maximum(separation - env.obstacles[:, 2].max() - cfg.safety_margin, 0.01)
+    acceleration_scale = 2 * free_half_width / (cfg.backup_steps * cfg.backup_dt) ** 2
+    for gi, goal in enumerate([env.roi_a, env.roi_b]):
+        direction = (goal - x[:2]) / jnp.maximum(jnp.linalg.norm(goal - x[:2]), 0.01)
+        normal = jnp.array([-direction[1], direction[0]])
+        for first_route, second_route in [(0, 1), (0, 2), (1, 2)]:
+            first = compact[3 * gi + first_route]
+            second = compact[3 * gi + second_route]
+            # Geometry-based initialization only; all four gate coefficients
+            # are optimized jointly with both routes by MBD. The acceleration
+            # scale is not an RPCBF replacement or a safety certificate.
+            gate = jnp.r_[-acceleration_scale / cfg.wind_std, -direction, 1.0]
+            if first_route == 1:
+                gate = jnp.r_[0.0, normal, 0.0]
+            branches.append(jnp.r_[first[:4], first[4:12], second[4:12], gate])
+    branches.append(jnp.r_[compact[-1, :12], compact[-1, 4:12], jnp.zeros(4)])
+    return jnp.stack(branches)

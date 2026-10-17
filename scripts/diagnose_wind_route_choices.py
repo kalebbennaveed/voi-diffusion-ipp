@@ -126,11 +126,17 @@ def diagnose(path, periods, output, worlds=4, banks=4):
             q = jnp.asarray(data["q"][i * stride])
             row = raw["periods"][i]
             initials = warm_starts(x, env, cfg, True)
-            extra, extra_labels = round_trip_seeds(x, env, cfg)
+            dimension = len(row["vector"])
+            if cfg.budgeted_policy == "branches":
+                # The earlier round-trip-seed screen was negative. Keep this
+                # policy-class check restricted to its actual search candidates.
+                extra, extra_labels = jnp.empty((0, dimension)), []
+            else:
+                extra, extra_labels = round_trip_seeds(x, env, cfg)
             vectors = jnp.concatenate(
                 [
                     initials,
-                    jnp.asarray(row["candidates"]).reshape(-1, 18),
+                    jnp.asarray(row["candidates"]).reshape(-1, dimension),
                     jnp.asarray(row["vector"])[None],
                     extra,
                 ]

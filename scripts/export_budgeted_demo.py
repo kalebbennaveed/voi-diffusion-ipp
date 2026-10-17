@@ -41,10 +41,9 @@ def export(path, pair_with=None):
         raise ValueError(
             "Numerical source differs from the recorded mission; use its frozen source"
         )
-    if (
-        meta["task_sha256"]
-        != hashlib.sha256((ROOT / "configs/two_region_design.yaml").read_bytes()).hexdigest()
-    ):
+    task_path = (ROOT / meta.get("task_file", "configs/two_region_design.yaml")).resolve()
+    task_path.relative_to(ROOT)
+    if meta["task_sha256"] != hashlib.sha256(task_path.read_bytes()).hexdigest():
         raise ValueError("Task definition differs from the recorded mission")
     cfg = Config(**meta["config"])
     method, seed = meta["method"], meta["seed"]
@@ -108,6 +107,10 @@ def export(path, pair_with=None):
         physical_wind(env, field_spec).at(env.cells), d["physical_wind"], atol=2e-6, rtol=2e-6
     )
     case_label = CASE_LABELS[wind_case]
+    if task_path.name == "two_region_open_passage.yaml":
+        case_label += " · open passage"
+    if cfg.budgeted_policy == "branches":
+        case_label += " · posterior-gated routes"
     if meta["prior_regime"] == "routes-survey":
         case_label += " · main route surveyed"
     root = jax.random.PRNGKey(seed)
@@ -184,7 +187,7 @@ def export(path, pair_with=None):
         )
         vectors = np.concatenate(
             (
-                np.array(hist["candidates"]).reshape(-1, 18),
+                np.array(hist["candidates"]).reshape(-1, len(row["vector"])),
                 np.array(hist["incumbent"]),
                 means,
                 np.array(row["initial_vector"])[None],
@@ -226,6 +229,8 @@ def export(path, pair_with=None):
                 "backup_used": row["backup_used"],
                 "policy_type": "wind-blind nominal"
                 if wind_blind
+                else "posterior-gated two-route policy"
+                if cfg.budgeted_policy == "branches"
                 else "continuous posterior feedback",
                 "stage_boundary_index": cfg.stage_steps,
                 "cached_replay_full_path_max_distance": mismatch,
@@ -322,6 +327,8 @@ def export(path, pair_with=None):
         "Candidate curves are cached-field RPCBF forecasts in planning world 1; selected curves "
         "are original uncached checks. Export/replay work is separate from planning latency."
     )
+    if cfg.budgeted_policy == "branches":
+        note += " Two separately optimized future routes share an observation-only posterior gate, reevaluated at causal belief boundaries. Only references switch; physical state and clarity never reset. This is a development policy-class refinement."
     if meta["prior_regime"] == "routes-survey":
         note = note.replace(
             "same archived noisy survey of the two outer routes; the passage is unobserved initially.",

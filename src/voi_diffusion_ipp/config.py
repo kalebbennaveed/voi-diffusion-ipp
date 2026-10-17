@@ -45,6 +45,7 @@ class Config:
     wind_backend: str = "feature"
     poam_train_steps: int = 10
     hypothetical_relocation: bool = False
+    budgeted_policy: str = "compact"  # compact continuous shift or posterior-gated branches
     budgeted_update_steps: int = 0  # 0: one future stage; >0: causal future belief periods
     poam_inducing_x: int = 6
     poam_inducing_y: int = 4
@@ -68,6 +69,8 @@ class Config:
     methods: tuple = ("proposed", "passive", "weighted_ig", "heuristic", "cem", "mppi", "oracle")
 
     def __post_init__(self):
+        if self.budgeted_policy not in ("compact", "branches"):
+            raise ValueError("Unknown budgeted feedback policy")
         if self.budgeted_update_steps < 0 or (
             self.budgeted_update_steps and self.future_steps % self.budgeted_update_steps
         ):

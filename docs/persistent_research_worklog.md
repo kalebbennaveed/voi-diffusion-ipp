@@ -898,3 +898,58 @@ compact policy's limited route-conditioned representation (0.6 m per-coordinate
 knot shift) and separately the demonstrated observation latency. Do not call
 single-seed development contrasts validation. All three original acceptance
 cases remain open in their strong scientific form.
+
+### Optional posterior-gated two-route policy — active development
+
+The original compact policy remains default. Branch policy protocol 01 prospectively
+declares one reversed-wind 120 s pair, seed 8101, with the same real POAM, sampled
+spline RPCBF, MBD budget and objective. The new 24-dimensional representation
+optimizes two future routes and an observable-posterior affine gate. Only reference
+curves switch at causal belief boundaries; physical and clarity states continue.
+23 component tests passed, including timing/causality and default compact tests.
+Freeze src/, configs, mission driver, exporter and audit against the protocol until
+this pair and its genuine forecasts finish. Keep both prior screens and all failures.
+No held-out success claim; automations remain paused; 3D is untouched.
+
+The reversed two-route pair and actual forecast exports finished. Its proposed cost
+3.08719 exceeds current-belief 2.89869 by 6.50%; both pass the dense no-contact
+audit. The original compact method stays default; this regression is retained.
+Session 41157 runs the declared same-state multi-bank diagnosis; source/configs
+stay unchanged. A new open-passage low-value protocol is declared but not yet
+started: same large regions/Q/off-route wind and common historical route survey,
+with radius 0.25 and normal offset 0.95. The mission driver/exporter now support
+an archived per-run task path/hash without modifying the original task file.
+
+### Open-passage control, informed diagnostic and horizon diagnosis completed
+
+Open passage: 120 s cost 2.045994 proposed vs 1.996063 current belief (2.50% regret),
+zero dense contacts, common direct route. This is development seed 8101 only.
+The route classifier initially retained the original gap thresholds. Its original
+audits and driver are archived in open_passage_classification_correction. It now
+derives middle/bypass boundaries from archived geometry; all genuine forecasts
+and trajectories are unchanged, and the open-passage replay was refreshed.
+
+The explicitly privileged reversed-wind compact planner achieves 2.711526 cost,
+zero contacts. This is a finite-budget fully informed diagnostic, not an optimal
+lower bound or a full-POAM method. It still selects both middle and outer routes.
+
+Optional branch-policy independent-bank checks have the same averaged winner in
+all three tested states (one held bank at 30 s favors active selection). Its
+executed 6.50% regret remains a negative development result. Four-bank horizon
+diagnosis compares 10 versus 14 s on earned reversed states: a round-trip seed
+becomes best at 60 s with 14 s lookahead for BOTH objectives. No reliable isolated
+anticipation mechanism is established. Actual MBD with all 21 seeds takes about
+1.80 s for 10 s and 2.54 s for 14 s at one warm saved state; cold startup ~19 s.
+This is not a mission latency claim and the longer horizon is not promoted.
+
+Eight fresh low-value pairs are prospectively declared in
+low_value_confirmation_protocol_01.json (seeds 18101–18108, exclude 8101).
+The coordinator is scripts/run_low_value_confirmation.py; status at
+results/low_value_confirmation_status_01.json, main log low_value_confirmation_01.log.
+Do not duplicate it. One heavy worker; arm order alternates; all 120 s per arm.
+Primary one-sided paired-t 95% upper regret <5%, with no contacts and all eight
+pairs complete; secondary 90% equivalence interval ±5%. This covers a fixed task
+and field under stochastic seeds, not a population of environments. All source,
+configs, mission/audit drivers, report and coordinator are frozen against that
+protocol while active. All original scenarios and 3D remain unchanged.
+Automations stay paused; this is a bounded user-requested foreground study.

@@ -116,3 +116,78 @@ def test_omitting_zero_target_cells_preserves_full_grid_task_cost():
         np.testing.assert_array_equal(f.x, r.x)
         np.testing.assert_array_equal(f.controls, r.controls)
         np.testing.assert_allclose(f.q[:, :, :2], r.q, atol=1e-7)
+
+
+def test_two_routes_are_selected_from_observed_posterior_and_keep_the_terminal_state():
+    from typing import NamedTuple
+
+    class Posterior(NamedTuple):
+        measured_mean: jax.Array
+
+        def predict(self, locations):
+            return self.measured_mean[None], jnp.eye(2)[None] * 0.04
+
+    cfg, _, env = fixture()
+    cfg = replace(cfg, budgeted_policy="branches")
+    x = jnp.array([0.0, 0.1, 0.15, -0.08])
+    # Separate continuations; the optimized gate uses measured x-wind only.
+    y = jnp.r_[
+        jnp.zeros(4),
+        jnp.tile(jnp.array([-0.5, 0.0]), 4),
+        jnp.tile(jnp.array([0.5, 0.0]), 4),
+        jnp.array([0.0, 1.0, 0.0, 0.0]),
+    ]
+    matrix = reference_matrices(3.0, 15)
+    left = future_reference(y, x, Posterior(jnp.array([-0.4, 0.0])), env, matrix, cfg)
+    right = future_reference(y, x, Posterior(jnp.array([0.4, 0.0])), env, matrix, cfg)
+    for ref in [left, right]:
+        np.testing.assert_allclose(ref[0, 0], x[:2], atol=1e-7)
+        np.testing.assert_allclose(ref[0, 1], x[2:], atol=1e-7)
+    assert float(left[-1, 0, 0]) < -1.0
+    assert float(right[-1, 0, 0]) > 1.0
+
+
+def test_two_route_rollout_preserves_causal_observation_timing():
+    cfg, b, env = fixture()
+    cfg = replace(
+        cfg, budgeted_policy="branches", budgeted_update_steps=5, hypothetical_relocation=True
+    )
+    eps = jax.random.normal(jax.random.PRNGKey(816), (2, *b.sample_shape))
+    y = jnp.r_[
+        jnp.zeros(4),
+        jnp.tile(jnp.array([-0.12, -0.1]), 4),
+        jnp.tile(jnp.array([0.12, 0.1]), 4),
+        jnp.array([0.0, 1.0, 0.0, 0.0]),
+    ]
+    x, q = jnp.array([-0.5, 0.0, 0.0, 0.0]), jnp.array([0.7, 0.7])
+    noise = jnp.zeros((1, 17, 2))
+    fn = jax.jit(lambda n: evaluate(y, x, q, b, None, n, env, cfg, True, True, eps))
+    active = fn(noise)
+    changed = fn(noise.at[:, 2:7].set(5.0))
+    np.testing.assert_array_equal(active[1][0].x, changed[1][0].x)
+    np.testing.assert_array_equal(active[1][1].controls[:, :5], changed[1][1].controls[:, :5])
+    assert not np.allclose(active[1][1].controls[:, 5:], changed[1][1].controls[:, 5:])
+    frozen = jax.jit(lambda: evaluate(y, x, q, b, None, noise, env, cfg, False, True, eps))()
+    np.testing.assert_array_equal(active[1][0].x, frozen[1][0].x)
+    np.testing.assert_array_equal(active[1][0].q, frozen[1][0].q)
+    assert np.isfinite(active[0])
+
+
+def test_seven_two_route_starts_preserve_the_common_first_action_and_allow_staying():
+    from voi_diffusion_ipp.planning.budgeted import split_vector, warm_starts
+
+    cfg, _, env = fixture()
+    env = env._replace(obstacles=jnp.array([[0.0, -0.72, 0.5], [0.0, 0.72, 0.5]]))
+    x = jnp.array([-0.5, 0.0, 0.0, 0.0])
+    compact = warm_starts(x, env, cfg, True)
+    cfg = replace(cfg, budgeted_policy="branches")
+    branched = warm_starts(x, env, cfg, True)
+    assert compact.shape == (7, 18)
+    assert branched.shape == (7, 24)
+    assert np.isfinite(branched).all()
+    np.testing.assert_array_equal(branched[-1, :4], compact[-1, :4])
+    u, routes, _ = split_vector(branched[3], cfg)
+    changed = branched[3].at[4:].add(0.7)
+    np.testing.assert_array_equal(u, split_vector(changed, cfg)[0])
+    assert routes.shape == (2, 4, 2)
+    assert not np.array_equal(routes[0], routes[1])
