@@ -369,6 +369,7 @@ def main():
     )
     p.add_argument("--shield-terminal-speed", type=float, default=0.2)
     p.add_argument("--shield-substeps", type=int, default=4)
+    p.add_argument("--shield-reconsider", action="store_true")
     p.add_argument("--task", type=Path, default=ROOT / "configs/two_region_design.yaml")
     args = p.parse_args()
     if args.policy == "branches" and "wind_blind_planner" in args.methods:
@@ -389,6 +390,7 @@ def main():
         safety_filter=args.safety_filter,
         shield_terminal_speed=args.shield_terminal_speed,
         shield_substeps=args.shield_substeps,
+        shield_latch=not args.shield_reconsider,
     )
     args.output.mkdir(parents=True, exist_ok=False)
     for method in args.methods:

@@ -38,6 +38,14 @@ def export(path, pair_with=None):
         raise ValueError("Publish completed recordings only")
     d = np.load(path, allow_pickle=False)
     meta = raw["metadata"]
+    if (
+        meta.get("planner_form", "compact") != "compact"
+        or meta["config"].get("safety_filter", "rpcbf") != "rpcbf"
+    ):
+        raise ValueError(
+            "This exporter labels RPCBF compact-policy forecasts. Safe-MPD experiments "
+            "must use their separate comparison report until a correctly labeled replay is added."
+        )
     if meta["source_sha256"] != source_hashes():
         raise ValueError(
             "Numerical source differs from the recorded mission; use its frozen source"

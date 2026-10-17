@@ -1,0 +1,5 @@
+{
+  "created_utc": "2026-10-17T22:04:41.843136+00:00",
+  "purpose": "Select CPU batching by synchronized same-state optimizer runtime, not hidden physical cost. Test chunks 1,2,8 for full-control RPCBF, reconsidering endpoint Safe-MPD and reconsidering endpoint compact shield. Select fastest only if max decision-vector difference from chunk1 <=1e-5; otherwise keep chunk2 and record divergence. Use same published 8-second pilot initial earned belief. Three timed calls after compile and warmup. Timing is optimizer only, not a full-cycle claim.",
+  "driver_sha256": "99ef65218b9d6d58cb44a94a18d55609fec35d71f9793deedb0be08a222c710e"
+}

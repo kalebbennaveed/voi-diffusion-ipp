@@ -1087,3 +1087,66 @@ warm calls. It is NOT started while missions run. Can then test justified
 bounded sensitivities. Full-control Safe-MPD freezes hypothetical belief; it is
 not an anticipated-learning implementation. The shield-only compact arm retains
 causal hypothetical POAM but not the transformed-control score; label separately.
+
+First six missions are now COMPLETE; source snapshot committed as61f8ade.
+Results in docs/safe_mpd_study/mission_results_01. Direct compact shield contacted
+at109.60s and made0 transfers; raw post-contact cost5.41443 is not mission success.
+Full transformed Safe-MPD had no contacts but only1 transfer and cost4.41457;
+endpoint versus dense monitoring produced identical physical data in this seed,
+with median cycles0.567 versus1.764s. Original RPCBF cost2.83933,16 transfers.
+
+Optional reference-style reconsideration is now implemented (default remains
+paper latch).18 component/regression tests pass. Current benchmark session49830
+runs scripts/benchmark_safe_mpd_jax.py; results docs/safe_mpd_study/jax_results_02,
+log results/safe_mpd_jax_02.log. It is the only heavy worker. Predeclared batching
+criterion is in jax_protocol_02.json. Wait for completion before further missions.
+Do not restart the old coordinator. The next bounded original-task mission set
+will compare reconsidering compact and full-control shields, a32-proposal
+full-control screen, and a current-belief compact RPCBF control. Preserve all
+failures and label any gain as developmental, not held-out validation.
+
+JAX batching screen is COMPLETE: all three chunk settings produced exactly the
+same selected vector in each formulation at the fixed initial state. Fastest
+median optimizer calls: full RPCBF chunk8,0.327s; reconsidering endpoint Safe-MPD
+chunk8,0.093s; reconsidering compact shield chunk1,0.742s. These exclude cache,
+verification and real updates and are NOT full-cycle mission latency.
+
+ACTIVE session12348 now runs mission_protocol_02.json, coordinator
+scripts/run_safe_mpd_study.py. Status results/safe_mpd_mission_02_status.json.
+Five120s jobs: compact-current RPCBF, compact anticipated-learning reconsidering
+shield, full-control RPCBF chunk8, reconsidering Safe-MPD8 proposals, reconsidering
+Safe-MPD32 proposals. Latest source/configs/mission drivers frozen by protocol.
+No source changes or duplicate workers until complete. No old stopped study or
+automation resumed. Source snapshot61f8ade preserves all first-screen behavior.
+
+### Safe-MPD comparison completed; no active worker
+
+All11 declared120-second missions, the4 short pilots, and the9-setting blocked
+JAX batch screen are complete. Current source freezes are lifted. Do not restart
+sessions58813/12348/49830 or old stopped studies. Automated research remains
+paused.34 final component/regression tests pass, Ruff and diff checks pass.
+See docs/safe_mpd_comparison.md for full interpretation and reproducible commands
+in the JSON protocols; all-run numeric/2D evidence is docs/safe_mpd_study/all_results.
+
+Final conclusion: retain RPCBF default. Full reference-style sampled-wind Safe-MPD
+achieves median0.377s / p950.600s full planning cycles for10s trajectories, but
+cost3.91687 and3 A/B transfers, versus compact current-belief RPCBF2.95491 and14
+transfers, and original proposed2.83933 and16 transfers.32 proposals did not help:
+cost3.94494,3 transfers, median0.541s. These full Safe-MPD runs had no contacts.
+Direct shield replacements inside the anticipated-learning compact planner
+contacted: both paper latch and reference-style reconsideration; preserve failures.
+The unknown-wind terminal speed test is empirical, not an invariant-set proof.
+
+The matched full-control RPCBF cost is3.58436 (chunk2) or3.84002 (chunk8), with
+median0.827/0.800s. Same-initial-state batching equality does NOT guarantee the
+same long mission: at period1 identical inputs give4.17e-7 control-vector change;
+by period3 the selected-vector difference is8.78e-4 after causal feedback/POAM
+updates. Both results are retained in reproducibility_checks.json. No seed sweeps
+or general success claim were made. Original120s arrays (states,controls,clarity,
+POAM mean/std) reproduce exactly. Original scenarios/demos/3D are unchanged.
+
+No benchmark code imports from reference repositories, and no dependencies were
+installed. Reference tracked files are untouched (an existing untracked .DS_Store
+was left alone). CPU is the measured supported backend; earlier Metal limitations
+remain. Safe-MPD replay data is not mislabeled as RPCBF: existing exporter rejects
+new shield formats; comparisons are supplied as independently audited2D plots.

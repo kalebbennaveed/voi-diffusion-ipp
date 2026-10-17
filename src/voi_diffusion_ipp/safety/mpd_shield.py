@@ -69,9 +69,11 @@ def monitor(x, nominal, belief, inner, env, cfg):
 
 
 def filter_control(x, nominal, belief, inner, env, cfg, active=False):
-    """Latch backup until the caller starts a NEW planning horizon (Algorithm 2)."""
+    """Paper latch by default; optional reference-style per-step reconsideration."""
     if not isinstance(inner, InnerFields):
         raise TypeError("Shield requires belief-derived InnerFields, never WorldField")
+    if not cfg.shield_latch:
+        active = jnp.array(False)
     accepted, violation, speed = jax.lax.cond(
         active,
         lambda _: (jnp.array(False), jnp.array(0.0), jnp.array(0.0)),

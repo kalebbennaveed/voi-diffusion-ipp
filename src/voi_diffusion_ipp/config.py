@@ -45,6 +45,7 @@ class Config:
     safety_filter: str = "rpcbf"  # experimental alternative: sampled_mpd_shield
     shield_terminal_speed: float = 0.2  # empirical recovery test, NOT invariant-set proof
     shield_substeps: int = 4
+    shield_latch: bool = True  # paper Algorithm 2; False matches reference reconsideration
     wind_backend: str = "feature"
     poam_train_steps: int = 10
     hypothetical_relocation: bool = False

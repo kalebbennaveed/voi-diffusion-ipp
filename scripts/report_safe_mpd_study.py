@@ -61,7 +61,25 @@ def main():
     fig, axes = plt.subplots(
         1, 3, figsize=(15, max(3, 0.45 * len(ready) + 1)), layout="constrained"
     )
-    labels = [r["name"].replace("safe_mpd_mission_01_", "") for r in ready]
+    names = {
+        "compact_rpcbf": "Original learning + RPCBF",
+        "compact_shield": "Learning + latched shield",
+        "control_rpcbf": "Control-sequence RPCBF",
+        "control_rpcbf_optimized": "Control-sequence RPCBF / batch 8",
+        "control_shield": "Control-sequence shield",
+        "safe_mpd": "Safe-MPD / dense monitor",
+        "safe_mpd_discrete": "Safe-MPD / discrete monitor",
+        "compact_reference": "Learning + reconsidering shield",
+        "safe_reference": "Safe-MPD / reconsidering",
+        "safe_reference_32": "Safe-MPD / reconsidering / 32",
+        "compact_current": "Current-belief compact RPCBF",
+    }
+
+    def label(row):
+        suffix = row["name"].replace("safe_mpd_mission_01_", "").replace("safe_mpd_mission_02_", "")
+        return names.get(suffix, suffix)
+
+    labels = [label(r) for r in ready]
     fields = [
         ("integrated_whole_grid_deficit", "Integrated clarity deficit (lower is better)"),
         ("steady_cycle_s", "Median full planning cycle (s)"),
@@ -86,13 +104,27 @@ def main():
     fig.savefig(args.output / "comparison.png", dpi=160)
     plt.close(fig)
     # Full physical trajectories, no smooth replacement paths.
+    nrows = (len(ready) + 2) // 3
     fig, axes = plt.subplots(
-        1, len(ready), figsize=(4 * len(ready), 4), layout="constrained", squeeze=False
+        nrows, 3, figsize=(12, 3.8 * nrows), layout="constrained", squeeze=False
     )
-    for ax, row in zip(axes[0], ready):
+    for ax, row in zip(axes.ravel(), ready):
         job = next(j for j in protocol["jobs"] if j["name"] == row["name"])
         d = np.load(ROOT / job["output"] / (row["method"] + ".npz"), allow_pickle=False)
-        ax.plot(d["x"][:, 0], d["x"][:, 1], lw=0.8, color="#286e89")
+        contact = row["audit"]["first_contact_interval_start_s"]
+        cut = len(d["x"]) if contact is None else round(contact / 0.05) + 1
+        ax.plot(d["x"][:cut, 0], d["x"][:cut, 1], lw=0.8, color="#286e89")
+        if contact is not None:
+            ax.plot(d["x"][cut - 1 :, 0], d["x"][cut - 1 :, 1], lw=0.8, color="#ae4a40", ls="--")
+        meta = json.loads((ROOT / job["output"] / (row["method"] + ".json")).read_text())[
+            "metadata"
+        ]
+        spec = meta["task_spec"]
+        size = np.asarray(spec["region_size"])
+        for region, key in [("A", "region_a"), ("B", "region_b")]:
+            center = np.asarray(spec[key])
+            ax.add_patch(plt.Rectangle(center - size / 2, *size, fill=False, ec="#8b8b8b", ls=":"))
+            ax.text(*center, region, fontsize=12, color="#333333")
         ax.scatter(*d["x"][0, :2], color="green", s=25)
         for ox, oy, r in d["obstacles"]:
             ax.add_patch(plt.Circle((ox, oy), r, color="#777777"))
@@ -100,8 +132,10 @@ def main():
             xlim=d["bounds"][:, 0],
             ylim=d["bounds"][:, 1],
             aspect="equal",
-            title=row["name"].replace("safe_mpd_mission_01_", ""),
+            title=label(row),
         )
+    for ax in axes.ravel()[len(ready) :]:
+        ax.axis("off")
     fig.savefig(args.output / "trajectories.png", dpi=140)
     plt.close(fig)
     for r in ready:

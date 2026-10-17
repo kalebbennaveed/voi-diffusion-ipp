@@ -1,0 +1,371 @@
+{
+  "label": "Combined completed development evidence; see per-batch protocols for frozen inputs",
+  "jobs": [
+    {
+      "name": "safe_mpd_mission_01_compact_rpcbf",
+      "output": "results/budgeted_missions/safe_mpd_mission_01_compact_rpcbf",
+      "methods": [
+        "proposed"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--chunk",
+        "2",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "compact",
+        "--safety-filter",
+        "rpcbf",
+        "--methods",
+        "proposed"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_01_compact_shield",
+      "output": "results/budgeted_missions/safe_mpd_mission_01_compact_shield",
+      "methods": [
+        "proposed"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--chunk",
+        "2",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "compact",
+        "--safety-filter",
+        "sampled_mpd_shield",
+        "--methods",
+        "proposed"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_01_control_rpcbf",
+      "output": "results/budgeted_missions/safe_mpd_mission_01_control_rpcbf",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--chunk",
+        "2",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "control_mpd",
+        "--safety-filter",
+        "rpcbf",
+        "--methods",
+        "current_belief"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_01_control_shield",
+      "output": "results/budgeted_missions/safe_mpd_mission_01_control_shield",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--chunk",
+        "2",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "control_mpd",
+        "--safety-filter",
+        "sampled_mpd_shield",
+        "--methods",
+        "current_belief"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_01_safe_mpd",
+      "output": "results/budgeted_missions/safe_mpd_mission_01_safe_mpd",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--chunk",
+        "2",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "safe_mpd",
+        "--safety-filter",
+        "sampled_mpd_shield",
+        "--methods",
+        "current_belief"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_01_safe_mpd_discrete",
+      "output": "results/budgeted_missions/safe_mpd_mission_01_safe_mpd_discrete",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--chunk",
+        "2",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "safe_mpd",
+        "--safety-filter",
+        "sampled_mpd_shield",
+        "--methods",
+        "current_belief",
+        "--shield-substeps",
+        "1"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_02_compact_current",
+      "output": "results/budgeted_missions/safe_mpd_mission_02_compact_current",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "compact",
+        "--safety-filter",
+        "rpcbf",
+        "--methods",
+        "current_belief",
+        "--proposals",
+        "8",
+        "--chunk",
+        "2"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_02_compact_reference",
+      "output": "results/budgeted_missions/safe_mpd_mission_02_compact_reference",
+      "methods": [
+        "proposed"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "compact",
+        "--safety-filter",
+        "sampled_mpd_shield",
+        "--methods",
+        "proposed",
+        "--proposals",
+        "8",
+        "--chunk",
+        "1",
+        "--shield-substeps",
+        "1",
+        "--shield-reconsider"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_02_control_rpcbf_optimized",
+      "output": "results/budgeted_missions/safe_mpd_mission_02_control_rpcbf_optimized",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "control_mpd",
+        "--safety-filter",
+        "rpcbf",
+        "--methods",
+        "current_belief",
+        "--proposals",
+        "8",
+        "--chunk",
+        "8"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_02_safe_reference",
+      "output": "results/budgeted_missions/safe_mpd_mission_02_safe_reference",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "safe_mpd",
+        "--safety-filter",
+        "sampled_mpd_shield",
+        "--methods",
+        "current_belief",
+        "--proposals",
+        "8",
+        "--chunk",
+        "8",
+        "--shield-substeps",
+        "1",
+        "--shield-reconsider"
+      ]
+    },
+    {
+      "name": "safe_mpd_mission_02_safe_reference_32",
+      "output": "results/budgeted_missions/safe_mpd_mission_02_safe_reference_32",
+      "methods": [
+        "current_belief"
+      ],
+      "arguments": [
+        "--periods",
+        "60",
+        "--seed",
+        "8101",
+        "--first-stage",
+        "2",
+        "--future-update-steps",
+        "10",
+        "--relocate",
+        "--rapid",
+        "--prior-regime",
+        "outer-survey",
+        "--wind-case",
+        "original",
+        "--planner-form",
+        "safe_mpd",
+        "--safety-filter",
+        "sampled_mpd_shield",
+        "--methods",
+        "current_belief",
+        "--proposals",
+        "32",
+        "--chunk",
+        "8",
+        "--shield-substeps",
+        "1",
+        "--shield-reconsider"
+      ]
+    }
+  ],
+  "protocols": [
+    "mission_protocol_01.json",
+    "mission_protocol_02.json"
+  ]
+}

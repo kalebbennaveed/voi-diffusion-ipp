@@ -75,7 +75,13 @@ def main():
         ("compact", "sampled_mpd_shield", 1),
     ]:
         for chunk in [1, 2, 8]:
-            cc = replace(cfg, candidate_chunk=chunk, safety_filter=safety, shield_substeps=substeps)
+            cc = replace(
+                cfg,
+                candidate_chunk=chunk,
+                safety_filter=safety,
+                shield_substeps=substeps,
+                shield_latch=False,
+            )
             plan = (
                 make_planner(cc, True, idx)
                 if form == "compact"

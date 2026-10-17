@@ -1,0 +1,100 @@
+{
+  "original_preserved": {
+    "maximum_difference": {
+      "x": 0.0,
+      "q": 0.0,
+      "controls": 0.0,
+      "mean": 0.0,
+      "std": 0.0
+    },
+    "config_changes": {
+      "shield_substeps": [
+        null,
+        4
+      ],
+      "safety_filter": [
+        null,
+        "rpcbf"
+      ],
+      "shield_terminal_speed": [
+        null,
+        0.2
+      ],
+      "budgeted_policy": [
+        null,
+        "compact"
+      ]
+    },
+    "first_vector_difference_period": null
+  },
+  "dense_endpoint": {
+    "maximum_difference": {
+      "x": 0.0,
+      "q": 0.0,
+      "controls": 0.0,
+      "mean": 0.0,
+      "std": 0.0
+    },
+    "config_changes": {
+      "shield_substeps": [
+        4,
+        1
+      ]
+    },
+    "first_vector_difference_period": null
+  },
+  "rpcbf_batch": {
+    "maximum_difference": {
+      "x": 4.087557792663574,
+      "q": 0.7767657041549683,
+      "controls": 3.200000047683716,
+      "mean": 1.0170118808746338,
+      "std": 0.5943598747253418
+    },
+    "config_changes": {
+      "shield_latch": [
+        null,
+        true
+      ],
+      "candidate_chunk": [
+        2,
+        8
+      ]
+    },
+    "first_vector_difference_period": 3,
+    "early_differences": [
+      {
+        "period": 0,
+        "initial_state_delta": 0.0,
+        "initial_posterior_mean_delta": 0.0,
+        "initial_posterior_std_delta": 0.0,
+        "selected_vector_delta": 0.0,
+        "cached_cost_delta": 0.0
+      },
+      {
+        "period": 1,
+        "initial_state_delta": 0.0,
+        "initial_posterior_mean_delta": 0.0,
+        "initial_posterior_std_delta": 0.0,
+        "selected_vector_delta": 4.172325134277344e-07,
+        "cached_cost_delta": -1.4901161193847656e-08
+      },
+      {
+        "period": 2,
+        "initial_state_delta": 1.341104507446289e-07,
+        "initial_posterior_mean_delta": 4.157423973083496e-06,
+        "initial_posterior_std_delta": 3.1147152185440063e-05,
+        "selected_vector_delta": 2.5331974029541016e-06,
+        "cached_cost_delta": -5.364418029785156e-06
+      },
+      {
+        "period": 3,
+        "initial_state_delta": 0.0003294944763183594,
+        "initial_posterior_mean_delta": 8.377432823181152e-05,
+        "initial_posterior_std_delta": 5.665421485900879e-05,
+        "selected_vector_delta": 0.0008783340454101562,
+        "cached_cost_delta": -8.687376976013184e-05
+      }
+    ]
+  }
+}

@@ -83,6 +83,18 @@ def test_all_samples_must_pass_and_terminal_recovery_is_checked():
     assert violation < 0 and speed > cfg.shield_terminal_speed and not ok
 
 
+def test_reference_reconsideration_is_explicit_and_default_remains_latched():
+    cfg, env, inner, belief = fixture()
+    x, u = jnp.array([-2.0, 0.0, 0.0, 0.0]), jnp.array([0.1, 0.1])
+    _, paper = filter_control(x, u, belief, inner, env, cfg, active=True)
+    assert paper.active and not paper.accepted
+    control, reference = filter_control(
+        x, u, belief, inner, env, replace(cfg, shield_latch=False), active=True
+    )
+    assert reference.accepted and not reference.active
+    np.testing.assert_array_equal(control, u)
+
+
 def test_physics_uses_applied_control_without_freezing_and_latch_persists():
     cfg, env, inner, belief = fixture()
     x = jnp.array([-0.94, 0.0, 1.0, 0.0])
