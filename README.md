@@ -51,6 +51,24 @@ stopped with unfinished recordings preserved. The 90-second regime screen was
 also stopped; **do not resume those old queues**. Earlier finite-feature ROI gains
 apply only to that historical model, not the current full-POAM method.
 
+
+The comparison selector now also includes **Wind-blind plan + safety filter**.
+This baseline runs actual MBD on nominal still-air dynamics and known obstacle
+geometry, then uses full POAM wind estimates only in the continuous execution
+RPCBF. It has no nominal wind compensation and no hypothetical learning.
+All three methods assimilate real observations. The original current-belief
+comparison remains available and isolates anticipation in the planning objective.
+
+In the additional 120 s seed-8101 development run, wind-blind planning cost
+3.4986, completed eight A/B transfers, used five fallback periods, and had no
+contacts in the independent 32-substep check (minimum clearance 0.1109 m).
+Proposed cost is 18.84% lower; current-belief cost is 15.54% lower. These contrasts
+combine awareness of wind/safety during planning with anticipation and are **not
+an isolated learning gain**. The nominal baseline is much cheaper (~0.067 s per
+cycle); this is an equal-MBD-candidate comparison, not an equal-wall-time study.
+Protocol/results: `docs/two_region_design/safety_only_{protocol,results}.json`.
+
+
 ## Interactive research demo
 
 ```sh

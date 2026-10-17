@@ -12,17 +12,17 @@ export function cumulativeCost(q, targets, dt) {
 export function beliefIndex(step, H, count) {
   return clamp(Math.floor(step / H), 0, count - 1);
 }
-export function pairedRecord(records, record) {
+export function pairedRecord(records, record, comparator = 'current_belief') {
   return records.find(r => r.group === record.group && r.seed === record.seed && r.method === (
-    record
-    .method === 'current_belief' ? 'proposed' : 'current_belief')) || null;
+    ['current_belief','wind_blind_planner'].includes(record.method) ? 'proposed' : comparator)) || null;
 }
 export function metricText(value, digits = 3) {
   return Number.isFinite(value) ? value.toFixed(digits) : 'Infeasible';
 }
 
 export function methodLabel(data) {
-  if (data.metrics.method === 'current_belief') return 'No anticipated learning';
+  if (data.metrics.method === 'current_belief') return 'Wind-aware · no anticipated learning';
+  if (data.metrics.method === 'wind_blind_planner') return 'Wind-blind plan + safety filter';
   if (!data.config.measurements) return 'Proposed · measurements off';
   if (data.metrics.method === 'cem') return 'CEM · anticipates learning';
   if (data.metrics.method === 'mppi') return 'MPPI · anticipates learning';
@@ -31,8 +31,19 @@ export function methodLabel(data) {
 
 // Keep method identity and colors stable even when the baseline record is selected.
 export function comparisonPair(data, other) {
-  if (data.metrics.method === 'current_belief' && other) return [other, data];
+  if (['current_belief','wind_blind_planner'].includes(data.metrics.method) && other) return [other, data];
   return [data, other];
+}
+
+export function comparisonClaim(baseline) {
+  return baseline?.metrics.method === 'wind_blind_planner' ?
+    'with wind-aware planning and anticipated learning' : 'when anticipating learning';
+}
+
+export function methodDescription(data) {
+  if (data.metrics.method === 'wind_blind_planner') return 'Chooses a still-air nominal trajectory. Only the continuous execution safety filter uses the learned wind.';
+  if (data.metrics.method === 'current_belief') return 'Plans through wind-aware safety using today’s belief; learns from real measurements but does not anticipate future updates.';
+  return 'Plans through wind-aware safety and simulates how earned measurements change future decisions.';
 }
 
 export function missionSummary(data) {

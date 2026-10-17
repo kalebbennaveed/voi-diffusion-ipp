@@ -44,14 +44,26 @@ def reference_matrices(seconds, steps, knots=5):
 
 
 def segment(
-    x0, q0, references, controller_belief, inner, world, noise, env, cfg, tracking, backup=False
+    x0,
+    q0,
+    references,
+    controller_belief,
+    inner,
+    world,
+    noise,
+    env,
+    cfg,
+    tracking,
+    backup=False,
+    nominal_wind_aware=True,
+    apply_safety=True,
 ):
     wind = lambda p: world.at(p)[0]
 
     def tick(carry, item):
         x, q, cost = carry
         reference, eps = item
-        mean = controller_belief.mean_at(x[:2])[0]
+        mean = controller_belief.mean_at(x[:2])[0] if nominal_wind_aware else jnp.zeros(2)
         if tracking:
             p, v, a = reference
             desired = a + 1.2 * (p - x[:2]) + 1.8 * (v - x[2:])
@@ -59,7 +71,11 @@ def segment(
             desired = reference
         nominal = jnp.clip(desired + cfg.linear_drag * x[2:] - mean, -cfg.umax, cfg.umax)
         nominal = jnp.where(backup, design_policy(x, controller_belief, cfg), nominal)
-        safe, info = filter_control(x, nominal, controller_belief, inner, env, cfg)
+        if apply_safety:
+            safe, info = filter_control(x, nominal, controller_belief, inner, env, cfg)
+            correction, slack = info.correction, info.slack
+        else:
+            safe, correction, slack = nominal, jnp.array(0.0), jnp.array(0.0)
         xn = step(x, safe, wind, cfg.dt, cfg.linear_drag)
         qn = clarity.step(
             q, x[:2], xn[:2], env.cells, cfg.sensor_sigma, cfg.sensor_R, env.process_noise, cfg.dt
@@ -77,8 +93,8 @@ def segment(
             qn,
             observation,
             safe,
-            info.correction,
-            info.slack,
+            correction,
+            slack,
             gap,
         )
 

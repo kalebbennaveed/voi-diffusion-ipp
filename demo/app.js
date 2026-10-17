@@ -6,6 +6,8 @@ import {
   pairedRecord,
   metricText,
   methodLabel,
+  methodDescription,
+  comparisonClaim,
   comparisonPair,
   missionSummary,
   persistenceMetrics,
@@ -17,6 +19,7 @@ const $ = id => document.getElementById(id);
 const state = {
   data: null,
   comparison: null,
+  comparisonMethod: new URLSearchParams(location.search).get("baseline") === "wind_blind_planner" ? "wind_blind_planner" : "current_belief",
   records: [],
   persistent: null,
   regimes: null,
@@ -305,7 +308,7 @@ function drawMap() {
   drawRegions(g,e,xy,scale);
   if ($('compare').checked && state.comparison) {
     const c = state.comparison;
-    const otherColor = c.metrics.method === 'current_belief' ? colors.amber : colors.teal;
+    const otherColor = ['current_belief','wind_blind_planner'].includes(c.metrics.method) ? colors.amber : colors.teal;
     path(g, c.mission.x.slice(0, t + 1), xy, otherColor, 1.8, [5, 4]);
     if (state.mode === 'mission') {
       const a = xy(c.mission.x[t]);
@@ -352,7 +355,7 @@ function drawMap() {
         2.6);
     }
   } else {
-    const ownColor = d.metrics.method === 'current_belief' ? colors.amber : colors.teal;
+    const ownColor = ['current_belief','wind_blind_planner'].includes(d.metrics.method) ? colors.amber : colors.teal;
     const period = Math.min(Math.floor(t / H), d.planning.length - 1);
     if (d.mission.nominal_paths?.[period]) path(g, d.mission.nominal_paths[period], xy, '#8599a7', 1.1, [3, 4]);
     path(g, d.mission.x.slice(0, t + 1), xy, ownColor, 2.8);
@@ -507,9 +510,9 @@ function drawCharts() {
     if (state.comparison && $('compare').checked) path(a.g, state.comparison.mission.q.map((q,
         i) => [i * d
         .config.dt, deficit(q, state.comparison.environment.targets)
-      ]), a.xy, state.comparison.metrics.method === 'current_belief' ? colors.amber : colors
+      ]), a.xy, ['current_belief','wind_blind_planner'].includes(state.comparison.metrics.method) ? colors.amber : colors
       .teal, 1.4, [4, 3]);
-    path(a.g, ts, a.xy, d.metrics.method === 'current_belief' ? colors.amber : colors.teal, 1.8);
+    path(a.g, ts, a.xy, ['current_belief','wind_blind_planner'].includes(d.metrics.method) ? colors.amber : colors.teal, 1.8);
     path(a.g, [
       [state.step * d.config.dt, 0],
       [state.step * d.config.dt, max]
@@ -668,12 +671,12 @@ function renderComparison() {
   $('comparison-time').textContent = `${time.toFixed(2)} / ${duration.toFixed(1)} s`;
   $('result-name-a').textContent = methodLabel(a);
   $('result-name-b').textContent = b ? methodLabel(b) : 'No matched comparator';
-  $('result-name-a').style.color = a.metrics.method === 'current_belief' ? colors.amber : colors
+  $('result-name-a').style.color = ['current_belief','wind_blind_planner'].includes(a.metrics.method) ? colors.amber : colors
     .teal;
   $('result-name-b').style.color = colors.amber;
   $('inspect-b').disabled = !b;
   for (const [d, side, color] of [
-      [a, 'a', a.metrics.method === 'current_belief' ? colors.amber : colors.teal],
+      [a, 'a', ['current_belief','wind_blind_planner'].includes(a.metrics.method) ? colors.amber : colors.teal],
       [b, 'b', colors.amber]
     ]) {
     if (d) {
@@ -708,25 +711,19 @@ function renderResults() {
     sb = b ? missionSummary(b) : null;
   $('result-scope').textContent = a.preview ? 'UNFINISHED MISSION · RECORDED PORTION ONLY' : b ? 'COMPLETED MISSIONS · SAME WIND AND START' :
     'COMPLETED MISSION · UNPAIRED RECORDING';
-  const colorA = a.metrics.method === 'current_belief' ? colors.amber : colors.teal;
+  const colorA = ['current_belief','wind_blind_planner'].includes(a.metrics.method) ? colors.amber : colors.teal;
   $('result-name-a').textContent = methodLabel(a);
   $('result-name-b').textContent = b ? methodLabel(b) : 'Comparison unavailable';
   $('result-column-a').textContent = a.metrics.method === 'current_belief' ?
     'No anticipated learning' : a.metrics.method === 'proposed' ? 'Proposed' : a.metrics.method
     .toUpperCase();
-  $('result-column-b').textContent = b ? 'No anticipated learning' : '—';
+  $('result-column-b').textContent = b ? methodLabel(b) : '—';
   $('result-cost-a').textContent = `Cost ${sa.cost.toFixed(3)}`;
   $('result-cost-b').textContent = sb ? `Cost ${sb.cost.toFixed(3)}` : '—';
   $('result-name-a').style.color = colorA;
   $('result-name-b').style.color = colors.amber;
-  $('result-note-a').textContent = a.config.measurements ?
-    'Accounts for future measurements while choosing current motion.' :
-    'Measurements are disabled in this control run.';
-  if (a.metrics.method === 'current_belief') $('result-note-a').textContent =
-    'Updates during execution; future planning uses the belief available now.';
-  $('result-note-b').textContent = b ?
-    'Updates during execution; future planning uses the belief available now.' :
-    'Run the other method with the same settings and seed to compare.';
+  $('result-note-a').textContent = methodDescription(a);
+  $('result-note-b').textContent = b ? methodDescription(b) : 'No matched comparator.';
   $('inspect-b').disabled = !b;
   $('replay-pair').textContent = b ? 'Replay both missions from the start →' :
     'Replay this mission from the start →';
@@ -737,7 +734,7 @@ function renderResults() {
   if (sb) {
     const benefit = sb.cost - sa.cost;
     $('result-verdict').textContent =
-      `${(100 * Math.abs(benefit) / Math.max(sb.cost, 1e-12)).toFixed(1)}% ${benefit >= 0 ? 'lower' : 'higher'} monitoring cost when anticipating learning`;
+      `${(100 * Math.abs(benefit) / Math.max(sb.cost, 1e-12)).toFixed(1)}% ${benefit >= 0 ? 'lower' : 'higher'} monitoring cost ${comparisonClaim(b)}`;
     $('result-verdict').style.color = benefit >= 0 ? colors.teal : colors.red;
     const extra = sa.first - sb.first,
       recovered = sb.later - sa.later;
@@ -770,6 +767,7 @@ function renderResults() {
     if (sb) sb.audit=b.research_audit;
     rows.push(
       ['A ↔ B transfers', s=>`${s.audit.transfers.length}`],
+      ['Planning periods using fallback', s=>`${s.audit.backup_periods}`],
       ['Steady planning time · median / 95th percentile', s=>`${s.audit.steady_cycle_s.median.toFixed(2)} / ${s.audit.steady_cycle_s.p95.toFixed(2)} s`],
       ['Planning cycles exceeding 2 s', s=>`${(100*s.audit.cycle_2s_miss_fraction).toFixed(1)}%`],
       ['Dense physical clearance · 32 substeps', s=>`${s.audit.minimum_dense_clearance.toFixed(3)} m`]
@@ -823,7 +821,7 @@ function update() {
   $('comparison-transport').classList.toggle('hidden', !isCompare);
   for (const id of ['result-heading', 'result-table-wrap', 'result-footnote', 'result-actions']) $(
     id).classList.toggle('hidden', isCompare);
-  $('method-explainer').classList.toggle('hidden', isCompare);
+  $('method-explainer').classList.toggle('hidden', isCompare || !!state.comparison);
   document.querySelector('.quick-actions').classList.toggle('hidden', isCompare);
   $('playback-view').classList.toggle('hidden', isPairView);
   $('mode-note').classList.toggle('hidden', isPairView);
@@ -842,12 +840,13 @@ function update() {
   $('learning-explainer-title').textContent = d.config.measurements ?
     'Both planning approaches learn during execution.' :
     'Measurements are disabled in this experiment.';
-  $('learning-explainer-text').textContent = d.config.measurements ?
+  $('learning-explainer-text').textContent = [d,state.comparison].some(v=>v?.metrics.method==='wind_blind_planner') ?
+    'The wind-blind planner ignores its wind estimate when choosing a nominal path. Its execution safety filter still uses full POAM. The proposed planner accounts for wind, safety and future learning while planning.' : d.config.measurements ?
     'The proposed planner also anticipates how future measurements will improve later decisions. The comparator plans its future using the belief available now.' :
     'The wind belief is not updated. This is a separate no-measurement control; it is different from the comparator that learns during execution but does not anticipate learning while planning.';
   $('mode-note').textContent = isDiff ?
     `Denoising: ${methodLabel(d)}. Each candidate predicts ${((H+d.config.future_steps)*d.config.dt).toFixed(1)} s; only the first ${(H*d.config.dt).toFixed(1)} s is executed before updating and replanning. ${d.preview ? '“Latest recorded state” shows the executed portion so far.' : '“Final result” shows the completed actual mission.'}` :
-    `Mission playback: ${methodLabel(d)} is ${d.metrics.method === 'current_belief' ? 'amber' : 'teal'}. ${state.comparison ? 'The other planner can be overlaid at the same execution time.' : 'This recording has no paired comparator.'}`;
+    `Mission playback: ${methodLabel(d)} is ${['current_belief','wind_blind_planner'].includes(d.metrics.method) ? 'amber' : 'teal'}. ${state.comparison ? 'The other planner can be overlaid at the same execution time.' : 'This recording has no paired comparator.'}`;
   $('play').textContent = state.playing ? 'Ⅱ' : '▶';
   $('play').setAttribute('aria-label', state.playing ? 'Pause playback' : 'Play playback');
   $('timeline').max = isDiff ? d.config.diffusion_steps - 1 : d.mission.x.length - 1;
@@ -861,7 +860,7 @@ function update() {
   $('scene-label').textContent = d.config.whole_field ?
     `${d.config.scenario.replaceAll('_', ' ')} · ${d.environment.cells.length} cells` :
     'Legacy ROI experiment · feature GP';
-  $('variant-tag').textContent = d.metrics.method === 'current_belief' ? 'No anticipated learning' :
+  $('variant-tag').textContent = d.metrics.method === 'wind_blind_planner' ? 'Safety only at execution' : d.metrics.method === 'current_belief' ? 'No anticipated learning' :
     d.config.future_updates && d.config.future_steps > d.config.stage_steps ? 'Repeated belief updates' : 'Two-stage';
   $('provenance').textContent =
     `Seed ${d.metrics.seed} · ${d.metrics.method} · JAX ${d.metrics.jax_version} · ${d.metrics.mean_plan_seconds.toFixed(2)} s / plan · ${d.metrics.objective_evaluations_per_plan} objective evaluations`;
@@ -881,7 +880,7 @@ function update() {
       .metrics
       .method === 'mppi' ? 'MPPI optimization' : 'Denoising the policy';
     $('map-subtitle').textContent =
-      `Plan at t = ${(state.period*H*d.config.dt).toFixed(1)} s · planning world 1 of ${d.config.worlds}`;
+      `Plan at t = ${(state.period*H*d.config.dt).toFixed(1)} s · ${d.metrics.method === 'wind_blind_planner' ? 'unfiltered zero-wind forecast' : 'planning world 1 of '+d.config.worlds}`;
     setMetric(1, l === d.config.diffusion_steps - 1 ? 'Final selected cost' : 'Best predicted cost',
       metricText(l === d.config.diffusion_steps - 1 ? p.selected_cost : r[0]), l === d.config
       .diffusion_steps - 1 ? 'Includes evaluation of the final denoised policy' :
@@ -899,7 +898,7 @@ function update() {
     $('chart-note-2').textContent = 'Hover to inspect a policy';
     $('explanation-title').textContent = 'From noisy policies to useful motion';
     $('explanation-text').textContent =
-      'Each line is a safety-filtered rollout of a sampled policy. Predicted task cost determines its weight. The weighted policy mean estimates the score used by the next reverse update.';
+      d.metrics.method === 'wind_blind_planner' ? 'Each candidate is a nominal still-air rollout without safety filtering. Its task cost determines the actual MBD reverse update. Full POAM/RPCBF is applied only during real execution.' : 'Each line is a safety-filtered rollout of a sampled policy. Predicted task cost determines its weight. The weighted policy mean estimates the score used by the next reverse update.';
     $('formula').textContent = d.metrics.method === 'cem' ? 'elite policies → refit distribution' :
       d.metrics
       .method === 'mppi' ? 'cost weights → weighted policy update' :
@@ -913,7 +912,7 @@ function update() {
       $('candidate-detail').textContent =
         `Policy ${i+1} · cost ${metricText(p.costs[l][i])} · weight ${p.weights[l][i].toFixed(4)} · ${p.policy_type || `branch ${p.candidate_branches[l][i]+1}`}`;
     } else $('candidate-detail').textContent =
-      p.backup_used ? 'The uncached check rejected this forecast. Actual execution used the backup policy.' : `Score norm ${Math.hypot(...p.score[l]).toFixed(2)} · costs include the complete stochastic objective.`;
+      p.backup_used ? 'No feasible selected plan passed verification. Actual execution used the backup policy.' : `Score norm ${Math.hypot(...p.score[l]).toFixed(2)} · costs include the complete stochastic objective.`;
   } else {
     const idx = state.step - 1,
       fail = idx >= 0 && !d.mission.feasible[idx];
@@ -945,11 +944,11 @@ function update() {
     $('formula').textContent = d.config.measurements ?
       'execute → observe → update belief → replan' : 'execute → replan with unchanged wind belief';
     $('forecast-note').textContent =
-      'Teal anticipates learning; amber plans with its current belief. Both use real observations during execution. Gray dashes show the selected planner’s nominal prediction.';
+      'Teal: proposed; amber: selected comparator. Both update POAM from real observations. Gray dashes show the selected planner’s forecast; the wind-blind baseline forecasts without wind or filtering.';
     $('legend').innerHTML =
-      `<span><i class="line ${d.metrics.method === 'current_belief' ? 'amber' : 'teal'}"></i>${methodLabel(d)}</span>` +
+      `<span><i class="line ${['current_belief','wind_blind_planner'].includes(d.metrics.method) ? 'amber' : 'teal'}"></i>${methodLabel(d)}</span>` +
       (state.comparison && $('compare').checked ?
-        `<span><i class="line ${state.comparison.metrics.method === 'current_belief' ? 'amber' : 'teal'}"></i>${methodLabel(state.comparison)}</span>` :
+        `<span><i class="line ${['current_belief','wind_blind_planner'].includes(state.comparison.metrics.method) ? 'amber' : 'teal'}"></i>${methodLabel(state.comparison)}</span>` :
         '') +
       '<span><i class="line gray"></i>Nominal prediction</span><span><i class="square"></i>Selected planner’s clarity</span>';
   }
@@ -1023,7 +1022,9 @@ async function replay(id) {
     state.step = 0;
     state.hover = -1;
     state.cost = cumulativeCost(data.mission.q, data.environment.targets, data.config.dt);
-    const paired = pairedRecord(state.records, record);
+    if (['current_belief','wind_blind_planner'].includes(record.method)) state.comparisonMethod = record.method;
+    if (!state.records.some(r=>r.group===record.group && r.seed===record.seed && r.method===state.comparisonMethod)) state.comparisonMethod='current_belief';
+    const paired = pairedRecord(state.records, record, state.comparisonMethod);
     if (paired) {
       const other = await fetch(`/api/replay/${encodeURIComponent(paired.id)}`);
       if (other.ok) state.comparison = await other.json();
@@ -1037,9 +1038,20 @@ async function replay(id) {
         .integrated_deficit) / baseline.metrics.integrated_deficit * 100;
       $('comparison-summary').classList.toggle('regression', improvement < 0);
       summary =
-        `<strong>${Math.abs(improvement).toFixed(1)}% ${improvement>=0?'lower':'higher'} ${data.preview ? 'cost so far' : 'mission cost'}</strong> when anticipating learning.<br>Same physical wind · seed ${data.metrics.seed}${data.preview ? ' · unfinished comparison' : ''}`;
+        `<strong>${Math.abs(improvement).toFixed(1)}% ${improvement>=0?'lower':'higher'} ${data.preview ? 'cost so far' : 'mission cost'}</strong> ${comparisonClaim(baseline)}.<br>Same physical wind · seed ${data.metrics.seed}${data.preview ? ' · unfinished comparison' : ''}`;
     }
     $('comparison-summary').innerHTML = summary;
+    const [main, secondary] = comparisonPair(data, state.comparison);
+    const mainRecord = state.records.find(r=>r.group===record.group && r.seed===record.seed && r.method==='proposed');
+    $('comparison-choice').hidden = !mainRecord;
+    for (const option of $('comparison-baseline').options) option.disabled = !state.records.some(r=>r.group===record.group && r.seed===record.seed && r.method===option.value);
+    $('comparison-baseline').value = secondary?.metrics.method || state.comparisonMethod;
+    $('comparison-purpose').textContent = secondary?.metrics.method === 'wind_blind_planner' ?
+      'Wind is ignored when choosing the nominal path. Full POAM wind estimates enter only the continuous execution safety filter. This comparison combines wind-aware planning and learning; it does not isolate learning value.' :
+      'Both planners use wind estimates and safety filtering while planning. Only the proposed method anticipates future measurements. This comparison isolates anticipation.';
+    $('evolution-title-b').textContent = secondary ? methodLabel(secondary) : 'Comparator unavailable';
+    $('denoising-title-a').textContent = methodLabel(main) + ' · denoising';
+    $('denoising-title-b').textContent = secondary ? methodLabel(secondary) + ' · denoising' : 'Comparator unavailable';
     $('run-diagnostics').textContent =
       `Selected run: ${data.metrics.collision?'collision observed':'no collisions'} · ${data.mission.feasible.filter(v=>!v).length} steps using allowed slack · ${data.metrics.optimizer_failure_count} optimizer fallbacks`;
     $('run-diagnostics').style.color = data.metrics.collision || data.metrics
@@ -1055,6 +1067,7 @@ async function replay(id) {
     $('recording').value = id;
     const url = new URL(location.href);
     url.searchParams.set('run', id);
+    url.searchParams.set('baseline', state.comparisonMethod);
     history.replaceState(null, '', url);
     $('method').value = data.metrics.method;
     if (data.config.whole_field) $('scenario').value = data.config.scenario;
@@ -1145,7 +1158,7 @@ async function inspectPlanner(index) {
   const desired = comparisonPair(state.data, state.comparison)[index];
   if (!desired) return;
   if (desired !== state.data) {
-    const record = pairedRecord(state.records, state.record);
+    const record = pairedRecord(state.records, state.record, state.comparisonMethod);
     if (record) await replay(record.id);
   }
   setMode('diffusion');
@@ -1240,6 +1253,11 @@ $('timeline').oninput = () => {
       .length - 1);
   }
   update();
+};
+$('comparison-baseline').onchange = async () => {
+  state.comparisonMethod = $('comparison-baseline').value;
+  const proposed = state.records.find(r=>r.group===state.record.group && r.seed===state.record.seed && r.method==='proposed');
+  if (proposed) await replay(proposed.id);
 };
 $('recording').onchange = () => replay($('recording').value);
 $('run').onclick = run;
@@ -1517,7 +1535,7 @@ function drawPairedDenoising() {
     path(g, l === p.candidate_paths.length - 1 ? p.selected_path : p.incumbent_paths[l], xy, p.backup_used && l === p.candidate_paths.length - 1 ? colors.red : color,
       2.5);
     $(`denoising-note-${side}`).textContent =
-      `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · ${p.backup_used ? 'full check rejected the selected policy; execution used backup. Red: rejected forecast.' : 'bold: best evaluated; purple: denoised mean'}${d.config.whole_field ? '; background: current clarity deficit' : ''}`;
+      `Level ${l+1}/${p.candidate_paths.length} · best expected deficit cost ${metricText(l === p.candidate_paths.length - 1 ? p.selected_cost : p.trace[l][0])} · ${d.metrics.method === 'wind_blind_planner' ? 'unfiltered zero-wind forecast; execution uses wind-aware RPCBF · ' : ''}${p.backup_used ? 'selected plan failed feasibility checking; execution used backup. Red: rejected forecast.' : 'bold: best evaluated; purple: denoised mean'}${d.config.whole_field ? '; background: current clarity deficit' : ''}`;
   }
 }
 $('field-layer').onchange = () => {

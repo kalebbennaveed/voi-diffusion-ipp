@@ -27,6 +27,7 @@ from voi_diffusion_ipp.planning.budgeted import (
     split_vector,
     warm_starts,
 )
+from voi_diffusion_ipp.planning.wind_blind import evaluate_nominal, make_nominal_planner
 from voi_diffusion_ipp.viz.demo_data import serializable
 from voi_diffusion_ipp.wind.cache import build_prior_cache
 from voi_diffusion_ipp.wind.oracle import KnownBasis, KnownCache, KnownWind
@@ -80,11 +81,15 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
         belief = KnownWind(KnownBasis(truth))
         build = jax.jit(lambda b, e: KnownCache(jnp.ones((len(e), 1, 2))))
     anticipate = method == "proposed"
+    wind_blind = method == "wind_blind_planner"
     objective_cells = np.flatnonzero(np.asarray(env.targets) > 0)
     plan = make_planner(cfg, anticipate, objective_cells)
     verify = jax.jit(
         lambda y, x, q, b, e, n: evaluate(y, x, q, b, None, n, env, cfg, anticipate, True, e)
     )
+    if wind_blind:
+        plan = make_nominal_planner(cfg, objective_cells)
+        verify = jax.jit(lambda y, x, q: evaluate_nominal(y, x, q, env, cfg))
     execute = jax.jit(
         lambda y, x, q, b, e, n, backup: segment(
             x,
@@ -98,6 +103,7 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
             actual_cfg,
             False,
             backup,
+            nominal_wind_aware=not wind_blind,
         )
     )
     snapshot = jax.jit(lambda b: b.predict(env.cells))
@@ -133,6 +139,8 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
         ).hexdigest(),
         "source_sha256": source_hashes(),
         "label": "Short development diagnostic, not statistical validation",
+        "planning_wind": "zero; no safety in objective" if wind_blind else "current POAM belief",
+        "execution_safety": "full POAM wind-aware spline RPCBF at 20 Hz",
         "initial_poam_update_s": initial_update,
         "initial_snapshot_s": initial_snapshot,
     }
@@ -143,9 +151,14 @@ def run(method, periods, seed, directory, cfg, rapid=False, prior_regime="cold")
         eps = jax.random.normal(keys[0], (cfg.worlds + cfg.inner_samples, *belief.sample_shape))
         noise = jax.random.normal(keys[1], (cfg.worlds, cfg.stage_steps + cfg.future_steps, 2))
         initials = warm_starts(x, env, cfg, rapid)
-        cache, cache_s = timed(build, belief, eps)
-        best, plan_s = timed(plan, x, q, belief, cache, noise, env, initials, keys[2])
-        checked, verify_s = timed(verify, best.vector, x, q, belief, eps, noise)
+        if wind_blind:
+            cache_s = 0.0
+            best, plan_s = timed(plan, x, q, env, initials, keys[2])
+            checked, verify_s = timed(verify, best.vector, x, q)
+        else:
+            cache, cache_s = timed(build, belief, eps)
+            best, plan_s = timed(plan, x, q, belief, cache, noise, env, initials, keys[2])
+            checked, verify_s = timed(verify, best.vector, x, q, belief, eps, noise)
         backup = not np.isfinite(float(best.cost)) or not np.isfinite(float(checked[0]))
         generation_wall_s = time.perf_counter() - period_start
         # Actual observation stream is shared across methods; positions are earned.
@@ -301,7 +314,7 @@ def main():
     )
     args.output.mkdir(parents=True, exist_ok=False)
     for method in args.methods:
-        if method not in ("proposed", "current_belief", "oracle"):
+        if method not in ("proposed", "current_belief", "oracle", "wind_blind_planner"):
             raise ValueError(method)
         print("METHOD", method, flush=True)
         run(method, args.periods, args.seed, args.output, cfg, args.rapid, args.prior_regime)

@@ -644,3 +644,56 @@ independent-bank decision stability. Read the primary references just added in
 reference_mapping.md. Preserve every prior/cadence regime and failure. Do not
 launch fresh-seed superiority sweeps until an observable causal decision benefit
 is robust to sampling. The original three acceptance claims remain open.
+
+
+### Additional comparator requested, 2026-10-17 UTC
+
+User clarified and explicitly approved ADDING a wind-blind nominal planner plus wind-aware execution safety, alongside the existing comparator. Preserve both existing arms. New `planning/wind_blind.py` accepts no wind belief; uses actual MBD on still-air unfiltered dynamics, known drag/obstacles and original clarity objective. Real execution continuously uses full POAM/RPCBF, but no nominal wind compensation. This comparison combines wind-aware planning and learning; it must not be labeled an isolated anticipation gain. Six component/causality tests pass. Protocol `docs/two_region_design/safety_only_protocol.json`; launch single 120 s job in `results/budgeted_missions/persistent_two_region_safety_only_01`, log `results/persistent_two_region_safety_only_01.log`. Keep src/configs frozen until run/export complete.
+
+Offline calibration diagnostic completed in `docs/wind_calibration_01`: both original 2 s posterior histories reconstructed exactly within tolerance. At final passage grid points, production 24-point model has only 31.9%/43.3% component coverage within +/-1.96 sigma (proposed/comparator), descriptive on one field. Forty inducing points improve RMSE but coverage only 44.3%/52.9%. Frozen-after-survey kernel diagnostic gives 98.1%/99.0% coverage with much wider uncertainty; NOT a replacement for full POAM. Learned effective passage length grows from ~1.06 to 1.63/1.70 m, while amplitude falls modestly .634 to .442/.419. Prequential observation coverage 93.3%/91.8% is substantially better than spatial passage coverage. Thus calibration across unvisited space and kernel adaptation need diagnosis; adding sparse capacity alone does not resolve it. No estimator changes made. Source used for this diagnosis predates the added baseline; all raw outcomes retained.
+
+
+### Wind-blind nominal comparator complete and published — latest continuation
+
+Session 41342 (mission) and 15091 (export) completed; session 83615 tests passed.
+No heavy worker or source freeze remains. User explicitly chose to ADD this
+comparator alongside the existing wind-aware/current-belief comparison.
+120 s, same seed 8101/task/initial survey/10 s horizon/2 s cadence:
+wind-blind nominal MBD + continuous full-POAM RPCBF cost 3.49864674, eight A/B
+transfers, five fallback periods, no dense 32-substep contacts, minimum clearance
+0.110872 m. Median/p95 planning cycles 0.06747/0.07557 s. Proposed cost 2.83932948
+is 18.8449% lower; current-belief cost 2.95490885 is 15.5414% lower. These contrasts
+combine wind-aware planning/filter prediction with anticipation and MUST NOT be
+presented as isolated learning gains. Same four MBD levels/eight proposals, but
+not equal wall time; a higher-budget nominal optimizer is a future fairness check.
+
+Protocol/results: docs/two_region_design/safety_only_{protocol,results}.json.
+Raw data: results/budgeted_missions/persistent_two_region_safety_only_01.
+Live record: budgeted_persistent_two_region_safety_only_01_wind_blind_planner_8101.
+All 61 POAM snapshots reconstructed within tolerance. Replay candidate/selected
+nominal paths agree to 4.34e-7 m; UI integrated cost differs by 8.57e-8. Original
+proposed/current-belief exports unchanged. Explicit cross-revision pairing checks
+config, task hash, seed, duration, initial observations/state/clarity, physical
+wind and geometry and records both source hashes. Added branch defaults preserve
+existing planner behavior; original causal tests pass.
+
+Demo selector is now explicit: Wind-aware · no anticipated learning versus
+Wind-blind plan + safety filter. Playback, final outcome/fallback table, both
+MBD histories and wind-blind forecast labels were checked in the browser without
+console warnings/errors. Screenshot results/demo/wind_blind_comparison.jpg.
+The URL baseline=wind_blind_planner selects the new comparison; current_belief
+retains the original. Seven distinct Python component/causal checks and eleven
+frontend checks passed, plus source lint and independent mission/array audit.
+Nominal-control test explicitly verifies no wind compensation, and the execution
+filter still changes controls to brake near a boundary. No estimator was replaced.
+
+Next research remains calibration and a robust causal learning mechanism. The
+calibration findings above rule out treating more inducing points alone as a
+solution. A useful next offline check is a dense GP posterior on the SAME earned
+observations and final learned kernel, comparing transport/compression error with
+kernel misspecification. This is diagnostic only, not a replacement for POAM.
+Then investigate a common independently declared coarse weather prior + learned
+POAM residual if justified. Preserve fixed-kernel diagnostic as diagnostic, not
+production. Do not launch positive held-out sweeps based on the 18.8% contrast;
+original anticipation-only development gain is still 3.9%, with weak same-state
+causal evidence. The three original research acceptance cases remain open.

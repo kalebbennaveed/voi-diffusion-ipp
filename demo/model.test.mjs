@@ -8,6 +8,8 @@ import {
   metricText,
   missionSummary,
   comparisonPair,
+  comparisonClaim,
+  methodLabel,
   playbackFrame,
   advanceComparison
 } from './model.js';
@@ -16,6 +18,18 @@ test('the displayed belief changes only at observation boundaries', () => {
   assert.equal(beliefIndex(15, 16, 6), 0);
   assert.equal(beliefIndex(16, 16, 6), 1);
   assert.equal(beliefIndex(80, 16, 6), 5);
+});
+
+test('wind-blind planning is a separate selectable comparator, not a learning-only claim', () => {
+  const rows = ['proposed','current_belief','wind_blind_planner'].map(method=>({group:'matched',seed:8101,method}));
+  assert.equal(pairedRecord(rows, rows[0]), rows[1]);
+  assert.equal(pairedRecord(rows, rows[0], 'wind_blind_planner'), rows[2]);
+  assert.equal(pairedRecord(rows, rows[2]), rows[0]);
+  const [proposed, current, blind] = rows.map(r=>({metrics:{method:r.method},config:{measurements:true}}));
+  assert.deepEqual(comparisonPair(blind, proposed), [proposed,blind]);
+  assert.equal(methodLabel(blind), 'Wind-blind plan + safety filter');
+  assert.match(comparisonClaim(blind), /wind-aware planning/);
+  assert.equal(comparisonClaim(current), 'when anticipating learning');
 });
 test('the displayed task metric is trapezoidal executed clarity deficit', () => {
   assert.deepEqual(cumulativeCost([

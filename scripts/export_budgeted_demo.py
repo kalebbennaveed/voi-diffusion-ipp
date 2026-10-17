@@ -22,6 +22,7 @@ from voi_diffusion_ipp.config import Config, config_dict
 from voi_diffusion_ipp.experiments.checkpoint import source_hashes
 from voi_diffusion_ipp.experiments.two_region import make_two_region
 from voi_diffusion_ipp.planning.budgeted import evaluate
+from voi_diffusion_ipp.planning.wind_blind import evaluate_nominal
 from voi_diffusion_ipp.viz.demo_data import serializable
 from voi_diffusion_ipp.wind.cache import build_prior_cache
 from voi_diffusion_ipp.wind.poam import POAM
@@ -29,7 +30,7 @@ from voi_diffusion_ipp.wind.poam import POAM
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def export(path):
+def export(path, pair_with=None):
     raw = json.loads(path.with_suffix(".json").read_text())
     if not raw["complete"]:
         raise ValueError("Publish completed recordings only")
@@ -46,8 +47,54 @@ def export(path):
         raise ValueError("Task definition differs from the recorded mission")
     cfg = Config(**meta["config"])
     method, seed = meta["method"], meta["seed"]
-    if method not in ("proposed", "current_belief"):
+    if method not in ("proposed", "current_belief", "wind_blind_planner"):
         raise ValueError("This exporter requires full POAM arms")
+    wind_blind = method == "wind_blind_planner"
+    pairing = None
+    if pair_with is not None:
+        if not wind_blind:
+            raise ValueError("Explicit earlier-source pairing is only for the added baseline")
+        previous = json.loads(pair_with.with_suffix(".json").read_text())
+        reference_meta = previous["metadata"]
+        if not previous["complete"] or reference_meta["method"] != "proposed":
+            raise ValueError("Pair with a completed proposed recording")
+        for key in [
+            "config",
+            "seed",
+            "prior_regime",
+            "execution_dt",
+            "observation_dt",
+            "task_sha256",
+            "rapid_shared_initializations",
+        ]:
+            if meta[key] != reference_meta[key]:
+                raise ValueError(f"Cannot pair different {key}")
+        with np.load(pair_with, allow_pickle=False) as reference:
+            for key in [
+                "physical_wind",
+                "cells",
+                "targets",
+                "obstacles",
+                "bounds",
+                "initial_observation_positions",
+                "initial_observations",
+            ]:
+                np.testing.assert_array_equal(d[key], reference[key])
+            for key in ["x", "q"]:
+                np.testing.assert_array_equal(d[key][0], reference[key][0])
+                if len(d[key]) != len(reference[key]):
+                    raise ValueError("Cannot pair different mission durations")
+        reference_id = f"budgeted_{pair_with.parent.name}_proposed_{seed}"
+        reference_record = json.loads(
+            (ROOT / "results/demo/live" / reference_id / "record.json").read_text()
+        )
+        pairing = {
+            "reference": str(pair_with.relative_to(ROOT)),
+            "reference_sha256": hashlib.sha256(pair_with.read_bytes()).hexdigest(),
+            "reference_source_sha256": reference_meta["source_sha256"],
+            "group": reference_record["group"],
+            "scope": "Same task/config/prior/seed/wind/initial states; additive baseline source revision. Not an anticipation-only ablation.",
+        }
     spec = yaml.safe_load((ROOT / "configs/two_region_design.yaml").read_text())
     env, model, _, _, _ = make_two_region(spec, cfg)
     root = jax.random.PRNGKey(seed)
@@ -75,9 +122,12 @@ def export(path):
     @jax.jit
     def forecast(vectors, x, q, b, cache, noise):
         def one(v):
-            _, (first, future) = evaluate(
-                v, x, q, b, cache, noise, env, viz_cfg, method == "proposed"
-            )
+            if wind_blind:
+                _, (first, future) = evaluate_nominal(v, x, q, env, viz_cfg)
+            else:
+                _, (first, future) = evaluate(
+                    v, x, q, b, cache, noise, env, viz_cfg, method == "proposed"
+                )
             return jnp.concatenate((first.x[0, :, :2], future.x[0, 1:, :2]))
 
         return jax.lax.map(one, vectors)
@@ -89,6 +139,7 @@ def export(path):
         "input_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "telemetry_sha256": hashlib.sha256(path.with_suffix(".json").read_bytes()).hexdigest(),
         "exporter_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "pairing": pairing,
     }
     manifest_path = output / "forecast_manifest.json"
     if manifest_path.exists() and json.loads(manifest_path.read_text()) != manifest:
@@ -133,7 +184,7 @@ def export(path):
                 np.testing.assert_array_equal(saved["vectors"], vectors)
                 paths = saved["paths"]
         else:
-            cache = build(b, eps)
+            cache = None if wind_blind else build(b, eps)
             paths = np.array(
                 forecast(
                     jnp.asarray(vectors),
@@ -160,7 +211,9 @@ def export(path):
                 "selected_path": original,
                 "selected_cost": row["full_objective"],
                 "backup_used": row["backup_used"],
-                "policy_type": "continuous posterior feedback",
+                "policy_type": "wind-blind nominal"
+                if wind_blind
+                else "continuous posterior feedback",
                 "stage_boundary_index": cfg.stage_steps,
                 "cached_replay_full_path_max_distance": mismatch,
                 "initial_vector": row["initial_vector"],
@@ -256,6 +309,17 @@ def export(path):
         "Candidate curves are cached-field RPCBF forecasts in planning world 1; selected curves "
         "are original uncached checks. Export/replay work is separate from planning latency."
     )
+    if wind_blind:
+        note = (
+            "Additional development baseline: nominal MBD assumes zero wind and does not include "
+            "RPCBF in its objective. Known obstacle collisions are rejected in its nominal model. "
+            "Full POAM still learns real wind; only the continuously applied execution RPCBF uses "
+            "that belief. Nominal control has no wind compensation. Candidate and selected curves "
+            "show unfiltered still-air forecasts, not predicted safety-filtered execution. "
+            "Same initial outer-route survey, physical wind, task, 10 s horizon, 2 s replanning, "
+            "20 Hz RPCBF and 5 Hz observations as the two existing arms. Comparing against proposed "
+            "combines wind-aware planning and anticipated learning; it does not isolate learning value."
+        )
     payload = {
         "schema": 2,
         "title": "Two-region persistent monitoring · development",
@@ -274,6 +338,7 @@ def export(path):
         "display_precision": "Clarity/field snapshots rounded to 5 decimals, paths to 6; raw archives and reported metrics retain full precision.",
         "research_audit": audit,
         "mission_metadata": meta,
+        "pairing_provenance": pairing,
     }
     file = output / "replay.json"
     file.write_text(json.dumps(serializable(payload), separators=(",", ":"), allow_nan=False))
@@ -288,7 +353,7 @@ def export(path):
         "scenario": cfg.scenario,
         "method": method,
         "seed": seed,
-        "group": f"budgeted-{group}",
+        "group": pairing["group"] if pairing else f"budgeted-{group}",
         "label": f"Two large regions · {audit['duration_s']:.0f} s · {period_s:g} s replanning · {method} · development",
         "available_seconds": audit["duration_s"],
         "file": str(file.relative_to(ROOT)),
@@ -302,6 +367,9 @@ def export(path):
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("paths", nargs="+", type=Path)
+    p.add_argument("--pair-with", type=Path)
     args = p.parse_args()
     for path in args.paths:
-        print(export(path.resolve()), flush=True)
+        print(
+            export(path.resolve(), args.pair_with.resolve() if args.pair_with else None), flush=True
+        )
