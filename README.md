@@ -5,6 +5,39 @@ persistent monitoring under an unknown spatial wind field. It includes actual
 MBD reverse diffusion, sampled spline RPCBF with a soft constrained QP, full POAM
 wind inference, whole-grid clarity dynamics and interactive recorded comparisons.
 
+## Covariance-anticipated extension — October 17, 2026
+
+A separate planner analytically conditions the full POAM predictive covariance
+on forecast sensing locations while freezing the forecast mean/kernel. Actual
+execution still uses full online POAM, MBD and sampled spline RPCBF. Original
+methods, environments and recordings are preserved. The new studies also use a
+proper bounded policy-parameter target with matching MBD importance weights.
+
+**Completed: 36 component/regression tests, 24 fixed-policy mechanism checks,
+60 controlled optimizer calls, and fifteen matched 120-second missions.** In the
+three development seeds, covariance anticipation increases cost by 2.90% on
+average versus its matched mean-dynamics frozen control. The original realization
+method reduces cost by 7.59% versus wind-aware frozen and 12.69% versus wind-blind
+matched execution (means of paired percentages). All fifteen missions are
+contact-free in dense checks; separate posterior-world stress checks include
+contacts. These are development results in one physical wind environment.
+
+Covariance planning averages 1.84s across per-mission steady-cycle medians versus
+2.05s for realization anticipation, for ten-second forecasts. Their p95 and
+deadline misses remain above the soft two-second target. The covariance variant
+is experimental, not a validated improvement. Conditioning the current predictive
+GP is not the same as predicting future sparse POAM refits or kernel learning.
+
+**[Open the new 2D comparison](http://127.0.0.1:8766/covariance/)** for actual
+execution, whole-grid clarity, wind diagnostics and stored denoising/final plans.
+Start it with `JAX_PLATFORMS=cpu uv run python -m voi_diffusion_ipp.viz.demo_server --port 8766`.
+See [all results and limitations](docs/covariance_study/README.md),
+[equations and implementation](docs/covariance_anticipated_method.md), and
+[the frozen mission protocol](docs/covariance_study/persistent_protocol_01.json).
+Existing 2D and 3D pages remain at `/` and `/3d/`; scheduled studies remain paused.
+
+## Archived reference scenario and results
+
 The current development case monitors **two large regions A and B for 120 seconds**.
 A narrow windy passage and two outer routes connect them. All 1,353 clarity cells
 evolve with Q=0.16; the 180 cells in A/B have positive targets. Without sensing,

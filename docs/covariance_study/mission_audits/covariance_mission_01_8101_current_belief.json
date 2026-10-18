@@ -1,0 +1,311 @@
+{
+  "route_classifier": {
+    "middle_half_width_m": 0.21999999999999997,
+    "bypass_inner_edge_m": 1.22
+  },
+  "input": "results/budgeted_missions/covariance_mission_01_8101/current_belief.npz",
+  "method": "current_belief",
+  "wind_case": "original",
+  "complete": true,
+  "duration_s": 120.0,
+  "integrated_whole_grid_deficit": 2.8657572269439697,
+  "integrated_roi_deficit": 21.54094182252884,
+  "recorded_cost_disagreement": 3.91155481338501e-08,
+  "dense_substeps": 32,
+  "minimum_dense_clearance": 0.11096876832340796,
+  "contact_intervals": 0,
+  "first_contact_interval_start_s": null,
+  "max_local_state_error": 1.2146528538536927e-07,
+  "peak_control": 1.6000001430511475,
+  "backup_periods": 0,
+  "visits": [
+    {
+      "region": "A",
+      "entry_s": 0.0,
+      "duration_s": 10.4
+    },
+    {
+      "region": "B",
+      "entry_s": 13.65,
+      "duration_s": 10.25
+    },
+    {
+      "region": "B",
+      "entry_s": 26.85,
+      "duration_s": 4.0
+    },
+    {
+      "region": "A",
+      "entry_s": 34.5,
+      "duration_s": 1.2000000000000002
+    },
+    {
+      "region": "B",
+      "entry_s": 51.300000000000004,
+      "duration_s": 1.3
+    },
+    {
+      "region": "A",
+      "entry_s": 56.050000000000004,
+      "duration_s": 1.05
+    },
+    {
+      "region": "B",
+      "entry_s": 61.25,
+      "duration_s": 0.55
+    },
+    {
+      "region": "B",
+      "entry_s": 63.25,
+      "duration_s": 0.55
+    },
+    {
+      "region": "B",
+      "entry_s": 64.55,
+      "duration_s": 0.65
+    },
+    {
+      "region": "A",
+      "entry_s": 69.15,
+      "duration_s": 2.0
+    },
+    {
+      "region": "B",
+      "entry_s": 75.2,
+      "duration_s": 1.35
+    },
+    {
+      "region": "A",
+      "entry_s": 81.2,
+      "duration_s": 2.15
+    },
+    {
+      "region": "B",
+      "entry_s": 85.2,
+      "duration_s": 3.25
+    },
+    {
+      "region": "A",
+      "entry_s": 92.2,
+      "duration_s": 1.55
+    },
+    {
+      "region": "B",
+      "entry_s": 97.4,
+      "duration_s": 1.6500000000000001
+    },
+    {
+      "region": "B",
+      "entry_s": 100.80000000000001,
+      "duration_s": 1.6500000000000001
+    },
+    {
+      "region": "A",
+      "entry_s": 106.0,
+      "duration_s": 1.25
+    },
+    {
+      "region": "B",
+      "entry_s": 110.65,
+      "duration_s": 1.35
+    },
+    {
+      "region": "A",
+      "entry_s": 115.75,
+      "duration_s": 1.2000000000000002
+    }
+  ],
+  "transfers": [
+    {
+      "direction": "A_to_B",
+      "departure_s": 10.4,
+      "arrival_s": 13.65,
+      "seconds": 3.25,
+      "midplane_lateral_m": 1.4212543351120321,
+      "route": "outer"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 30.85,
+      "arrival_s": 34.5,
+      "seconds": 3.6500000000000004,
+      "midplane_lateral_m": 1.492539829515309,
+      "route": "outer"
+    },
+    {
+      "direction": "A_to_B",
+      "departure_s": 35.7,
+      "arrival_s": 39.550000000000004,
+      "seconds": 3.85,
+      "midplane_lateral_m": -1.7127895181656072,
+      "route": "outer"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 40.95,
+      "arrival_s": 45.800000000000004,
+      "seconds": 4.8500000000000005,
+      "midplane_lateral_m": 1.5859138058336395,
+      "route": "outer"
+    },
+    {
+      "direction": "A_to_B",
+      "departure_s": 47.1,
+      "arrival_s": 51.300000000000004,
+      "seconds": 4.2,
+      "midplane_lateral_m": -1.7330687577677446,
+      "route": "outer"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 52.6,
+      "arrival_s": 56.050000000000004,
+      "seconds": 3.45,
+      "midplane_lateral_m": 1.85076298932377,
+      "route": "outer"
+    },
+    {
+      "direction": "A_to_B",
+      "departure_s": 57.1,
+      "arrival_s": 60.5,
+      "seconds": 3.4000000000000004,
+      "midplane_lateral_m": -1.722418993232882,
+      "route": "outer"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 65.2,
+      "arrival_s": 69.15,
+      "seconds": 3.95,
+      "midplane_lateral_m": -1.7434521953901265,
+      "route": "outer"
+    },
+    {
+      "direction": "A_to_B",
+      "departure_s": 71.15,
+      "arrival_s": 75.2,
+      "seconds": 4.05,
+      "midplane_lateral_m": 1.64602051072694,
+      "route": "outer"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 76.55,
+      "arrival_s": 81.2,
+      "seconds": 4.65,
+      "midplane_lateral_m": -1.5443908498946444,
+      "route": "outer"
+    },
+    {
+      "direction": "A_to_B",
+      "departure_s": 83.35000000000001,
+      "arrival_s": 85.2,
+      "seconds": 1.85,
+      "midplane_lateral_m": 0.10884560831012276,
+      "route": "middle"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 88.45,
+      "arrival_s": 92.2,
+      "seconds": 3.75,
+      "midplane_lateral_m": -1.3609857426270775,
+      "route": "outer"
+    },
+    {
+      "direction": "A_to_B",
+      "departure_s": 93.75,
+      "arrival_s": 97.4,
+      "seconds": 3.6500000000000004,
+      "midplane_lateral_m": 1.8440178058923054,
+      "route": "outer"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 102.45,
+      "arrival_s": 106.0,
+      "seconds": 3.5500000000000003,
+      "midplane_lateral_m": 1.7154813069835835,
+      "route": "outer"
+    },
+    {
+      "direction": "A_to_B",
+      "departure_s": 107.25,
+      "arrival_s": 110.65,
+      "seconds": 3.4000000000000004,
+      "midplane_lateral_m": -1.7399181658556788,
+      "route": "outer"
+    },
+    {
+      "direction": "B_to_A",
+      "departure_s": 112.0,
+      "arrival_s": 115.75,
+      "seconds": 3.75,
+      "midplane_lateral_m": 1.7920228479504212,
+      "route": "outer"
+    }
+  ],
+  "directional_routes": {
+    "A_to_B": {
+      "count": 8,
+      "route_counts": {
+        "middle": 1,
+        "outer": 7,
+        "other": 0
+      },
+      "mean_seconds": 3.45625
+    },
+    "B_to_A": {
+      "count": 8,
+      "route_counts": {
+        "middle": 0,
+        "outer": 8,
+        "other": 0
+      },
+      "mean_seconds": 3.95
+    }
+  },
+  "passage_rmse_initial_final": [
+    0.9166338443756104,
+    0.3908420205116272
+  ],
+  "passage_std_initial_final": [
+    0.48935315012931824,
+    0.11682045459747314
+  ],
+  "visit_sequence": [
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A",
+    "B",
+    "A"
+  ],
+  "startup_cycle_s": [
+    14.343276458006585,
+    1.1320925419931882
+  ],
+  "timing_definition": "First two cycles reported separately; remaining cycles include input preparation, previous real POAM update and full selected-trajectory check.",
+  "steady_cycle_s": {
+    "median": 1.0717480210005306,
+    "p95": 1.4729494793005868,
+    "max": 1.5361915410030633
+  },
+  "cycle_1s_miss_fraction": 1.0,
+  "cycle_2s_miss_fraction": 0.0,
+  "final_mean_clarity": {
+    "A": 0.5981169939041138,
+    "B": 0.3809041380882263
+  },
+  "initialization": "outer-survey",
+  "limits": "Development seed; empirical dense collision check, no formal safety claim. Oracle is explicitly privileged."
+}

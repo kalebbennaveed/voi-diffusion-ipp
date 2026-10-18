@@ -42,7 +42,13 @@ variational refit, inducing relocation or kernel learning. The test suite verifi
 agreement with the refit at inducing observations and their distinction away
 from inducing inputs. Full POAM remains the real estimator. The approximation
 also omits the random changes in posterior mean and observation-dependent future
-measurement locations. Neither optimality nor universal safety is claimed.
+measurement locations. A second approximation replaces uncertain physical wind
+by its current mean in the robot dynamics. With nonlinear safety interventions
+and sensing, motion under mean wind is generally not expected motion, and its
+monitoring cost is not the expected monitoring cost. The `mean_frozen` control
+is therefore necessary: covariance vs realization anticipation changes both
+physical forecast and future-belief assumptions. Neither optimality nor universal
+safety is claimed.
 
 Both stages propagate robot and clarity states continuously. No state/clarity
 reset, early access to a future covariance, information bonus, forced A/B
@@ -70,10 +76,10 @@ and central-probe vs whole-grid uncertainty response. Eight independently drawn
 posterior physical fields stress the zero-innovation approximation. These fields
 are simulator inputs only; they are not used to select the planning policy.
 
-Retain failures and all candidate outcomes. Next phases, after the mechanism
-check: implement a proper bounded target with matching weights; fixed-state
-4x8/8x16/16x32 search comparisons at a controlled noise range; separate independent
-selection/evaluation banks; equal-total-evaluation multiple chains; declared
+Retain failures and all candidate outcomes. The completed phases include a
+proper bounded target with matching weights; fixed-state 4x8/8x16/16x32 search
+comparisons at a controlled noise range; separate independent selection and
+evaluation banks; equal-total-evaluation multiple chains; and fifteen declared
 matched 120-second missions. Reference numerical results are not global optima.
 Fresh-seed confirmation must be separate from method/configuration selection.
 
@@ -139,3 +145,33 @@ means. This is an offline approximation stress test, not the covariance
 planner's training objective and not a new independent test of physical-model
 calibration. Contacts and raw task costs are reported separately. These small
 development banks cannot support a statistical general-success claim.
+
+## Measured development status
+
+The 36 component/regression tests pass. Fixed-state protocols and all results are
+in `covariance_study/`. The bounded-target 120-second experiment uses the same
+original environment, not an edited version of the archived scenario. Tiny
+compiled numerical differences can change receding-horizon selections: in seed
+8101 the first observed policy discrepancy is 8.4e-6 at period4, despite zero
+proposals outside the finite box. Do not attribute a changed mission cost to
+truncation without a controlled test. The archived unbounded 12-second prefix
+still reproduces exactly. See `covariance_study/target_numerics_note.json`.
+
+Across the three declared development seeds in the original physical wind,
+covariance anticipation has 0.94–4.44% higher cost than its mean-dynamics frozen
+control. The realized reduction in uncertainty is therefore not sufficient to
+establish improved task performance. Its average of mission-median full-cycle
+latencies is 1.84s, versus 2.05s for realization anticipation. The latter has
+3.81–12.93% lower cost than wind-aware frozen, and 9.76–14.30% lower cost than
+wind-blind matched execution. No new online search heuristic is promoted.
+
+A controlled estimator check at three saved states gives each update operator
+the same actual next-period measurement locations (post-hoc diagnostic only).
+The full GP covariance, a fixed-inducing POAM refit, a relocated refit and the
+actual real-data/kernel-trained POAM update disagree spatially. The actual next
+POAM covariance has lower grid-average variance than the GP forecast but is
+higher at 19.6–37.8% of cells. Thus the mismatch is not uniformly optimistic or
+pessimistic; it must be addressed as model consistency rather than an extra
+variance reward. These checks identify plausible limitations, not a causal
+proof of the mission regressions. All reports, raw maps and protocols are in
+`covariance_study/estimator_consistency_01/` and `covariance_study/README.md`.

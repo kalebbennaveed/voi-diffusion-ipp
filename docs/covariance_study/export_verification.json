@@ -1,0 +1,142 @@
+{
+  "state": "passed",
+  "checks": "All 15 full 120s recordings, all 900 plans, stored optimizer vectors/weights, original selected uncached paths, real execution and POAM maps agree with numeric archives to declared UI rounding. Every cached candidate checkpoint passed exporter vector checks and source/input manifests. No optimizer reruns.",
+  "limits": "Candidate forecasts use interpolated fields; final curves use the original uncached verification. Their maximum trajectory differences are recorded below; these are model/field-evaluation differences, not physical execution error. Realization curves show world 1 while objective weights average both worlds.",
+  "records": [
+    {
+      "id": "budgeted_covariance_mission_01_8101_covariance_anticipated_8101",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "covariance_anticipated",
+      "seed": 8101,
+      "replay_sha256": "4ff1c7c701ef5b10ca6b6e29e399a2f24761bc6865996ae6a87a56e64201b610",
+      "forecast_manifest_sha256": "5acba7f22dedcacc357223214afce6cfec7a94a486964392159d402c3273f50d",
+      "max_cached_vs_original_uncached_path_distance": 0.022086044359110265
+    },
+    {
+      "id": "budgeted_covariance_mission_01_8101_mean_frozen_8101",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "mean_frozen",
+      "seed": 8101,
+      "replay_sha256": "0e3e33d73a5f7ee4b80a7e20440e073558c86f03e02ebe3fa270b82c05090fbf",
+      "forecast_manifest_sha256": "8f063c4340ed3dfb37985224ddf051ac5f85b00e1d439a812ec37d6410aab6bf",
+      "max_cached_vs_original_uncached_path_distance": 0.052384282906386005
+    },
+    {
+      "id": "budgeted_covariance_mission_01_8101_proposed_8101",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "proposed",
+      "seed": 8101,
+      "replay_sha256": "a869c8c2be81cfdbb4f4edead5a48e1db75f743ee87a416066bf0c3bdfcc13dd",
+      "forecast_manifest_sha256": "80d4e5671f54d1d972626b3b71c69883b7407c2057aca5a633bf5e2e41662ac4",
+      "max_cached_vs_original_uncached_path_distance": 0.2918529685419907
+    },
+    {
+      "id": "budgeted_covariance_mission_01_8101_current_belief_8101",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "current_belief",
+      "seed": 8101,
+      "replay_sha256": "c7e376922aa7dcfb2b5cc25dd3fe54c73a457cce66ccec67148b5747dee30a93",
+      "forecast_manifest_sha256": "474b6af0661ab6954088bd0ef2cad8c10de88a26a35bfd7ffdee0a6d7d18f290",
+      "max_cached_vs_original_uncached_path_distance": 0.3153279772181572
+    },
+    {
+      "id": "budgeted_covariance_mission_01_8101_wind_blind_matched_8101",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "wind_blind_matched",
+      "seed": 8101,
+      "replay_sha256": "43dfa675a20392748d57dc3aa685a7d488ea7b9a6417bea7aaf0b729569cd8e8",
+      "forecast_manifest_sha256": "a9198bc86c3aff186b3386e28d938e158e216e03e10a8370bc3889af75a36d6a",
+      "max_cached_vs_original_uncached_path_distance": 3.2782554626464844e-07
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985201_covariance_anticipated_985201",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "covariance_anticipated",
+      "seed": 985201,
+      "replay_sha256": "e2a85a4b230886f0a58cfae05bebf4c53a933e43c601957fd68b65ff5f4015e0",
+      "forecast_manifest_sha256": "a23e269a7b54402d9f20881e2f17da0fc67796994f818c6c466be3c1842a5a93",
+      "max_cached_vs_original_uncached_path_distance": 0.013367659858383405
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985201_mean_frozen_985201",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "mean_frozen",
+      "seed": 985201,
+      "replay_sha256": "0c8ce179b1c92a6168d651eb1a34f7854c8acb44668a246af6b120f78be40599",
+      "forecast_manifest_sha256": "46df18dfda135fa32f808fd9f8191f4014730d57a81f41144f747b1483ccedcd",
+      "max_cached_vs_original_uncached_path_distance": 0.020692987425271262
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985201_proposed_985201",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "proposed",
+      "seed": 985201,
+      "replay_sha256": "b5056e185aba929f44bd8a301b903311644f95206f66aa40212f15a2d26a0768",
+      "forecast_manifest_sha256": "ee3796a8bc77089790977295a9b6d6f37827daa184dfb92e858fb8b5d0023813",
+      "max_cached_vs_original_uncached_path_distance": 0.9585987145840968
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985201_current_belief_985201",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "current_belief",
+      "seed": 985201,
+      "replay_sha256": "c0eae267c5b7c157239cc097540371fa29c2c80b7e1391b9e8907c5d62cecabf",
+      "forecast_manifest_sha256": "c1b217085e0fbb27699bf9213b7f880185fa4e78c40d46d776cf5ec7969fb22c",
+      "max_cached_vs_original_uncached_path_distance": 0.08890157448322322
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985201_wind_blind_matched_985201",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "wind_blind_matched",
+      "seed": 985201,
+      "replay_sha256": "99d809aa335acf5dbbf62fe955a8f7628256b575fabe0dca4a17450c8a6c9e17",
+      "forecast_manifest_sha256": "8eee7f40f7d4d77b50e9bb70296f243841106213a070aa784738daabd73b2ec1",
+      "max_cached_vs_original_uncached_path_distance": 2.980232238769531e-07
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985202_covariance_anticipated_985202",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "covariance_anticipated",
+      "seed": 985202,
+      "replay_sha256": "e31a84a5aa53d0bdbdf3af286acb4a116e9bb7a85cb02ccd4e67f2b1ccc0662a",
+      "forecast_manifest_sha256": "4b872cabdb05de3aa1d5b65572e645f9ab41d7425bf4b54a038668827a146e01",
+      "max_cached_vs_original_uncached_path_distance": 0.09177117476802907
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985202_mean_frozen_985202",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "mean_frozen",
+      "seed": 985202,
+      "replay_sha256": "4afa9b4ee86173526664c477792a9030e1cb3d8d3a299231889d4e1180a77a67",
+      "forecast_manifest_sha256": "684255dd9c43e6cf8806bfe20c4c4731b2961f03c5c3e81e1b6c475c3e812ce6",
+      "max_cached_vs_original_uncached_path_distance": 0.23157258164709074
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985202_proposed_985202",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "proposed",
+      "seed": 985202,
+      "replay_sha256": "847078ce650bea131d2c1e1ef2c18590c9a48df6dbb4df5298f081267a04f797",
+      "forecast_manifest_sha256": "f85aab38ea5d5616821e2ce0bca3f4e1a86584dcc861864e4a922d3cacd78948",
+      "max_cached_vs_original_uncached_path_distance": 0.05266632334589528
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985202_current_belief_985202",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "current_belief",
+      "seed": 985202,
+      "replay_sha256": "d016c4df3e5aa245381507d6842ada07824af1f4558f56aa661bc21a4bdd2b24",
+      "forecast_manifest_sha256": "33e0c37fcb01e48f801e7c3f1e8f0c2d56620959f7c4ef52c901881e78bf2474",
+      "max_cached_vs_original_uncached_path_distance": 0.19117263747407087
+    },
+    {
+      "id": "budgeted_covariance_mission_01_985202_wind_blind_matched_985202",
+      "group": "budgeted-6a0782d22fc4b16f",
+      "method": "wind_blind_matched",
+      "seed": 985202,
+      "replay_sha256": "cf3ea945f119648f87580bc98b09a644e69a3f4c0d21c80c9e03c09ecf46a304",
+      "forecast_manifest_sha256": "23f749c5891fb114389362aaeb8c648ab6f740aaa2075228daa4ace54d7d3584",
+      "max_cached_vs_original_uncached_path_distance": 4.2981520598697533e-07
+    }
+  ]
+}

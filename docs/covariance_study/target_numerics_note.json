@@ -1,0 +1,14 @@
+{
+  "archived": "results/budgeted_missions/safe_mpd_mission_01_compact_rpcbf/proposed.json",
+  "bounded": "results/budgeted_missions/covariance_mission_01_8101/proposed.json",
+  "first_difference_period": 4,
+  "max_policy_parameter_difference": 8.404254913330078e-06,
+  "max_executed_terminal_difference": 6.139278411865234e-06,
+  "first_difference_cached_costs": [
+    0.23950771987438202,
+    0.23950830101966858
+  ],
+  "out_of_box_proposals_in_bounded_120s": 0,
+  "total_proposals": 1920,
+  "interpretation": "The bounded objective branch changes the compiled computation. With no outside proposals, these observed small differences are consistent with floating-point/compiler sensitivity, not removal of candidates. Receding-horizon trajectories later diverge. Do not claim that target truncation improved monitoring. Original unbounded 12s replay separately reproduces archived arrays exactly."
+}

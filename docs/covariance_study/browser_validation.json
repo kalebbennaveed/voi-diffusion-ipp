@@ -1,0 +1,21 @@
+{
+  "scope": "Read-only interactive replay QA in Codex in-app browser, port 8766. No experiment runs launched by playback.",
+  "checks": [
+    "All three seed groups and all five methods available",
+    "Each seed covariance-versus-mean-frozen loaded; 120s UI totals match independent audit rounded values",
+    "Realization-versus-wind-blind matched comparison and query-link restoration",
+    "Mission play/pause, scrub, reset, field clarity/deficit layers",
+    "POAM uncertainty, physical-wind evaluation and mean-error map switching",
+    "Actual four-level denoising animation and final original uncached curve",
+    "Wind-blind seed8101 period9 rejected forecast correctly labeled; execution backup distinct",
+    "Mean-versus-realization forecast descriptions and isolated-comparison explanations",
+    "No captured browser warning/error logs after testing"
+  ],
+  "screenshots": [
+    "demo_covariance.jpg",
+    "demo_covariance_full.jpg",
+    "demo_comparison.jpg"
+  ],
+  "status": "passed",
+  "limitations": "Visual QA checks rendered behavior; numeric artifact agreement is independently recorded in export_verification.json. Playback does not establish algorithmic optimality or safety."
+}

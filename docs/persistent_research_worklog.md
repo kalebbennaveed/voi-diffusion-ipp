@@ -1223,3 +1223,106 @@ Next declared protocol docs/covariance_study/persistent_protocol_01.json:
 Generic serial runner is scripts/run_safe_mpd_study.py (historical filename; every
 job explicitly selects RPCBF). Source hashes include runner/auditor/configs.
 No held-out confirmation or across-environment success claim from this small study.
+
+36/36 component/regression tests pass (93.70s), log
+results/covariance_regression_final.txt. Local bounded commit4cce59b, not pushed.
+ACTIVE mission coordinator execsession89616. Seeds8101 and985201 complete with
+all five audits; third seed985202 running. Preserve all frozen sources through
+mission completion AND genuine forecast exports. Current two-seed covariance
+costs2.99728/2.92469 vsmean-frozen2.90066/2.8976 (regressions). Originalproposed
+2.75669/2.8262 vswind-blind-matched3.05472/3.2869. No contacts in these10missions.
+Keep all results; no general claim and no held-out8-seed sweep justified yet.
+
+Separate read-only2D server ACTIVE session51547 at127.0.0.1:8766, loopback bind
+required normal sandbox escalation and was approved. Old8765 demo untouched.
+New page /covariance/; supports ?run=<existing record ID> to inspect oldarchives.
+CUA tab3 (covTab) tested originaldata at60s/play/pause/denoising final. Browser QA
+overlapfirstseedisrecorded; laterwind/error UI edits awaitnewdata visualcheck.
+Newpage groups by configuration ANDseed, reports true measured latency/contact,
+whole-grid clarity, POAMmean/uncertainty/error vsphysicalwind, realdenoisingweights
+andfinaluncachedforecast. Invalidpathpointsarenotdrawnaszeros.3Dunchanged.
+
+Next after mission coordinatorfinishes: run scripts/report_covariance_missions.py
+ docs/covariance_study/persistent_protocol_01.json (includes independentfloat64
+whole-gridQdynamics reconstruction inadditionto32-substep physicalaudit).
+Then oneheavyworker scripts/export_covariance_study.py exportsall15 recordings
+serially, resumableforecastcheckpoints; logs/statusresults/covariance_exports_01*.
+Do not edit numerical source beforeexport; exporter enforcesarchivedsourcehashes.
+Verify newpage actualcovariance data, controls, maps, wind diagnostics, denoising
+andfinalresult. Preserveoriginaldemo. Add conclusions/allregressions toreport,
+archiveauditJSONsunder docs, commitbounded reporting/UI improvements.
+Targetnumericsnote records firstold-vsboundedpolicy discrepancy8.4e-6atperiod4
+withoutanyoutsideproposals; do notcreditchangedmissioncostto targettruncation.
+Schedulesremainpaused; no heavyworkerexcept89616.
+
+
+## Covariance extension: completed missions and estimator diagnosis (2026-10-17)
+
+All 15 declared 120-second missions finished; coordinator session 89616 exited 0.
+Every mission passed the independent 32-substep physical check without contact.
+Independent NumPy float64 whole-grid clarity reconstruction agrees within 5.37e-7.
+The original task/Q/wind and frozen source hashes agree. The reporting script
+initially repeated NPZ decompression inside its time loop; it was interrupted
+(exit 130), corrected to load q once, and rerun successfully. This affected report
+runtime only, after all mission timings had been recorded.
+
+Mean costs across three development seeds: covariance 3.02029, mean-frozen 2.93453,
+realization 2.78134, wind-aware frozen 3.01484, matched wind-blind 3.18783. Mean paired
+covariance regret is 2.90%; realization gains are 7.59% versus frozen and 12.69%
+versus blind. Covariance loses to its matched mean-frozen control in every seed.
+Do not promote it. All seeds share one original physical wind; no held-out or
+across-environment confirmation. The new mode remains separate, without any
+information reward.
+
+Full-cycle timing, averaged across per-mission medians: covariance 1.844s,
+realization 2.048s, mean-frozen 0.582s, wind-aware frozen 1.080s. Covariance exceeds
+two seconds in 19.0% of steady cycles; realization in 75.9%. Startup/preparation
+are reported separately. No hard real-time claim or large speedup. All methods
+use 10-second forecasts, two-second execution periods, and actual RPCBF.
+
+Completed estimator_consistency_01 uses identical actual next-period positions at
+periods 0, 5, 18 (post-hoc only, never supplied to planning). It compares full GP
+conditioning with fixed-inducing/relocated POAM zero-innovation refits under a
+frozen kernel, and separately with actual next online POAM snapshots. Operators
+differ spatially. Actual next POAM average variance is lower than the forecast,
+yet 19.6–37.8% of cells have higher actual variance. Sparse projection/relocation
+can move the mean even with old-mean pseudo-values. Covariance prediction is exact
+conditioning of the current predictive GP, not prediction of later POAM refitting
+or kernel training. This is a modeling limitation, not the proven sole cause of
+mission regression. Full real online POAM is retained.
+
+All 15 dense audit JSONs and raw input hashes are archived in docs/covariance_study.
+README, method note, and mission/cost/clarity/route/timing reports are added. The
+new 2D UI supports all five methods, three seeds, selected-comparison URLs, actual
+20 Hz execution, whole-grid clarity/deficit, POAM estimates/uncertainty/error and
+physical wind for evaluation only, regional 120-second curves, four genuine MBD
+levels and original uncached final forecasts. CUA verified first-seed playback,
+scrubbing, field/wind layers, realization versus blind, covariance versus frozen,
+and denoising/final views. No console errors. Screenshots saved. Original 2D/3D
+are unchanged; scheduled tasks remain paused.
+
+All 15 exports completed; session 3241 exited 0. Publication status is
+results/covariance_exports_01_status.json. Independent export verification passed
+all 900 stored policy/weight/final-path checks and every real execution/POAM map
+to declared display rounding; numeric originals remain unchanged. Source/config
+hashes stayed frozen through completion. The only running task-related server is
+the read-only local demo on port 8766 (session 51547), plus the pre-existing server
+on 8765. There are no active heavy research workers or resumed schedules.
+
+An additional export diagnostic records each mission's worst cached-field versus
+original uncached selected-model path. The largest is 0.959m at the ten-second
+forecast endpoint (realization seed 985201, period 6), growing from 0.00358m in the
+first two seconds. Cached/full costs are 0.25343/0.25211. The new covariance mode's
+maximum is 0.0918m. These are model-evaluation sensitivities, not actual execution
+errors. Final replay paths use original uncached checks; rejected forecasts are
+explicitly labeled when backup was executed. Do not hide the discrepancy or claim
+cache uniform trajectory accuracy. See cache_path_diagnostic.json and
+export_verification.json, reproducible with scripts/verify_covariance_exports.py.
+
+The controlled covariance extension, optimizer study and development comparison
+are complete. It is not a validated algorithmic improvement. A future bounded
+refinement should first test estimator-consistent covariance prediction, mean-wind
+versus uncertain dynamics, richer spatial continuation features, and cache
+sensitivity at fixed states. Do not launch another long sweep or tune hidden wind
+solely to produce a benefit. Original three scientific acceptance cases remain
+open; earlier results and failure logs are preserved. No new automation is created.

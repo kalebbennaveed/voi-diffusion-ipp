@@ -1,0 +1,156 @@
+{
+  "purpose": "All declared raw mission and independent dense audit hashes; full raw archives remain in results inside this repository. Numeric source hashes and task parameters are in the frozen protocol and per-mission metadata.",
+  "protocol": "docs/covariance_study/persistent_protocol_01.json",
+  "missions": [
+    {
+      "seed": 8101,
+      "method": "covariance_anticipated",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_8101/covariance_anticipated.npz": "5afd1064016b8d81fa1149cef4cd31ef44ae089f94f55643af62da9f20becffd",
+        "results/budgeted_missions/covariance_mission_01_8101/covariance_anticipated.json": "eeb64673bfa6dd06d02f07dd25e561de4241d0ba2b3967dc9e1968e305d7837e",
+        "results/budgeted_missions/covariance_mission_01_8101/covariance_anticipated.audit.json": "ab3a3d05dfff6f7268240c99df1bd20d4a76018dd7050d6aae5b51c60dc0aff7",
+        "docs/covariance_study/mission_audits/covariance_mission_01_8101_covariance_anticipated.json": "ab3a3d05dfff6f7268240c99df1bd20d4a76018dd7050d6aae5b51c60dc0aff7"
+      }
+    },
+    {
+      "seed": 8101,
+      "method": "mean_frozen",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_8101/mean_frozen.npz": "f5e59b7dea444aadb00b3d176b2c9be47920cfb094ce8fd681ee4641dd186bbd",
+        "results/budgeted_missions/covariance_mission_01_8101/mean_frozen.json": "427d54e73d86dd85d0c1edb7f006d250dc023c425f2f5762ffc8b2c5669926cc",
+        "results/budgeted_missions/covariance_mission_01_8101/mean_frozen.audit.json": "728e8735085725c144ceb3976630fa1e2fc352737987503cf9f921b249a6927b",
+        "docs/covariance_study/mission_audits/covariance_mission_01_8101_mean_frozen.json": "728e8735085725c144ceb3976630fa1e2fc352737987503cf9f921b249a6927b"
+      }
+    },
+    {
+      "seed": 8101,
+      "method": "proposed",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_8101/proposed.npz": "b6a7b8a5096a1bc3c1aefd3352f54dc2f11cd499d61ab9f0d37f0c98d4d2e9ad",
+        "results/budgeted_missions/covariance_mission_01_8101/proposed.json": "34ccd9fa0a732b29ee1a9534d2dd056995a419ea2379309e1eb92e16185ee578",
+        "results/budgeted_missions/covariance_mission_01_8101/proposed.audit.json": "7163948e4a4aa6afa7dab888a357b240031049bf2b64a069c5ca0727688cb370",
+        "docs/covariance_study/mission_audits/covariance_mission_01_8101_proposed.json": "7163948e4a4aa6afa7dab888a357b240031049bf2b64a069c5ca0727688cb370"
+      }
+    },
+    {
+      "seed": 8101,
+      "method": "current_belief",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_8101/current_belief.npz": "07178b2d6ec441852722c17ce79b524fa05f094ae54716ccb856159df8aba164",
+        "results/budgeted_missions/covariance_mission_01_8101/current_belief.json": "71b534a7d52c5419274e717b5aa4d13de36f53a5615c9dcf68d9d1910cd19802",
+        "results/budgeted_missions/covariance_mission_01_8101/current_belief.audit.json": "67fa8472b437fc2a192ab5a850901ab9b010dd37c8e00ecf235ad57be4319c85",
+        "docs/covariance_study/mission_audits/covariance_mission_01_8101_current_belief.json": "67fa8472b437fc2a192ab5a850901ab9b010dd37c8e00ecf235ad57be4319c85"
+      }
+    },
+    {
+      "seed": 8101,
+      "method": "wind_blind_matched",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_8101/wind_blind_matched.npz": "d31e2a901bd44132b61e4f904f73a7573df435061ea24cadea48a368cea72ffa",
+        "results/budgeted_missions/covariance_mission_01_8101/wind_blind_matched.json": "18a5a92273873b366d28b0ea78d4c7eec7f738cb0d184d42d9d2daf398e03b36",
+        "results/budgeted_missions/covariance_mission_01_8101/wind_blind_matched.audit.json": "1513bb4569e042cf68bf7b7d6df5e4fe83a93894d1ddcb766c84b16499ad9903",
+        "docs/covariance_study/mission_audits/covariance_mission_01_8101_wind_blind_matched.json": "1513bb4569e042cf68bf7b7d6df5e4fe83a93894d1ddcb766c84b16499ad9903"
+      }
+    },
+    {
+      "seed": 985201,
+      "method": "covariance_anticipated",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985201/covariance_anticipated.npz": "3d931bb8fe3376ad450ef429b15805bdcb56715396528784443ab8fbf6b09297",
+        "results/budgeted_missions/covariance_mission_01_985201/covariance_anticipated.json": "5556833e892759bfbfc2a978995d546a8fb1fec491e0f171d9243eab8cd1ac1f",
+        "results/budgeted_missions/covariance_mission_01_985201/covariance_anticipated.audit.json": "44ccd0560f304feea56b3786ab28cf1f64eb3bc4ae98cf2cae181f356cce1d94",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985201_covariance_anticipated.json": "44ccd0560f304feea56b3786ab28cf1f64eb3bc4ae98cf2cae181f356cce1d94"
+      }
+    },
+    {
+      "seed": 985201,
+      "method": "mean_frozen",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985201/mean_frozen.npz": "d0a87029a3bba7c6b9185a26b6e61a225ca4e73bcb2aceaf5a82ac52c3744a29",
+        "results/budgeted_missions/covariance_mission_01_985201/mean_frozen.json": "075e103ba3e2704eacf4c7108bda0e362298ee8d8adb8a924b6629ef91269d3d",
+        "results/budgeted_missions/covariance_mission_01_985201/mean_frozen.audit.json": "5cb1f51c59c2e4edbfa2ae597106a24334ca9ed2d397c07c186f1fed2d0352c3",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985201_mean_frozen.json": "5cb1f51c59c2e4edbfa2ae597106a24334ca9ed2d397c07c186f1fed2d0352c3"
+      }
+    },
+    {
+      "seed": 985201,
+      "method": "proposed",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985201/proposed.npz": "4dc562a65a832cbdd6d0d6b357e22648a7ccbbb1553c39de47ac80b8f94b1253",
+        "results/budgeted_missions/covariance_mission_01_985201/proposed.json": "ba3a50cef55afd5204cb07927d97702480cbee733b458b6db9e577ce2496b332",
+        "results/budgeted_missions/covariance_mission_01_985201/proposed.audit.json": "720c7f56e19bb50f3548af79b2e260e18dd579353000c01eead23b2502a8e039",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985201_proposed.json": "720c7f56e19bb50f3548af79b2e260e18dd579353000c01eead23b2502a8e039"
+      }
+    },
+    {
+      "seed": 985201,
+      "method": "current_belief",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985201/current_belief.npz": "f85072d31986226f29ae230cf984f5263aa98588a8d2d009141f512eb2100fb6",
+        "results/budgeted_missions/covariance_mission_01_985201/current_belief.json": "e619d520095e5bfd7c33c2cd9bbcde4339dc934703892c6833663055efd01cfd",
+        "results/budgeted_missions/covariance_mission_01_985201/current_belief.audit.json": "124920badb94f65e301af9dd8e4d5ee1c6057434bc20988aff3b55ae75eed0a1",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985201_current_belief.json": "124920badb94f65e301af9dd8e4d5ee1c6057434bc20988aff3b55ae75eed0a1"
+      }
+    },
+    {
+      "seed": 985201,
+      "method": "wind_blind_matched",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985201/wind_blind_matched.npz": "0a7af8b1f3eec9a652c5b47b1dfe45df042440ddf6d1a8af344c1043e6d4d915",
+        "results/budgeted_missions/covariance_mission_01_985201/wind_blind_matched.json": "99d96ff9659ec8bae1f64fb8ed26bf4fd0492a884fb8c672bcae4160b3e2c4e6",
+        "results/budgeted_missions/covariance_mission_01_985201/wind_blind_matched.audit.json": "be1236e1618a7694642813cb4c6a43899fd0fc6f690b48c19eb7e274918025d2",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985201_wind_blind_matched.json": "be1236e1618a7694642813cb4c6a43899fd0fc6f690b48c19eb7e274918025d2"
+      }
+    },
+    {
+      "seed": 985202,
+      "method": "covariance_anticipated",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985202/covariance_anticipated.npz": "cf8c761d62fa834165862255c7d101de543371152fd2dc6a1fd3e26011d17c4f",
+        "results/budgeted_missions/covariance_mission_01_985202/covariance_anticipated.json": "b1871c8ac5fffa7e4451dfa057c9affa90e40bd3b84773d2c4a2c238537567da",
+        "results/budgeted_missions/covariance_mission_01_985202/covariance_anticipated.audit.json": "25f83df2e86f7c7c1095b6ca9d1c4513775e7889950e1a27b5c81fabb653d2c8",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985202_covariance_anticipated.json": "25f83df2e86f7c7c1095b6ca9d1c4513775e7889950e1a27b5c81fabb653d2c8"
+      }
+    },
+    {
+      "seed": 985202,
+      "method": "mean_frozen",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985202/mean_frozen.npz": "1ec47dfed7a80990f3bd4a6b580b3c2cc3fcbc8fc58ff710bc351024e1717f5c",
+        "results/budgeted_missions/covariance_mission_01_985202/mean_frozen.json": "607ae94cba61e9f4053b1896a48bc9c88492dee31b035ae6653541a31ee174aa",
+        "results/budgeted_missions/covariance_mission_01_985202/mean_frozen.audit.json": "3299b418071d7aad3fb7274177e46baf4090550ee6cfc876d2479fdd53bc5f96",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985202_mean_frozen.json": "3299b418071d7aad3fb7274177e46baf4090550ee6cfc876d2479fdd53bc5f96"
+      }
+    },
+    {
+      "seed": 985202,
+      "method": "proposed",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985202/proposed.npz": "9b0193ec7a02d6c10e4497a287d551fc0c1e0950560545cc9a66679346dcb744",
+        "results/budgeted_missions/covariance_mission_01_985202/proposed.json": "83f8673c37c55e9129a4e13ac7003ca4dcad06e32c11928b611d2a15da83ece7",
+        "results/budgeted_missions/covariance_mission_01_985202/proposed.audit.json": "7992abfad081040f0b9dd60f965d20ad4715b281ac1b361ef20e0bb912054422",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985202_proposed.json": "7992abfad081040f0b9dd60f965d20ad4715b281ac1b361ef20e0bb912054422"
+      }
+    },
+    {
+      "seed": 985202,
+      "method": "current_belief",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985202/current_belief.npz": "c17ae5d483704158c3fefd6343f2954de7902585c3ecb73879c043b59aa8e939",
+        "results/budgeted_missions/covariance_mission_01_985202/current_belief.json": "294736bf845ea97b2c93c4f8e06fb5706e38795786e9bd7b18059e53572371ce",
+        "results/budgeted_missions/covariance_mission_01_985202/current_belief.audit.json": "348c14973188a47df835bfb3483d9054ebc49388b9cd63c828bdd59da5bdca26",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985202_current_belief.json": "348c14973188a47df835bfb3483d9054ebc49388b9cd63c828bdd59da5bdca26"
+      }
+    },
+    {
+      "seed": 985202,
+      "method": "wind_blind_matched",
+      "files": {
+        "results/budgeted_missions/covariance_mission_01_985202/wind_blind_matched.npz": "beafdebe7e28709f315c1ed3855df6aee51d457796f277fe325c9f6facd78133",
+        "results/budgeted_missions/covariance_mission_01_985202/wind_blind_matched.json": "8b48694806e5bc55d09368335c2a858ddf78b138c6075b6d0c36066b2c07d887",
+        "results/budgeted_missions/covariance_mission_01_985202/wind_blind_matched.audit.json": "06afd57f03217a7a0d2080c8917c85e20f2c5f50fb9d6bf395e67d79402b54c7",
+        "docs/covariance_study/mission_audits/covariance_mission_01_985202_wind_blind_matched.json": "06afd57f03217a7a0d2080c8917c85e20f2c5f50fb9d6bf395e67d79402b54c7"
+      }
+    }
+  ]
+}
