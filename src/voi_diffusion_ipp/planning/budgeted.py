@@ -139,8 +139,17 @@ def split_vector(vector, cfg):
 
 def future_reference(vector, terminal, posterior, env, matrices, cfg):
     _, normalized, gain = split_vector(vector, cfg)
-    mean, cov = posterior.predict(env.probe)
-    features = jnp.r_[mean[0] / cfg.wind_std, jnp.sqrt(cov[0, 0, 0]) / cfg.wind_std]
+    if cfg.budgeted_feedback_features == "route_knots":
+        # Query only the available posterior at the four nominal future knots.
+        # These are belief queries, not assumed future measurement locations.
+        # Pooling retains the original three-feature/six-gain parameter count.
+        mid = 0.5 * (env.bounds[0] + env.bounds[1])
+        extent = 0.5 * (env.bounds[1] - env.bounds[0]) - 0.12
+        mean, cov = posterior.predict(mid + extent * normalized)
+        features = jnp.r_[mean.mean(axis=0), jnp.sqrt(cov[:, 0, 0]).mean()] / cfg.wind_std
+    else:
+        mean, cov = posterior.predict(env.probe)
+        features = jnp.r_[mean[0] / cfg.wind_std, jnp.sqrt(cov[0, 0, 0]) / cfg.wind_std]
     # Same learned function for every scenario. No access to world identity.
     if cfg.budgeted_policy == "branches":
         # A discrete route choice is valid for gradient-free MBD. Only the

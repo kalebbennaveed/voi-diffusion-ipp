@@ -1,0 +1,8 @@
+{
+  "status": "failed_before_results",
+  "exit_code": 1,
+  "reason": "production-parity first-stage mismatch",
+  "maximum_state_difference": 0.00043201,
+  "log": "results/mbd_reliability/mechanism_01.log",
+  "driver": "docs/mbd_reliability/mechanism_driver_01.py"
+}

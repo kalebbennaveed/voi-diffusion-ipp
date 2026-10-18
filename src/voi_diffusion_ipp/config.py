@@ -52,6 +52,7 @@ class Config:
     poam_train_steps: int = 10
     hypothetical_relocation: bool = False
     budgeted_policy: str = "compact"  # compact continuous shift or posterior-gated branches
+    budgeted_feedback_features: str = "probe"  # experimental alternative: route_knots
     budgeted_update_steps: int = 0  # 0: one future stage; >0: causal future belief periods
     poam_inducing_x: int = 6
     poam_inducing_y: int = 4
@@ -85,6 +86,10 @@ class Config:
             raise ValueError("Positive shield terminal speed and substeps required")
         if self.budgeted_policy not in ("compact", "branches"):
             raise ValueError("Unknown budgeted feedback policy")
+        if self.budgeted_feedback_features not in ("probe", "route_knots"):
+            raise ValueError("Unknown budgeted feedback features")
+        if self.budgeted_feedback_features == "route_knots" and self.budgeted_policy != "compact":
+            raise ValueError("Route-knot features currently support the compact policy only")
         if self.budgeted_update_steps < 0 or (
             self.budgeted_update_steps and self.future_steps % self.budgeted_update_steps
         ):

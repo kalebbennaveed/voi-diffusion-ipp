@@ -1,0 +1,3618 @@
+{
+  "complete": true,
+  "protocol": "docs/mbd_reliability/search_protocol_03.json",
+  "protocol_sha256": "1a2fefb990d773c170adcca66b03837e9afb491e5ca951ea0950c8505bfacff5",
+  "evidence_sha256": {
+    "docs/mbd_reliability/search_01/original.json": "04f5bee07e4966e8e5c32eafdff9456e1b273c698cbf063208fb98ab2e931c29",
+    "docs/mbd_reliability/search_01/original_test_0_fixed_inner.npz": "e18965ddd7606ba412f719423184425fede27a1b10ea4222458071d4ee0c6314",
+    "docs/mbd_reliability/search_01/original_test_1_fixed_inner.npz": "cd6fed429ec6c5f0e8e490ba2570803239888ac4650721162bd408409b1510c6",
+    "docs/mbd_reliability/search_01/original_test_2_fixed_inner.npz": "66804e4345a1dee8a98f7607623fcfc1678cae606166828c3556825ba06827f6",
+    "docs/mbd_reliability/search_01/original_test_3_fixed_inner.npz": "94fba32f7a4dc840bc594c023a4d00c14b07f82ef2786f39a907d949507770e9",
+    "docs/mbd_reliability/search_01/original_test_0_fresh_inner.npz": "2fc23541e1e302f2be67b7b2f896d9ad4420cac0218b98c70281e0f4741f9a48",
+    "docs/mbd_reliability/search_01/original_test_1_fresh_inner.npz": "1c3ec87086496855d1bf2a5f92c2594af8d72a182878313ebf6ea3bc8d016ec7",
+    "docs/mbd_reliability/search_01/original_test_2_fresh_inner.npz": "fdeb091a6163e68aab26edf65b72af414739c03809b7f41eb448dd7c4aa50e5e",
+    "docs/mbd_reliability/search_01/original_test_3_fresh_inner.npz": "91c57f6e998d60eac15098e6600946f910dc2142a3cd272babf3aebe4e85a905",
+    "docs/mbd_reliability/search_01/reversed.json": "a6bc84c86c256309448784503852eeb51f3c41bcdedcc939ea33a5c55e402d54",
+    "docs/mbd_reliability/search_01/reversed_test_0_fixed_inner.npz": "16764510d5ed95f9a148515ba1aa7c4f56a5de95892093cbaae3985f60da728a",
+    "docs/mbd_reliability/search_01/reversed_test_1_fixed_inner.npz": "729617f015bb129a138b1e5a0d2b8a5755c2b9dac1ac0edd205aa58ebe73af3b",
+    "docs/mbd_reliability/search_01/reversed_test_2_fixed_inner.npz": "4a458fbb33a5e7ab9cfce630c2dae819c835e26e1256418c9bc704b8f2cd9473",
+    "docs/mbd_reliability/search_01/reversed_test_3_fixed_inner.npz": "ed8a461d0cc151d93121bd6269fef6f5afe97c2b92fc2624c284fd8299505a29",
+    "docs/mbd_reliability/search_01/reversed_test_0_fresh_inner.npz": "5bc134bbdaeaac30ceef47ff0035b7aa538ea415b308c6fa2c1ff73da316a9bc",
+    "docs/mbd_reliability/search_01/reversed_test_1_fresh_inner.npz": "f21ac540f6f1797bc4e01ad0f3dc80e616da024bdb67a34a9a81f0f40542d183",
+    "docs/mbd_reliability/search_01/reversed_test_2_fresh_inner.npz": "3b0a452826418574f21ae67a27b5b5e1b9db49a946cfb81721e57a91adb4e563",
+    "docs/mbd_reliability/search_01/reversed_test_3_fresh_inner.npz": "91c3d28df165db13e2fe38c309203d3541112cbafdbb18a90ad76bd8c2a3a1e5",
+    "docs/mbd_reliability/search_01/low_value.json": "25094d6ff132d085981743e14f91c0afda4a654a86ace97ca180c4c2262c7946",
+    "docs/mbd_reliability/search_01/low_value_test_0_fixed_inner.npz": "382adf0366331844d7bf6419252016fa881b6f0686506603a7256688b9e648f1",
+    "docs/mbd_reliability/search_01/low_value_test_1_fixed_inner.npz": "7fcd5e78a6ab2a2c5fc624d126901964b3a05dbd741b0326e6765e51944290d9",
+    "docs/mbd_reliability/search_01/low_value_test_2_fixed_inner.npz": "78b84a9e6dd7babd86a77d6aea02b341050e4b919e45912608b7724eea14cd5a",
+    "docs/mbd_reliability/search_01/low_value_test_3_fixed_inner.npz": "9206b8c9d782c242c3bc4793e75b8e0c92763143c4a5b5d26dfdc36bd2aebca2",
+    "docs/mbd_reliability/search_01/low_value_test_0_fresh_inner.npz": "eef86e36d6587ff19922cef71c4d4d236f7b72f21d0cf4cc2fd42569eae9ee52",
+    "docs/mbd_reliability/search_01/low_value_test_1_fresh_inner.npz": "594410f66bd1e4df798aa2de7939469d2d8d3e6c11468b1254d3b7d79df890f6",
+    "docs/mbd_reliability/search_01/low_value_test_2_fresh_inner.npz": "296a401d5833f7522eed8290bb9749d1b61e845cf2713dd4045c3c9bfa43ba37",
+    "docs/mbd_reliability/search_01/low_value_test_3_fresh_inner.npz": "1f9dc84e50b6d739439dd0ddbe84a36854fecec6718d6512e279ade527b53d5f"
+  },
+  "records": [
+    {
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.2594134211540222,
+      "optimizer_s": 1.146983792001265,
+      "compile_s": 13.177217708995158,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 5.257887363433838,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2811222970485687,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -1.4430623054504395
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2763221263885498,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.04580944776535034
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.23795664310455322,
+      "optimizer_s": 1.1486234579933807,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.761214256286621,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2481747567653656,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.23010629415512085
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2623317241668701,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.039086103439331055
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.2734760344028473,
+      "optimizer_s": 0.47380675000022165,
+      "compile_s": 9.446812999995018,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.153326988220215,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.28251829743385315,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.26271486282348633
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2860175371170044,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.3291008472442627
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.23764531314373016,
+      "optimizer_s": 0.4701480410003569,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.484606742858887,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2541455030441284,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.3795654773712158
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25408652424812317,
+        "contact_count": 2,
+        "worlds": 16,
+        "minimum_clearance": -0.15341734886169434
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.24365882575511932,
+      "optimizer_s": 3.8264111659955233,
+      "compile_s": 11.958300791993679,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0,
+      "mean_ess": 12.293295860290527,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2589901089668274,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.24985241889953613
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.26862335205078125,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.1296137571334839
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.2415199875831604,
+      "optimizer_s": 3.8056793750001816,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0,
+      "mean_ess": 12.944469451904297,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24801167845726013,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.21700137853622437
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2542495131492615,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.18594229221343994
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.24227340519428253,
+      "optimizer_s": 1.743616582993127,
+      "compile_s": 8.666306416002044,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0078125,
+      "mean_ess": 11.955227851867676,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2563835680484772,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.317599892616272
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2619204819202423,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.08091902732849121
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.23822535574436188,
+      "optimizer_s": 1.7085470000019995,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0078125,
+      "mean_ess": 12.428417205810547,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2572806477546692,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.2837865352630615
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25706642866134644,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.09409594535827637
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.2353770136833191,
+      "optimizer_s": 14.077088207995985,
+      "compile_s": 12.09746987499966,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.009765625,
+      "mean_ess": 26.22046661376953,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2559228539466858,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.2519129514694214
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.263214111328125,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.024048805236816406
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.2356773018836975,
+      "optimizer_s": 14.219686750002438,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.001953125,
+      "mean_ess": 27.23335075378418,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24760174751281738,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.24367892742156982
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25022417306900024,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.1555091142654419
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.23836645483970642,
+      "optimizer_s": 6.323522166996554,
+      "compile_s": 8.613373415995738,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.0078125,
+      "mean_ess": 25.05315399169922,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.25587087869644165,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.3879697322845459
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.27033933997154236,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.046419501304626465
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.23578576743602753,
+      "optimizer_s": 6.321465791996161,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.005859375,
+      "mean_ess": 27.220619201660156,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.25375446677207947,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.11289548873901367
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25762635469436646,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.10434389114379883
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.2717623710632324,
+      "optimizer_s": 2.243090417003259,
+      "compile_s": 11.143696667000768,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.0,
+      "mean_ess": 5.372066974639893,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.28134551644325256,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -1.4288055896759033
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2915704548358917,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.2520482540130615
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.23934896290302277,
+      "optimizer_s": 2.2613624579971656,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.865290641784668,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2481747567653656,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.23010629415512085
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2623317241668701,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.039086103439331055
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.2672071158885956,
+      "optimizer_s": 0.9428952910020598,
+      "compile_s": 8.901768582996738,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.0,
+      "mean_ess": 4.390007972717285,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.27877944707870483,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.9960174560546875
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.29103559255599976,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -1.4534311294555664
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.24142952263355255,
+      "optimizer_s": 0.9428367080035969,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.815075874328613,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2481747567653656,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.23010629415512085
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2623317241668701,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.039086103439331055
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.2633476257324219,
+      "optimizer_s": 4.540022249995673,
+      "compile_s": 10.671241042000474,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.09375,
+      "mean_ess": 4.8069047927856445,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2618599534034729,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.043882906436920166
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2763862609863281,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.04725003242492676
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.2440156191587448,
+      "optimizer_s": 4.537630250000802,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.28125,
+      "mean_ess": 5.164482593536377,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24614882469177246,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.22083771228790283
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2603209912776947,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.12401902675628662
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.26426416635513306,
+      "optimizer_s": 1.8783727499976521,
+      "compile_s": 9.362098958998104,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.34375,
+      "mean_ess": 4.318759441375732,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2727704644203186,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.033794522285461426
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2741491198539734,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.028235673904418945
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.2454826980829239,
+      "optimizer_s": 1.9005693330036593,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.0625,
+      "mean_ess": 6.623797416687012,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.25509488582611084,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.23984742164611816
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25855931639671326,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.011692285537719727
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.2712025046348572,
+      "optimizer_s": 1.0255573749964242,
+      "compile_s": 14.940417417004937,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.34300422668457,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.28091394901275635,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.16144990921020508
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2864033281803131,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.009111166000366211
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.24175578355789185,
+      "optimizer_s": 1.0228409999981523,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 5.632231712341309,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.25069308280944824,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.22745555639266968
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24515661597251892,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.2495431900024414
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.2734760344028473,
+      "optimizer_s": 0.43054174999997485,
+      "compile_s": 10.010243707998598,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.055514335632324,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.28251829743385315,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.26271486282348633
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2860175371170044,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.3291008472442627
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.24090807139873505,
+      "optimizer_s": 0.421700333004992,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.03571428571428571,
+      "mean_ess": 5.633304595947266,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.25450125336647034,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.207122802734375
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2519187927246094,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.0010943412780761719
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.24545586109161377,
+      "optimizer_s": 1.0426168749982025,
+      "compile_s": 12.59489054200094,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.8147861957550049,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24760377407073975,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.17593586444854736
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25140661001205444,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.19024288654327393
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.2712025046348572,
+      "optimizer_s": 1.0354572500000359,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.6765589714050293,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.28091394901275635,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.16144990921020508
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2864033281803131,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.009111166000366211
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.2466953843832016,
+      "optimizer_s": 0.42262770800152794,
+      "compile_s": 8.6173041669972,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.7439459562301636,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2490083873271942,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.19524800777435303
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2517090439796448,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.19657284021377563
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.2734760344028473,
+      "optimizer_s": 0.4110575829981826,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.041666666666666664,
+      "mean_ess": 1.6463083028793335,
+      "job": "original",
+      "fixed_inner": {
+        "raw_mean_cost": 0.28251829743385315,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.26271486282348633
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2860175371170044,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.3291008472442627
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.23690052330493927,
+      "optimizer_s": 1.1383010829958948,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 7.021727561950684,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.25243502855300903,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.01800680160522461
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25474482774734497,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.0416104793548584
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.23023612797260284,
+      "optimizer_s": 1.1495366250019288,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.197319507598877,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24503959715366364,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.21020209789276123
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24853932857513428,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.13475346565246582
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.2339206486940384,
+      "optimizer_s": 0.6148904579968075,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 7.764688491821289,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2659863829612732,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.08224174380302429
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.26109766960144043,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.018506735563278198
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.23713518679141998,
+      "optimizer_s": 0.46922820799954934,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.529771327972412,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2465778887271881,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.1985170841217041
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24711491167545319,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.12329816818237305
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.2324811965227127,
+      "optimizer_s": 3.7113008750020526,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0078125,
+      "mean_ess": 13.647241592407227,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.23229625821113586,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.24638396501541138
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23601379990577698,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.16072678565979004
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.23488306999206543,
+      "optimizer_s": 3.685534500000358,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0,
+      "mean_ess": 12.904266357421875,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2623666822910309,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.08439970016479492
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.257820188999176,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.13771581649780273
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.23064231872558594,
+      "optimizer_s": 1.768197292003606,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0078125,
+      "mean_ess": 14.521142959594727,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2330896109342575,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.00732111930847168
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23421867191791534,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.08703255653381348
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.2289823293685913,
+      "optimizer_s": 1.7548847500002012,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0078125,
+      "mean_ess": 13.155176162719727,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2442249208688736,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.24682843685150146
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2452647089958191,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.2467365264892578
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.2302996814250946,
+      "optimizer_s": 14.13010783399659,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.005859375,
+      "mean_ess": 27.94009017944336,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2547725737094879,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.05520009994506836
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24725277721881866,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.05138874053955078
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.22611494362354279,
+      "optimizer_s": 14.0937386670048,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.0,
+      "mean_ess": 27.584308624267578,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.23951692879199982,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.1801774501800537
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23933300375938416,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.11629891395568848
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.23009547591209412,
+      "optimizer_s": 6.407393041998148,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.0,
+      "mean_ess": 29.474390029907227,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2298966348171234,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.24645674228668213
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23478418588638306,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.17128753662109375
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.2258293479681015,
+      "optimizer_s": 6.425985709000088,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.0,
+      "mean_ess": 27.591461181640625,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.23586063086986542,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.07632589340209961
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.239658385515213,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.16715526580810547
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.23717088997364044,
+      "optimizer_s": 2.2643653330014786,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.0,
+      "mean_ess": 7.601927280426025,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.23690609633922577,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.185011625289917
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23800215125083923,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.0037126541137695312
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.247798889875412,
+      "optimizer_s": 2.2400333330006106,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.03125,
+      "mean_ess": 6.483687400817871,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.273857444524765,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -1.9859871864318848
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24331802129745483,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.24678122997283936
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.23938968777656555,
+      "optimizer_s": 0.9571539579992532,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.0,
+      "mean_ess": 7.428826808929443,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24264995753765106,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.08103740215301514
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2376464605331421,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.16120696067810059
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.23595872521400452,
+      "optimizer_s": 0.9470431669979007,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.081502914428711,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.23665370047092438,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.15993690490722656
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24051369726657867,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.14127516746520996
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.24989546835422516,
+      "optimizer_s": 4.539798792000511,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.28125,
+      "mean_ess": 4.628914833068848,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24149131774902344,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.16941237449645996
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24813368916511536,
+        "contact_count": 2,
+        "worlds": 16,
+        "minimum_clearance": -1.9252614974975586
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.2518143057823181,
+      "optimizer_s": 4.514830207997875,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.21875,
+      "mean_ess": 3.733978033065796,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.26116764545440674,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.12654829025268555
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2404443919658661,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.04795408248901367
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.24579794704914093,
+      "optimizer_s": 1.8623533330028295,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.84375,
+      "mean_ess": 1.2484885454177856,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24766972661018372,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.1271214485168457
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2388405054807663,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.11088776588439941
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.258868008852005,
+      "optimizer_s": 1.8615212500008056,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.28125,
+      "mean_ess": 4.315312385559082,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.273857444524765,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -1.9859871864318848
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24331802129745483,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.24678122997283936
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.23629169166088104,
+      "optimizer_s": 1.0331724999996368,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.554581642150879,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2339676320552826,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.053436279296875
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23359884321689606,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.246748149394989
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.23579667508602142,
+      "optimizer_s": 1.0149943750002421,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 5.6422271728515625,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.24354824423789978,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.016809940338134766
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24393293261528015,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.038335561752319336
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.2355765998363495,
+      "optimizer_s": 0.43697654199786484,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.724273204803467,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.23841242492198944,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -0.03823423385620117
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24114061892032623,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.020786702632904053
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.2331802099943161,
+      "optimizer_s": 0.425636416002817,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 5.112664222717285,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.25426027178764343,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.09754633903503418
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25227129459381104,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.11071920394897461
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.23501704633235931,
+      "optimizer_s": 1.0470362919950276,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.7585071325302124,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2758095860481262,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.09298062324523926
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.27599406242370605,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.07523536682128906
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.24287253618240356,
+      "optimizer_s": 1.0323296249989653,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.8674988746643066,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.26116764545440674,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.12654829025268555
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2404443919658661,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.04795408248901367
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.23035737872123718,
+      "optimizer_s": 0.43065258400019957,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.7521796226501465,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2647516429424286,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.026547908782958984
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.26741117238998413,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.11583101749420166
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.23802518844604492,
+      "optimizer_s": 0.4127705840000999,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.8133389949798584,
+      "job": "reversed",
+      "fixed_inner": {
+        "raw_mean_cost": 0.2600443363189697,
+        "contact_count": 1,
+        "worlds": 16,
+        "minimum_clearance": -1.0830323696136475
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2547222971916199,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.037911415100097656
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.1387623749978957,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0625,
+      "mean_ess": 6.756004333496094,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.126357499997539,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.840665340423584,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.4831116249988554,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 7.3251237869262695,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.4739210829939111,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.765448093414307,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 3.7004007499999716,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.03125,
+      "mean_ess": 13.99559211730957,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.15890926122665405,
+      "optimizer_s": 3.690647999996145,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.015625,
+      "mean_ess": 13.732561111450195,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.16217449307441711,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.10781574249267578
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.16070294380187988,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.15449166297912598
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 1.7643605840057717,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0,
+      "mean_ess": 14.634557723999023,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.15889863669872284,
+      "optimizer_s": 1.743367874994874,
+      "compile_s": 0.0,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "invalid_fraction": 0.0,
+      "mean_ess": 14.074767112731934,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1624424308538437,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.04965519905090332
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.161177396774292,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.16674566268920898
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.1588718146085739,
+      "optimizer_s": 13.935546458997123,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.0,
+      "mean_ess": 28.619956970214844,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1633169949054718,
+        "contact_count": 2,
+        "worlds": 16,
+        "minimum_clearance": -0.07666516304016113
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.16168197989463806,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.49987757205963135
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.15892907977104187,
+      "optimizer_s": 13.950114125000255,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.0234375,
+      "mean_ess": 28.626354217529297,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.16098007559776306,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.10173416137695312
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.16178172826766968,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.3593372106552124
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.1583869457244873,
+      "optimizer_s": 6.326758957999118,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.00390625,
+      "mean_ess": 28.50162696838379,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.16522052884101868,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.12591087818145752
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.16541579365730286,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.3148479461669922
+      }
+    },
+    {
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.15865160524845123,
+      "optimizer_s": 6.694915874999424,
+      "compile_s": 0.0,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "invalid_fraction": 0.001953125,
+      "mean_ess": 29.71856689453125,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.16238656640052795,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.12848830223083496
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.16310547292232513,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.18012213706970215
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.1601262390613556,
+      "optimizer_s": 2.2938635000027716,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.03125,
+      "mean_ess": 6.969736099243164,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.1601262390613556,
+      "optimizer_s": 2.236927250000008,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.21875,
+      "mean_ess": 5.674205780029297,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.1605747491121292,
+      "optimizer_s": 0.9482744159977301,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.25,
+      "mean_ess": 5.509266376495361,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.1605747491121292,
+      "optimizer_s": 0.9484636249981122,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "invalid_fraction": 0.09375,
+      "mean_ess": 6.226500511169434,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.15962764620780945,
+      "optimizer_s": 4.491793666995363,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.25,
+      "mean_ess": 5.37876033782959,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.15962764620780945,
+      "optimizer_s": 4.502146040998923,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.3125,
+      "mean_ess": 4.930649757385254,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.15984372794628143,
+      "optimizer_s": 1.883832125000481,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.25,
+      "mean_ess": 5.732653617858887,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.15984372794628143,
+      "optimizer_s": 1.8499617089983076,
+      "compile_s": 0.0,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "invalid_fraction": 0.375,
+      "mean_ess": 4.1952805519104,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.0450990419994923,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.652256965637207,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.0116452090005623,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.558152198791504,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.43346420799935004,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.641145706176758,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "one_chain",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.420291417001863,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 6.433167457580566,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": true,
+      "seed": 990101,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.0384159589957562,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.692692756652832,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": true,
+      "seed": 990102,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.0250254580023466,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.7825226783752441,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": false,
+      "seed": 990101,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.4108079169964185,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.6988104581832886,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    },
+    {
+      "variant": "three_chains",
+      "anticipate": false,
+      "seed": 990102,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.40458000000217,
+      "compile_s": 0.0,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "invalid_fraction": 0.0,
+      "mean_ess": 1.7800555229187012,
+      "job": "low_value",
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.554802656173706
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_count": 0,
+        "worlds": 16,
+        "minimum_clearance": 0.5652385354042053
+      }
+    }
+  ],
+  "groups": [
+    {
+      "job": "original",
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "train_cost": 0.24868503212928772,
+      "optimizer_s": 1.147803624997323,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "fixed_inner": {
+        "raw_mean_cost": 0.26464852690696716,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.26932692527770996,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "train_cost": 0.2555606737732887,
+      "optimizer_s": 0.4719773955002893,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2683319002389908,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2700520306825638,
+        "contact_exposures": 2,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "train_cost": 0.24258940666913986,
+      "optimizer_s": 3.8160452704978525,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "fixed_inner": {
+        "raw_mean_cost": 0.25350089371204376,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.26143643260002136,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "train_cost": 0.2402493804693222,
+      "optimizer_s": 1.7260817914975632,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2568321079015732,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2594934552907944,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "train_cost": 0.2355271577835083,
+      "optimizer_s": 14.148387478999211,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2517623007297516,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2567191421985626,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "train_cost": 0.23707611113786697,
+      "optimizer_s": 6.3224939794963575,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "fixed_inner": {
+        "raw_mean_cost": 0.25481267273426056,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2639828473329544,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "train_cost": 0.2555556669831276,
+      "optimizer_s": 2.2522264375002123,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2647601366043091,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2769510895013809,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "train_cost": 0.25431831926107407,
+      "optimizer_s": 0.9428659995028283,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2634771019220352,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.27668365836143494,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "train_cost": 0.25368162244558334,
+      "optimizer_s": 4.5388262499982375,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2540043890476227,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2683536261320114,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "train_cost": 0.2548734322190285,
+      "optimizer_s": 1.8894710415006557,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2639326751232147,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2663542181253433,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "one_chain",
+      "anticipate": true,
+      "train_cost": 0.2564791440963745,
+      "optimizer_s": 1.0241991874972882,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2658035159111023,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.265779972076416,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "one_chain",
+      "anticipate": false,
+      "train_cost": 0.25719205290079117,
+      "optimizer_s": 0.4261210415024834,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.26850977540016174,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2689681649208069,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "three_chains",
+      "anticipate": true,
+      "train_cost": 0.2583291828632355,
+      "optimizer_s": 1.0390370624991192,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.26425886154174805,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2689049690961838,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "original",
+      "variant": "three_chains",
+      "anticipate": false,
+      "train_cost": 0.26008570939302444,
+      "optimizer_s": 0.4168426454998553,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2657633423805237,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2688632905483246,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "train_cost": 0.23356832563877106,
+      "optimizer_s": 1.1439188539989118,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "fixed_inner": {
+        "raw_mean_cost": 0.24873731285333633,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2516420781612396,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "train_cost": 0.2355279177427292,
+      "optimizer_s": 0.5420593329981784,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "fixed_inner": {
+        "raw_mean_cost": 0.25628213584423065,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2541062906384468,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "train_cost": 0.23368213325738907,
+      "optimizer_s": 3.6984176875012054,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "fixed_inner": {
+        "raw_mean_cost": 0.24733147025108337,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2469169944524765,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "train_cost": 0.22981232404708862,
+      "optimizer_s": 1.7615410210019036,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "fixed_inner": {
+        "raw_mean_cost": 0.23865726590156555,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23974169045686722,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "train_cost": 0.2282073125243187,
+      "optimizer_s": 14.111923250500695,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "fixed_inner": {
+        "raw_mean_cost": 0.24714475125074387,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2432928904891014,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "train_cost": 0.2279624119400978,
+      "optimizer_s": 6.416689375499118,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "fixed_inner": {
+        "raw_mean_cost": 0.23287863284349442,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23722128570079803,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "train_cost": 0.24248488992452621,
+      "optimizer_s": 2.2521993330010446,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2553817704319954,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24066008627414703,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "train_cost": 0.23767420649528503,
+      "optimizer_s": 0.9520985624985769,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "fixed_inner": {
+        "raw_mean_cost": 0.23965182900428772,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.23908007889986038,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "train_cost": 0.25085488706827164,
+      "optimizer_s": 4.527314499999193,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2513294816017151,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24428904056549072,
+        "contact_exposures": 2,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "train_cost": 0.25233297795057297,
+      "optimizer_s": 1.8619372915018175,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "fixed_inner": {
+        "raw_mean_cost": 0.26076358556747437,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24107926338911057,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "one_chain",
+      "anticipate": true,
+      "train_cost": 0.23604418337345123,
+      "optimizer_s": 1.0240834374999395,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2387579381465912,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.2387658879160881,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "one_chain",
+      "anticipate": false,
+      "train_cost": 0.2343784049153328,
+      "optimizer_s": 0.4313064790003409,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.24633634835481644,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.24670595675706863,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "three_chains",
+      "anticipate": true,
+      "train_cost": 0.23894479125738144,
+      "optimizer_s": 1.0396829584969964,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.2684886157512665,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.25821922719478607,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "reversed",
+      "variant": "three_chains",
+      "anticipate": false,
+      "train_cost": 0.23419128358364105,
+      "optimizer_s": 0.42171158400014974,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.26239798963069916,
+        "contact_exposures": 1,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.261066734790802,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w2",
+      "anticipate": true,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.1325599374977173,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w2",
+      "anticipate": false,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.47851635399638326,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 82,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "8x16_w2",
+      "anticipate": true,
+      "train_cost": 0.15948478877544403,
+      "optimizer_s": 3.695524374998058,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1609094738960266,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.16029999405145645,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "8x16_w2",
+      "anticipate": false,
+      "train_cost": 0.15946804732084274,
+      "optimizer_s": 1.7538642295003228,
+      "objective_evaluations": 137,
+      "outer_rollout_evaluations": 274,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1610434427857399,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.1605372205376625,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "16x32_w2",
+      "anticipate": true,
+      "train_cost": 0.1589004471898079,
+      "optimizer_s": 13.942830291998689,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "fixed_inner": {
+        "raw_mean_cost": 0.16214853525161743,
+        "contact_exposures": 2,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.16173185408115387,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "16x32_w2",
+      "anticipate": false,
+      "train_cost": 0.15851927548646927,
+      "optimizer_s": 6.510837416499271,
+      "objective_evaluations": 521,
+      "outer_rollout_evaluations": 1042,
+      "fixed_inner": {
+        "raw_mean_cost": 0.16380354762077332,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.164260633289814,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w4",
+      "anticipate": true,
+      "train_cost": 0.1601262390613556,
+      "optimizer_s": 2.2653953750013898,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w4",
+      "anticipate": false,
+      "train_cost": 0.1605747491121292,
+      "optimizer_s": 0.9483690204979212,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 164,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w8",
+      "anticipate": true,
+      "train_cost": 0.15962764620780945,
+      "optimizer_s": 4.496969853997143,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w8",
+      "anticipate": false,
+      "train_cost": 0.15984372794628143,
+      "optimizer_s": 1.8668969169993943,
+      "objective_evaluations": 41,
+      "outer_rollout_evaluations": 328,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "one_chain",
+      "anticipate": true,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.0283721255000273,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "one_chain",
+      "anticipate": false,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.4268778125006065,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "three_chains",
+      "anticipate": true,
+      "train_cost": 0.160060316324234,
+      "optimizer_s": 1.0317207084990514,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    },
+    {
+      "job": "low_value",
+      "variant": "three_chains",
+      "anticipate": false,
+      "train_cost": 0.16003745794296265,
+      "optimizer_s": 0.40769395849929424,
+      "objective_evaluations": 37,
+      "outer_rollout_evaluations": 74,
+      "fixed_inner": {
+        "raw_mean_cost": 0.1596444547176361,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      },
+      "fresh_inner": {
+        "raw_mean_cost": 0.15989704430103302,
+        "contact_exposures": 0,
+        "policy_world_exposures": 32
+      }
+    }
+  ],
+  "anticipation_comparisons": [
+    {
+      "job": "original",
+      "variant": "4x8_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.49412742394544323,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 3.3897958937001755,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 2.3493416988480376,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -3.245036289565385,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 2
+          }
+        }
+      ]
+    },
+    {
+      "job": "original",
+      "variant": "8x16_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": -1.0166567764816243,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -2.559124082774114,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 3.602668672634684,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 1.0957928371875825,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "original",
+      "variant": "16x32_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": -0.02031307763858609,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 2.635661034079393,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 2.4246742678182747,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 2.8732237562215817,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "original",
+      "variant": "4x8_w4",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": -0.9204657629668368,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 1
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.18377899252616395,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 1
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "original",
+      "variant": "4x8_w8",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 3.999887245868905,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.816030754921394,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 3.506954326178296,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.6813426433563387,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 1
+          }
+        }
+      ]
+    },
+    {
+      "job": "original",
+      "variant": "one_chain",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.5678741644945785,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.1348837092988798,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 1.4963268379423267,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 2.684268481503354,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "original",
+      "variant": "three_chains",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.5640827088321414,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.12015220542285691,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.5678741644945785,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.1348837092988798,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 5.094754948503208,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 1
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 2.433128516157546,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 1
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.6238562514526309,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.5764188368979692,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "reversed",
+      "variant": "8x16_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.3403638282898017,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.7664324851482194,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": -7.428300665474573,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -5.119154751110548,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "reversed",
+      "variant": "16x32_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": -10.820488482640314,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -5.3106606330246695,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": -1.5501942433757578,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.13576898431046255,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w4",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 2.3671387610006236,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 1
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -0.1496722134633009,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": -15.720753142590958,
+            "anticipated_contacts": 1,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -1.1659726920949227,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "reversed",
+      "variant": "4x8_w8",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 2.494616094475163,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -3.890957970316905,
+            "anticipated_contacts": 2,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 4.633724342377968,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 1
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 1.181017877864357,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "reversed",
+      "variant": "one_chain",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 1.8643293730019406,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 1
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 3.1275426500924786,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 4.213016636232604,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 3.305315411314121,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "reversed",
+      "variant": "three_chains",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": -4.1767231291940385,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": -3.2096228280263865,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": -0.43196831407209096,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 1
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 5.60528284456109,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "low_value",
+      "variant": "8x16_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.16494322204993941,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.29436694096537563,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "low_value",
+      "variant": "16x32_w2",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 1.1521170818782005,
+            "anticipated_contacts": 2,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 2.257229300849141,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.8661374114505076,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.8115881281836916,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w4",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "low_value",
+      "variant": "4x8_w8",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "low_value",
+      "variant": "one_chain",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    },
+    {
+      "job": "low_value",
+      "variant": "three_chains",
+      "paired_seeds": [
+        {
+          "seed": 990101,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        },
+        {
+          "seed": 990102,
+          "fixed_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          },
+          "fresh_inner": {
+            "raw_gain_percent": 0.0,
+            "anticipated_contacts": 0,
+            "frozen_contacts": 0
+          }
+        }
+      ]
+    }
+  ],
+  "interpretation": [
+    "Three saved development states and two optimizer seeds; descriptive results, not mission-level confirmation.",
+    "16 independent posterior physical worlds per policy and inner setting; repeated policies and shared worlds are paired, not independent replicates.",
+    "Raw cost includes post-contact motion and must not be interpreted as successful monitoring when contact occurs.",
+    "All selected policies receive causal hypothetical updates at evaluation; frozen denotes only the planning objective.",
+    "Test banks never rerank policies. More training worlds changes the sampled contact-admissibility set as well as the sample average.",
+    "Optimizer-only synchronized CPU timings exclude cache construction, real POAM, verification and execution; cold compilation is recorded separately."
+  ]
+}

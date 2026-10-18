@@ -1,0 +1,480 @@
+{
+  "complete": true,
+  "arm_order": [
+    "old",
+    "controller_and_filter",
+    "reference",
+    "both"
+  ],
+  "rows": [
+    {
+      "job": "original",
+      "anticipate": true,
+      "seed": 990101,
+      "mean_cost": [
+        0.3526878356933594,
+        0.3482566624879837,
+        0.3523598611354828,
+        0.3418959528207779
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        1.256400918014169,
+        0.09299287491211941,
+        3.059896537504732
+      ],
+      "contact_exposures": [
+        2,
+        1,
+        2,
+        1
+      ],
+      "mean_rpcbf_correction": [
+        0.9369201213121414,
+        0.5689417347311974,
+        0.9611257910728455,
+        0.591976597905159
+      ],
+      "mean_reference_position_shift": 0.1601423379033804,
+      "maximum_reference_position_shift": 0.2606033682823181,
+      "route_std_before_after": [
+        0.5662946403026581,
+        0.5186983272433281
+      ],
+      "probe_std_before_after": [
+        0.5191006660461426,
+        0.5342934429645538
+      ]
+    },
+    {
+      "job": "original",
+      "anticipate": true,
+      "seed": 990102,
+      "mean_cost": [
+        0.25009263306856155,
+        0.24827847629785538,
+        0.25250428915023804,
+        0.24877623468637466
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        0.7253939264211895,
+        -0.9643051264990044,
+        0.5263643179069597
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.8876666873693466,
+        0.8845750987529755,
+        0.9259859919548035,
+        0.8757154643535614
+      ],
+      "mean_reference_position_shift": 0.15132051706314087,
+      "maximum_reference_position_shift": 0.2238938808441162,
+      "route_std_before_after": [
+        0.5320470482110977,
+        0.5103981643915176
+      ],
+      "probe_std_before_after": [
+        0.5191006660461426,
+        0.5473042577505112
+      ]
+    },
+    {
+      "job": "original",
+      "anticipate": false,
+      "seed": 990101,
+      "mean_cost": [
+        0.31572987139225006,
+        0.31508687138557434,
+        0.31572987139225006,
+        0.31508687138557434
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        0.2036551067658983,
+        0.0,
+        0.2036551067658983
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.1819974221289158,
+        0.18809328600764275,
+        0.1819974221289158,
+        0.18809328600764275
+      ],
+      "mean_reference_position_shift": 0.0,
+      "maximum_reference_position_shift": 0.0,
+      "route_std_before_after": [
+        0.2618766762316227,
+        0.19890273734927177
+      ],
+      "probe_std_before_after": [
+        0.5191006660461426,
+        0.5342637002468109
+      ]
+    },
+    {
+      "job": "original",
+      "anticipate": false,
+      "seed": 990102,
+      "mean_cost": [
+        0.25524435192346573,
+        0.254361554980278,
+        0.2549409493803978,
+        0.2590980902314186
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        0.3458634584997272,
+        0.11886748552183693,
+        -1.5098231474710213
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.2569579593837261,
+        0.23605391755700111,
+        0.2502484731376171,
+        0.27470579743385315
+      ],
+      "mean_reference_position_shift": 0.11203945428133011,
+      "maximum_reference_position_shift": 0.17849856615066528,
+      "route_std_before_after": [
+        0.6278815865516663,
+        0.5998838543891907
+      ],
+      "probe_std_before_after": [
+        0.5191006660461426,
+        0.53761225938797
+      ]
+    },
+    {
+      "job": "reversed",
+      "anticipate": true,
+      "seed": 990101,
+      "mean_cost": [
+        0.25805307552218437,
+        0.25678804889321327,
+        0.25774646922945976,
+        0.2555393576622009
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        0.4902195513117796,
+        0.11881520578825691,
+        0.9741088552797907
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        1.2097969204187393,
+        1.060603529214859,
+        1.20750130712986,
+        1.1359971761703491
+      ],
+      "mean_reference_position_shift": 0.06289123836904764,
+      "maximum_reference_position_shift": 0.06664679199457169,
+      "route_std_before_after": [
+        0.4094298854470253,
+        0.372514009475708
+      ],
+      "probe_std_before_after": [
+        0.30598872900009155,
+        0.31066469848155975
+      ]
+    },
+    {
+      "job": "reversed",
+      "anticipate": true,
+      "seed": 990102,
+      "mean_cost": [
+        0.26029662787914276,
+        0.24311010167002678,
+        0.26159099116921425,
+        0.24458978697657585
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        6.602669557861421,
+        -0.49726471703370195,
+        6.034208368561612
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.42297697998583317,
+        0.3650068826973438,
+        0.44892967119812965,
+        0.3875036872923374
+      ],
+      "mean_reference_position_shift": 0.04506491497159004,
+      "maximum_reference_position_shift": 0.06965778023004532,
+      "route_std_before_after": [
+        0.5692082196474075,
+        0.37503504008054733
+      ],
+      "probe_std_before_after": [
+        0.30598872900009155,
+        0.30947650223970413
+      ]
+    },
+    {
+      "job": "reversed",
+      "anticipate": false,
+      "seed": 990101,
+      "mean_cost": [
+        0.26559288054704666,
+        0.27075500041246414,
+        0.26074135676026344,
+        0.2652519829571247
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        -1.9436213255358972,
+        1.8266768961541602,
+        0.12835343674114988
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        1.2576282918453217,
+        1.1933404207229614,
+        1.3464215397834778,
+        1.2957789599895477
+      ],
+      "mean_reference_position_shift": 0.0629225093871355,
+      "maximum_reference_position_shift": 0.06709656864404678,
+      "route_std_before_after": [
+        0.4243788421154022,
+        0.3906896114349365
+      ],
+      "probe_std_before_after": [
+        0.30598872900009155,
+        0.3108777403831482
+      ]
+    },
+    {
+      "job": "reversed",
+      "anticipate": false,
+      "seed": 990102,
+      "mean_cost": [
+        0.25428127869963646,
+        0.24781931936740875,
+        0.2554634027183056,
+        0.24882366880774498
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        2.5412642901881655,
+        -0.4648883412551513,
+        2.146288519469869
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.4371350333094597,
+        0.4668668136000633,
+        0.45339759811758995,
+        0.4921855479478836
+      ],
+      "mean_reference_position_shift": 0.07342626061290503,
+      "maximum_reference_position_shift": 0.09067996591329575,
+      "route_std_before_after": [
+        0.49035802483558655,
+        0.3639034554362297
+      ],
+      "probe_std_before_after": [
+        0.30598872900009155,
+        0.3108455017209053
+      ]
+    },
+    {
+      "job": "low_value",
+      "anticipate": true,
+      "seed": 990101,
+      "mean_cost": [
+        0.1609104610979557,
+        0.16103986278176308,
+        0.1609104610979557,
+        0.16103986278176308
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        -0.08041844074301582,
+        0.0,
+        -0.08041844074301582
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.040057293605059385,
+        0.03665673639625311,
+        0.040057293605059385,
+        0.03665673639625311
+      ],
+      "mean_reference_position_shift": 0.0,
+      "maximum_reference_position_shift": 0.0,
+      "route_std_before_after": [
+        0.12017467431724072,
+        0.11931837908923626
+      ],
+      "probe_std_before_after": [
+        0.09259550273418427,
+        0.11262098699808121
+      ]
+    },
+    {
+      "job": "low_value",
+      "anticipate": true,
+      "seed": 990102,
+      "mean_cost": [
+        0.1609104610979557,
+        0.16103986278176308,
+        0.1609104610979557,
+        0.16103986278176308
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        -0.08041844074301582,
+        0.0,
+        -0.08041844074301582
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.040057293605059385,
+        0.03665673639625311,
+        0.040057293605059385,
+        0.03665673639625311
+      ],
+      "mean_reference_position_shift": 0.0,
+      "maximum_reference_position_shift": 0.0,
+      "route_std_before_after": [
+        0.12017467431724072,
+        0.11931837908923626
+      ],
+      "probe_std_before_after": [
+        0.09259550273418427,
+        0.11262098699808121
+      ]
+    },
+    {
+      "job": "low_value",
+      "anticipate": false,
+      "seed": 990101,
+      "mean_cost": [
+        0.1609104610979557,
+        0.16103986278176308,
+        0.1609104610979557,
+        0.16103986278176308
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        -0.08041844074301582,
+        0.0,
+        -0.08041844074301582
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.040057293605059385,
+        0.03665673639625311,
+        0.040057293605059385,
+        0.03665673639625311
+      ],
+      "mean_reference_position_shift": 0.0,
+      "maximum_reference_position_shift": 0.0,
+      "route_std_before_after": [
+        0.12017467431724072,
+        0.11931837908923626
+      ],
+      "probe_std_before_after": [
+        0.09259550273418427,
+        0.11262098699808121
+      ]
+    },
+    {
+      "job": "low_value",
+      "anticipate": false,
+      "seed": 990102,
+      "mean_cost": [
+        0.1609104610979557,
+        0.16103986278176308,
+        0.1609104610979557,
+        0.16103986278176308
+      ],
+      "gain_percent_of_mean_cost": [
+        0.0,
+        -0.08041844074301582,
+        0.0,
+        -0.08041844074301582
+      ],
+      "contact_exposures": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean_rpcbf_correction": [
+        0.040057293605059385,
+        0.03665673639625311,
+        0.040057293605059385,
+        0.03665673639625311
+      ],
+      "mean_reference_position_shift": 0.0,
+      "maximum_reference_position_shift": 0.0,
+      "route_std_before_after": [
+        0.12017467431724072,
+        0.11931837908923626
+      ],
+      "probe_std_before_after": [
+        0.09259550273418427,
+        0.11262098699808121
+      ]
+    }
+  ],
+  "interpretation": "Same first terminal state/clarity and physical wind per comparison; one update held fixed for eight seconds. All production endpoint state parity errors are zero. Raw cost includes contacts; descriptive posterior-model mechanism diagnostic, not a mission or optimal probing demonstration."
+}

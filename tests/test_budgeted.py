@@ -3,6 +3,7 @@ from dataclasses import replace
 import jax
 import jax.numpy as jnp
 import numpy as np
+import pytest
 
 from voi_diffusion_ipp.config import Config
 from voi_diffusion_ipp.environment import Environment
@@ -74,9 +75,11 @@ def test_causal_update_and_future_noise_cannot_change_earlier_execution():
     assert np.isfinite(actual[0])
 
 
-def test_multistage_updates_affect_only_later_future_controls():
+@pytest.mark.parametrize("features", ["probe", "route_knots"])
+def test_multistage_updates_affect_only_later_future_controls(features):
     cfg, b, env = fixture()
-    cfg = replace(cfg, budgeted_update_steps=5, hypothetical_relocation=True)
+    cfg = replace(cfg, budgeted_update_steps=5, hypothetical_relocation=True,
+                  budgeted_feedback_features=features)
     eps = jax.random.normal(jax.random.PRNGKey(803), (2, *b.sample_shape))
     vector = jnp.zeros(18).at[12:].set(0.1)
     vector = vector.at[4:12].set(jnp.tile(jnp.array([jnp.arctanh(-0.5 / 3.88), 0.0]), 4))
@@ -90,6 +93,41 @@ def test_multistage_updates_affect_only_later_future_controls():
     assert not np.allclose(baseline[1][1].controls[:, 5:], altered[1][1].controls[:, 5:])
     terminal = fn(noise.at[:, 12:].set(10.0))
     np.testing.assert_array_equal(baseline[1][1].controls, terminal[1][1].controls)
+
+
+def test_route_features_respond_to_local_learning_without_a_probe_change():
+    from typing import NamedTuple
+
+    class SpatialBelief(NamedTuple):
+        slope: float
+
+        def predict(self, locations):
+            p = jnp.atleast_2d(locations)
+            mean = jnp.stack((self.slope * p[:, 0], jnp.zeros(len(p))), axis=-1)
+            return mean, jnp.broadcast_to(jnp.eye(2) * 0.04, (len(p), 2, 2))
+
+    cfg, _, env = fixture()
+    vector = jnp.zeros(18).at[4:12].set(jnp.tile(jnp.array([0.3, 0.0]), 4)).at[12].set(0.4)
+    x = jnp.array([-0.5, 0.1, 0.2, -0.1])
+    matrix = reference_matrices(3.0, 15)
+    before, after = SpatialBelief(0.0), SpatialBelief(0.5)
+    probe_before = future_reference(vector, x, before, env, matrix, cfg)
+    probe_after = future_reference(vector, x, after, env, matrix, cfg)
+    np.testing.assert_array_equal(probe_before, probe_after)
+    local = replace(cfg, budgeted_feedback_features="route_knots")
+    route_before = future_reference(vector, x, before, env, matrix, local)
+    route_after = future_reference(vector, x, after, env, matrix, local)
+    assert float(jnp.max(jnp.linalg.norm(route_after[:, 0]-route_before[:, 0], axis=-1))) > 0.05
+    np.testing.assert_allclose(route_after[0, 0], x[:2], atol=1e-7)
+    np.testing.assert_allclose(route_after[0, 1], x[2:], atol=1e-7)
+    np.testing.assert_array_equal(route_before, probe_before)
+
+
+def test_route_feature_configuration_rejects_unsupported_combinations():
+    with pytest.raises(ValueError, match="feedback features"):
+        replace(Config(), budgeted_feedback_features="unknown")
+    with pytest.raises(ValueError, match="compact policy"):
+        replace(Config(), budgeted_feedback_features="route_knots", budgeted_policy="branches")
 
 
 def test_omitting_zero_target_cells_preserves_full_grid_task_cost():

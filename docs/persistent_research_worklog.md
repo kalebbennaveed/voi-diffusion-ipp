@@ -1375,3 +1375,67 @@ in the script; production cache remains unchanged. Run only after35128 finishes,
 then analyze all outcomes before promoting a numerical change or new long runs.
 No Gaussian prior, multichain strategy, covariance variant or reranking promoted.
 Do not call the overall scientific task complete from this audit or runtime.
+
+
+## Reliability continuation completed (2026-10-17)
+
+Search session 35128 finished successfully: 84 optimizer calls and 2,688 paired
+selected-policy/world exposures. The reporting script verifies every JSON/NPZ
+cost and clearance exactly. All frozen source and driver hashes remained intact.
+The scientific figure was inspected and its labels corrected for readability.
+Larger search improves the original and reversed anticipated policies, but also
+the frozen policies; the reversed ranking flips against anticipation at 8x16 and
+16x32. Larger search worsens the low-value test cost despite better training cost.
+Three chains lose in both route-sensitive states at the same 37 objective calls.
+More worlds is mixed and does not repair empirical safety. Ten fresh-inner contact
+exposures occurred; policies/worlds are shared, not independent trials. No search
+configuration was promoted.
+
+Conditioning session 14280 completed all five scientific cases. Exact prior
+values at relocated inducing points are not a sufficient cache repair: paths
+are often slightly worse and the known rejected contact remains missed. The
+production cache is unchanged. After Python wrote complete=true, the macOS
+/usr/bin/time -l wrapper exited 1 because the sandbox denied kern.clockrate.
+This is preserved in conditioning_01/process_status.json. Peak memory is
+unavailable; synchronized Python evaluator timings and scientific outputs remain.
+
+Mechanism session 96912 failed before saving any outcomes: first-stage parity
+error 0.000432. Protocol/driver 01 and failure evidence are retained. The production
+reference had closed-over constants while the diagnostic used dynamic inputs and
+a reduced clarity grid. Protocol 02 aligns both calls to dynamic inputs and the
+full grid, keeping the original tolerances. Session 39457 then completed all
+12 policies x four fresh worlds x four matched arms. Every production endpoint
+path parity error is EXACTLY ZERO. Earned updates change controller/filter and
+reference; gains, regressions and contacts all occur. Central-probe standard
+deviation increases while average route standard deviation decreases in every
+selection. This is variational POAM relocation, not exact-GP monotonic conditioning.
+
+One optional bounded refinement was implemented:
+Config.budgeted_feedback_features='route_knots'; the default remains 'probe'.
+It queries the available POAM belief at four unshifted nominal future knots,
+pooling mean wind and marginal standard deviation into the same three features.
+It retains 18 parameters, six gains, MBD, RPCBF and the clarity objective, with no
+information reward or physical truth access. Branched policies reject this
+unsupported feature combination. All 22 targeted tests pass (26.89s), including
+local response with an unchanged central probe and future-observation causality.
+
+Route-feature session 69515 completed 24 optimizer calls and 384 paired test
+exposures (16 new posterior fields per policy). All twelve probe policy vectors
+AND training costs reproduce the previous search exactly. JSON/NPZ metrics match,
+and source/driver hashes remained frozen through completion. The local-feature
+anticipated raw cost worsens 4.51% at the original state and 0.67% at the reversed
+state, with no change in the low-value state. Contacts increase from 1 to 2 and
+1 to 4 out of 32 paired exposures respectively. Frozen-planning variants also
+regress. DO NOT PROMOTE. Complete data and summaries are in docs/mbd_reliability;
+report scripts reproduce the figures and numeric tables.
+
+No heavy research worker remains active after session 69515; the original web
+servers are preserved. The full approved-plan status is in
+ docs/mbd_reliability/README.md. Mathematical, numerical, search, independent-world,
+multichain, mechanism and feature diagnostics are complete. Broader scientific
+acceptance and new frozen-method 120-second confirmation remain UNMET: no new
+candidate passed the development gate. Existing missions and 2D/3D recordings
+are preserved. Do not resume automations or launch an undeclared sweep. The next
+research questions are posterior calibration near contact-prone routes, mean
+learning versus route adaptation, and a more expressive continuation policy.
+No information reward, forced alternation or formal safety claim was added.

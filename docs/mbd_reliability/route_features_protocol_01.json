@@ -1,0 +1,123 @@
+{
+  "jobs": [
+    {
+      "name": "original",
+      "input": "results/budgeted_missions/persistent_two_region_2s_01/proposed.npz",
+      "input_sha256": "908eb333fc601ace8bd613c8d2e002f2ce56527d7e4e3f0cae1cec38363957a3",
+      "json_sha256": "4459b6300a190904aa2128b4f59c00329644d6063004d969a0dd2b39bc398b54",
+      "periods": [
+        0,
+        5,
+        10
+      ],
+      "events": {
+        "departure": 0,
+        "outbound_midplane": 5,
+        "return_midplane": 10
+      },
+      "stress_selected": false,
+      "period": 5
+    },
+    {
+      "name": "reversed",
+      "input": "results/budgeted_missions/reversed_wind_01/proposed.npz",
+      "input_sha256": "5ccafdfbb1afa4d049a569af991d41ee99a4b0a896556f226565a08653399191",
+      "json_sha256": "8ae76c73821ac788ff98965f682853557497e4c25e1cb4e3282f94845947e6e3",
+      "periods": [
+        0,
+        14,
+        21
+      ],
+      "events": {
+        "departure": 0,
+        "outbound_midplane": 14,
+        "return_midplane": 21
+      },
+      "stress_selected": false,
+      "period": 14
+    },
+    {
+      "name": "low_value",
+      "input": "results/budgeted_missions/open_passage_wind_01/proposed.npz",
+      "input_sha256": "8cdf5a16f004f6e5a9c4bb79cd1a68defe187d9da86216f718b16a92fe95174a",
+      "json_sha256": "c610fc1d4651d833a00493ff9df03ed675a071820168ec702ac4104db91ec7b1",
+      "periods": [
+        0,
+        1,
+        4
+      ],
+      "events": {
+        "departure": 0,
+        "outbound_midplane": 1,
+        "return_midplane": 4
+      },
+      "stress_selected": false,
+      "period": 1
+    }
+  ],
+  "training_seed": 990200,
+  "inner_seed": 990300,
+  "optimizer_seeds": [
+    990101,
+    990102
+  ],
+  "evaluation_banks": 4,
+  "source_sha256": {
+    "src/voi_diffusion_ipp/__init__.py": "8cc1e55939efbb83ca7af87e3c69abf111605c3377802b929032e33b7dad21bf",
+    "src/voi_diffusion_ipp/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/baselines/draft.py": "ad48de7e2dffc63b1f85644cb72eda16827c9067f45909e3c6f65d792d8c1eb1",
+    "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
+    "src/voi_diffusion_ipp/config.py": "ba38626b52be6905c5792678f78a748b4e8a5f3e1d10eca3daa757af39c1723d",
+    "src/voi_diffusion_ipp/dynamics.py": "7b99b46fb45adc0cff005fa3a009518178df408aa2f201aa167a88fd5ce22544",
+    "src/voi_diffusion_ipp/environment.py": "ddad36cf27d4e5c682f434ebc2151cd03a5068892897036dbae9fa64b14cae52",
+    "src/voi_diffusion_ipp/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/experiments/checkpoint.py": "3fa3c71b9613be9fdd79002b1c595c7018c045d3764a0ea04f8e3d6bff00328f",
+    "src/voi_diffusion_ipp/experiments/persistence.py": "a2a334104e628be8743567ac009a7b1f9f9c5610a582360b6e5dd0fc1fd74904",
+    "src/voi_diffusion_ipp/experiments/replay_budgeted.py": "869dc67b791372d9de3cc02bd48dea586a15b9f3d1d5d2ce4d6badbbc9c22ff9",
+    "src/voi_diffusion_ipp/experiments/run.py": "107db94d0cd43005ca6d910418f2cf905176a68b19d6478c72602bc22d95469e",
+    "src/voi_diffusion_ipp/experiments/scenarios.py": "5e05aae9bafe89be57f98e3378fc0c3884b491a58006f395a32192b32aaa6104",
+    "src/voi_diffusion_ipp/experiments/suite.py": "0c0ff8ef2b88d46a8de2214bf69429c16c0c4b9ef70aae4dd1ac00b57d0634c0",
+    "src/voi_diffusion_ipp/experiments/two_region.py": "98d274d9ff67cc1d4f5ab685a057b710090fce756bd443220dc93fdb81a91f9b",
+    "src/voi_diffusion_ipp/experiments/wind_cases.py": "b49e453d218e92166eda50ceed51ddb2b237100f4199a09c96d6a7bafccce373",
+    "src/voi_diffusion_ipp/planning/__init__.py": "90c2781b42b77b8f1b9ad3d535b6f64d850c8158a69e6a6daa9e2acab02d306f",
+    "src/voi_diffusion_ipp/planning/budgeted.py": "d13e778c823081e452acf0ea064e06aabced5d13e39a1fad13a7bb1c8d5c71ca",
+    "src/voi_diffusion_ipp/planning/covariance.py": "41fa8ffaca2d74dac69ef2916a80ac1378a37207ed7157a3598f9ccc999cfb81",
+    "src/voi_diffusion_ipp/planning/mbd.py": "544a027bb7dab0ed5976faf2e2565cfea1d02e46dbf0c2780510851c51956422",
+    "src/voi_diffusion_ipp/planning/mpc.py": "12bc58c0c671b2372bc0a923186632e93ed4170365e81da2040e782174d0ba4f",
+    "src/voi_diffusion_ipp/planning/rollout.py": "eb51284c7951a87237549217e5e90b5775f6b043d71a6afe746cd1275404d05d",
+    "src/voi_diffusion_ipp/planning/safe_mpd.py": "d79aedaa64cd4c3a197ec11c58f0e8946e080d6c1ec3f77eb579e5bf8fd8d512",
+    "src/voi_diffusion_ipp/planning/sampling.py": "2080532f77ef2aa52e684a03f8667f7ffa4eb04a6ffba142aac6bc83c1f64631",
+    "src/voi_diffusion_ipp/planning/two_stage.py": "dacf36acbd8156336f786ae1139d689e656ab564b9707f1d617187ad80c2705a",
+    "src/voi_diffusion_ipp/planning/wind_blind.py": "61c61126a55bf5bfc4362c4dbb39dbced9fff32597cc3b02ec74012d183d3be5",
+    "src/voi_diffusion_ipp/safety/__init__.py": "c00308ddb2d6c20920184172aa25a144dcff69b30e29074fd8a20f0764cd39ce",
+    "src/voi_diffusion_ipp/safety/mpd_shield.py": "096e1a2fd1a7907994413d1c2b7fc877114df8fdb3e851f68f529495f1226a20",
+    "src/voi_diffusion_ipp/safety/qp.py": "fd3fda65e9cf952d9b502201751077a402547f75b2d202079436a9dc09b8768e",
+    "src/voi_diffusion_ipp/safety/rpcbf.py": "ea5f3db70a58cd33f2348811262b3f0f9f6d4110228b424fc9903845cbe3e26d",
+    "src/voi_diffusion_ipp/safety/spline.py": "4cd9f4814a78aa42c7f6f13270a6aed55cacb60dd50ebae4e58b245c586b6582",
+    "src/voi_diffusion_ipp/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/voi_diffusion_ipp/viz/demo_data.py": "a7c14ce32a81f0a3e7721af6fa7c1474ce51cec32e3db43b835e467aa0e87f2b",
+    "src/voi_diffusion_ipp/viz/demo_server.py": "0ea76ef4db2bd738320fc78bfa2280857574deea9071a315bf0f20655d0f8bb0",
+    "src/voi_diffusion_ipp/viz/report.py": "15724940b26a9c5740b5f94bbbb834ee03c2266625f3460ae2be29e1d479d0b6",
+    "src/voi_diffusion_ipp/wind/__init__.py": "df7aaf8bf26ec5b0ee4469564aa08c8ee7badace32f0591f72107b057a183ec9",
+    "src/voi_diffusion_ipp/wind/cache.py": "31e5f2a8e01b8cb42fed67cc42006237e21707d7227159842f8620316bb8d0cd",
+    "src/voi_diffusion_ipp/wind/covariance_forecast.py": "f6dcf583ffb049c5689b41dc03380703e9bde7a3750046f063411b6f829fcf26",
+    "src/voi_diffusion_ipp/wind/gp.py": "3d1feec0574a7e1f703bbb60c668f962246f1d2f57b8fb8bef423f9bf4c91aac",
+    "src/voi_diffusion_ipp/wind/oracle.py": "867800a0d1b0f9fa73866e0b8048e8e379e558175900d822f164b6c9fcaf7925",
+    "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70",
+    "src/voi_diffusion_ipp/wind/poam.py": "666b50f58e38797634713349f6f0d53698661ced86ae9957b9bd4b137b096275",
+    "src/voi_diffusion_ipp/wind/poam_belief.py": "a29a8160148784f801ee0dcbc0616b5dfa862e718b51e998d340280b3a4dbf7b"
+  },
+  "driver_sha256": {
+    "scripts/benchmark_route_features.py": "b4b24d975a7ff203d84e249d0db1ab04c119336bcfc9378ee6178957339f674a",
+    "scripts/benchmark_mbd_reliability.py": "4c5c942e30e8baaf39e6aa6a8c75588f932cde9be0d9c4fc8f3c939ffa58e1c0",
+    "scripts/diagnose_mbd_reliability.py": "1e1c46a7e6e4b7d2bebf6b3cb93ed4b86ee7c00e69ae5a38d825e2f2503405d6"
+  },
+  "output": "docs/mbd_reliability/route_features_01",
+  "reference_output": "docs/mbd_reliability/search_01",
+  "evaluation_seed": 996400,
+  "evaluation_inner_seed": 996500,
+  "hypothesis": "A single central probe poorly represents learning along future routes. Replace only the three compact policy features with mean x/y wind and average marginal standard deviation at the four nominal unshifted future knots. Same18nominal parameters, same6gains, sameboundedshift, no new information reward. This tests a limitation suggested by the one-update mechanism diagnostic; it is not already a proven improvement.",
+  "design": "24matched optimizer calls:3saved states x2feature modes x2anticipation settings x2optimizer seeds.4x8,2trainingworlds,uniformlatentbox6,samewarmstarts,samecoherentinner/outerdraws. Probe arm must reproduce the prior training policy vectors within1e-6andcosts2e-7. No change to real POAM or RPCBF.",
+  "evaluation": "16new independent posterior fields and fresh inner banks per selected policy. Original uncached fields, causal POAM updates at2,4,6,8s for all policies. Raw costs and contacts separate. No test-bank policy selection. Full10s forecast.",
+  "decision": "Development-only comparison. Do not promote from a single favorable state/seed; retain regressions and contacts. A promotion would require subsequent separate mission development and frozen held-out evaluation. All existing modes/defaultprobe/scenarios/recordings preserved."
+}
