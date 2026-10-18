@@ -111,7 +111,11 @@ def optimize(objective, initial, key, cfg, algorithm="mbd"):
         best_cost = jnp.where(better, costs[ii], best_cost)
         if algorithm == "mbd":
             s, w = score(y, candidates, costs, ab[i], cfg.temperature)
-            y = reverse_update(y, s, alpha[i], ab[i])
+            # An empty importance distribution has no estimated score. Retain
+            # the iterate explicitly; even a zero score would rescale it.
+            y = jnp.where(
+                jnp.any(jnp.isfinite(costs)), reverse_update(y, s, alpha[i], ab[i]), y
+            )
         elif algorithm == "cem":
             elite_n = max(2, cfg.proposals // 4)
             idx = jnp.argsort(jnp.where(jnp.isfinite(costs), costs, jnp.inf))[:elite_n]
@@ -130,7 +134,12 @@ def optimize(objective, initial, key, cfg, algorithm="mbd"):
         finite = jnp.isfinite(costs)
         avg = jnp.sum(jnp.where(finite, costs, 0)) / jnp.maximum(jnp.sum(finite), 1)
         trace = jnp.array(
-            [best_cost, avg, 1 / jnp.maximum(jnp.sum(w * w), 1e-30), 1 - jnp.mean(finite)]
+            [
+                best_cost,
+                avg,
+                jnp.where(jnp.any(finite), 1 / jnp.maximum(jnp.sum(w * w), 1e-30), 0.0),
+                1 - jnp.mean(finite),
+            ]
         )
         normalized = (
             y / jnp.sqrt(jnp.where(i > 0, ab[jnp.maximum(i - 1, 0)], 1.0))

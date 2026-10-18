@@ -161,8 +161,16 @@ def future_reference(vector, terminal, posterior, env, matrices, cfg):
     return jnp.swapaxes(M @ knots + V[:, :, None] * terminal[None, None, 2:], 0, 1)
 
 
-def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exact=False, eps=None):
-    """Causal two-stage rollouts; current-belief ablation omits hypothetical updates only."""
+def evaluate(
+    vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exact=False, eps=None,
+    physical_fields=None,
+):
+    """Causal rollouts; the ablation omits hypothetical updates only.
+
+    Optional physical_fields supplies the outer simulator bank for numerical
+    diagnostics. It never supplies the controller or inner RPCBF samples.
+    Default behavior retains the archived cached/uncached physical model.
+    """
     matrices = reference_matrices(cfg.future_steps * cfg.dt, cfg.future_steps)
     if exact:
         current_mean = belief
@@ -171,10 +179,14 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
         current_mean, all_inner = cache.tabulate(belief)
     first_controls, _, _ = split_vector(vector, cfg)
     inner = InnerFields(all_inner.basis, all_inner.coefficients[cfg.worlds :])
+    outer = (
+        InnerFields(all_inner.basis, all_inner.coefficients[: cfg.worlds])
+        if physical_fields is None else physical_fields
+    )
 
     def one(inputs):
         coeff, observation_noise = inputs
-        world = WorldField(all_inner.basis, coeff)
+        world = WorldField(outer.basis, coeff)
         first = segment(
             x,
             q,
@@ -253,7 +265,7 @@ def evaluate(vector, x, q, belief, cache, noise, env, cfg, anticipate=True, exac
             valid &= (first.clearance.min() >= 0) & (future.clearance.min() >= 0)
         return jnp.where(valid, cost, jnp.inf), (first, future)
 
-    costs, trajectories = jax.lax.map(one, (all_inner.coefficients[: cfg.worlds], noise))
+    costs, trajectories = jax.lax.map(one, (outer.coefficients, noise))
     return costs.mean(), trajectories
 
 

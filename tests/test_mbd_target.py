@@ -52,3 +52,15 @@ def test_budget_comparison_preserves_noise_endpoints_and_legacy_schedule():
         np.testing.assert_allclose(ab[jnp.array([0, -1])], old_ab[jnp.array([0, -1])], atol=1e-7)
         np.testing.assert_allclose(np.cumprod(a), ab, atol=2e-7)
         assert np.all(np.diff(ab) < 0)
+
+
+def test_all_invalid_level_keeps_iterate_and_reports_no_effective_samples():
+    cfg = replace(Config(), diffusion_steps=4, proposals=8)
+    result = jax.jit(lambda k: optimize(lambda y: jnp.inf, jnp.ones(2), k, cfg))(
+        jax.random.PRNGKey(990001)
+    )
+    np.testing.assert_array_equal(result.history.noisy_after, result.history.noisy_before)
+    np.testing.assert_array_equal(result.history.weights, 0)
+    np.testing.assert_array_equal(result.trace[:, 2], 0)
+    np.testing.assert_array_equal(result.vector, jnp.ones(2))
+    assert np.isinf(result.cost)  # A finite vector is not a successful optimization.

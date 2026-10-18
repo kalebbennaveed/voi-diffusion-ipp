@@ -1326,3 +1326,52 @@ versus uncertain dynamics, richer spatial continuation features, and cache
 sensitivity at fixed states. Do not launch another long sweep or tune hidden wind
 solely to produce a benefit. Original three scientific acceptance cases remain
 open; earlier results and failure logs are preserved. No new automation is created.
+
+## Original MBD–RPCBF reliability plan resumed by user (2026-10-17)
+
+User approved the full staged plan and then explicitly asked to keep working.
+Foreground research only; scheduled tasks remain paused. Original scenarios,
+2D/3D demos and numerical archives preserved. One heavy JAX worker at a time.
+
+Completed formulation audit and correction: all-invalid MBD levels previously
+rescaled the iterate with no usable score and reported ESS about1e30. An explicit
+branch now holds the iterate and reports ESS0; an entirely invalid optimization
+still returns infinite cost. The failing test is retained.19 targeted MBD,
+budgeted-causality and cache tests pass. This was rare in prior data (one level
+in current_belief seed8101 among the six covariance-study wind-aware missions),
+so it is not asserted as the cause of the scientific limitations.
+
+Numerical audit complete: nine geometry/event-selected states across original,
+reversed and open-passage missions, plus two separately marked failure-selected
+stress cases. Stored winner plus three next-ranked policies, anticipated/frozen
+forecasts,129/257 caches, exact outer physics and original uncached evaluation.
+Best shortlist winner is unchanged in all nine event states; path discrepancies
+reach0.433m. Fine cache is not uniformly sufficient; known rejected forecast
+still has a wrong clearance sign even at257. Keep uncached final checks.
+Protocol01 failed parsing JSON null invalid costs before evaluator work; fixed
+protocol02 completed ten states then detected0.000232 batched/reduced-grid replay
+drift at the final stress case. Original full-grid single-vector replay matches
+that archive EXACTLY. Protocol03 completes this state, preserving original
+archive tolerance and separately reporting compilation-shape drift. All three
+executed driver snapshots/hashes and prior failures are retained under
+ docs/mbd_reliability/ and results/mbd_reliability/.
+
+ACTIVE exec session35128: scripts/benchmark_mbd_reliability.py with
+ docs/mbd_reliability/search_protocol_03.json; log
+ results/mbd_reliability/search_01.log; numeric per-case checkpoints under
+ docs/mbd_reliability/search_01/.84 declared optimizer calls: three event states,
+seven budget/world/restart settings, two seeds, paired anticipated/frozen modes.
+Four independent4-world test banks, fixed vs fresh inner draws, uncached causal
+POAM evaluation of all selected policies. No selection on test results. Source
+and both driver/evaluator hashes FROZEN until this completes. Do not duplicate.
+Initial search protocol01/02 were superseded before any search worker started.
+
+Next serial diagnostic already declared, NOT STARTED:
+ scripts/diagnose_cache_conditioning.py
+ docs/mbd_reliability/conditioning_protocol_01.json.
+Tests whether interpolated prior values at relocated inducing points amplify
+field errors through the inverse-kernel correction. Experimental wrapper stays
+in the script; production cache remains unchanged. Run only after35128 finishes,
+then analyze all outcomes before promoting a numerical change or new long runs.
+No Gaussian prior, multichain strategy, covariance variant or reranking promoted.
+Do not call the overall scientific task complete from this audit or runtime.
