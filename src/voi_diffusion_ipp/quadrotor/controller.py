@@ -43,7 +43,7 @@ def geometric_wrench(position, velocity, rotation, omega, reference, vehicle, ga
     force = -gains.kx * (position - reference.position) - gains.kv * (velocity - reference.velocity) + vehicle.mass * (vehicle.gravity * e3 + reference.acceleration)
     if gains.max_horizontal_accel is not None:
         limit=vehicle.mass*gains.max_horizontal_accel
-        drag=vehicle.linear_drag*xp.sqrt(xp.maximum(xp.sum(velocity**2),1e-24))*velocity[:2]
+        drag=0. if gains.limit_total_horizontal_force else vehicle.linear_drag*xp.sqrt(xp.maximum(xp.sum(velocity**2),1e-24))*velocity[:2]
         force=xp.concatenate((xp.clip(force[:2]-drag,-limit,limit)+drag,force[2:]))
     rd = desired_rotation(force, reference.yaw, reference.heading, xp=xp)
     e_rotation = 0.5 * vee(rd.T @ rotation - rotation.T @ rd, xp)

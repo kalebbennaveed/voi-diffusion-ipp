@@ -13,10 +13,12 @@ from .controller import allocation_matrix,geometric_wrench
 from .dynamics import rigid_body_derivative
 from .reference import flat_reference
 from .types import State
+from .aerodynamics import acceleration as air_acceleration
 
 
-def executor(load,segment_dt=.4,segments=5,dt=.01,max_horizontal_accel=None):
-    vehicle=VehicleConfig();gains=ControllerConfig(max_horizontal_accel=max_horizontal_accel)
+def executor(load,segment_dt=.4,segments=5,dt=.01,max_horizontal_accel=None,wind_velocity=False):
+    vehicle=VehicleConfig();gains=ControllerConfig(max_horizontal_accel=max_horizontal_accel,
+                                                 limit_total_horizontal_force=wind_velocity)
     allocation=jnp.asarray(allocation_matrix(vehicle));inverse=jnp.linalg.inv(allocation)
     def execute(packed,polynomials,mean):
         def tick(x,i):
@@ -32,12 +34,16 @@ def executor(load,segment_dt=.4,segments=5,dt=.01,max_horizontal_accel=None):
             learned=jnp.r_[mean.mean_at(state.position[None,:2])[0],0.]
             speed=jnp.sqrt(jnp.maximum(jnp.sum(state.velocity**2),1e-24))
             drag=vehicle.linear_drag*speed*state.velocity/vehicle.mass
-            ref=flat_reference(p,v,a,j,s,compensation=drag-learned,xp=jnp)
+            compensation=-air_acceleration(state.velocity,learned,xp=jnp) if wind_velocity else drag-learned
+            ref=flat_reference(p,v,a,j,s,compensation=compensation,xp=jnp)
             wrench=geometric_wrench(state.position,state.velocity,state.rotation,state.angular_velocity,
                                    ref,vehicle,gains,xp=jnp)
             command=jnp.sqrt(jnp.clip(inverse@wrench,0,vehicle.max_motor_speed**2))
             # The coherent spatial field is queried at every RK4 substage.
             def derivative(xx):
+                if wind_velocity:
+                    wind=jnp.r_[load(xx[None,:2])[0],0.]
+                    return rigid_body_derivative(xx,command,vehicle,allocation,wind,jnp.zeros(3),xp=jnp)
                 force=vehicle.mass*jnp.r_[load(xx[None,:2])[0],0.]
                 return rigid_body_derivative(xx,command,vehicle,allocation,jnp.zeros(3),force,xp=jnp)
             k1=derivative(x);k2=derivative(x+dt*k1/2);k3=derivative(x+dt*k2/2);k4=derivative(x+dt*k3)

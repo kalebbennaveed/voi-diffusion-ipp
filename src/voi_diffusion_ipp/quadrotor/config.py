@@ -27,3 +27,6 @@ class ControllerConfig:
     # None preserves the lab controller. Urban inspection applies the same
     # compensated horizontal command limits as its double-integrator planner.
     max_horizontal_accel: float | None = None
+    # Air-velocity experiments bound total horizontal thrust per mass. Drag
+    # compensation must use this same finite authority, not bypass the bound.
+    limit_total_horizontal_force: bool = False

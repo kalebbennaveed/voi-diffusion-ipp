@@ -1,0 +1,1112 @@
+{
+  "revision": "airflow_narrow_cycles_v8",
+  "missing": [],
+  "source_sha256_at_audit": {
+    "src/voi_diffusion_ipp/experiments/urban_airflow.py": "ed4b709a9afd1e6ca81f236ab2884b1e76da90839a13f98b093d36b863529751",
+    "src/voi_diffusion_ipp/planning/urban_cycle.py": "ca6ac24ba65b6eab4ffcd3f08318257cf65a32779a8e7cb268bb20b38fe96b64",
+    "src/voi_diffusion_ipp/planning/mbd.py": "544a027bb7dab0ed5976faf2e2565cfea1d02e46dbf0c2780510851c51956422",
+    "src/voi_diffusion_ipp/safety/flow_policy_value.py": "e81dfeccf50e9bc5311dec38e72c990bcaca360183e9ade7ad6343fcfeabfbe6",
+    "src/voi_diffusion_ipp/quadrotor/aerodynamics.py": "b5af8239e9160f560bdc6a15df1e5afe309ee9c611423d667171ca50cfd82e07",
+    "src/voi_diffusion_ipp/quadrotor/config.py": "b06281f596afc745bd12b77062a2895025b715a49cb4020c9b782637d6b87432",
+    "src/voi_diffusion_ipp/quadrotor/controller.py": "7ef57c408d8b609aad0443f15e23d50371253d9eb3284ddecb4f06662a10bcd5",
+    "src/voi_diffusion_ipp/quadrotor/dynamics.py": "0df7181629b92abfbeb3ecfeda5436ab3432ba9f764d0e91840a17a758ecf66c",
+    "src/voi_diffusion_ipp/quadrotor/execution.py": "0118e94a0a7ca1d545566b541d385b6891696ccf5288e51d0eafae5d4978666d",
+    "src/voi_diffusion_ipp/wind/poam.py": "666b50f58e38797634713349f6f0d53698661ced86ae9957b9bd4b137b096275",
+    "src/voi_diffusion_ipp/wind/poam_belief.py": "a29a8160148784f801ee0dcbc0616b5dfa862e718b51e998d340280b3a4dbf7b",
+    "scripts/run_urban_quad_airflow.py": "c9e981d8310a592d7b4a1300a93aeeb2b025022552237faa8a8b6af619d953e9"
+  },
+  "results": {
+    "forward": {
+      "proposed": {
+        "success": true,
+        "failure": null,
+        "cost": 47.01003286886332,
+        "min_clearance": 0.7066154956817627,
+        "rms_tracking_error": 0.15595177826201365,
+        "max_tracking_error": 1.0935418808711304,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 498.0709487499844,
+        "independent_cost": 47.010085399999994,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.8484117843742881,
+        "region_costs": [
+          41.283245199999996,
+          52.7369256
+        ],
+        "region_occupancy_seconds": [
+          52.39999999999997,
+          35.39999999999997
+        ],
+        "crossings": [
+          {
+            "time": 15.7,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 38.3,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 57.8,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 80.5,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 99.9,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 122.3,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 139.9,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 162.1,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 179.8,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 202.2,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 219.7,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 242.2,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 262.0,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 284.6,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 303.7,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 326.3,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 345.7,
+            "direction": "right",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 369,
+            "median_ground_speed": 2.437413543594931
+          }
+        },
+        "altitude_range": [
+          2.98451,
+          3.00678
+        ],
+        "sha256": "ea5cf4c23cfd388df8532d99810451023116ecfe6d6d2b6b88bc14c9150e1307",
+        "reduction_vs_blind_percent": 43.49535497689884
+      },
+      "aware": {
+        "success": true,
+        "failure": null,
+        "cost": 46.311663825696954,
+        "min_clearance": 0.719211324464933,
+        "rms_tracking_error": 0.16322127236746553,
+        "max_tracking_error": 0.8903994743030125,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 514.2853265420126,
+        "independent_cost": 46.3117191,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.851768573107464,
+        "region_costs": [
+          41.742279599999996,
+          50.88115859999999
+        ],
+        "region_occupancy_seconds": [
+          52.30000000000001,
+          37.49999999999998
+        ],
+        "crossings": [
+          {
+            "time": 11.5,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 36.4,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 55.9,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 78.5,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 98.1,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 121.3,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 139.9,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 162.1,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 179.8,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 202.2,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 221.7,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 244.3,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 262.0,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 284.6,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 303.7,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 326.3,
+            "direction": "left",
+            "passage": "C"
+          },
+          {
+            "time": 345.7,
+            "direction": "right",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 372,
+            "median_ground_speed": 2.4267730176242788
+          }
+        },
+        "altitude_range": [
+          2.98031,
+          3.00853
+        ],
+        "sha256": "4cbbd581c38386ae18cfa790f64825f97c7d772b2dbcf71a708c542ebde9cf5c",
+        "reduction_vs_blind_percent": 44.33477355355282
+      },
+      "blind": {
+        "success": true,
+        "failure": null,
+        "cost": 83.19675815969448,
+        "min_clearance": 0.37165202792965474,
+        "rms_tracking_error": 1.328515952633179,
+        "max_tracking_error": 3.594644602924487,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 363.32108695901115,
+        "independent_cost": 83.1967808,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.8804892850507583,
+        "region_costs": [
+          88.09240779999999,
+          78.30115379999998
+        ],
+        "region_occupancy_seconds": [
+          20.799999999999976,
+          35.90000000000002
+        ],
+        "crossings": [
+          {
+            "time": 12.0,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 73.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 89.8,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 165.8,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 184.0,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 246.0,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 264.2,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 325.8,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 341.9,
+            "direction": "right",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 1087,
+            "median_ground_speed": 0.3838400750312557
+          },
+          "downwind": {
+            "samples": 210,
+            "median_ground_speed": 2.348812701563652
+          }
+        },
+        "altitude_range": [
+          2.95537,
+          3.00428
+        ],
+        "sha256": "48a90a9f4c73650396de634c93c5fd9b1e99dde5c135aa5e22b0442c2d1df5f4"
+      }
+    },
+    "reverse": {
+      "proposed": {
+        "success": true,
+        "failure": null,
+        "cost": 47.10571325709159,
+        "min_clearance": 0.6872323036193848,
+        "rms_tracking_error": 0.18227899860109437,
+        "max_tracking_error": 1.3499657117004704,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 755.4125722909812,
+        "independent_cost": 47.10580590000001,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.8536039311970983,
+        "region_costs": [
+          40.0755262,
+          54.1360856
+        ],
+        "region_occupancy_seconds": [
+          57.80000000000002,
+          37.6
+        ],
+        "crossings": [
+          {
+            "time": 25.9,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 49.1,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 68.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 90.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 110.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 132.3,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 150.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 172.7,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 192.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 215.0,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 234.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 256.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 276.0,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 298.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 318.2,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 340.9,
+            "direction": "left",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 331,
+            "median_ground_speed": 2.4337815357176162
+          }
+        },
+        "altitude_range": [
+          2.97965,
+          3.01414
+        ],
+        "sha256": "293be6813d831d48144204a118928521538923cf8b208e66c00d7ddb0558eae3",
+        "reduction_vs_blind_percent": 45.625148303454644
+      },
+      "aware": {
+        "success": true,
+        "failure": null,
+        "cost": 46.57678672455183,
+        "min_clearance": 0.679645718529728,
+        "rms_tracking_error": 0.1546133955340544,
+        "max_tracking_error": 0.6285011691204192,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 399.0057217499998,
+        "independent_cost": 46.5768369,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.8600274991776262,
+        "region_costs": [
+          40.9623282,
+          52.1913456
+        ],
+        "region_occupancy_seconds": [
+          54.1,
+          38.69999999999999
+        ],
+        "crossings": [
+          {
+            "time": 18.6,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 43.2,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 62.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 85.1,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 104.2,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 126.7,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 146.2,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 168.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 187.9,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 211.3,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 230.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 252.8,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 272.2,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 294.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 314.1,
+            "direction": "right",
+            "passage": "C"
+          },
+          {
+            "time": 337.0,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 356.3,
+            "direction": "right",
+            "passage": "C"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 334,
+            "median_ground_speed": 2.405614442278
+          }
+        },
+        "altitude_range": [
+          2.98434,
+          3.01478
+        ],
+        "sha256": "1f94e9eca76dbe048953ebc5b2c2d2ba8a8bd7d55bbb946efdb8edcce6c38eab",
+        "reduction_vs_blind_percent": 46.235696361781464
+      },
+      "blind": {
+        "success": true,
+        "failure": null,
+        "cost": 86.63143307494188,
+        "min_clearance": 0.5119504627978746,
+        "rms_tracking_error": 1.3701846106836384,
+        "max_tracking_error": 3.578176692361901,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 542.5047860830091,
+        "independent_cost": 86.63150639999999,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.8890314277261495,
+        "region_costs": [
+          76.13558979999999,
+          97.127423
+        ],
+        "region_occupancy_seconds": [
+          37.6,
+          19.5
+        ],
+        "crossings": [
+          {
+            "time": 54.2,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 73.4,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 136.3,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 155.1,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 218.3,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 236.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 300.3,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 319.1,
+            "direction": "left",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 1096,
+            "median_ground_speed": 0.3814166789872224
+          },
+          "downwind": {
+            "samples": 172,
+            "median_ground_speed": 2.35467019321152
+          }
+        },
+        "altitude_range": [
+          2.95904,
+          3.0049
+        ],
+        "sha256": "3ce4c4f0872f47cde22d7d7e2a1627196d13405878e153fb3dda0731b74b785b"
+      }
+    },
+    "crosswind": {
+      "proposed": {
+        "success": true,
+        "failure": null,
+        "cost": 47.21931468737566,
+        "min_clearance": 0.5467625141143799,
+        "rms_tracking_error": 0.16632698292021764,
+        "max_tracking_error": 0.9195290972103858,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 642.9154673750163,
+        "independent_cost": 47.2193779,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.7858474970129984,
+        "region_costs": [
+          48.795137800000006,
+          45.643618000000004
+        ],
+        "region_occupancy_seconds": [
+          54.300000000000004,
+          76.40000000000008
+        ],
+        "crossings": [
+          {
+            "time": 21.1,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 46.4,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 71.5,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 95.1,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 121.3,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 153.0,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 179.1,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 203.0,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 229.2,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 252.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 279.3,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 302.8,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 329.2,
+            "direction": "right",
+            "passage": "B"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 253,
+            "median_ground_speed": 2.461578775196926
+          }
+        },
+        "altitude_range": [
+          2.98111,
+          3.01495
+        ],
+        "sha256": "01e1488dc527d8feaab36efd66f4c5444cae81f6b2812d3ee7a263be88c67bff",
+        "reduction_vs_blind_percent": 38.03097840160584
+      },
+      "aware": {
+        "success": true,
+        "failure": null,
+        "cost": 47.060954822971496,
+        "min_clearance": 0.7480414390563965,
+        "rms_tracking_error": 0.1668741615723609,
+        "max_tracking_error": 1.4727729524068947,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 499.8414964590047,
+        "independent_cost": 47.0610083,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.7737699990559902,
+        "region_costs": [
+          48.6566632,
+          45.4653534
+        ],
+        "region_occupancy_seconds": [
+          57.400000000000006,
+          71.80000000000004
+        ],
+        "crossings": [
+          {
+            "time": 20.4,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 49.1,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 75.4,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 98.6,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 124.1,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 153.0,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 179.2,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 202.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 229.2,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 252.9,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 279.3,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 302.4,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 328.2,
+            "direction": "right",
+            "passage": "B"
+          },
+          {
+            "time": 350.4,
+            "direction": "left",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 288,
+            "median_ground_speed": 2.4336520324439945
+          }
+        },
+        "altitude_range": [
+          2.96814,
+          3.01168
+        ],
+        "sha256": "63afcedd5767ebb9a5d78324d8427d26a527a468ac9665252ce3349c56847064",
+        "reduction_vs_blind_percent": 38.23880449824769
+      },
+      "blind": {
+        "success": true,
+        "failure": null,
+        "cost": 76.19825756390397,
+        "min_clearance": 0.7015517234802247,
+        "rms_tracking_error": 1.2433676856922764,
+        "max_tracking_error": 3.4148753728617725,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 555.6577931249922,
+        "independent_cost": 76.19834089999999,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.8966807145625353,
+        "region_costs": [
+          69.5195404,
+          82.8771414
+        ],
+        "region_occupancy_seconds": [
+          42.60000000000001,
+          26.90000000000002
+        ],
+        "crossings": [
+          {
+            "time": 41.5,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 60.5,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 111.8,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 130.7,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 181.7,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 203.3,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 253.8,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 273.1,
+            "direction": "left",
+            "passage": "A"
+          },
+          {
+            "time": 323.6,
+            "direction": "right",
+            "passage": "A"
+          },
+          {
+            "time": 342.9,
+            "direction": "left",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 1005,
+            "median_ground_speed": 0.5166574937035173
+          },
+          "downwind": {
+            "samples": 210,
+            "median_ground_speed": 2.4348937355177886
+          }
+        },
+        "altitude_range": [
+          2.9589,
+          3.00858
+        ],
+        "sha256": "afac21787a0c51f75745b2ec9e6ab6411b48c44a0ee67068d40e0809ac91ceec"
+      }
+    },
+    "commitment": {
+      "proposed": {
+        "success": true,
+        "failure": null,
+        "cost": 92.03526873681854,
+        "min_clearance": 0.8066096274645635,
+        "rms_tracking_error": 0.04740577341274318,
+        "max_tracking_error": 0.7263828890236067,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 1341.6450385419885,
+        "independent_cost": 92.03556727777777,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 1.0000496447086333,
+        "region_costs": [
+          185.3531114,
+          56.14420415384616
+        ],
+        "region_occupancy_seconds": [
+          1.6,
+          345.3
+        ],
+        "crossings": [
+          {
+            "time": 12.1,
+            "direction": "right",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 42,
+            "median_ground_speed": 2.4096325185847904
+          }
+        },
+        "altitude_range": [
+          2.98768,
+          3.0047
+        ],
+        "sha256": "63dd6e716d54831780ab76cfd4e1ff3b6d1edc8b52469d76a1b44516db5567ed",
+        "reduction_vs_blind_percent": -27.881230814110403
+      },
+      "aware": {
+        "success": true,
+        "failure": null,
+        "cost": 91.97587323791673,
+        "min_clearance": 0.8072287356555801,
+        "rms_tracking_error": 0.03400854315952392,
+        "max_tracking_error": 0.542679347199286,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 986.2259050419962,
+        "independent_cost": 91.97617277777778,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 1.00686321391591,
+        "region_costs": [
+          185.2477834,
+          56.102476384615386
+        ],
+        "region_occupancy_seconds": [
+          1.6,
+          345.3
+        ],
+        "crossings": [
+          {
+            "time": 12.0,
+            "direction": "right",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 42,
+            "median_ground_speed": 2.3918698323442786
+          }
+        },
+        "altitude_range": [
+          2.99245,
+          3.00186
+        ],
+        "sha256": "845ae57e4281b87dd82b9ec449725c207cc2639a9636d3d36d8415aa63250103",
+        "reduction_vs_blind_percent": -27.798701913954726
+      },
+      "blind": {
+        "success": true,
+        "failure": null,
+        "cost": 71.96933291219416,
+        "min_clearance": 0.9227984428405762,
+        "rms_tracking_error": 0.6440394861221055,
+        "max_tracking_error": 3.8724089477506944,
+        "completed_seconds": 359.9999999998176,
+        "wall_seconds": 850.943496708991,
+        "independent_cost": 71.96935322222222,
+        "mean_std_start": 1.335761784123523,
+        "mean_std_end": 0.9298264277300664,
+        "region_costs": [
+          185.3568586,
+          28.35877423076923
+        ],
+        "region_occupancy_seconds": [
+          1.6,
+          264.70000000000005
+        ],
+        "crossings": [
+          {
+            "time": 11.9,
+            "direction": "right",
+            "passage": "A"
+          }
+        ],
+        "wind_traversal": {
+          "upwind": {
+            "samples": 0,
+            "median_ground_speed": null
+          },
+          "downwind": {
+            "samples": 41,
+            "median_ground_speed": 2.485494363884175
+          }
+        },
+        "altitude_range": [
+          2.95602,
+          3.00575
+        ],
+        "sha256": "99265b40283a0713eb333d097e860edd346fc99b018392cc703c97d83e748457"
+      }
+    }
+  }
+}
