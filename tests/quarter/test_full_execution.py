@@ -28,10 +28,11 @@ def test_sampled_outer_controller_and_nonlinear_plant_against_numpy(planning_dt)
     allocation=allocation_matrix(vehicle)
     for interval in range(cfg.commit_steps):
         ref=reference[interval];a=aa[interval]
-        u=np.clip(a+cfg.tracking_kp*(ref[:2]-state.position[:2])+cfg.tracking_kv*(ref[2:]-state.velocity[:2])-acceleration(state.velocity[:2],estimate),-cfg.umax,cfg.umax)
         ticks=round(cfg.dt/.01)
         for i in range(ticks):
             t=i*.01;p=np.r_[ref[:2]+t*ref[2:]+.5*t*t*a,3.2];v=np.r_[ref[2:]+t*a,0.]
+            if i%round(cfg.execution_dt/.01)==0:
+                u=np.clip(a+cfg.tracking_kp*(p[:2]-state.position[:2])+cfg.tracking_kv*(v[:2]-state.velocity[:2])-acceleration(state.velocity[:2],estimate),-cfg.umax,cfg.umax)
             flat=flat_reference(p,v,np.r_[u,0.])
             wrench=geometric_wrench(state.position,state.velocity,state.rotation,state.angular_velocity,flat,vehicle,gains,horizontal_acceleration=u)
             command=np.sqrt(np.clip(np.linalg.solve(allocation,wrench),0,vehicle.max_motor_speed**2))

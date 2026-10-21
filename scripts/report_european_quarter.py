@@ -34,7 +34,8 @@ for path in sorted(root.glob('*.json')):
     regions=[]
     for k,r in enumerate(d['environment']['regions']):
         inside=np.all(p[:,:2]>=r[:2],axis=1)&np.all(p[:,:2]<=r[2:],axis=1)
-        regions.append(dict(name=['west','east','northwest','southeast'][k],seconds=float(dt[inside].sum()),first_entry=float(t[inside][0]) if inside.any() else None,final_mean_clarity=float(q[-1,k*42:(k+1)*42].mean()),mean_deficit=float(np.trapezoid(np.maximum(targets[k*42:(k+1)*42]-q[:,k*42:(k+1)*42],0).mean(axis=1),t)/max(t[-1],1e-6))))
+        cell_mask=np.all(np.asarray(d['environment']['cells'])>=r[:2],axis=1)&np.all(np.asarray(d['environment']['cells'])<=r[2:],axis=1)
+        regions.append(dict(name=['west','east','northwest','southeast'][k],seconds=float(dt[inside].sum()),first_entry=float(t[inside][0]) if inside.any() else None,final_mean_clarity=float(q[-1,cell_mask].mean()),mean_deficit=float(np.trapezoid(np.maximum(targets[cell_mask]-q[:,cell_mask],0).mean(axis=1),t)/max(t[-1],1e-6))))
     belief=d['beliefs'][-1];grid=np.array(d['environment']['grid']);valid=np.ones(len(grid),bool)
     for b in d['environment']['buildings']:valid&=~(np.all(grid>=b[:2],axis=1)&np.all(grid<=b[2:4],axis=1))
     times=np.array([plan.get('total_planning_seconds',plan['seconds']) for i,plan in enumerate(d['plans']) if i>=2 and not plan.get('compilation_included') and not d['plans'][i-1].get('compilation_included')])
@@ -64,15 +65,15 @@ for path in sorted(root.glob('*.json')):
         error=float(np.linalg.norm(np.asarray(predicted)-np.asarray(measured_frames[endpoint]['p'][:2])))
         prediction_errors.append(error)
         if plan['t']>=30:later_prediction_errors.append(error)
-    rows.append(dict(revision=d['revision'],file=path.name,layout=d['layout'],case=d['case'],method=d['method'],seed=d['seed'],cost=d['cost'],success=d['success'],failure=d['failure'],mission_seconds=d['mission_seconds'],first_minute_cost=early,later_mean_deficit=late,headwind_seconds=float(dt[headwind].sum()),median_headwind_speed=float(np.median(speed[headwind])) if headwind.any() else None,passage_seconds={name:float(dt[central&(passages==k)].sum()) for k,name in enumerate('ABC')},transfers=transfers,regions=regions,initial_mean_wind_std=1.8,final_mean_wind_std=float(np.mean(np.array(belief['std'])[valid])),final_wind_rmse=belief['rmse'],observations=len(d['observations']),minimum_clearance=d['min_clearance'],tracking_rms=d['rms_tracking_error'],median_planning_seconds=float(np.median(times)) if len(times) else None))
+    rows.append(dict(revision=d['revision'],file=path.name,layout=d['layout'],case=d['case'],method=d['method'],seed=d['seed'],cost=d['cost'],success=d['success'],failure=d['failure'],mission_seconds=d['mission_seconds'],first_minute_cost=early,later_mean_deficit=late,headwind_seconds=float(dt[headwind].sum()),median_headwind_speed=float(np.median(speed[headwind])) if headwind.any() else None,passage_seconds={name:float(dt[central&(passages==k)].sum()) for k,name in enumerate('ABC')},transfers=transfers,regions=regions,initial_mean_wind_std=d['config'].get('prior_std',1.8),final_mean_wind_std=float(np.mean(np.array(belief['std'])[valid])),final_wind_rmse=belief['rmse'],observations=len(d['observations']),minimum_clearance=d['min_clearance'],tracking_rms=d['rms_tracking_error'],median_planning_seconds=float(np.median(times)) if len(times) else None))
     rows[-1].update(mean_position_prediction_error=float(np.mean(prediction_errors)) if prediction_errors else None,
                     position_prediction_error_after_30s=float(np.mean(later_prediction_errors)) if later_prediction_errors else None,
                     prediction_error_interval=d['config']['commit'])
 for r in rows:
     blind=next((b for b in rows if b['layout']==r['layout'] and b['case']==r['case'] and b['seed']==r['seed'] and b['method']=='blind' and b['mission_seconds']==r['mission_seconds']),None)
-    r['early_deficit_reduction_percent']=100*(blind['first_minute_cost']-r['first_minute_cost'])/blind['first_minute_cost'] if blind and blind['first_minute_cost']>0 else None
-    r['late_deficit_reduction_percent']=100*(blind['later_mean_deficit']-r['later_mean_deficit'])/blind['later_mean_deficit'] if blind and blind['later_mean_deficit']>0 else None
-    r['deficit_reduction_percent']=100*(blind['cost']-r['cost'])/blind['cost'] if blind else None
+    r['early_deficit_reduction_percent']=100*(blind['first_minute_cost']-r['first_minute_cost'])/blind['first_minute_cost'] if r['success'] and blind and blind['success'] and blind['first_minute_cost']>0 else None
+    r['late_deficit_reduction_percent']=100*(blind['later_mean_deficit']-r['later_mean_deficit'])/blind['later_mean_deficit'] if r['success'] and blind and blind['success'] and blind['later_mean_deficit']>0 else None
+    r['deficit_reduction_percent']=100*(blind['cost']-r['cost'])/blind['cost'] if r['success'] and blind and blind['success'] else None
     if blind:
         # A percentage is meaningful only under the same physical experiment.
         # Optimizer settings may differ in explicitly identified ablations.

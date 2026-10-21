@@ -98,6 +98,72 @@ initialization choices, not constraints on the subsequent MBD optimization.
     return np.arctanh(np.clip(acceleration/cfg.umax,-.999,.999)).astype(np.float32).ravel()
 
 
+def winding_signature(path,rectangles):
+    """Geometric path class around each obstacle, for paths with equal endpoints."""
+    centers=(rectangles[:,:2]+rectangles[:,2:4])/2
+    vectors=np.asarray(path)[:,None,:]-centers[None]
+    angles=np.arctan2(vectors[:,:,1],vectors[:,:,0])
+    changes=np.diff(angles,axis=0)
+    turns=np.sum((changes+np.pi)%(2*np.pi)-np.pi,axis=0)
+    # Endpoint angles contribute a fixed fractional turn for every path.
+    endpoint=(angles[-1]-angles[0]+np.pi)%(2*np.pi)-np.pi
+    return tuple(np.rint((turns-endpoint)/(2*np.pi)).astype(int))
+
+
+def diverse_connections(start,goal,rectangles,bounds,rng,margin,step,count):
+    """RRT paths through randomly sampled free points, retaining distinct classes.
+
+    Uniform samples and obstacle winding signatures use only known geometry.
+    They do not use passage names, disturbance fields, task cost, or route order.
+    Each returned path remains just an initialization for all MBD coordinates.
+    """
+    ordinary=connect(start,goal,rectangles,bounds,rng,margin=margin,step=step)
+    if ordinary is None:return []
+    classes={winding_signature(ordinary,rectangles):ordinary}
+    def retain(path):
+        signature=winding_signature(path,rectangles)
+        length=lambda a:np.linalg.norm(np.diff(a,axis=0),axis=1).sum()
+        if signature not in classes or length(path)<length(classes[signature]):classes[signature]=path
+    # Connect to both ends of a free obstacle face. A single point halfway
+    # along a thin passage can be approached and left from the same side,
+    # producing a loop rather than a distinct passage-crossing initialization.
+    for rect in rectangles:
+        for axis in range(2):
+            other=1-axis
+            for side in (0,1):
+                left=np.zeros(2);right=np.zeros(2)
+                left[axis]=right[axis]=rect[axis+2*side]+(-1 if side==0 else 1)*(margin+.05)
+                left[other]=rect[other]-margin-.05;right[other]=rect[other+2]+margin+.05
+                if not segment_free(left,right,rectangles,bounds,margin):continue
+                if np.linalg.norm(start-right)+np.linalg.norm(goal-left)<np.linalg.norm(start-left)+np.linalg.norm(goal-right):left,right=right,left
+                a=connect(start,left,rectangles,bounds,rng,margin=margin,step=step)
+                b=connect(right,goal,rectangles,bounds,rng,margin=margin,step=step)
+                if a is not None and b is not None:retain(np.r_[a,right[None],b[1:]])
+    # Face-adjacent free points give thin passages a chance proportional to
+    # their geometric existence, rather than their very small area. Ordinary
+    # uniform RRT sampling almost never visits these narrow free-space strips.
+    candidates=[]
+    for rect in rectangles:
+        center=(rect[:2]+rect[2:4])/2
+        for axis in range(2):
+            for side in (0,1):
+                point=center.copy();point[axis]=rect[axis+2*side]+(-1 if side==0 else 1)*(margin+.05)
+                candidates.append(point)
+    candidates.extend(rng.uniform(bounds[0]+margin,bounds[1]-margin,size=(max(16,6*count),2)))
+    for point in candidates:
+        if not segment_free(point,point,rectangles,bounds,margin):continue
+        left=connect(start,point,rectangles,bounds,rng,margin=margin,step=step)
+        right=connect(point,goal,rectangles,bounds,rng,margin=margin,step=step)
+        if left is None or right is None:continue
+        path=np.r_[left,right[1:]]
+        retain(path)
+    paths=sorted(classes.values(),key=lambda a:np.linalg.norm(np.diff(a,axis=0),axis=1).sum())
+    # Distinct geometric classes get equal opportunity before duplicates.
+    selected=paths[:count]
+    while len(selected)<count:selected.append(paths[len(selected)%len(paths)])
+    return selected
+
+
 def demonstrations(state, env, cfg, seed):
     """Regenerate RRT paths to all task regions from the actual reached state."""
     state=np.asarray(state,float); rectangles=np.asarray(env.rectangles); bounds=np.asarray(env.bounds)
@@ -107,19 +173,27 @@ def demonstrations(state, env, cfg, seed):
                   float(np.min(state[:2]-bounds[0])),float(np.min(bounds[1]-state[:2])))
     margin=max(.28,min(cfg.rrt_margin,clearance-.02))
     parameters=[]; records=[]
+    connection_cache={}
+    def connection(start,goal,trial):
+        if not cfg.rrt_diversity:return connect(start,goal,rectangles,bounds,rng,margin=margin,step=max(.5,3*cfg.environment_scale))
+        identity=tuple(np.r_[start,goal])
+        if identity not in connection_cache:
+            connection_cache[identity]=diverse_connections(start,goal,rectangles,bounds,rng,margin,max(.5,3*cfg.environment_scale),cfg.rrt_paths)
+        paths=connection_cache[identity]
+        return paths[trial%len(paths)] if paths else None
     # Include single-visit initializations and, optionally, paths containing
     # subsequent task-site visits. Subsequent sites are sampled without wind
     # information; no visit order is enforced on the MBD decision coordinates.
     for visits in range(1,cfg.rrt_visits+1):
         for goal_index,goal in enumerate(goals):
             for trial in range(cfg.rrt_paths):
-                path=connect(state[:2],goal,rectangles,bounds,rng,margin=margin,step=max(.5,3*cfg.environment_scale))
+                path=connection(state[:2],goal,trial)
                 if path is None: continue
                 visit_order=[goal_index]
                 for _ in range(1,visits):
                     other=[k for k in range(len(goals)) if k!=visit_order[-1]]
                     next_goal=int(rng.choice(other))
-                    extra=connect(path[-1],goals[next_goal],rectangles,bounds,rng,margin=margin,step=max(.5,3*cfg.environment_scale))
+                    extra=connection(path[-1],goals[next_goal],trial+visits)
                     if extra is None:break
                     path=np.r_[path,extra[1:]];visit_order.append(next_goal)
                 for cruise in (1.8,2.8):

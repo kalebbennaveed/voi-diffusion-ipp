@@ -1,0 +1,1356 @@
+{
+  "slides": [
+    {
+      "id": "section",
+      "title": "",
+      "archive": false
+    },
+    {
+      "id": "an-informative-plan-can-lose-its-value-in-execution",
+      "title": "An informative plan can lose its value in execution",
+      "archive": false
+    },
+    {
+      "id": "robot-state-control-and-spatial-disturbance",
+      "title": "Robot state, control and spatial disturbance",
+      "archive": false
+    },
+    {
+      "id": "presentation-structure",
+      "title": "Presentation structure",
+      "archive": false
+    },
+    {
+      "id": "preliminaries",
+      "title": "Preliminaries",
+      "archive": false
+    },
+    {
+      "id": "clarity-measures-how-well-a-cell-is-known",
+      "title": "Clarity measures how well a cell is known",
+      "archive": false
+    },
+    {
+      "id": "monitoring-quality-evolves-along-the-executed-path",
+      "title": "Monitoring quality evolves along the executed path",
+      "archive": false
+    },
+    {
+      "id": "represent-the-wind-that-the-robot-currently-knows",
+      "title": "Represent the wind that the robot currently knows",
+      "archive": false
+    },
+    {
+      "id": "poam-uses-spatial-correlation-to-connect-observations",
+      "title": "POAM uses spatial correlation to connect observations",
+      "archive": false
+    },
+    {
+      "id": "what-the-attentive-weights-mean",
+      "title": "What the attentive weights mean",
+      "archive": false
+    },
+    {
+      "id": "poam-predicts-wind-through-a-sparse-gaussian-posterior",
+      "title": "POAM predicts wind through a sparse Gaussian posterior",
+      "archive": false
+    },
+    {
+      "id": "how-a-new-observation-changes-the-poam-posterior",
+      "title": "How a new observation changes the POAM posterior",
+      "archive": false
+    },
+    {
+      "id": "poam-visual",
+      "title": "Watch POAM learn a spatial wind model",
+      "archive": false
+    },
+    {
+      "id": "why-position-alone-is-not-enough",
+      "title": "Why position alone is not enough",
+      "archive": false
+    },
+    {
+      "id": "example-evaluate-the-policy-brake-until-stopped",
+      "title": "Example: evaluate the policy \u201cbrake until stopped\u201d",
+      "archive": false
+    },
+    {
+      "id": "from-the-example-to-a-robust-policy-value",
+      "title": "From the example to a robust policy value",
+      "archive": false
+    },
+    {
+      "id": "a-policy-value-can-guide-the-applied-input",
+      "title": "A policy value can guide the applied input",
+      "archive": false
+    },
+    {
+      "id": "mbd-example-optimize-one-path-height-parameter",
+      "title": "MBD example: optimize one path-height parameter",
+      "archive": false
+    },
+    {
+      "id": "mbd-prefer-lower-cost-decisions-then-smooth-the-density",
+      "title": "MBD: prefer lower-cost decisions, then smooth the density",
+      "archive": false
+    },
+    {
+      "id": "mbd-noise-schedule-what-alpha-controls",
+      "title": "MBD noise schedule: what alpha controls",
+      "archive": false
+    },
+    {
+      "id": "one-mbd-iteration-sample-evaluate-and-weight",
+      "title": "One MBD iteration: sample, evaluate and weight",
+      "archive": false
+    },
+    {
+      "id": "use-the-weighted-mean-to-refine-the-noisy-vector",
+      "title": "Use the weighted mean to refine the noisy vector",
+      "archive": false
+    },
+    {
+      "id": "watch-mbd-refine-paths-in-a-simple-environment",
+      "title": "Watch MBD refine paths in a simple environment",
+      "archive": false
+    },
+    {
+      "id": "mbd-one-iteration",
+      "title": "One MBD iteration, step by step",
+      "archive": false
+    },
+    {
+      "id": "optimistic-problem",
+      "title": "Problem formulation",
+      "archive": false
+    },
+    {
+      "id": "optimistic-decision",
+      "title": "The trajectory decision",
+      "archive": false
+    },
+    {
+      "id": "optimistic-task",
+      "title": "Motion, monitoring, and soft planning constraints",
+      "archive": false
+    },
+    {
+      "id": "optimistic-two-criteria",
+      "title": "Average performance and optimistic performance",
+      "archive": false
+    },
+    {
+      "id": "optimistic-method",
+      "title": "Method",
+      "archive": false
+    },
+    {
+      "id": "current-algorithm",
+      "title": "Proposed algorithm",
+      "archive": false
+    },
+    {
+      "id": "optimistic-architecture",
+      "title": "Architecture and the two loops",
+      "archive": false
+    },
+    {
+      "id": "two-field-banks",
+      "title": "Step 1: spatial fields for prediction and control",
+      "archive": false
+    },
+    {
+      "id": "two-policy-roles",
+      "title": "Steps 2\u20133: a nominal trajectory produces several executions",
+      "archive": false
+    },
+    {
+      "id": "state-dependent-value",
+      "title": "Step 3: the controller evaluates a continuation",
+      "archive": false
+    },
+    {
+      "id": "state-dependent-filter",
+      "title": "Step 3: the filter changes the requested input when needed",
+      "archive": false
+    },
+    {
+      "id": "fixed-belief-changing-control",
+      "title": "Step 3: propagate motion before crediting sensing",
+      "archive": false
+    },
+    {
+      "id": "performance-costs",
+      "title": "Step 4: monitoring and constraint costs",
+      "archive": false
+    },
+    {
+      "id": "optimistic-tail-cost",
+      "title": "Step 4: favorable monitoring outcomes, all constraint penalties",
+      "archive": false
+    },
+    {
+      "id": "optimism-cost-example",
+      "title": "Step 4: an arithmetic example",
+      "archive": false
+    },
+    {
+      "id": "optimistic-target",
+      "title": "Step 5: the target and the ordinary MBD proposal",
+      "archive": false
+    },
+    {
+      "id": "optimistic-archive-priority",
+      "title": "Step 5: which evaluated trajectories receive more samples?",
+      "archive": false
+    },
+    {
+      "id": "optimistic-mixture",
+      "title": "Step 5: draw a new batch and correct its weights",
+      "archive": false
+    },
+    {
+      "id": "optimistic-denoising",
+      "title": "Step 5: denoise and decide whether to repeat",
+      "archive": false
+    },
+    {
+      "id": "optimistic-selection",
+      "title": "Step 6: compare final choices in fresh fields",
+      "archive": false
+    },
+    {
+      "id": "optimistic-real-learning",
+      "title": "Step 7: execute, observe, and replan",
+      "archive": false
+    },
+    {
+      "id": "optimistic-walkthrough",
+      "title": "Proposed method, step by step",
+      "archive": false
+    },
+    {
+      "id": "optimistic-long-mission",
+      "title": "Method scope and the long-mission hypothesis",
+      "archive": false
+    },
+    {
+      "id": "optimistic-mbd-comparison",
+      "title": "Comparison with MBD",
+      "archive": false
+    },
+    {
+      "id": "optimistic-algorithm-comparison",
+      "title": "Algorithm comparison",
+      "archive": false
+    },
+    {
+      "id": "optimistic-mbd-components",
+      "title": "What is optimized, predicted, and learned",
+      "archive": false
+    },
+    {
+      "id": "current-implementation",
+      "title": "Implementation",
+      "archive": false
+    },
+    {
+      "id": "implementation-clocks",
+      "title": "Experiment and clock settings",
+      "archive": false
+    },
+    {
+      "id": "implementation-reference",
+      "title": "The nominal trajectory has 450 independent parameters",
+      "archive": false
+    },
+    {
+      "id": "implementation-tracker",
+      "title": "Tracking and wind compensation inside prediction",
+      "archive": false
+    },
+    {
+      "id": "implementation-values",
+      "title": "Controller values and the braking continuation",
+      "archive": false
+    },
+    {
+      "id": "implementation-fallback",
+      "title": "The implemented filter and its slack fallback",
+      "archive": false
+    },
+    {
+      "id": "implementation-penalties",
+      "title": "Numerical penalties and contact handling",
+      "archive": false
+    },
+    {
+      "id": "implementation-poam",
+      "title": "Disturbance belief and field generation",
+      "archive": false
+    },
+    {
+      "id": "implementation-rrt",
+      "title": "RRT provides initial trajectories, not enforced paths",
+      "archive": false
+    },
+    {
+      "id": "implementation-diffusion",
+      "title": "Diffusion settings in the recorded experiments",
+      "archive": false
+    },
+    {
+      "id": "implementation-work-count",
+      "title": "How one planning call becomes 912 trajectory rollouts",
+      "archive": false
+    },
+    {
+      "id": "implementation-execution",
+      "title": "Nonlinear execution and monitoring",
+      "archive": false
+    },
+    {
+      "id": "implementation-baselines",
+      "title": "Baselines and the shared execution controller",
+      "archive": false
+    },
+    {
+      "id": "implementation-jax",
+      "title": "Where JAX parallelism is used",
+      "archive": false
+    },
+    {
+      "id": "compute-time",
+      "title": "Compute-time investigation",
+      "archive": false
+    },
+    {
+      "id": "compute-measurement",
+      "title": "What was measured",
+      "archive": false
+    },
+    {
+      "id": "compute-overview",
+      "title": "Complete planning time",
+      "archive": false
+    },
+    {
+      "id": "compute-search-selection",
+      "title": "Search and final selection both cost seconds",
+      "archive": false
+    },
+    {
+      "id": "compute-controller",
+      "title": "The controller prediction is the main added rollout cost",
+      "archive": false
+    },
+    {
+      "id": "compute-other",
+      "title": "Other measured costs and what the old timer omitted",
+      "archive": false
+    },
+    {
+      "id": "compute-conclusion",
+      "title": "Current compute diagnosis",
+      "archive": false
+    },
+    {
+      "id": "implementation-inactive",
+      "title": "Configuration fields that do not affect the current path",
+      "archive": false
+    },
+    {
+      "id": "implementation-source-map",
+      "title": "Files for independent investigation",
+      "archive": false
+    },
+    {
+      "id": "archived-method",
+      "title": "Archived method",
+      "archive": false
+    },
+    {
+      "id": "archived-problem-formulation",
+      "title": "Archived problem formulation",
+      "archive": true
+    },
+    {
+      "id": "define-the-decision-and-the-planning-horizon",
+      "title": "Define the decision and the planning horizon",
+      "archive": true
+    },
+    {
+      "id": "shared-motion-constraints-and-execution-controller",
+      "title": "Shared motion constraints and execution controller",
+      "archive": true
+    },
+    {
+      "id": "problem-1-wind-aware-planning-with-a-fixed-predicted-belief",
+      "title": "Problem 1: wind-aware planning with a fixed predicted belief",
+      "archive": true
+    },
+    {
+      "id": "problem-2-wind-aware-planning-with-anticipated-learning",
+      "title": "Problem 2: wind-aware planning with anticipated learning",
+      "archive": true
+    },
+    {
+      "id": "method-from-policy-parameters-to-delivered-monitoring",
+      "title": "Method: from policy parameters to delivered monitoring",
+      "archive": true
+    },
+    {
+      "id": "first-distinguish-the-requested-input-from-the-applied-input",
+      "title": "First distinguish the requested input from the applied input",
+      "archive": true
+    },
+    {
+      "id": "predict-future-constraint-values-under-a-fixed-policy",
+      "title": "Predict future constraint values under a fixed policy",
+      "archive": true
+    },
+    {
+      "id": "predict-which-input-the-execution-controller-will-apply",
+      "title": "Predict which input the execution controller will apply",
+      "archive": true
+    },
+    {
+      "id": "propagate-the-applied-input-then-compute-sensing",
+      "title": "Propagate the applied input, then compute sensing",
+      "archive": true
+    },
+    {
+      "id": "wind-aware-evaluation-average-costs-across-possible-fields",
+      "title": "Wind-aware evaluation: average costs across possible fields",
+      "archive": true
+    },
+    {
+      "id": "anticipated-learning-update-then-continue",
+      "title": "Anticipated learning: update, then continue",
+      "archive": true
+    },
+    {
+      "id": "predict-one-observation-and-its-belief-update",
+      "title": "Predict one observation and its belief update",
+      "archive": true
+    },
+    {
+      "id": "what-changes-after-a-predicted-observation",
+      "title": "What changes after a predicted observation?",
+      "archive": true
+    },
+    {
+      "id": "paired-predictions",
+      "title": "Two matched predictions define the value of learning",
+      "archive": true
+    },
+    {
+      "id": "probability-and-magnitude",
+      "title": "How often and how much does learning help?",
+      "archive": true
+    },
+    {
+      "id": "signed-learning-value",
+      "title": "Signed learning value includes deterioration",
+      "archive": true
+    },
+    {
+      "id": "learning-cost-in-mbd",
+      "title": "Complete task cost with anticipated learning",
+      "archive": true
+    },
+    {
+      "id": "mbd-now-optimizes-the-complete-monitoring-prediction",
+      "title": "MBD now optimizes the complete monitoring prediction",
+      "archive": true
+    },
+    {
+      "id": "proposed-policy-walkthrough",
+      "title": "Follow one policy\u2019s predicted execution",
+      "archive": true
+    },
+    {
+      "id": "proposed-mbd-walkthrough",
+      "title": "Turn predicted monitoring costs into the next action",
+      "archive": true
+    },
+    {
+      "id": "finish-optimization-before-physical-execution",
+      "title": "Finish optimization before physical execution",
+      "archive": true
+    },
+    {
+      "id": "comparison-with-mbd",
+      "title": "Comparison with MBD",
+      "archive": true
+    },
+    {
+      "id": "algorithm-comparison-what-changes-inside-mbd",
+      "title": "Algorithm comparison: what changes inside MBD?",
+      "archive": true
+    },
+    {
+      "id": "relationship-to-the-mbd-paper",
+      "title": "Relationship to the MBD paper",
+      "archive": true
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "archive": true
+    },
+    {
+      "id": "three-levels-of-planning-awareness",
+      "title": "Three levels of planning awareness",
+      "archive": true
+    },
+    {
+      "id": "two-environments-with-opposite-wind-directions",
+      "title": "Two environments with opposite wind directions",
+      "archive": true
+    },
+    {
+      "id": "environment-1-original-ab-region-wind",
+      "title": "Environment 1: original A/B-region wind",
+      "archive": true
+    },
+    {
+      "id": "original-wind-compare-delivered-monitoring",
+      "title": "Original wind: compare delivered monitoring",
+      "archive": true
+    },
+    {
+      "id": "environment-2-reversed-wind",
+      "title": "Environment 2: reversed wind",
+      "archive": true
+    },
+    {
+      "id": "reversed-wind-the-additional-learning-gain-is-smaller",
+      "title": "Reversed wind: the additional learning gain is smaller",
+      "archive": true
+    },
+    {
+      "id": "separate-the-wind-aware-gain-from-the-learning-gain",
+      "title": "Separate the wind-aware gain from the learning gain",
+      "archive": true
+    },
+    {
+      "id": "what-the-current-evidence-establishes",
+      "title": "What the current evidence establishes",
+      "archive": true
+    },
+    {
+      "id": "takeaways",
+      "title": "Takeaways",
+      "archive": true
+    },
+    {
+      "id": "implementation-appendix",
+      "title": "Implementation appendix",
+      "archive": true
+    },
+    {
+      "id": "implementation-the-18-dimensional-policy-representation",
+      "title": "Implementation: the 18-dimensional policy representation",
+      "archive": true
+    },
+    {
+      "id": "implementation-a-planar-tracking-controller",
+      "title": "Implementation: a planar tracking controller",
+      "archive": true
+    },
+    {
+      "id": "implementation-the-velocity-damping-design-policy",
+      "title": "Implementation: the velocity-damping design policy",
+      "archive": true
+    },
+    {
+      "id": "implementation-the-planar-input-inequality",
+      "title": "Implementation: the planar input inequality",
+      "archive": true
+    },
+    {
+      "id": "implementation-belief-dependent-reference-positions",
+      "title": "Implementation: belief-dependent reference positions",
+      "archive": true
+    },
+    {
+      "id": "implementation-a-bounded-target-for-parameter-search",
+      "title": "Implementation: a bounded target for parameter search",
+      "archive": true
+    },
+    {
+      "id": "appendix-covariance-only-anticipation",
+      "title": "Appendix: covariance-only anticipation",
+      "archive": true
+    },
+    {
+      "id": "appendix-sources-and-reproducibility",
+      "title": "Appendix: sources and reproducibility",
+      "archive": true
+    }
+  ],
+  "errors": [],
+  "math": {
+    "errors": [],
+    "rendered": 669
+  },
+  "report": [
+    {
+      "id": "section",
+      "title": "",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "an-informative-plan-can-lose-its-value-in-execution",
+      "title": "An informative plan can lose its value in execution",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "robot-state-control-and-spatial-disturbance",
+      "title": "Robot state, control and spatial disturbance",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "presentation-structure",
+      "title": "Presentation structure",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "preliminaries",
+      "title": "Preliminaries",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "clarity-measures-how-well-a-cell-is-known",
+      "title": "Clarity measures how well a cell is known",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "monitoring-quality-evolves-along-the-executed-path",
+      "title": "Monitoring quality evolves along the executed path",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "represent-the-wind-that-the-robot-currently-knows",
+      "title": "Represent the wind that the robot currently knows",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "poam-uses-spatial-correlation-to-connect-observations",
+      "title": "POAM uses spatial correlation to connect observations",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "what-the-attentive-weights-mean",
+      "title": "What the attentive weights mean",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "poam-predicts-wind-through-a-sparse-gaussian-posterior",
+      "title": "POAM predicts wind through a sparse Gaussian posterior",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "how-a-new-observation-changes-the-poam-posterior",
+      "title": "How a new observation changes the POAM posterior",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "poam-visual",
+      "title": "Watch POAM learn a spatial wind model",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "why-position-alone-is-not-enough",
+      "title": "Why position alone is not enough",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "example-evaluate-the-policy-brake-until-stopped",
+      "title": "Example: evaluate the policy \u201cbrake until stopped\u201d",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "from-the-example-to-a-robust-policy-value",
+      "title": "From the example to a robust policy value",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "a-policy-value-can-guide-the-applied-input",
+      "title": "A policy value can guide the applied input",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "mbd-example-optimize-one-path-height-parameter",
+      "title": "MBD example: optimize one path-height parameter",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "mbd-prefer-lower-cost-decisions-then-smooth-the-density",
+      "title": "MBD: prefer lower-cost decisions, then smooth the density",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "mbd-noise-schedule-what-alpha-controls",
+      "title": "MBD noise schedule: what alpha controls",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "one-mbd-iteration-sample-evaluate-and-weight",
+      "title": "One MBD iteration: sample, evaluate and weight",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "use-the-weighted-mean-to-refine-the-noisy-vector",
+      "title": "Use the weighted mean to refine the noisy vector",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "watch-mbd-refine-paths-in-a-simple-environment",
+      "title": "Watch MBD refine paths in a simple environment",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "mbd-one-iteration",
+      "title": "One MBD iteration, step by step",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-problem",
+      "title": "Problem formulation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-decision",
+      "title": "The trajectory decision",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-task",
+      "title": "Motion, monitoring, and soft planning constraints",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-two-criteria",
+      "title": "Average performance and optimistic performance",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-method",
+      "title": "Method",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "current-algorithm",
+      "title": "Proposed algorithm",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-architecture",
+      "title": "Architecture and the two loops",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "two-field-banks",
+      "title": "Step 1: spatial fields for prediction and control",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "two-policy-roles",
+      "title": "Steps 2\u20133: a nominal trajectory produces several executions",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "state-dependent-value",
+      "title": "Step 3: the controller evaluates a continuation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "state-dependent-filter",
+      "title": "Step 3: the filter changes the requested input when needed",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "fixed-belief-changing-control",
+      "title": "Step 3: propagate motion before crediting sensing",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "performance-costs",
+      "title": "Step 4: monitoring and constraint costs",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-tail-cost",
+      "title": "Step 4: favorable monitoring outcomes, all constraint penalties",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimism-cost-example",
+      "title": "Step 4: an arithmetic example",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-target",
+      "title": "Step 5: the target and the ordinary MBD proposal",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-archive-priority",
+      "title": "Step 5: which evaluated trajectories receive more samples?",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-mixture",
+      "title": "Step 5: draw a new batch and correct its weights",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-denoising",
+      "title": "Step 5: denoise and decide whether to repeat",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-selection",
+      "title": "Step 6: compare final choices in fresh fields",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-real-learning",
+      "title": "Step 7: execute, observe, and replan",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-walkthrough",
+      "title": "Proposed method, step by step",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-long-mission",
+      "title": "Method scope and the long-mission hypothesis",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-mbd-comparison",
+      "title": "Comparison with MBD",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-algorithm-comparison",
+      "title": "Algorithm comparison",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "optimistic-mbd-components",
+      "title": "What is optimized, predicted, and learned",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "current-implementation",
+      "title": "Implementation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-clocks",
+      "title": "Experiment and clock settings",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-reference",
+      "title": "The nominal trajectory has 450 independent parameters",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-tracker",
+      "title": "Tracking and wind compensation inside prediction",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-values",
+      "title": "Controller values and the braking continuation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-fallback",
+      "title": "The implemented filter and its slack fallback",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-penalties",
+      "title": "Numerical penalties and contact handling",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-poam",
+      "title": "Disturbance belief and field generation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-rrt",
+      "title": "RRT provides initial trajectories, not enforced paths",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-diffusion",
+      "title": "Diffusion settings in the recorded experiments",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-work-count",
+      "title": "How one planning call becomes 912 trajectory rollouts",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-execution",
+      "title": "Nonlinear execution and monitoring",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-baselines",
+      "title": "Baselines and the shared execution controller",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-jax",
+      "title": "Where JAX parallelism is used",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "compute-time",
+      "title": "Compute-time investigation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "compute-measurement",
+      "title": "What was measured",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "compute-overview",
+      "title": "Complete planning time",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "compute-search-selection",
+      "title": "Search and final selection both cost seconds",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "compute-controller",
+      "title": "The controller prediction is the main added rollout cost",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "compute-other",
+      "title": "Other measured costs and what the old timer omitted",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "compute-conclusion",
+      "title": "Current compute diagnosis",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-inactive",
+      "title": "Configuration fields that do not affect the current path",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-source-map",
+      "title": "Files for independent investigation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "archived-method",
+      "title": "Archived method",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "archived-problem-formulation",
+      "title": "Archived problem formulation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "define-the-decision-and-the-planning-horizon",
+      "title": "Define the decision and the planning horizon",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "shared-motion-constraints-and-execution-controller",
+      "title": "Shared motion constraints and execution controller",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "problem-1-wind-aware-planning-with-a-fixed-predicted-belief",
+      "title": "Problem 1: wind-aware planning with a fixed predicted belief",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "problem-2-wind-aware-planning-with-anticipated-learning",
+      "title": "Problem 2: wind-aware planning with anticipated learning",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "method-from-policy-parameters-to-delivered-monitoring",
+      "title": "Method: from policy parameters to delivered monitoring",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "first-distinguish-the-requested-input-from-the-applied-input",
+      "title": "First distinguish the requested input from the applied input",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "predict-future-constraint-values-under-a-fixed-policy",
+      "title": "Predict future constraint values under a fixed policy",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "predict-which-input-the-execution-controller-will-apply",
+      "title": "Predict which input the execution controller will apply",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "propagate-the-applied-input-then-compute-sensing",
+      "title": "Propagate the applied input, then compute sensing",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "wind-aware-evaluation-average-costs-across-possible-fields",
+      "title": "Wind-aware evaluation: average costs across possible fields",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "anticipated-learning-update-then-continue",
+      "title": "Anticipated learning: update, then continue",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "predict-one-observation-and-its-belief-update",
+      "title": "Predict one observation and its belief update",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "what-changes-after-a-predicted-observation",
+      "title": "What changes after a predicted observation?",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "paired-predictions",
+      "title": "Two matched predictions define the value of learning",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "probability-and-magnitude",
+      "title": "How often and how much does learning help?",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "signed-learning-value",
+      "title": "Signed learning value includes deterioration",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "learning-cost-in-mbd",
+      "title": "Complete task cost with anticipated learning",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "mbd-now-optimizes-the-complete-monitoring-prediction",
+      "title": "MBD now optimizes the complete monitoring prediction",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "proposed-policy-walkthrough",
+      "title": "Follow one policy\u2019s predicted execution",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "proposed-mbd-walkthrough",
+      "title": "Turn predicted monitoring costs into the next action",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "finish-optimization-before-physical-execution",
+      "title": "Finish optimization before physical execution",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "comparison-with-mbd",
+      "title": "Comparison with MBD",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "algorithm-comparison-what-changes-inside-mbd",
+      "title": "Algorithm comparison: what changes inside MBD?",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "relationship-to-the-mbd-paper",
+      "title": "Relationship to the MBD paper",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "three-levels-of-planning-awareness",
+      "title": "Three levels of planning awareness",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "two-environments-with-opposite-wind-directions",
+      "title": "Two environments with opposite wind directions",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "environment-1-original-ab-region-wind",
+      "title": "Environment 1: original A/B-region wind",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "original-wind-compare-delivered-monitoring",
+      "title": "Original wind: compare delivered monitoring",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "environment-2-reversed-wind",
+      "title": "Environment 2: reversed wind",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "reversed-wind-the-additional-learning-gain-is-smaller",
+      "title": "Reversed wind: the additional learning gain is smaller",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "separate-the-wind-aware-gain-from-the-learning-gain",
+      "title": "Separate the wind-aware gain from the learning gain",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "what-the-current-evidence-establishes",
+      "title": "What the current evidence establishes",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "takeaways",
+      "title": "Takeaways",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-appendix",
+      "title": "Implementation appendix",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-the-18-dimensional-policy-representation",
+      "title": "Implementation: the 18-dimensional policy representation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-a-planar-tracking-controller",
+      "title": "Implementation: a planar tracking controller",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-the-velocity-damping-design-policy",
+      "title": "Implementation: the velocity-damping design policy",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-the-planar-input-inequality",
+      "title": "Implementation: the planar input inequality",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-belief-dependent-reference-positions",
+      "title": "Implementation: belief-dependent reference positions",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "implementation-a-bounded-target-for-parameter-search",
+      "title": "Implementation: a bounded target for parameter search",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "appendix-covariance-only-anticipation",
+      "title": "Appendix: covariance-only anticipation",
+      "images": [],
+      "overflow": []
+    },
+    {
+      "id": "appendix-sources-and-reproducibility",
+      "title": "Appendix: sources and reproducibility",
+      "images": [],
+      "overflow": []
+    }
+  ],
+  "stages": [
+    {
+      "step": 0,
+      "active": 1,
+      "eq": "xk,\u00a0qk,\u00a0Bkd,Bd(\u03c4)=Bkdx_k,\\ q_k,\\ \\mathcal B_k^d,\\qquad \\mathcal B^d(\\tau)=\\mathcal B_k^dxk\u200b,\u00a0qk\u200b,\u00a0Bkd\u200b,Bd(\u03c4)=Bkd\u200b"
+    },
+    {
+      "step": 1,
+      "active": 1,
+      "eq": "u[s]=\u0393k(x[s],unom[s]),Js=\u222b0TD(q[s](\u03c4))\u2009d\u03c4u^{[s]}=\\Gamma_k(x^{[s]},u_{\\mathrm{nom}}^{[s]}),\\quad J_s=\\int_0^TD(q^{[s]}(\\tau))\\,d\\tauu[s]=\u0393k\u200b(x[s],unom[s]\u200b),Js\u200b=\u222b0T\u200bD(q[s](\u03c4))d\u03c4"
+    },
+    {
+      "step": 2,
+      "active": 1,
+      "eq": "Fk(\u03b8)=12(J(1)(\u03b8)+J(2)(\u03b8))+P\u203e(\u03b8)F_k(\\theta)=\\tfrac12\\big(J_{(1)}(\\theta)+J_{(2)}(\\theta)\\big)+\\overline P(\\theta)Fk\u200b(\u03b8)=21\u200b(J(1)\u200b(\u03b8)+J(2)\u200b(\u03b8))+P(\u03b8)"
+    },
+    {
+      "step": 3,
+      "active": 1,
+      "eq": "qiprop=(1\u2212\u03c1)\u03d5i+\u03c1\u03c8iq_i^{\\mathrm{prop}}=(1-\\rho)\\phi_i+\\rho\\psi_iqiprop\u200b=(1\u2212\u03c1)\u03d5i\u200b+\u03c1\u03c8i\u200b"
+    },
+    {
+      "step": 4,
+      "active": 1,
+      "eq": "w~n\u221d1\u0398\u03c7k\u2009e\u2212Fk/\u03bb\u2009\u03d5i/qiprop,yi\u22121=\u03b1\u02c9i\u22121\u03b8\u02c9\\widetilde w_n\\propto\\mathbf1_\\Theta\\chi_k\\,e^{-F_k/\\lambda}\\,\\phi_i/q_i^{\\mathrm{prop}},\\quad y_{i-1}=\\sqrt{\\bar\\alpha_{i-1}}\\bar\\thetawn\u200b\u221d1\u0398\u200b\u03c7k\u200be\u2212Fk\u200b/\u03bb\u03d5i\u200b/qiprop\u200b,yi\u22121\u200b=\u03b1\u02c9i\u22121\u200b\u200b\u03b8\u02c9"
+    },
+    {
+      "step": 5,
+      "active": 1,
+      "eq": "\u03b8k\u22c6\u2208arg\u2061min\u2061\u03b8\u2208Ck{J\u03b7val(\u03b8)+P\u203eval(\u03b8)}\\theta_k^\\star\\in\\arg\\min_{\\theta\\in\\mathcal C_k}\\{J_\\eta^{\\mathrm{val}}(\\theta)+\\overline P^{\\mathrm{val}}(\\theta)\\}\u03b8k\u22c6\u200b\u2208arg\u03b8\u2208Ck\u200bmin\u200b{J\u03b7val\u200b(\u03b8)+Pval(\u03b8)}"
+    },
+    {
+      "step": 6,
+      "active": 1,
+      "eq": "Bk+1d=POAMUpdate\u2061(Bkd,Dkd,real)\\mathcal B_{k+1}^d=\\operatorname{POAMUpdate}(\\mathcal B_k^d,\\mathcal D_k^{d,\\mathrm{real}})Bk+1d\u200b=POAMUpdate(Bkd\u200b,Dkd,real\u200b)"
+    }
+  ],
+  "controls": {
+    "next": 1,
+    "prev": 0,
+    "playing": {
+      "index": 1,
+      "playing": true
+    },
+    "paused": true
+  },
+  "revision": "20261021-method-compute-review"
+}

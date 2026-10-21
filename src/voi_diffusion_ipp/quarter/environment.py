@@ -62,17 +62,23 @@ BOUNDS=np.array([[-37.,-25.5],[37.,34.5]],np.float32)
 RECTANGLES=np.array([[-19.,-20.,19.,5.5,18.],[-19.,10.5,19.,22.,15.]],np.float32)
 
 
-def environment(layout='two',scale=1.,inspection_scale=1.):
+def environment(layout='two',scale=1.,inspection_scale=1.,case='forward'):
     # At the smallest supported scale, passage A is 1.75 m across for the
     # 0.55 m aircraft. Building heights and vehicle dimensions do not shrink.
     if not .35<=scale<=1.5:raise ValueError('Geometry scale must preserve usable drone passages (0.35 to 1.5)')
     if not .4<=inspection_scale<=1.5:raise ValueError('Invalid inspection region scale')
     centers=(CENTERS[:2] if layout=='two' else CENTERS)*scale
-    half_size=np.array([4.5,5.])*inspection_scale
+    half_size=np.tile(np.array([4.5,5.])*inspection_scale,(len(centers),1))
+    # The larger eastern task region is physical area, represented by extra
+    # equally weighted monitoring cells. No route preference or turn-back
+    # instruction enters the objective or the geometric initialization.
+    if case in ('commitment','calm_a'):half_size[1,1]*=2
     regions=np.c_[centers-half_size,centers+half_size]
     cells=[]
-    for x,z in centers:
-        xx,zz=np.meshgrid(x+np.linspace(-3.6,3.6,6)*inspection_scale,z+np.linspace(-4.2,4.2,7)*inspection_scale)
+    for i,(x,z) in enumerate(centers):
+        larger=case in ('commitment','calm_a') and i==1
+        yy=np.linspace(-8.4,8.4,13) if larger else np.linspace(-4.2,4.2,7)
+        xx,zz=np.meshgrid(x+np.linspace(-3.6,3.6,6)*inspection_scale,z+yy*inspection_scale)
         cells.extend(np.c_[xx.ravel(),zz.ravel()])
     cells=jnp.array(np.array(cells),jnp.float32)
     rectangles=RECTANGLES.copy();rectangles[:,:4]*=scale
@@ -93,6 +99,13 @@ def wind(p,case='forward',strength=3.1,scale=1.):
         return strength*jnp.stack((sign*A,.09*A*jnp.sin(x/5)),axis=-1)
     if case=='crosswind':
         return strength*jnp.stack((-.80*A-.86*C,.55*A*jnp.cos(x/6)+.45*C*jnp.sin((x+4)/7)),axis=-1)
+    if case in ('commitment','calm_a'):
+        B=axial*smooth_window(z,-25.5,-20.,.8)
+        # A spatial velocity field across all three passages: eastward travel
+        # is assisted and westward return opposes the flow. The planner is
+        # never given the case name or this physical field, only observations.
+        active_A=A if case=='commitment' else jnp.zeros_like(A)
+        return strength*jnp.stack((active_A+B+C,.09*(active_A-C)*jnp.sin(x/5)),axis=-1)
     raise ValueError(case)
 
 
@@ -100,8 +113,16 @@ def initial_belief(cfg):
     # Sites and corridors receive inducing locations, without oracle values.
     xx,zz=np.meshgrid(np.linspace(-31,31,9),[-23.,-10.,8.,27.])
     scale=getattr(cfg,'environment_scale',1.)
+    support=None
+    nodes=getattr(cfg,'wind_support_nodes',0)
+    if nodes:
+        # Numerical prior-covariance anchors, not wind observations. Exact
+        # support covariance plus the spectral residual preserve a continuous
+        # full GP draw, rather than truncating the field to inducing means.
+        sx,sy=np.meshgrid(np.linspace(-45,45,nodes)*scale,np.linspace(-35,44,nodes)*scale)
+        support=np.c_[sx.ravel(),sy.ravel()].astype(np.float32)
     return POAM(np.c_[xx.ravel(),zz.ravel()].astype(np.float32)*scale,jax.random.PRNGKey(731),
-                noise_std=cfg.observation_std,lengths=(5.*scale,13.*scale),prior_std=cfg.prior_std,spectral_count=16).planning_belief()
+                noise_std=cfg.observation_std,lengths=(5.*scale,13.*scale),prior_std=cfg.prior_std,spectral_count=16,prior_support=support).planning_belief()
 
 class ExtendedTableBasis(NamedTuple):
     lower:jax.Array
@@ -136,6 +157,7 @@ def table_sampler(count,scale=1.):
     return sample
 
 
-def metadata(layout='two',scale=1.,inspection_scale=1.):
-    e=environment(layout,scale,inspection_scale)
-    return dict(layout=layout,horizontal_scale=scale,inspection_scale=inspection_scale,bounds=np.asarray(e.bounds).tolist(),buildings=np.asarray(e.rectangles).tolist(),regions=np.asarray(e.regions).tolist(),cells=np.asarray(e.cells).tolist(),targets=np.asarray(e.targets).tolist(),process_noise=np.asarray(e.process_noise).tolist(),passages=(np.array(PASSAGES)*scale).tolist(),flight_height=3.2,drone_span=.55)
+def metadata(layout='two',scale=1.,inspection_scale=1.,case='forward'):
+    e=environment(layout,scale,inspection_scale,case)
+    counts=[int(np.sum(np.all(np.asarray(e.cells)>=r[:2],axis=1)&np.all(np.asarray(e.cells)<=r[2:],axis=1))) for r in np.asarray(e.regions)]
+    return dict(layout=layout,case=case,horizontal_scale=scale,inspection_scale=inspection_scale,bounds=np.asarray(e.bounds).tolist(),buildings=np.asarray(e.rectangles).tolist(),regions=np.asarray(e.regions).tolist(),region_cell_counts=counts,cells=np.asarray(e.cells).tolist(),targets=np.asarray(e.targets).tolist(),process_noise=np.asarray(e.process_noise).tolist(),passages=(np.array(PASSAGES)*scale).tolist(),flight_height=3.2,drone_span=.55)

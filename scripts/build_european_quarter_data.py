@@ -11,16 +11,16 @@ p=argparse.ArgumentParser();p.add_argument('--results',default='output/european_
 out=root/args.destination;out.mkdir(parents=True,exist_ok=True)
 cfg=ControlSettings(environment_scale=args.scale,inspection_scale=args.inspection_scale);b=initial_belief(cfg)
 for layout in ['two','multi']:
-    env=metadata(layout,args.scale,args.inspection_scale);bounds=np.array(env['bounds'])
-    xx,zz=np.meshgrid(np.linspace(bounds[0,0],bounds[1,0],49),np.linspace(bounds[0,1],bounds[1,1],41));grid=np.c_[xx.ravel(),zz.ravel()].astype(np.float32)
-    mu,cov=b.predict(jnp.array(grid));std=np.sqrt(np.maximum(np.asarray(cov)[:,0,0],0))
-    env.update(grid=grid.tolist(),grid_shape=[41,49],wind=np.asarray(wind(jnp.array(grid),scale=args.scale)).tolist())
-    q=np.full(len(env['cells']),.35);q[:42]=.65
-    data=dict(environment=env,q=q.tolist(),mean=np.asarray(mu).tolist(),std=std.tolist(),position=[-28*args.scale,8*args.scale,3.2])
-    (out/f'initial_{layout}.json').write_text(json.dumps(data,separators=(',',':')))
-    for case in ['forward','reverse','crosswind']:
-        data['environment']['wind']=np.asarray(wind(jnp.array(grid),case,scale=args.scale)).tolist()
+    for case in ['forward','reverse','crosswind','commitment']:
+        env=metadata(layout,args.scale,args.inspection_scale,case);bounds=np.array(env['bounds'])
+        xx,zz=np.meshgrid(np.linspace(bounds[0,0],bounds[1,0],49),np.linspace(bounds[0,1],bounds[1,1],41));grid=np.c_[xx.ravel(),zz.ravel()].astype(np.float32)
+        mu,cov=b.predict(jnp.array(grid));std=np.sqrt(np.maximum(np.asarray(cov)[:,0,0],0))
+        env.update(grid=grid.tolist(),grid_shape=[41,49],wind=np.asarray(wind(jnp.array(grid),case,scale=args.scale)).tolist())
+        q=np.full(len(env['cells']),.35);q[:42]=.65
+        data=dict(environment=env,q=q.tolist(),mean=np.asarray(mu).tolist(),std=std.tolist(),position=[-28*args.scale,8*args.scale,3.2])
         (out/f'initial_{layout}_{case}.json').write_text(json.dumps(data,separators=(',',':')))
+        if case=='forward':(out/f'initial_{layout}.json').write_text(json.dumps(data,separators=(',',':')))
+
 manifest=[]
 for file in sorted((root/args.results).glob('*.json')):
     data=json.loads(file.read_text())

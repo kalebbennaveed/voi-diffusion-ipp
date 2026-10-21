@@ -1,0 +1,3 @@
+# Scientific archives and rendered PDFs must retain their exact bytes.
+*.pdf binary
+*.npz binary

@@ -1,0 +1,24 @@
+.reveal .walk-player [hidden]{display:none!important}
+.reveal .walk-slide h2{margin-bottom:16px}
+.reveal .walk-status{font-size:23px;line-height:1.2;min-height:30px;color:#526c80;margin:10px 0 16px;border-left:5px solid #2474bf;padding-left:14px}
+.reveal .walk-grid{display:grid;grid-template-columns:880px 1fr;gap:28px;height:430px}
+.reveal .walk-stage{width:880px;height:430px;display:block}
+.reveal .walk-algorithm{height:430px;display:flex;flex-direction:column;justify-content:center;list-style:none;margin:0!important;padding:0!important}
+.reveal .walk-algorithm .walk-step{font-size:23px;line-height:1.18;display:flex;gap:14px;align-items:center;padding:10px 14px;margin:0!important;box-sizing:border-box;min-height:52px;border-left:5px solid transparent;color:#667987}
+.reveal .walk-step>span{min-width:18px;font-size:21px}
+.reveal .walk-step>b{font-weight:400}
+.reveal .walk-step.active{border-left-color:#e7ad00;background:#fff5cc;color:#00274c}
+.reveal .walk-step.active>b{font-weight:700}
+.reveal .walk-step.done{color:#2474bf}
+.reveal .walk-explanation{height:69px;font-size:24px;line-height:1.28;display:flex;align-items:center;margin-top:12px}
+.reveal .walk-equation{height:60px;font-size:24px;display:flex;align-items:center;justify-content:center}
+.reveal .walk-equation .katex-display{font-size:1em;margin:0}
+.reveal .walk-controls{display:flex;align-items:center;gap:12px;border-top:2px solid #b9cad8;margin-top:8px;padding:12px 0}
+.reveal .walk-controls button{font:22px Arial;color:#00274c;background:white;border:2px solid #8ca7ba;border-radius:5px;padding:9px 15px;cursor:pointer}
+.reveal .walk-controls button[data-action="play"]{background:#00274c;color:white;border-color:#00274c;min-width:100px}
+.reveal .walk-controls button:disabled{opacity:.38;cursor:default}
+.reveal .walk-controls input{flex:1;min-width:80px;accent-color:#2474bf;cursor:pointer;height:24px}
+.reveal .walk-controls output{font-size:22px;min-width:120px;text-align:right}
+.reveal .walk-controls :focus-visible{outline:4px solid #ffcb05;outline-offset:3px}
+.reveal .walk-slide .caption{font-size:21px;line-height:1.2;margin-top:4px}
+@media print{.reveal .walk-controls{display:none!important}.reveal .walk-slide .caption{margin-top:25px}}

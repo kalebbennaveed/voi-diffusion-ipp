@@ -4,7 +4,7 @@ There are exactly 2*T/dt independent decision coordinates: both nominal
 accelerations at every configured integration interval. No route library, target selection,
 dwell schedule, waypoint tracker, spline knots, or truncated temporal basis.
 """
-from dataclasses import dataclass
+from dataclasses import dataclass,replace
 from typing import NamedTuple
 import jax
 import jax.numpy as jnp
@@ -42,6 +42,20 @@ class ControlSettings(Settings):
     jerk_penalty:float=0.
     tracking_kp:float=3/.680
     tracking_kv:float=5/.680
+    execution_dt:float=.05
+    execution_margin:float=.55
+    execution_filter:str='hard'
+    penalty_aggregation:str='mean'
+    validate_initials:bool=True
+    rrt_diversity:bool=False
+    prediction_substeps:int=1
+    observation_period:float=5.
+    prediction_filter:str='soft'
+    guidance_mode:str='nominal'
+    online_estimation:bool=False
+    wind_support_nodes:int=0
+    wind_relocate:bool=False
+    terminate_predictions:bool=False
 
     def __post_init__(self):
         super().__post_init__()
@@ -53,6 +67,16 @@ class ControlSettings(Settings):
         if not .4<=self.inspection_scale<=1.5:raise ValueError('Invalid inspection region scale')
         if self.initialization not in ('gaussian','zero','rrt'):raise ValueError('Unknown MBD initialization')
         if min(self.rrt_paths,self.rrt_visits)<1 or self.guidance_sigma<=0:raise ValueError('Invalid RRT guidance configuration')
+        if self.execution_filter not in ('hard','soft'):raise ValueError('Unknown execution filter')
+        if self.execution_dt<=0 or abs(self.execution_dt/.01-round(self.execution_dt/.01))>1e-6 or abs(self.dt/self.execution_dt-round(self.dt/self.execution_dt))>1e-6:raise ValueError('Execution control period must be a physics-step multiple and divide planning dt')
+        if self.execution_margin<.275:raise ValueError('Execution margin must contain the aircraft')
+        if self.penalty_aggregation not in ('mean','tail'):raise ValueError('Unknown constraint-penalty aggregation')
+        if self.prediction_substeps<1 or abs(self.dt/self.prediction_substeps/.01-round(self.dt/self.prediction_substeps/.01))>1e-6:raise ValueError('Prediction control period must be a physics-step multiple')
+        if self.observation_period<=0 or abs(self.commit/min(self.observation_period,self.commit)-round(self.commit/min(self.observation_period,self.commit)))>1e-6:raise ValueError('Observation period must divide the commit interval')
+        if self.prediction_filter not in ('soft','hard'):raise ValueError('Unknown prediction filter')
+        if self.guidance_mode not in ('off','nominal','executed'):raise ValueError('Unknown demonstration likelihood')
+        if self.online_estimation and abs(min(self.observation_period,self.commit)/self.dt-round(min(self.observation_period,self.commit)/self.dt))>1e-6:raise ValueError('Online observation period must align with trajectory decisions')
+        if self.wind_support_nodes not in (0,) and not 3<=self.wind_support_nodes<=33:raise ValueError('Wind sampler support must be zero or a grid dimension between 3 and 33')
 
 
 def controls(theta,cfg):
@@ -97,29 +121,75 @@ class Rollout(NamedTuple):
     penalty:jax.Array
     max_slack:jax.Array
     min_clearance:jax.Array
+    terminated:jax.Array
+
+
+def segment_contact(p0,p1,env,radius=.275):
+    """Swept circular footprint against rectangles and the experiment boundary."""
+    rectangles=env.rectangles
+    corners=jnp.stack((rectangles[:,:2],rectangles[:,2:4],rectangles[:,jnp.array([0,3])],rectangles[:,jnp.array([2,1])]),axis=1)
+    delta=p1-p0;length=jnp.maximum(jnp.sum(delta*delta),1e-20)
+    t=jnp.clip(jnp.sum((corners-p0)*delta,axis=-1)/length,0.,1.)
+    corner_distance=jnp.min(jnp.linalg.norm(corners-(p0+t[:,:,None]*delta),axis=-1))
+    moving=jnp.abs(delta)>1e-10;safe=jnp.where(moving,delta,1.)
+    lo=(rectangles[:,:2]-p0)/safe;hi=(rectangles[:,2:4]-p0)/safe
+    within=(p0>=rectangles[:,:2])&(p0<=rectangles[:,2:4])
+    near=jnp.where(moving,jnp.minimum(lo,hi),jnp.where(within,-jnp.inf,jnp.inf))
+    far=jnp.where(moving,jnp.maximum(lo,hi),jnp.where(within,jnp.inf,-jnp.inf))
+    intersects=jnp.any(jnp.maximum(jnp.max(near,axis=1),0.)<=jnp.minimum(jnp.min(far,axis=1),1.))
+    endpoints=jnp.minimum(env.clearance(jnp.r_[p0,jnp.zeros(2)]),env.clearance(jnp.r_[p1,jnp.zeros(2)]))
+    return intersects|(jnp.minimum(endpoints,corner_distance)<radius)
 
 
 def rollout(theta,x0,q0,mean_array,construction,physical,env,cfg,filter_on=True):
     basis=table_basis(cfg.environment_scale)
     mean=TableMean(basis,mean_array);inner=InnerFields(basis,construction);world=WorldField(basis,physical)
+    prediction_cfg=replace(cfg,safety_margin=cfg.execution_margin) if cfg.prediction_filter=='hard' else cfg
     reference,aa=nominal_reference(theta,x0,cfg)
     def step(carry,inputs):
-        x,q,monitor,penalty,max_slack,gap,old_u=carry
+        x,q,monitor,penalty,max_slack,gap,old_u,alive=carry
         ref,a=inputs
-        u,slack=applied_control(x,ref,a,mean,inner,env,cfg,filter_on)
+        if filter_on and cfg.prediction_filter=='hard':
+            from ..safety.flow_policy_value import filter_control
+            nominal=a+cfg.tracking_kp*(ref[:2]-x[:2])+cfg.tracking_kv*(ref[2:]-x[2:])-drag(x[2:],mean.mean_at(x[:2])[0],xp=jnp)
+            u,info=filter_control(x,nominal,mean,inner,env,prediction_cfg)
+            slack=info.slack
+        else:u,slack=applied_control(x,ref,a,mean,inner,env,prediction_cfg,filter_on)
         def f(z):return jnp.r_[z[2:],u+drag(z[2:],world.at(z[:2])[0],xp=jnp)]
-        h=cfg.dt;k1=f(x);k2=f(x+h*k1/2);k3=f(x+h*k2/2);k4=f(x+h*k3)
+        h=cfg.dt/cfg.prediction_substeps;k1=f(x);k2=f(x+h*k1/2);k3=f(x+h*k2/2);k4=f(x+h*k3)
         xn=x+h*(k1+2*k2+2*k3+k4)/6
-        qn=sensing.step(q,x[:2],xn[:2],env,cfg,h)
-        cost=h*.5*(clarity.deficit(q,env.targets)+clarity.deficit(qn,env.targets))
+        contact=segment_contact(x[:2],xn[:2],env) if cfg.terminate_predictions else jnp.array(False)
+        observing=alive&~contact
         clearance=env.clearance(xn)
+        # Absorbing failure state: keep the last valid position. Subsequent
+        # clarity evolves without observations; no post-contact flight or
+        # monitoring is credited by the finite-horizon prediction.
+        stopped=jnp.r_[x[:2],jnp.zeros(2)]
+        xn=jnp.where(observing,xn,jnp.where(contact,stopped,x))
+        qn=sensing.step(q,x[:2],xn[:2],env,cfg,h)
+        qn=jnp.where(observing,qn,q/(1+h*env.process_noise*q))
+        u=jnp.where(alive,u,jnp.zeros_like(u))
+        cost=h*.5*(clarity.deficit(q,env.targets)+clarity.deficit(qn,env.targets))
         soft=cfg.violation_weight*jax.nn.relu(cfg.planning_clearance-clearance)**2
         soft+=cfg.speed_penalty*jax.nn.relu(jnp.linalg.norm(xn[2:])-cfg.speed_max)**2
         soft+=cfg.jerk_penalty*jnp.sum(jax.nn.relu(jnp.abs((u-old_u)/h)-cfg.jerk_limit)**2)
-        return (xn,qn,monitor+cost,penalty+h*soft,jnp.maximum(max_slack,slack),jnp.minimum(gap,clearance),u),(xn,qn,u)
-    init=(x0,q0,jnp.array(0.),jnp.array(0.),jnp.array(0.),env.clearance(x0),jnp.zeros(2))
-    end,(xs,qs,us)=jax.lax.scan(step,init,(reference[:-1],aa))
-    return Rollout(jnp.r_[x0[None],xs],jnp.r_[q0[None],qs],us,reference,end[2],end[3],end[4],end[5])
+        new_gap=jnp.where(alive,jnp.minimum(gap,jnp.where(contact,jnp.minimum(clearance,.275),clearance)),gap)
+        new_slack=jnp.where(alive,jnp.maximum(max_slack,slack),max_slack)
+        return (xn,qn,monitor+cost,penalty+h*soft*alive,new_slack,new_gap,u,observing),(xn,qn,u)
+    init=(x0,q0,jnp.array(0.),jnp.array(0.),jnp.array(0.),env.clearance(x0),jnp.zeros(2),jnp.array(True))
+    offsets=jnp.arange(cfg.prediction_substeps)*cfg.dt/cfg.prediction_substeps
+    refs=reference[:-1,None,:]
+    pp=refs[:,:,:2]+offsets[None,:,None]*refs[:,:,2:]+.5*offsets[None,:,None]**2*aa[:,None,:]
+    vv=refs[:,:,2:]+offsets[None,:,None]*aa[:,None,:]
+    fine_reference=jnp.concatenate((pp,vv),axis=-1).reshape(-1,4)
+    fine_acceleration=jnp.repeat(aa,cfg.prediction_substeps,axis=0)
+    end,(xs,qs,us)=jax.lax.scan(step,init,(fine_reference,fine_acceleration))
+    # Keep the public rollout arrays at the decision interval. Substeps only
+    # resolve the same controller and sensing between decision coordinates.
+    xs=xs[cfg.prediction_substeps-1::cfg.prediction_substeps]
+    qs=qs[cfg.prediction_substeps-1::cfg.prediction_substeps]
+    us=us[cfg.prediction_substeps-1::cfg.prediction_substeps]
+    return Rollout(jnp.r_[x0[None],xs],jnp.r_[q0[None],qs],us,reference,end[2],end[3],end[4],end[5],~end[7])
 
 
 def optimizer(env,cfg,method):
@@ -131,8 +201,9 @@ def optimizer(env,cfg,method):
         def values(theta,bank):
             def one(field):
                 r=rollout(theta,x,q,mean,construction,field,env,cfg,not blind)
-                return r.monitor+r.penalty
-            return jax.vmap(one)(bank)
+                return jnp.array([r.monitor,r.penalty])
+            components=jax.vmap(one)(bank)
+            return aggregate_costs(components[:,0],components[:,1],cfg.penalty_aggregation)
         fraction=eta if optimistic else 1.
         rho=cfg.mixture if method in ('proposed','fading') else 0.
         initials=initial_sequences(x,cfg)
@@ -141,15 +212,34 @@ def optimizer(env,cfg,method):
             if demonstrations is None:raise ValueError('RRT guidance requires generated demonstrations')
             initials=jnp.concatenate((initials,demonstrations))
             def guidance(theta,selected,selected_cost):
-                points=nominal_reference(theta,x,cfg)[0][:, :2]
+                points=(rollout(theta,x,q,mean,construction,mean,env,cfg,not blind).x[:,:2]
+                        if cfg.guidance_mode=='executed' else nominal_reference(theta,x,cfg)[0][:,:2])
                 reference=nominal_reference(selected,x,cfg)[0][:, :2]
                 # Peak-normalized Gaussian trajectory likelihood. Its full
                 # covariance is (H+1)*sigma^2 I; sigma is the RMS position scale.
                 return -selected_cost/cfg.temperature-jnp.mean(jnp.sum((points-reference)**2,axis=1))/(2*cfg.guidance_sigma**2)
+            if cfg.guidance_mode=='off':guidance=None
         result=search(lambda th:values(th,worlds),initials,previous,key,cfg,fraction,rho,cold,guidance)
-        costs=jax.lax.map(lambda th:values(th,validation),result.finalists,batch_size=cfg.batch_size)
+        candidates=result.finalists
+        if cfg.validate_initials:
+            # A geometrically distinct initial trajectory must not disappear
+            # just because it missed the top four on a tiny training bank.
+            candidates=jnp.concatenate((candidates,result.initial_parameters))
+            candidate_indices=jnp.concatenate((result.finalist_indices,jnp.arange(len(result.initial_parameters))))
+            result=result._replace(finalists=candidates,finalist_indices=candidate_indices)
+        costs=jax.lax.map(lambda th:values(th,validation),candidates,batch_size=cfg.batch_size)
         scores=lower_tail(costs,fraction)
         valid=jnp.all(jnp.isfinite(costs),axis=1)&jnp.all(jnp.abs(result.finalists)<=cfg.latent_bound,axis=1)
         scores=jnp.where(valid,scores,jnp.inf);i=jnp.argmin(scores)
         return result.finalists[i],scores[i],jnp.mean(costs[i]),result,i
     return plan
+
+
+def aggregate_costs(monitoring,penalties,mode='mean'):
+    """Optimism applies to monitoring; mean soft penalties remain in every score.
+
+    Adding the same expected penalty to each field cost preserves the expected
+    total cost exactly and makes the favorable-tail score equal to the favorable
+    monitoring tail plus the full mean penalty. 'tail' reproduces old runs.
+    """
+    return monitoring+(penalties if mode=='tail' else jnp.mean(penalties))

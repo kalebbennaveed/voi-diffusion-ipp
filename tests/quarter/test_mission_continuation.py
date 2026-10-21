@@ -2,6 +2,7 @@
 import importlib.util
 from pathlib import Path
 import numpy as np
+import pytest
 from voi_diffusion_ipp.quarter.continuous import ControlSettings
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -10,12 +11,13 @@ runner=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(runner)
 
 
-def test_continuation_preserves_physics_belief_and_random_streams(tmp_path):
+@pytest.mark.parametrize('observation_period,online_estimation',[(5.,False),(.1,False),pytest.param(.1,True,id='online')])
+def test_continuation_preserves_physics_belief_and_random_streams(tmp_path,observation_period,online_estimation):
     cfg=ControlSettings(horizon=1.,commit=.2,iterations=2,proposals=4,
                         worlds=2,validation_worlds=2,batch_size=4,
                         environment_scale=.35,inspection_scale=.55,
                         initialization='rrt',rrt_paths=1,common_construction=True,
-                        cosine_end=.05,planning_clearance=.6,slack_weight=50.)
+                        cosine_end=.05,planning_clearance=.6,slack_weight=50.,observation_period=observation_period,online_estimation=online_estimation)
     full_dir=tmp_path/'full';prefix_dir=tmp_path/'prefix';long_dir=tmp_path/'continued'
     for directory in (full_dir,prefix_dir,long_dir):directory.mkdir()
     full=runner.run('two','forward','proposed',.6,8101,cfg,full_dir)
