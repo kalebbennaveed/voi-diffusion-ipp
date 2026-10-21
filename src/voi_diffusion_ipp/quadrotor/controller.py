@@ -36,11 +36,17 @@ def desired_rotation(force: np.ndarray, yaw: float, heading: np.ndarray | None =
     return xp.column_stack((xp.cross(b2, b3), b2, b3))
 
 
-def geometric_wrench(position, velocity, rotation, omega, reference, vehicle, gains, *, xp=np):
+def geometric_wrench(position, velocity, rotation, omega, reference, vehicle, gains, *, xp=np, horizontal_acceleration=None):
     """Kaleb's existing feedback/feedforward law, shared by NumPy and JAX."""
     e3 = xp.array([0.0, 0.0, 1.0])
     inertia = xp.diag(xp.asarray(vehicle.inertia))
     force = -gains.kx * (position - reference.position) - gains.kv * (velocity - reference.velocity) + vehicle.mass * (vehicle.gravity * e3 + reference.acceleration)
+    if horizontal_acceleration is not None:
+        # A sampled-data outer controller has already evaluated horizontal
+        # position/velocity feedback and its constraint filter at the reached
+        # state. Apply that specific-force request once, before attitude
+        # construction; do not add a second horizontal feedback controller.
+        force=xp.concatenate((vehicle.mass*xp.asarray(horizontal_acceleration),force[2:]))
     if gains.max_horizontal_accel is not None:
         limit=vehicle.mass*gains.max_horizontal_accel
         drag=0. if gains.limit_total_horizontal_force else vehicle.linear_drag*xp.sqrt(xp.maximum(xp.sum(velocity**2),1e-24))*velocity[:2]

@@ -1,0 +1,252 @@
+{
+  "description": "Measured from completed flight recordings; each row identifies its source revision. Individual seeds, not statistical claims. Median timing excludes the first two calls of each process, including a resumed process, because type specialization can compile twice.",
+  "runs": [
+    {
+      "revision": "quarter-full-control-mbd-v1",
+      "file": "two_forward_blind_8101.json",
+      "layout": "two",
+      "case": "forward",
+      "method": "blind",
+      "seed": 8101,
+      "cost": 10.062869539382518,
+      "success": true,
+      "failure": null,
+      "mission_seconds": 120.0,
+      "first_minute_cost": 6.485627009198652,
+      "later_mean_deficit": 0.05962070883639778,
+      "headwind_seconds": 44.099999999999994,
+      "median_headwind_speed": 0.7644306328896037,
+      "passage_seconds": {
+        "A": 52.6,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "transfers": [
+        {
+          "start": 3.1,
+          "end": 12.9,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 9.8
+        },
+        {
+          "start": 24.5,
+          "end": 45.6,
+          "passage": "A",
+          "direction": "west",
+          "seconds": 21.1
+        },
+        {
+          "start": 51.2,
+          "end": 61.2,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 10.0
+        },
+        {
+          "start": 68.6,
+          "end": 91.3,
+          "passage": "A",
+          "direction": "west",
+          "seconds": 22.700000000000003
+        },
+        {
+          "start": 99.9,
+          "end": 109.2,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 9.299999999999997
+        }
+      ],
+      "regions": [
+        {
+          "name": "west",
+          "seconds": 18.89999999999999,
+          "first_entry": 0.0,
+          "final_mean_clarity": 0.7107980932508197,
+          "mean_deficit": 0.0520517771957176
+        },
+        {
+          "name": "east",
+          "seconds": 18.800000000000004,
+          "first_entry": 14.1,
+          "final_mean_clarity": 0.8754100033215114,
+          "mean_deficit": 0.11566386070220717
+        }
+      ],
+      "initial_mean_wind_std": 1.8,
+      "final_mean_wind_std": 1.4799667870621889,
+      "final_wind_rmse": 1.0940709114074707,
+      "observations": 24,
+      "minimum_clearance": 0.3280838429927826,
+      "tracking_rms": 1.320024142750107,
+      "median_planning_seconds": 9.906838645998505,
+      "mean_position_prediction_error": 1.4820275765950859,
+      "position_prediction_error_after_30s": 1.7226577655306077,
+      "prediction_error_interval": 5.0,
+      "early_deficit_reduction_percent": 0.0,
+      "late_deficit_reduction_percent": 0.0,
+      "deficit_reduction_percent": 0.0
+    },
+    {
+      "revision": "quarter-full-control-mbd-v1",
+      "file": "two_forward_blind_filter_8101.json",
+      "layout": "two",
+      "case": "forward",
+      "method": "blind_filter",
+      "seed": 8101,
+      "cost": 13.588161358915386,
+      "success": true,
+      "failure": null,
+      "mission_seconds": 120.0,
+      "first_minute_cost": 7.0105022120988,
+      "later_mean_deficit": 0.1096276524469431,
+      "headwind_seconds": 40.099999999999994,
+      "median_headwind_speed": 0.7623669672801937,
+      "passage_seconds": {
+        "A": 47.900000000000006,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "transfers": [
+        {
+          "start": 3.1,
+          "end": 10.8,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 7.700000000000001
+        },
+        {
+          "start": 68.3,
+          "end": 91.4,
+          "passage": "A",
+          "direction": "west",
+          "seconds": 23.10000000000001
+        },
+        {
+          "start": 99.8,
+          "end": 110.3,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 10.5
+        }
+      ],
+      "regions": [
+        {
+          "name": "west",
+          "seconds": 12.500000000000002,
+          "first_entry": 0.0,
+          "final_mean_clarity": 0.7080585729508173,
+          "mean_deficit": 0.13433615953676284
+        },
+        {
+          "name": "east",
+          "seconds": 21.200000000000003,
+          "first_entry": 14.7,
+          "final_mean_clarity": 0.8264823811394828,
+          "mean_deficit": 0.09213460701266452
+        }
+      ],
+      "initial_mean_wind_std": 1.8,
+      "final_mean_wind_std": 1.4672288159430662,
+      "final_wind_rmse": 0.9419524073600769,
+      "observations": 24,
+      "minimum_clearance": 0.176215261220932,
+      "tracking_rms": 1.1023545998539241,
+      "median_planning_seconds": 11.503782312007388,
+      "mean_position_prediction_error": 1.1785736572565613,
+      "position_prediction_error_after_30s": 1.3088156257584123,
+      "prediction_error_interval": 5.0,
+      "early_deficit_reduction_percent": -8.092898375989098,
+      "late_deficit_reduction_percent": -83.87512424209328,
+      "deficit_reduction_percent": -35.03266941637393
+    },
+    {
+      "revision": "quarter-full-control-mbd-v1",
+      "file": "two_forward_proposed_8101.json",
+      "layout": "two",
+      "case": "forward",
+      "method": "proposed",
+      "seed": 8101,
+      "cost": 8.640143107055337,
+      "success": true,
+      "failure": null,
+      "mission_seconds": 120.0,
+      "first_minute_cost": 5.850213805155363,
+      "later_mean_deficit": 0.0464988216983329,
+      "headwind_seconds": 0.0,
+      "median_headwind_speed": null,
+      "passage_seconds": {
+        "A": 19.200000000000003,
+        "B": 0.0,
+        "C": 17.199999999999992
+      },
+      "transfers": [
+        {
+          "start": 3.0,
+          "end": 12.8,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 9.8
+        },
+        {
+          "start": 22.7,
+          "end": 37.7,
+          "passage": "C",
+          "direction": "west",
+          "seconds": 15.000000000000004
+        },
+        {
+          "start": 48.7,
+          "end": 57.0,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 8.299999999999997
+        },
+        {
+          "start": 76.1,
+          "end": 84.4,
+          "passage": "C",
+          "direction": "west",
+          "seconds": 8.300000000000011
+        },
+        {
+          "start": 93.6,
+          "end": 103.0,
+          "passage": "A",
+          "direction": "east",
+          "seconds": 9.400000000000006
+        }
+      ],
+      "regions": [
+        {
+          "name": "west",
+          "seconds": 17.199999999999992,
+          "first_entry": 0.0,
+          "final_mean_clarity": 0.6640273786726452,
+          "mean_deficit": 0.04728290165582346
+        },
+        {
+          "name": "east",
+          "seconds": 17.79999999999999,
+          "first_entry": 14.4,
+          "final_mean_clarity": 0.7872235746610732,
+          "mean_deficit": 0.09672082127678015
+        }
+      ],
+      "initial_mean_wind_std": 1.8,
+      "final_mean_wind_std": 1.222379773442757,
+      "final_wind_rmse": 0.5644621849060059,
+      "observations": 24,
+      "minimum_clearance": 0.3141714036464691,
+      "tracking_rms": 0.1684587225511736,
+      "median_planning_seconds": 115.55316868750378,
+      "mean_position_prediction_error": 0.0627415393431967,
+      "position_prediction_error_after_30s": 0.029390710703187568,
+      "prediction_error_interval": 5.0,
+      "early_deficit_reduction_percent": 9.797251725115762,
+      "late_deficit_reduction_percent": 22.008941849503998,
+      "deficit_reduction_percent": 14.138376998321723
+    }
+  ]
+}

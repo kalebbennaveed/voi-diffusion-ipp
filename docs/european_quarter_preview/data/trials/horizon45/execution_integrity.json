@@ -1,0 +1,68 @@
+{
+  "check": "Replay positions, attitudes, timestamps, controls, costs and clearances reconstructed from 100 Hz execution audits.",
+  "runs": [
+    {
+      "file": "two_forward_blind_8101.json",
+      "case": "forward",
+      "method": "blind",
+      "seed": 8101,
+      "success": true,
+      "continuation_check": null,
+      "recorded_seconds": 120.0,
+      "reconstructed_cost": 10.062869539382518,
+      "reported_cost": 10.062869539382518,
+      "replay_frames": 1201,
+      "maximum_rotation_orthogonality_error": 2.6226043701171875e-06,
+      "first_plan_distance_to_nearest_initial_control_sequence": 0.0,
+      "decision_origins": {
+        "RRT initialization": 17,
+        "diffusion proposal": 5,
+        "previous trajectory": 2
+      },
+      "maximum_rrt_seconds": 0.5411836249986663,
+      "mean_guidance_used_fraction": 0.9969618055555557
+    },
+    {
+      "file": "two_forward_blind_filter_8101.json",
+      "case": "forward",
+      "method": "blind_filter",
+      "seed": 8101,
+      "success": false,
+      "continuation_check": null,
+      "recorded_seconds": 33.52,
+      "reconstructed_cost": 26.301828129048552,
+      "reported_cost": 26.301828289023288,
+      "replay_frames": 337,
+      "maximum_rotation_orthogonality_error": 2.086162567138672e-06,
+      "first_plan_distance_to_nearest_initial_control_sequence": 0.0,
+      "decision_origins": {
+        "RRT initialization": 6,
+        "diffusion proposal": 1
+      },
+      "maximum_rrt_seconds": 0.5618186249921564,
+      "mean_guidance_used_fraction": 0.9986979166666667
+    },
+    {
+      "file": "two_forward_proposed_8101.json",
+      "case": "forward",
+      "method": "proposed",
+      "seed": 8101,
+      "success": true,
+      "continuation_check": null,
+      "recorded_seconds": 120.0,
+      "reconstructed_cost": 8.636894393996045,
+      "reported_cost": 8.636894393996045,
+      "replay_frames": 1201,
+      "maximum_rotation_orthogonality_error": 2.5033950805664062e-06,
+      "first_plan_distance_to_nearest_initial_control_sequence": 0.0,
+      "decision_origins": {
+        "RRT initialization": 11,
+        "diffusion proposal": 11,
+        "final denoised vector": 2
+      },
+      "maximum_rrt_seconds": 1.2069297499838285,
+      "mean_guidance_used_fraction": 0.927951388888889
+    }
+  ],
+  "initial_plan_direction_checks": []
+}
