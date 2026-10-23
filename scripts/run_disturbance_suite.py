@@ -45,7 +45,9 @@ def main():
     p.add_argument('--validation-batch-size',type=int,default=0)
     p.add_argument('--planning-value-margin',type=float,default=.4)
     p.add_argument('--execution-margin',type=float,default=.7)
+    p.add_argument('--execution-dt',type=float,default=.05)
     p.add_argument('--planning-clearance',type=float,default=.6)
+    p.add_argument('--sensor-half-angle-degrees',type=float,default=25.)
     p.add_argument('--methods',nargs='+',choices=['aware','blind_filter'],default=['aware','blind_filter'])
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--resume-directory',type=Path)
@@ -56,8 +58,10 @@ def main():
         temperature=args.temperature,prior_std=args.prior_std,optimism=1.,mixture=0.,
         prediction_filter=args.prediction_filter,slack_weight=15.,planning_clearance=args.planning_clearance,
         safety_margin=args.planning_value_margin,execution_margin=args.execution_margin,rrt_visits=2,
+        execution_dt=args.execution_dt,
         prediction_substeps=args.prediction_substeps,
         validation_batch_size=args.validation_batch_size,
+        sensor_half_angle_degrees=args.sensor_half_angle_degrees,
         online_estimation=True,observation_period=1.,guidance_mode='off',
         execution_filter='hard',common_construction=True,wind_inducing_count=args.inducing_count,wind_kernel_lengths=(args.short_length,args.long_length))
     if abs(args.seconds/cfg.commit-round(args.seconds/cfg.commit))>1e-6:raise ValueError('Duration must be a commit multiple')

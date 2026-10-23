@@ -6,7 +6,7 @@ from scipy.interpolate import RegularGridInterpolator
 
 ROOT=Path(__file__).resolve().parents[1]
 from voi_diffusion_ipp.quarter.benchmark_environments import SCENARIOS
-PLAYBACK_VERSION='recorded-spatial-maps-v3'
+PLAYBACK_VERSION='recorded-spatial-maps-v4-wind-and-sensor'
 
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -85,9 +85,13 @@ def examine(path):
         'median_search_selection_seconds':float(np.median([p['seconds'] for p in warm_plans])) if warm else None,
         'source':str(path.relative_to(ROOT)),'sha256':sha(path),'source_hashes':d['source_hashes']}
     assert all(p.get('optimism_fraction')==1 and p.get('archive_mixture')==0 for p in d['plans'])
+    sensing={'half_angle_degrees':float(d['config'].get('sensor_half_angle_degrees',45.)),
+        'gaussian_sigma_m':float(d['config']['sensor_sigma']),
+        'measurement_R':float(d['config']['sensor_R']),
+        'footprint':'altitude * tan(half_angle_degrees); building visibility applied in clarity updates'}
     playback={'frames':[f[i] for i in range(0,len(f),5)]+([f[-1]] if (len(f)-1)%5 else []),
         'trail':[[x['t'],*x['p'][:2]] for x in f],'beliefs':d['beliefs'],'environment':d['environment'],
-        'method':d['method']}
+        'method':d['method'],'sensing':sensing}
     return d,out,playback
 
 
@@ -122,6 +126,8 @@ def main():
             'reduction_percent':value,'valid_safe_comparison':safe,
             'substantial_reduction':bool(safe and value>=15),
             'settings':da['config']}
+        if selection and selection['cases'][s.name].get('protocol_note'):
+            row['protocol_note']=selection['cases'][s.name]['protocol_note']
         if s.name=='interchange':
             row['title']='Four-branch inspection network'
             row['metadata_note']='The recorded geometry has west, east, north and south branches; an earlier title called it three-branch.'
@@ -151,7 +157,14 @@ def main():
         'definitions':{'substantial_reduction':'at least15 percent lower integrated monitoring deficit, both full missions completed without contact'}}
     if selection:summary['case_selection']={'manifest':str(a.selection),'sha256':sha(a.selection),'declaration':selection}
     timing=ROOT/'output/disturbance_suite/runtime_benchmark.json'
-    if selection and timing.exists():summary['single_process_timing']=json.loads(timing.read_text())
+    if selection and timing.exists():
+        benchmark=json.loads(timing.read_text())
+        selected_angles={float(row['settings'].get('sensor_half_angle_degrees',45.)) for row in rows}
+        timing_angles={float(row.get('sensor_half_angle_degrees',45.)) for row in benchmark['rows']}
+        if selected_angles==timing_angles:
+            summary['single_process_timing']=benchmark
+        else:
+            summary['timing_note']='An isolated runtime benchmark exists but uses a different sensing cone; it is not presented as timing evidence for these missions.'
     (a.out/'results.json').write_text(json.dumps(summary,indent=2))
     template=(ROOT/'docs/disturbance_suite/report_template.html').read_text()
     template=template.replace('__REPORT__',json.dumps(summary,separators=(',',':')))

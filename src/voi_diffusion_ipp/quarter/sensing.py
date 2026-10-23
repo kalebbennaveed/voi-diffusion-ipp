@@ -1,4 +1,4 @@
-"""Ground-facing footprint: Gaussian quality inside a finite 45-degree cone."""
+"""Ground-facing footprint: Gaussian quality inside a finite camera cone."""
 import jax.numpy as jnp
 from ..clarity import deficit
 
@@ -12,7 +12,8 @@ def rate(q,p,env,cfg,height=3.2):
     near=jnp.where(nonzero,jnp.minimum(t1,t2),jnp.where((origin>=lo)&(origin<=hi),-jnp.inf,jnp.inf))
     far=jnp.where(nonzero,jnp.maximum(t1,t2),jnp.where((origin>=lo)&(origin<=hi),jnp.inf,-jnp.inf))
     blocked=jnp.any(jnp.maximum(jnp.max(near,axis=2),0.)<=jnp.minimum(jnp.min(far,axis=2),1.),axis=1)
-    gain=jnp.exp(-r2/cfg.sensor_sigma**2)/cfg.sensor_R*(r2<=height**2)*(~blocked)
+    radius=jnp.maximum(height,0.)*jnp.tan(jnp.deg2rad(cfg.sensor_half_angle_degrees))
+    gain=jnp.exp(-r2/cfg.sensor_sigma**2)/cfg.sensor_R*(r2<=radius**2)*(~blocked)
     return gain*(1-q)**2-env.process_noise*q*q
 
 def step(q,p0,p1,env,cfg,dt,height=3.2):

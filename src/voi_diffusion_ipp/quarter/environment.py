@@ -40,12 +40,14 @@ class Settings:
     spline: str='full'
     sensor_sigma: float=2.2
     sensor_R: float=.3
+    sensor_half_angle_degrees: float=45.
     observation_std: float=.25
     wind_strength: float=3.1
     prior_std: float=1.8
     seed: int=8101
 
     def __post_init__(self):
+        if not 0<self.sensor_half_angle_degrees<90:raise ValueError('Sensor half-angle must be between 0 and 90 degrees')
         if not 0<self.dt<=.5:raise ValueError('Planning dt must be positive and <= 0.5 s')
         if abs(self.dt/.01-round(self.dt/.01))>1e-6:raise ValueError('Planning dt must be a multiple of the 0.01 s physics step')
         if abs(self.commit/self.dt-round(self.commit/self.dt))>1e-6:raise ValueError('Commit must be divisible by dt')

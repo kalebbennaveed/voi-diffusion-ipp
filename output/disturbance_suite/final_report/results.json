@@ -1,5 +1,5 @@
 {
-  "playback_version": "recorded-spatial-maps-v3",
+  "playback_version": "recorded-spatial-maps-v4-wind-and-sensor",
   "comparison": "Disturbance-aware expected-cost MBD versus disturbance-blind planning, common learned physical execution filter",
   "protocol": {
     "aware": "Predicts posterior-field-dependent motion under the execution-filter model; minimizes expected monitoring cost plus soft penalties.",
@@ -13,34 +13,34 @@
       "topology": "Two obstacles, three passages",
       "task": "Two compact inspection regions",
       "mechanism": "Middle-passage wind changes transfer speed and circulation direction",
-      "scenario_revision": "monitoring-suite-v7-feasible-alternatives",
+      "scenario_revision": "monitoring-suite-v9-traversable-service-aisles",
       "real_obstacles": 2,
       "mission_seconds": 300.0,
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 22.05898841925955,
-        "cost_first60": 4.931884290985181,
-        "cost_after60": 17.127104128274368,
+        "cost": 26.759858139499556,
+        "cost_first60": 6.227838268183405,
+        "cost_after60": 20.53201987131615,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.41538354754447937,
-        "dense_cost_before_failure": 22.058988513396613,
+        "minimum_surface_gap": 0.44501158595085144,
+        "dense_cost_before_failure": 26.759858221752307,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 22.05898841925955,
-        "maximum_integral_step_discrepancy": 8.098071531924267e-10,
+        "saved_cost_increments_sum": 26.759858139499556,
+        "maximum_integral_step_discrepancy": 8.488340035202324e-10,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
         "wind_exposure_fraction": 0.0,
-        "nominal_reference_wind_exposure_fraction_approx": 0.0016661112962345886,
+        "nominal_reference_wind_exposure_fraction_approx": 0.0,
         "headwind_fraction": 0.0,
         "mean_speed_when_opposing_wind": null,
-        "rms_reference_tracking_error": 0.738370280623203,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.004665111629456847,
+        "rms_reference_tracking_error": 0.20985334922061685,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.0,
         "cells_ever_reaching_target_fraction": 1.0,
         "regional_target_attainment": [
           {
@@ -53,36 +53,36 @@
           }
         ],
         "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 5.48404412495438,
-        "warm_planning_p95": 6.658739220484856,
-        "warm_planning_max": 8.26453358400613,
-        "first_call_seconds": 27.273897624923848,
+        "warm_planning_median": 2.9344042490120046,
+        "warm_planning_p95": 3.5752493621199384,
+        "warm_planning_max": 4.607556791044772,
+        "first_call_seconds": 17.777256458008196,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 27.273897624923848
+            "recorded_seconds": 17.777256458008196
           }
         ],
-        "median_fields_seconds": 0.04184224997879937,
-        "median_geometry_seconds": 0.0753745409892872,
-        "median_search_selection_seconds": 5.363966042001266,
-        "source": "output/disturbance_suite/final300_part1_seed9101/original/two_original_aware_9101.json",
-        "sha256": "3ee7debb14af54ffa9307bfe648ccd776b203bbdaadf153e54f33d02f05f131c",
+        "median_fields_seconds": 0.02295841701561585,
+        "median_geometry_seconds": 0.04296295897802338,
+        "median_search_selection_seconds": 2.8699027920374647,
+        "source": "output/disturbance_suite/sensor25_pair300/original/two_original_aware_9101.json",
+        "sha256": "76741e4177ccaeea92970f5d17f618ca7c8ef3efc55ca0f8a6e050376708af24",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -112,33 +112,33 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 121.58793012067326,
-        "cost_first60": 14.730891783867264,
-        "cost_after60": 106.857038336806,
+        "cost": 130.55738848395413,
+        "cost_first60": 12.479087353742216,
+        "cost_after60": 118.07830113021191,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.395870178937912,
-        "dense_cost_before_failure": 121.58793048786465,
+        "minimum_surface_gap": 0.46022459864616394,
+        "dense_cost_before_failure": 130.55738897358353,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 121.58793012067326,
-        "maximum_integral_step_discrepancy": 1.0572728656108032e-09,
+        "saved_cost_increments_sum": 130.55738848395413,
+        "maximum_integral_step_discrepancy": 1.250189685282621e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.9520159946684439,
-        "nominal_reference_wind_exposure_fraction_approx": 0.4441852715761413,
-        "headwind_fraction": 0.39653448850383205,
-        "mean_speed_when_opposing_wind": 0.2790686171815078,
-        "rms_reference_tracking_error": 2.5421688294986833,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.20093302232589136,
-        "cells_ever_reaching_target_fraction": 1.0,
+        "wind_exposure_fraction": 0.8610463178940353,
+        "nominal_reference_wind_exposure_fraction_approx": 0.388870376541153,
+        "headwind_fraction": 0.1616127957347551,
+        "mean_speed_when_opposing_wind": 0.2734431523822603,
+        "rms_reference_tracking_error": 2.8390021365846145,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.3598800399866711,
+        "cells_ever_reaching_target_fraction": 0.9880952380952381,
         "regional_target_attainment": [
           {
             "site": 1,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.9761904761904762
           },
           {
             "site": 2,
@@ -146,36 +146,36 @@
           }
         ],
         "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 2.2631944160093553,
-        "warm_planning_p95": 2.592016617307672,
-        "warm_planning_max": 2.6596330410102382,
-        "first_call_seconds": 7.9342963739763945,
+        "warm_planning_median": 1.4080384990666062,
+        "warm_planning_p95": 1.735963495809118,
+        "warm_planning_max": 2.161638166930061,
+        "first_call_seconds": 6.925334041006863,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 7.9342963739763945
+            "recorded_seconds": 6.925334041006863
           }
         ],
-        "median_fields_seconds": 0.04362879099790007,
-        "median_geometry_seconds": 0.07926570798736066,
-        "median_search_selection_seconds": 2.1381176250288263,
-        "source": "output/disturbance_suite/final300_part1_seed9101/original/two_original_blind_filter_9101.json",
-        "sha256": "0170602205fc14061d4c42a19d7bf412fc5d4db05e3d48d9c158c9eed69d88e1",
+        "median_fields_seconds": 0.02784504200099036,
+        "median_geometry_seconds": 0.05143883399432525,
+        "median_search_selection_seconds": 1.326250208017882,
+        "source": "output/disturbance_suite/sensor25_pair300/original/two_original_blind_filter_9101.json",
+        "sha256": "950262b72bea214f4c58bab5fd88de97e9f62f248915d0dbfa832203778644b2",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -203,7 +203,7 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 81.85758372778737,
+      "reduction_percent": 79.50337514388286,
       "valid_safe_comparison": true,
       "substantial_reduction": true,
       "settings": {
@@ -233,6 +233,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.65,
         "prior_std": 1.8,
@@ -667,7 +668,7 @@
           1.8
         ]
       },
-      "playback_url": "data/original-3da23ba4f0b8.json.deflate"
+      "playback_url": "data/original-3004c773b9f5.json.deflate"
     },
     {
       "case": "reversed",
@@ -675,34 +676,34 @@
       "topology": "Exact matched geometry and target cells",
       "task": "Same monitoring task, exact negative physical field",
       "mechanism": "Reversal tests whether route use responds to disturbance direction",
-      "scenario_revision": "monitoring-suite-v7-feasible-alternatives",
+      "scenario_revision": "monitoring-suite-v9-traversable-service-aisles",
       "real_obstacles": 2,
       "mission_seconds": 300.0,
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 17.798688177152144,
-        "cost_first60": 4.473245146044064,
-        "cost_after60": 13.32544303110808,
+        "cost": 24.768523729013395,
+        "cost_first60": 6.070733536136686,
+        "cost_after60": 18.69779019287671,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.3812313377857208,
-        "dense_cost_before_failure": 17.79868822556521,
+        "minimum_surface_gap": 0.457387238740921,
+        "dense_cost_before_failure": 24.7685237767512,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 17.798688177152144,
-        "maximum_integral_step_discrepancy": 8.124680745888457e-10,
+        "saved_cost_increments_sum": 24.768523729013395,
+        "maximum_integral_step_discrepancy": 9.645840948896423e-10,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.19660113295568143,
-        "nominal_reference_wind_exposure_fraction_approx": 0.2162612462512496,
+        "wind_exposure_fraction": 0.12495834721759413,
+        "nominal_reference_wind_exposure_fraction_approx": 0.14361879373542152,
         "headwind_fraction": 0.0,
         "mean_speed_when_opposing_wind": null,
-        "rms_reference_tracking_error": 0.3175163412464221,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.0003332222592469177,
+        "rms_reference_tracking_error": 0.3701489205405508,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.0,
         "cells_ever_reaching_target_fraction": 1.0,
         "regional_target_attainment": [
           {
@@ -715,36 +716,36 @@
           }
         ],
         "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 5.9927557069459,
-        "warm_planning_p95": 6.392721249128226,
-        "warm_planning_max": 8.0410564589547,
-        "first_call_seconds": 4.75157504202798,
+        "warm_planning_median": 3.9929362499387935,
+        "warm_planning_p95": 4.431060058617731,
+        "warm_planning_max": 4.884944291959982,
+        "first_call_seconds": 3.90482900099596,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 4.75157504202798
+            "recorded_seconds": 3.90482900099596
           }
         ],
-        "median_fields_seconds": 0.041843832994345576,
-        "median_geometry_seconds": 0.07472033298108727,
-        "median_search_selection_seconds": 5.848650207975879,
-        "source": "output/disturbance_suite/final300_part1_seed9101/reversed/two_reversed_aware_9101.json",
-        "sha256": "ea3f8c92a1cb84347053508b849f8589c6fe53bbef8002a305becfef1209d684",
+        "median_fields_seconds": 0.02898733300389722,
+        "median_geometry_seconds": 0.05262925004353747,
+        "median_search_selection_seconds": 3.9161524169612676,
+        "source": "output/disturbance_suite/sensor25_pair300/reversed/two_reversed_aware_9101.json",
+        "sha256": "0aece9034d95c6a408c8344b0b17bdb47beb98984524b2093230bfc548504523",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -774,33 +775,33 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 112.27316928328946,
-        "cost_first60": 17.19419969501905,
-        "cost_after60": 95.07896958827041,
+        "cost": 180.12819774472155,
+        "cost_first60": 24.93066133535467,
+        "cost_after60": 155.19753640936688,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.40384504199028015,
-        "dense_cost_before_failure": 112.27316974867578,
+        "minimum_surface_gap": 0.3342442810535431,
+        "dense_cost_before_failure": 180.12819839099464,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 112.27316928328946,
-        "maximum_integral_step_discrepancy": 1.663519513545736e-09,
+        "saved_cost_increments_sum": 180.12819774472155,
+        "maximum_integral_step_discrepancy": 1.8076527687899135e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
         "wind_exposure_fraction": 0.9950016661112963,
-        "nominal_reference_wind_exposure_fraction_approx": 0.6817727424191936,
-        "headwind_fraction": 0.010329890036654448,
-        "mean_speed_when_opposing_wind": 0.35301175989998257,
-        "rms_reference_tracking_error": 4.359820333995138,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.7190936354548484,
-        "cells_ever_reaching_target_fraction": 0.5,
+        "nominal_reference_wind_exposure_fraction_approx": 0.4481839386871043,
+        "headwind_fraction": 0.16894368543818727,
+        "mean_speed_when_opposing_wind": 0.22713765084039356,
+        "rms_reference_tracking_error": 2.614552207439472,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.46584471842719094,
+        "cells_ever_reaching_target_fraction": 0.47619047619047616,
         "regional_target_attainment": [
           {
             "site": 1,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.9523809523809523
           },
           {
             "site": 2,
@@ -808,36 +809,36 @@
           }
         ],
         "cells_ever_above_0_7_fraction": 0.5,
-        "warm_planning_median": 2.3744248740258627,
-        "warm_planning_p95": 2.654142070608213,
-        "warm_planning_max": 2.8120344989583828,
-        "first_call_seconds": 2.4204782500164583,
+        "warm_planning_median": 1.9099874990060925,
+        "warm_planning_p95": 2.1730210412642914,
+        "warm_planning_max": 2.7529241249430925,
+        "first_call_seconds": 1.7030816670157947,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 2.4204782500164583
+            "recorded_seconds": 1.7030816670157947
           }
         ],
-        "median_fields_seconds": 0.047197084000799805,
-        "median_geometry_seconds": 0.07912208297057077,
-        "median_search_selection_seconds": 2.249133665987756,
-        "source": "output/disturbance_suite/final300_part1_seed9101/reversed/two_reversed_blind_filter_9101.json",
-        "sha256": "09bfbc527138c42b1130a9ca6d934302b569146cf6a461342ecea51afac8cb16",
+        "median_fields_seconds": 0.03613958298228681,
+        "median_geometry_seconds": 0.0640019160346128,
+        "median_search_selection_seconds": 1.815088416042272,
+        "source": "output/disturbance_suite/sensor25_pair300/reversed/two_reversed_blind_filter_9101.json",
+        "sha256": "9018a4124290fe5f2c562b8828de11c93b27f14756faf63f755313100d5b60c8",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -865,7 +866,7 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 84.14697982539158,
+      "reduction_percent": 86.24950227719735,
       "valid_safe_comparison": true,
       "substantial_reduction": true,
       "settings": {
@@ -895,6 +896,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.65,
         "prior_std": 1.8,
@@ -1329,7 +1331,7 @@
           1.8
         ]
       },
-      "playback_url": "data/reversed-f417cf35edba.json.deflate"
+      "playback_url": "data/reversed-bfe751c1f058.json.deflate"
     },
     {
       "case": "courtyards",
@@ -1337,35 +1339,35 @@
       "topology": "Six staggered building blocks; intersecting streets",
       "task": "Four spatially separated courtyards",
       "mechanism": "A circulating street flow changes the profitable order of four courtyard visits",
-      "scenario_revision": "monitoring-suite-v7-feasible-alternatives",
+      "scenario_revision": "monitoring-suite-v9-traversable-service-aisles",
       "real_obstacles": 6,
       "mission_seconds": 300.0,
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 70.97333308449015,
-        "cost_first60": 15.64925334858708,
-        "cost_after60": 55.32407973590307,
+        "cost": 90.23984699975699,
+        "cost_first60": 17.883541249437258,
+        "cost_after60": 72.35630575031973,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.4105859696865082,
-        "dense_cost_before_failure": 70.97333327089481,
+        "minimum_surface_gap": 0.4568086564540863,
+        "dense_cost_before_failure": 90.2398472990157,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 70.97333308449015,
-        "maximum_integral_step_discrepancy": 1.3255824641081326e-09,
+        "saved_cost_increments_sum": 90.23984699975699,
+        "maximum_integral_step_discrepancy": 1.5224906656577386e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.5294901699433522,
-        "nominal_reference_wind_exposure_fraction_approx": 0.5244918360546484,
-        "headwind_fraction": 0.1692769076974342,
-        "mean_speed_when_opposing_wind": 0.7491882243623247,
-        "rms_reference_tracking_error": 1.69927737528048,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.003332222592469177,
-        "cells_ever_reaching_target_fraction": 1.0,
+        "wind_exposure_fraction": 0.6461179606797735,
+        "nominal_reference_wind_exposure_fraction_approx": 0.587137620793069,
+        "headwind_fraction": 0.2539153615461513,
+        "mean_speed_when_opposing_wind": 0.7587833402326136,
+        "rms_reference_tracking_error": 1.4836554579804504,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.003998667110963012,
+        "cells_ever_reaching_target_fraction": 0.9047619047619048,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -1381,40 +1383,40 @@
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.6190476190476191
           }
         ],
-        "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 5.80905337492004,
-        "warm_planning_p95": 6.797503853874512,
-        "warm_planning_max": 7.318469000048935,
-        "first_call_seconds": 31.05291033303365,
+        "cells_ever_above_0_7_fraction": 0.9107142857142857,
+        "warm_planning_median": 4.1371961669647135,
+        "warm_planning_p95": 4.705611650331411,
+        "warm_planning_max": 5.6924352499772795,
+        "first_call_seconds": 17.88553583394969,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 31.05291033303365
+            "recorded_seconds": 17.88553583394969
           }
         ],
-        "median_fields_seconds": 0.041042541968636215,
-        "median_geometry_seconds": 0.24053200002526864,
-        "median_search_selection_seconds": 5.531161291990429,
-        "source": "output/disturbance_suite/final300_part2_seed9101/courtyards/two_courtyards_aware_9101.json",
-        "sha256": "a294a2321932d76bfaef0752771ce881bc47148e7932035389a5ad92f7b52a75",
+        "median_fields_seconds": 0.02972329198382795,
+        "median_geometry_seconds": 0.18102099996758625,
+        "median_search_selection_seconds": 3.930576333019417,
+        "source": "output/disturbance_suite/sensor25_complex300/courtyards/two_courtyards_aware_9101.json",
+        "sha256": "acbf2f912aa59bac6d2fd8f01282eb3e1e62720db99717571a81ee5e67b384f9",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -1444,29 +1446,29 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 133.77943506359588,
-        "cost_first60": 20.369719505426474,
-        "cost_after60": 113.40971555816941,
+        "cost": 115.86360751988832,
+        "cost_first60": 23.16698708385229,
+        "cost_after60": 92.69662043603603,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.37080642580986023,
-        "dense_cost_before_failure": 133.77943557036642,
+        "minimum_surface_gap": 0.47300848364830017,
+        "dense_cost_before_failure": 115.86360796831062,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 133.77943506359588,
-        "maximum_integral_step_discrepancy": 1.773947761254946e-09,
+        "saved_cost_increments_sum": 115.86360751988832,
+        "maximum_integral_step_discrepancy": 2.149137713278182e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.9823392202599134,
-        "nominal_reference_wind_exposure_fraction_approx": 0.8820393202265912,
-        "headwind_fraction": 0.4441852715761413,
-        "mean_speed_when_opposing_wind": 0.32544723868538483,
-        "rms_reference_tracking_error": 3.5849937623332857,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.1789403532155948,
-        "cells_ever_reaching_target_fraction": 0.7619047619047619,
+        "wind_exposure_fraction": 0.9416861046317894,
+        "nominal_reference_wind_exposure_fraction_approx": 0.9076974341886038,
+        "headwind_fraction": 0.5438187270909697,
+        "mean_speed_when_opposing_wind": 0.3324413241966373,
+        "rms_reference_tracking_error": 3.17587989319212,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.06164611796067977,
+        "cells_ever_reaching_target_fraction": 1.0,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -1474,7 +1476,7 @@
           },
           {
             "site": 2,
-            "fraction_ever_reaching_target": 0.9285714285714286
+            "fraction_ever_reaching_target": 1.0
           },
           {
             "site": 3,
@@ -1482,40 +1484,40 @@
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.11904761904761904
+            "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.8035714285714286,
-        "warm_planning_median": 2.4115427079377696,
-        "warm_planning_p95": 2.7146437664923724,
-        "warm_planning_max": 3.906285374017898,
-        "first_call_seconds": 7.03233337495476,
+        "cells_ever_above_0_7_fraction": 1.0,
+        "warm_planning_median": 1.546558876056224,
+        "warm_planning_p95": 2.1777436592616133,
+        "warm_planning_max": 3.046179207973182,
+        "first_call_seconds": 5.602726623939816,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 7.03233337495476
+            "recorded_seconds": 5.602726623939816
           }
         ],
-        "median_fields_seconds": 0.042329917021561414,
-        "median_geometry_seconds": 0.25773295800900087,
-        "median_search_selection_seconds": 2.1177666669827886,
-        "source": "output/disturbance_suite/final300_part2_seed9101/courtyards/two_courtyards_blind_filter_9101.json",
-        "sha256": "bccfcaf51eeca9eecd7ccb540ecbff8de3562f2f8e641adb69ca6b96c34a8e93",
+        "median_fields_seconds": 0.0285891669918783,
+        "median_geometry_seconds": 0.1775206660386175,
+        "median_search_selection_seconds": 1.3442074159975164,
+        "source": "output/disturbance_suite/sensor25_complex300/courtyards/two_courtyards_blind_filter_9101.json",
+        "sha256": "e55f0dc293a403e579942dbc7584915b5fd1cdc03c4490109279d2542febe28b",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -1543,7 +1545,7 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 46.94750127270986,
+      "reduction_percent": 22.115452011739695,
       "valid_safe_comparison": true,
       "substantial_reduction": true,
       "settings": {
@@ -1573,6 +1575,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.6,
         "prior_std": 1.8,
@@ -2007,7 +2010,7 @@
           1.8
         ]
       },
-      "playback_url": "data/courtyards-5540918f4d4a.json.deflate"
+      "playback_url": "data/courtyards-f6fa780563c5.json.deflate"
     },
     {
       "case": "exhaust",
@@ -2015,35 +2018,35 @@
       "topology": "Eight process blocks with offset gates",
       "task": "A sheltered staging site and five equipment inspection patches",
       "mechanism": "Local exhaust jets disturb direct close inspection; lateral standoff views remain feasible",
-      "scenario_revision": "monitoring-suite-v7-feasible-alternatives",
+      "scenario_revision": "monitoring-suite-v9-traversable-service-aisles",
       "real_obstacles": 8,
       "mission_seconds": 300.0,
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 80.29365058848634,
-        "cost_first60": 17.765547073911875,
-        "cost_after60": 62.52810351457447,
+        "cost": 118.40048117376864,
+        "cost_first60": 22.20794117380865,
+        "cost_after60": 96.19253999995999,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.15268400311470032,
-        "dense_cost_before_failure": 80.29365090677202,
+        "minimum_surface_gap": 0.343959242105484,
+        "dense_cost_before_failure": 118.40048168288607,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 80.29365058848634,
-        "maximum_integral_step_discrepancy": 1.5357952743745573e-09,
+        "saved_cost_increments_sum": 118.40048117376864,
+        "maximum_integral_step_discrepancy": 1.6253796364384954e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.29856714428523823,
-        "nominal_reference_wind_exposure_fraction_approx": 0.22659113628790403,
-        "headwind_fraction": 0.02332555814728424,
-        "mean_speed_when_opposing_wind": 0.7459562597162012,
-        "rms_reference_tracking_error": 1.9758467615166075,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.10796401199600134,
-        "cells_ever_reaching_target_fraction": 1.0,
+        "wind_exposure_fraction": 0.5428190603132289,
+        "nominal_reference_wind_exposure_fraction_approx": 0.34721759413528824,
+        "headwind_fraction": 0.05764745084971676,
+        "mean_speed_when_opposing_wind": 0.6541110998570141,
+        "rms_reference_tracking_error": 2.897591571054616,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.25324891702765745,
+        "cells_ever_reaching_target_fraction": 0.8452380952380952,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -2055,7 +2058,7 @@
           },
           {
             "site": 3,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.07142857142857142
           },
           {
             "site": 4,
@@ -2070,37 +2073,37 @@
             "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 6.976049458957277,
-        "warm_planning_p95": 8.748760696500538,
-        "warm_planning_max": 9.120180291007273,
-        "first_call_seconds": 7.445270583964884,
+        "cells_ever_above_0_7_fraction": 0.9642857142857143,
+        "warm_planning_median": 4.361399249988608,
+        "warm_planning_p95": 5.998150291043566,
+        "warm_planning_max": 6.149557081982493,
+        "first_call_seconds": 5.589859250001609,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 7.445270583964884
+            "recorded_seconds": 5.589859250001609
           }
         ],
-        "median_fields_seconds": 0.05021312501048669,
-        "median_geometry_seconds": 0.5648378750192933,
-        "median_search_selection_seconds": 6.3057333750184625,
-        "source": "output/disturbance_suite/final300_part1_seed9101/exhaust/two_exhaust_aware_9101.json",
-        "sha256": "b828cf72b1492afeff7c32c491dfd0911bb69700185266d6831addbeed93f22f",
+        "median_fields_seconds": 0.030504665977787226,
+        "median_geometry_seconds": 0.36411975004011765,
+        "median_search_selection_seconds": 3.9535267910105176,
+        "source": "output/disturbance_suite/sensor25_complex300/exhaust/two_exhaust_aware_9101.json",
+        "sha256": "6dc18a866b71957cd7237f89c8493f4f33410a204411d0a968e17660602a568e",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -2130,29 +2133,29 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 154.48655102355406,
-        "cost_first60": 23.90687614073977,
-        "cost_after60": 130.5796748828143,
+        "cost": 176.5960936807096,
+        "cost_first60": 26.108116287272424,
+        "cost_after60": 150.48797739343718,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.169979065656662,
-        "dense_cost_before_failure": 154.48655170349335,
+        "minimum_surface_gap": 0.3164077699184418,
+        "dense_cost_before_failure": 176.59609440552367,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 154.48655102355406,
-        "maximum_integral_step_discrepancy": 2.1103326057134164e-09,
+        "saved_cost_increments_sum": 176.5960936807096,
+        "maximum_integral_step_discrepancy": 2.3407240703002263e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.5874708430523159,
-        "nominal_reference_wind_exposure_fraction_approx": 0.5124958347217594,
-        "headwind_fraction": 0.000999666777740753,
-        "mean_speed_when_opposing_wind": 0.2723047889386355,
-        "rms_reference_tracking_error": 3.5389865185766594,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.38153948683772076,
-        "cells_ever_reaching_target_fraction": 0.3333333333333333,
+        "wind_exposure_fraction": 0.36254581806064645,
+        "nominal_reference_wind_exposure_fraction_approx": 0.45418193935354884,
+        "headwind_fraction": 0.0023325558147284237,
+        "mean_speed_when_opposing_wind": 0.43049252096803137,
+        "rms_reference_tracking_error": 2.9835883852317835,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.25891369543485504,
+        "cells_ever_reaching_target_fraction": 0.30952380952380953,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -2160,7 +2163,7 @@
           },
           {
             "site": 2,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.8571428571428571
           },
           {
             "site": 3,
@@ -2179,37 +2182,37 @@
             "fraction_ever_reaching_target": 0.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.3333333333333333,
-        "warm_planning_median": 2.070336500997655,
-        "warm_planning_p95": 2.356393782672239,
-        "warm_planning_max": 2.7999936670530587,
-        "first_call_seconds": 2.321659292036202,
+        "cells_ever_above_0_7_fraction": 0.3273809523809524,
+        "warm_planning_median": 2.601584082003683,
+        "warm_planning_p95": 3.3179567245184436,
+        "warm_planning_max": 4.538590333017055,
+        "first_call_seconds": 1.8036435410031117,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 2.321659292036202
+            "recorded_seconds": 1.8036435410031117
           }
         ],
-        "median_fields_seconds": 0.03476233303081244,
-        "median_geometry_seconds": 0.4021031249430962,
-        "median_search_selection_seconds": 1.6359384160023183,
-        "source": "output/disturbance_suite/final300_part1_seed9101/exhaust/two_exhaust_blind_filter_9101.json",
-        "sha256": "17bbe41376aaf9c8cc9be35252b9b7e8a10c42dcb4a12416b41625758b7f5260",
+        "median_fields_seconds": 0.041897332994267344,
+        "median_geometry_seconds": 0.545849707967136,
+        "median_search_selection_seconds": 2.022027333965525,
+        "source": "output/disturbance_suite/sensor25_complex300/exhaust/two_exhaust_blind_filter_9101.json",
+        "sha256": "1a9f3f126f175bdcc1d09d452f4de6ac09cca207aefbc2e892f63593ccdcb4fc",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -2237,7 +2240,7 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 48.02547532034408,
+      "reduction_percent": 32.95407689603835,
       "valid_safe_comparison": true,
       "substantial_reduction": true,
       "settings": {
@@ -2267,6 +2270,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 4.0,
         "prior_std": 1.8,
@@ -2701,7 +2705,7 @@
           1.8
         ]
       },
-      "playback_url": "data/exhaust-6e7a4bef9497.json.deflate"
+      "playback_url": "data/exhaust-10d68c12a2cb.json.deflate"
     },
     {
       "case": "slalom",
@@ -2709,43 +2713,43 @@
       "topology": "Four alternating long barriers and two corner blocks",
       "task": "Continuous narrow street segments rather than two target boxes",
       "mechanism": "Opposite outer-street flows and a sheltered central street change survey order and approach direction",
-      "scenario_revision": "monitoring-suite-v7-feasible-alternatives",
+      "scenario_revision": "monitoring-suite-v9-traversable-service-aisles",
       "real_obstacles": 6,
       "mission_seconds": 300.0,
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 102.1854724563891,
-        "cost_first60": 16.200616120710038,
-        "cost_after60": 85.98485633567907,
+        "cost": 120.37521744496189,
+        "cost_first60": 23.36585206934251,
+        "cost_after60": 97.00936537561938,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.09455189108848572,
-        "dense_cost_before_failure": 102.18547282337965,
+        "minimum_surface_gap": 0.032286256551742554,
+        "dense_cost_before_failure": 120.37521788378537,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 102.1854724563891,
-        "maximum_integral_step_discrepancy": 1.2710335704942122e-09,
+        "saved_cost_increments_sum": 120.37521744496189,
+        "maximum_integral_step_discrepancy": 1.957551354521414e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.5521492835721427,
-        "nominal_reference_wind_exposure_fraction_approx": 0.3972009330223259,
-        "headwind_fraction": 0.1166277907364212,
-        "mean_speed_when_opposing_wind": 0.3046112284915995,
-        "rms_reference_tracking_error": 2.07188748394611,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.14361879373542152,
-        "cells_ever_reaching_target_fraction": 0.9702380952380952,
+        "wind_exposure_fraction": 0.34955014995001665,
+        "nominal_reference_wind_exposure_fraction_approx": 0.26057980673108966,
+        "headwind_fraction": 0.04598467177607464,
+        "mean_speed_when_opposing_wind": 0.2928601255774842,
+        "rms_reference_tracking_error": 1.9833622022422481,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.22159280239920026,
+        "cells_ever_reaching_target_fraction": 0.9583333333333334,
         "regional_target_attainment": [
           {
             "site": 1,
-            "fraction_ever_reaching_target": 0.9705882352941176
+            "fraction_ever_reaching_target": 0.8235294117647058
           },
           {
             "site": 2,
-            "fraction_ever_reaching_target": 0.9411764705882353
+            "fraction_ever_reaching_target": 0.9705882352941176
           },
           {
             "site": 3,
@@ -2757,40 +2761,40 @@
           },
           {
             "site": 5,
-            "fraction_ever_reaching_target": 0.9393939393939394
+            "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.9940476190476191,
-        "warm_planning_median": 3.4332453349488787,
-        "warm_planning_p95": 4.77476773870876,
-        "warm_planning_max": 5.397729291988071,
-        "first_call_seconds": 3.2780856659519486,
+        "cells_ever_above_0_7_fraction": 0.9642857142857143,
+        "warm_planning_median": 5.698669166013133,
+        "warm_planning_p95": 6.209787370287813,
+        "warm_planning_max": 6.283047374978196,
+        "first_call_seconds": 23.317118250997737,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 3.2780856659519486
+            "recorded_seconds": 23.317118250997737
           }
         ],
-        "median_fields_seconds": 0.02649012499023229,
-        "median_geometry_seconds": 0.19138566695619375,
-        "median_search_selection_seconds": 3.2114617499755695,
-        "source": "output/disturbance_suite/final300_part1_seed9101/slalom/two_slalom_aware_9101.json",
-        "sha256": "4dabf0093555512c908fd42061f95f54b8d5408793a76f39d93699c5c6906b8d",
+        "median_fields_seconds": 0.0364374159835279,
+        "median_geometry_seconds": 0.265841708984226,
+        "median_search_selection_seconds": 5.310878208023496,
+        "source": "output/disturbance_suite/sensor25_slalom_control50_300/slalom/two_slalom_aware_9101.json",
+        "sha256": "c20da2685226fbd0e036ed1af4b2e95ae81c8f4eedac508a8c68d61ae5726a22",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -2820,33 +2824,33 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 152.83735045068897,
-        "cost_first60": 21.138663924997672,
-        "cost_after60": 131.6986865256913,
+        "cost": 165.54432471236214,
+        "cost_first60": 23.705975063610822,
+        "cost_after60": 141.83834964875132,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.09921535849571228,
-        "dense_cost_before_failure": 152.83735110657068,
+        "minimum_surface_gap": 0.08285412192344666,
+        "dense_cost_before_failure": 165.54432525934257,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 152.83735045068897,
-        "maximum_integral_step_discrepancy": 1.479694176215185e-09,
+        "saved_cost_increments_sum": 165.54432471236214,
+        "maximum_integral_step_discrepancy": 2.035383313281347e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.971676107964012,
-        "nominal_reference_wind_exposure_fraction_approx": 0.7510829723425525,
-        "headwind_fraction": 0.06297900699766744,
-        "mean_speed_when_opposing_wind": 0.21833375362784505,
-        "rms_reference_tracking_error": 2.863669724441947,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.47784071976007997,
-        "cells_ever_reaching_target_fraction": 0.5178571428571429,
+        "wind_exposure_fraction": 0.0319893368877041,
+        "nominal_reference_wind_exposure_fraction_approx": 0.3078973675441519,
+        "headwind_fraction": 0.0013328890369876708,
+        "mean_speed_when_opposing_wind": 0.2098014071868326,
+        "rms_reference_tracking_error": 1.9321681185887827,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.5598133955348217,
+        "cells_ever_reaching_target_fraction": 0.47023809523809523,
         "regional_target_attainment": [
           {
             "site": 1,
-            "fraction_ever_reaching_target": 0.8823529411764706
+            "fraction_ever_reaching_target": 0.8235294117647058
           },
           {
             "site": 2,
@@ -2854,48 +2858,48 @@
           },
           {
             "site": 3,
-            "fraction_ever_reaching_target": 0.5294117647058824
+            "fraction_ever_reaching_target": 0.0
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.6363636363636364
+            "fraction_ever_reaching_target": 1.0
           },
           {
             "site": 5,
             "fraction_ever_reaching_target": 0.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.6130952380952381,
-        "warm_planning_median": 1.9252453329390846,
-        "warm_planning_p95": 2.121818312641699,
-        "warm_planning_max": 2.262007375014946,
-        "first_call_seconds": 2.0032318749581464,
+        "cells_ever_above_0_7_fraction": 0.47619047619047616,
+        "warm_planning_median": 1.2495844160439447,
+        "warm_planning_p95": 1.3395036289002746,
+        "warm_planning_max": 1.4210611670278013,
+        "first_call_seconds": 4.537304624973331,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 2.0032318749581464
+            "recorded_seconds": 4.537304624973331
           }
         ],
-        "median_fields_seconds": 0.033487459004390985,
-        "median_geometry_seconds": 0.25784775003558025,
-        "median_search_selection_seconds": 1.6222392500494607,
-        "source": "output/disturbance_suite/final300_part1_seed9101/slalom/two_slalom_blind_filter_9101.json",
-        "sha256": "cc56bebdcea38d8aec7ebbe2e4f2f214f2672225cfae4c3eb688f38e96a0bbf6",
+        "median_fields_seconds": 0.024041874974500388,
+        "median_geometry_seconds": 0.1701778750284575,
+        "median_search_selection_seconds": 1.0537792919785716,
+        "source": "output/disturbance_suite/sensor25_slalom_control50_300/slalom/two_slalom_blind_filter_9101.json",
+        "sha256": "aae7324d9ac68237617d6b6d4d6593a5dddfc516a28d37abfe7a0e78cdb38642",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -2923,7 +2927,7 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 33.14103381466433,
+      "reduction_percent": 27.285204337800664,
       "valid_safe_comparison": true,
       "substantial_reduction": true,
       "settings": {
@@ -2953,6 +2957,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.6,
         "prior_std": 1.8,
@@ -2974,7 +2979,7 @@
         "jerk_penalty": 0.0,
         "tracking_kp": 4.411764705882352,
         "tracking_kv": 7.352941176470588,
-        "execution_dt": 0.05,
+        "execution_dt": 0.02,
         "execution_margin": 0.7,
         "execution_filter": "hard",
         "penalty_aggregation": "mean",
@@ -3387,7 +3392,8 @@
           1.8
         ]
       },
-      "playback_url": "data/slalom-8f301869c543.json.deflate"
+      "protocol_note": "Both planners use 50 Hz execution-filter updates here (20 Hz in the previous checkpoint), with the same original 0.7 m execution buffer and 0.6 m geometric planning clearance. The 20 Hz narrower-footprint baseline contacted a building; that failed pair is retained and excluded from this comparison.",
+      "playback_url": "data/slalom-a63b02932df8.json.deflate"
     },
     {
       "case": "atrium",
@@ -3395,35 +3401,35 @@
       "topology": "Nested ring walls, two entrances, inner pavilion",
       "task": "Five patches inside and outside the ring",
       "mechanism": "South and east entrance jets penalize direct transfers; the west inner route remains sheltered",
-      "scenario_revision": "monitoring-suite-v7-feasible-alternatives",
+      "scenario_revision": "monitoring-suite-v9-traversable-service-aisles",
       "real_obstacles": 7,
       "mission_seconds": 300.0,
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 80.23699156753719,
-        "cost_first60": 14.752339507685974,
-        "cost_after60": 65.48465205985121,
+        "cost": 143.83229709789157,
+        "cost_first60": 22.9766319131013,
+        "cost_after60": 120.85566518479027,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.18662241101264954,
-        "dense_cost_before_failure": 80.2369918603876,
+        "minimum_surface_gap": 0.35579362511634827,
+        "dense_cost_before_failure": 143.83229762097744,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 80.23699156753719,
-        "maximum_integral_step_discrepancy": 1.4275844603672816e-09,
+        "saved_cost_increments_sum": 143.83229709789157,
+        "maximum_integral_step_discrepancy": 1.9681950418418137e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.6931022992335888,
-        "nominal_reference_wind_exposure_fraction_approx": 0.4405198267244252,
-        "headwind_fraction": 0.16061312895701432,
-        "mean_speed_when_opposing_wind": 0.33661432141341685,
-        "rms_reference_tracking_error": 1.8818943135058441,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.18527157614128623,
-        "cells_ever_reaching_target_fraction": 0.9702380952380952,
+        "wind_exposure_fraction": 0.2619126957680773,
+        "nominal_reference_wind_exposure_fraction_approx": 0.15761412862379207,
+        "headwind_fraction": 0.06831056314561813,
+        "mean_speed_when_opposing_wind": 0.3507559602580846,
+        "rms_reference_tracking_error": 2.511161139270927,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.5678107297567477,
+        "cells_ever_reaching_target_fraction": 0.7797619047619048,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -3435,48 +3441,48 @@
           },
           {
             "site": 3,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.8529411764705882
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.8484848484848485
+            "fraction_ever_reaching_target": 0.030303030303030304
           },
           {
             "site": 5,
             "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.9940476190476191,
-        "warm_planning_median": 6.9211559579125606,
-        "warm_planning_p95": 7.9987286581075745,
-        "warm_planning_max": 9.160318708978593,
-        "first_call_seconds": 6.4001981249894015,
+        "cells_ever_above_0_7_fraction": 0.7797619047619048,
+        "warm_planning_median": 4.638465168012772,
+        "warm_planning_p95": 6.3371301539300475,
+        "warm_planning_max": 6.946609917969909,
+        "first_call_seconds": 6.39032558206236,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 6.4001981249894015
+            "recorded_seconds": 6.39032558206236
           }
         ],
-        "median_fields_seconds": 0.048613375052809715,
-        "median_geometry_seconds": 0.33846362499753013,
-        "median_search_selection_seconds": 6.5211500829900615,
-        "source": "output/disturbance_suite/final300_part2_seed9101/atrium/two_atrium_aware_9101.json",
-        "sha256": "219d14329f9e88d45075c53d13403d84148b490a6606270dd55e5ac255d9db85",
+        "median_fields_seconds": 0.03309624997200444,
+        "median_geometry_seconds": 0.23950241599231958,
+        "median_search_selection_seconds": 4.3745975839556195,
+        "source": "output/disturbance_suite/sensor25_complex300/atrium/two_atrium_aware_9101.json",
+        "sha256": "598f45d9cce3a3bf7be85fb497bd0e75f044ade5e98c40dd9408b904a53982c6",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -3506,29 +3512,29 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 116.13381842849776,
-        "cost_first60": 17.311734249582514,
-        "cost_after60": 98.82208417891525,
+        "cost": 147.26050799246877,
+        "cost_first60": 22.396202548407018,
+        "cost_after60": 124.86430544406176,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.3154907524585724,
-        "dense_cost_before_failure": 116.13381885076365,
+        "minimum_surface_gap": 0.28324976563453674,
+        "dense_cost_before_failure": 147.2605085563039,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 116.13381842849776,
-        "maximum_integral_step_discrepancy": 1.7211728153831984e-09,
+        "saved_cost_increments_sum": 147.26050799246877,
+        "maximum_integral_step_discrepancy": 2.2633355988010972e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
         "wind_exposure_fraction": 0.9910029990003332,
-        "nominal_reference_wind_exposure_fraction_approx": 0.4475174941686105,
-        "headwind_fraction": 0.21159613462179275,
-        "mean_speed_when_opposing_wind": 0.2462782096884917,
-        "rms_reference_tracking_error": 1.9382521222870572,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.38520493168943687,
-        "cells_ever_reaching_target_fraction": 0.5654761904761905,
+        "nominal_reference_wind_exposure_fraction_approx": 0.457514161946018,
+        "headwind_fraction": 0.18193935354881707,
+        "mean_speed_when_opposing_wind": 0.2600133240609694,
+        "rms_reference_tracking_error": 1.836894368550388,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.38353882039320225,
+        "cells_ever_reaching_target_fraction": 0.40476190476190477,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -3544,44 +3550,44 @@
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.8484848484848485
+            "fraction_ever_reaching_target": 0.030303030303030304
           },
           {
             "site": 5,
             "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.5773809523809523,
-        "warm_planning_median": 2.431259832053911,
-        "warm_planning_p95": 3.5034711871121544,
-        "warm_planning_max": 4.063978916965425,
-        "first_call_seconds": 3.8780147079960443,
+        "cells_ever_above_0_7_fraction": 0.40476190476190477,
+        "warm_planning_median": 1.9133786669699475,
+        "warm_planning_p95": 2.4880001068871933,
+        "warm_planning_max": 2.8400151660316624,
+        "first_call_seconds": 2.0997503339895047,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 3.8780147079960443
+            "recorded_seconds": 2.0997503339895047
           }
         ],
-        "median_fields_seconds": 0.04425804200582206,
-        "median_geometry_seconds": 0.3214161659707315,
-        "median_search_selection_seconds": 2.0512329160119407,
-        "source": "output/disturbance_suite/final300_part2_seed9101/atrium/two_atrium_blind_filter_9101.json",
-        "sha256": "0e38b7030a500929584eb09870f615d2f03c4ad5ff3f4079abc6d20706741e51",
+        "median_fields_seconds": 0.03445650002686307,
+        "median_geometry_seconds": 0.2775762919918634,
+        "median_search_selection_seconds": 1.612923291977495,
+        "source": "output/disturbance_suite/sensor25_complex300/atrium/two_atrium_blind_filter_9101.json",
+        "sha256": "8eb6d7b8ebff3f059e3351aad7fa45ac43e89baffaa519f193823be3979d0220",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "6a265b29525cab3a1e7d0156b35b355abf6cb403e2763353dd75a83bcf61fcf6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -3609,9 +3615,9 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 30.90988253612089,
+      "reduction_percent": 2.327990675376817,
       "valid_safe_comparison": true,
-      "substantial_reduction": true,
+      "substantial_reduction": false,
       "settings": {
         "dt": 0.2,
         "horizon": 12.0,
@@ -3639,6 +3645,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.6,
         "prior_std": 1.8,
@@ -4073,7 +4080,7 @@
           1.8
         ]
       },
-      "playback_url": "data/atrium-dbbf8804fd62.json.deflate"
+      "playback_url": "data/atrium-a218d3e898b8.json.deflate"
     },
     {
       "case": "freight",
@@ -4087,29 +4094,29 @@
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 87.59951067750808,
-        "cost_first60": 20.451673704897985,
-        "cost_after60": 67.1478369726101,
+        "cost": 112.37281116680242,
+        "cost_first60": 21.254451997345313,
+        "cost_after60": 91.11835916945711,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.3384304344654083,
-        "dense_cost_before_failure": 87.59951098946765,
+        "minimum_surface_gap": 0.3258136808872223,
+        "dense_cost_before_failure": 112.37281157022532,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 87.59951067750808,
-        "maximum_integral_step_discrepancy": 1.3969838619232178e-09,
+        "saved_cost_increments_sum": 112.37281116680242,
+        "maximum_integral_step_discrepancy": 1.8564363327838729e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
-        "continued_prefix_verified": true,
+        "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.22859046984338555,
-        "nominal_reference_wind_exposure_fraction_approx": 0.15894701766077973,
-        "headwind_fraction": 0.04065311562812396,
-        "mean_speed_when_opposing_wind": 0.4263236920069443,
-        "rms_reference_tracking_error": 1.3970224864591623,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.06364545151616129,
-        "cells_ever_reaching_target_fraction": 0.9880952380952381,
+        "wind_exposure_fraction": 0.33455514828390537,
+        "nominal_reference_wind_exposure_fraction_approx": 0.21059646784405198,
+        "headwind_fraction": 0.1562812395868044,
+        "mean_speed_when_opposing_wind": 0.5215089896140459,
+        "rms_reference_tracking_error": 1.6529790589994597,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.0376541152949017,
+        "cells_ever_reaching_target_fraction": 0.9404761904761905,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -4125,39 +4132,35 @@
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.9642857142857143
+            "fraction_ever_reaching_target": 0.6428571428571429
           },
           {
             "site": 5,
-            "fraction_ever_reaching_target": 0.9642857142857143
+            "fraction_ever_reaching_target": 1.0
           },
           {
             "site": 6,
             "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 3.1050754790194333,
-        "warm_planning_p95": 5.385864195451722,
-        "warm_planning_max": 5.504215250024572,
-        "first_call_seconds": 20.804916834051255,
+        "cells_ever_above_0_7_fraction": 0.9583333333333334,
+        "warm_planning_median": 5.518227791995741,
+        "warm_planning_p95": 5.996568803442642,
+        "warm_planning_max": 6.932130957953632,
+        "first_call_seconds": 5.858457374037243,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 20.804916834051255
-          },
-          {
-            "mission_time": 59.99999999999663,
-            "recorded_seconds": 13.703538083937019
+            "recorded_seconds": 5.858457374037243
           }
         ],
-        "median_fields_seconds": 0.022442916495492682,
-        "median_geometry_seconds": 0.265719146002084,
-        "median_search_selection_seconds": 2.8189071045198943,
-        "source": "output/disturbance_suite/final300_revised9_seed9101/freight/two_freight_aware_9101.json",
-        "sha256": "702f388180bcc1a4fab0301af96fa67f8ab0824a17f17aea14c46ae90922f2b6",
+        "median_fields_seconds": 0.03901637496892363,
+        "median_geometry_seconds": 0.43632279202574864,
+        "median_search_selection_seconds": 5.047893250011839,
+        "source": "output/disturbance_suite/sensor25_network300/freight/two_freight_aware_9101.json",
+        "sha256": "ba051ce1480ac83e1f67aacc539f5455b11bd797a363b7e2a79599baedaddb1a",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "1b3196d6367945b4c3a96fc170373e26a18dcfcfe347cbdde2d7b25aae1f6aa6",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
@@ -4165,12 +4168,12 @@
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -4200,29 +4203,29 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 151.47133336495608,
-        "cost_first60": 21.129638844169676,
-        "cost_after60": 130.3416945207864,
+        "cost": 176.67994066420943,
+        "cost_first60": 28.770298077724874,
+        "cost_after60": 147.90964258648455,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.3991124927997589,
-        "dense_cost_before_failure": 151.4713339814883,
+        "minimum_surface_gap": 0.4426012933254242,
+        "dense_cost_before_failure": 176.67994147123278,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 151.47133336495608,
-        "maximum_integral_step_discrepancy": 1.4045231401527136e-09,
+        "saved_cost_increments_sum": 176.67994066420943,
+        "maximum_integral_step_discrepancy": 2.621451305161171e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
-        "continued_prefix_verified": true,
+        "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.12662445851382872,
-        "nominal_reference_wind_exposure_fraction_approx": 0.1149616794401866,
-        "headwind_fraction": 0.01299566811062979,
-        "mean_speed_when_opposing_wind": 0.27370826727621317,
-        "rms_reference_tracking_error": 2.9963226333766233,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.44585138287237586,
-        "cells_ever_reaching_target_fraction": 0.6666666666666666,
+        "wind_exposure_fraction": 0.45418193935354884,
+        "nominal_reference_wind_exposure_fraction_approx": 0.20959680106631123,
+        "headwind_fraction": 0.04598467177607464,
+        "mean_speed_when_opposing_wind": 0.3476278266181725,
+        "rms_reference_tracking_error": 3.221819422150721,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.43618793735421524,
+        "cells_ever_reaching_target_fraction": 0.19642857142857142,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -4230,15 +4233,15 @@
           },
           {
             "site": 2,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.0
           },
           {
             "site": 3,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.17857142857142858
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.0
           },
           {
             "site": 5,
@@ -4249,28 +4252,24 @@
             "fraction_ever_reaching_target": 0.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.6726190476190477,
-        "warm_planning_median": 1.9548801454948261,
-        "warm_planning_p95": 2.4089717668393855,
-        "warm_planning_max": 3.607733584009111,
-        "first_call_seconds": 7.864181124954484,
+        "cells_ever_above_0_7_fraction": 0.20238095238095238,
+        "warm_planning_median": 2.4574306680005975,
+        "warm_planning_p95": 2.88101035747095,
+        "warm_planning_max": 3.075409874028992,
+        "first_call_seconds": 2.6828992079827003,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 7.864181124954484
-          },
-          {
-            "mission_time": 59.99999999999663,
-            "recorded_seconds": 5.403866250009742
+            "recorded_seconds": 2.6828992079827003
           }
         ],
-        "median_fields_seconds": 0.03080622901325114,
-        "median_geometry_seconds": 0.33936047900351696,
-        "median_search_selection_seconds": 1.5851207290252205,
-        "source": "output/disturbance_suite/final300_revised9_seed9101/freight/two_freight_blind_filter_9101.json",
-        "sha256": "fffec1699ddffe73bf35ff4ddbd3e32e7b4b4f5efd8d30f3a7c9f08b9d3e8919",
+        "median_fields_seconds": 0.03957141702994704,
+        "median_geometry_seconds": 0.41318716696696356,
+        "median_search_selection_seconds": 1.9661987500148825,
+        "source": "output/disturbance_suite/sensor25_network300/freight/two_freight_blind_filter_9101.json",
+        "sha256": "0f5463d39f3c0beff818e34a281249a3abb1a7903305dd3bf831f3bcf2140631",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "1b3196d6367945b4c3a96fc170373e26a18dcfcfe347cbdde2d7b25aae1f6aa6",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
@@ -4278,12 +4277,12 @@
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -4311,7 +4310,7 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 42.16759783420853,
+      "reduction_percent": 36.39752722105928,
       "valid_safe_comparison": true,
       "substantial_reduction": true,
       "settings": {
@@ -4341,6 +4340,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.65,
         "prior_std": 1.8,
@@ -4775,7 +4775,7 @@
           1.8
         ]
       },
-      "playback_url": "data/freight-1cccce1a7fa2.json.deflate"
+      "playback_url": "data/freight-ceb1dc4fa140.json.deflate"
     },
     {
       "case": "perimeter",
@@ -4783,33 +4783,33 @@
       "topology": "Large central structure, five detached annexes",
       "task": "Distributed perimeter samples along four facades",
       "mechanism": "Corner jets and lee-side shelter alter where the robot can hold useful sensing positions",
-      "scenario_revision": "monitoring-suite-v8-clockwise-facade-flow",
+      "scenario_revision": "monitoring-suite-v9-traversable-service-aisles",
       "real_obstacles": 6,
       "mission_seconds": 300.0,
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 22.443292806099635,
-        "cost_first60": 5.730406460352242,
-        "cost_after60": 16.712886345747393,
+        "cost": 33.51696139591513,
+        "cost_first60": 7.906805240374524,
+        "cost_after60": 25.610156155540608,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.4016481339931488,
-        "dense_cost_before_failure": 22.443292872687532,
+        "minimum_surface_gap": 0.3072527348995209,
+        "dense_cost_before_failure": 33.516961487926366,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 22.443292806099635,
-        "maximum_integral_step_discrepancy": 1.2524071189845554e-09,
+        "saved_cost_increments_sum": 33.51696139591513,
+        "maximum_integral_step_discrepancy": 1.2710335704942122e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 1.0,
-        "nominal_reference_wind_exposure_fraction_approx": 0.9216927690769744,
+        "wind_exposure_fraction": 0.9990003332222592,
+        "nominal_reference_wind_exposure_fraction_approx": 0.9436854381872709,
         "headwind_fraction": 0.0,
         "mean_speed_when_opposing_wind": null,
-        "rms_reference_tracking_error": 0.6491615619681661,
+        "rms_reference_tracking_error": 0.5430119770254953,
         "nearly_stationary_with_reference_error_over_1m_fraction": 0.0,
         "cells_ever_reaching_target_fraction": 1.0,
         "regional_target_attainment": [
@@ -4831,36 +4831,36 @@
           }
         ],
         "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 6.486392583989073,
-        "warm_planning_p95": 7.111846679792507,
-        "warm_planning_max": 7.328849917044863,
-        "first_call_seconds": 26.99999466794543,
+        "warm_planning_median": 4.514077625994105,
+        "warm_planning_p95": 5.798159395845141,
+        "warm_planning_max": 7.067211541056167,
+        "first_call_seconds": 4.809720000019297,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 26.99999466794543
+            "recorded_seconds": 4.809720000019297
           }
         ],
-        "median_fields_seconds": 0.047579542035236955,
-        "median_geometry_seconds": 0.2910307500278577,
-        "median_search_selection_seconds": 6.130350749997888,
-        "source": "output/disturbance_suite/final300_perimeter_seed9101/perimeter/two_perimeter_aware_9101.json",
-        "sha256": "8f20608d178cc88a09f42c2a97162927f45128b6bb965211bfbefe812cc6d17b",
+        "median_fields_seconds": 0.03271570801734924,
+        "median_geometry_seconds": 0.20778654201421887,
+        "median_search_selection_seconds": 4.288204499986023,
+        "source": "output/disturbance_suite/sensor25_network300/perimeter/two_perimeter_aware_9101.json",
+        "sha256": "1aeee6f6db8aeb280d417d41591d4908ded6bb4dbbcce73da5306dc66a59272e",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "2e6135c470e6193e0740ece48517e3c3c2d9878682c0c1e45829d991f9eb41f6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -4890,28 +4890,28 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 32.65531872631982,
-        "cost_first60": 15.930137350223958,
-        "cost_after60": 16.72518137609586,
+        "cost": 34.37336706009228,
+        "cost_first60": 8.12482652592007,
+        "cost_after60": 26.248540534172207,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.22647365927696228,
-        "dense_cost_before_failure": 32.655318806223754,
+        "minimum_surface_gap": 0.2990048825740814,
+        "dense_cost_before_failure": 34.37336715615755,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 32.65531872631982,
-        "maximum_integral_step_discrepancy": 1.4941075022166517e-09,
+        "saved_cost_increments_sum": 34.37336706009228,
+        "maximum_integral_step_discrepancy": 1.2710335704942122e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
         "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 1.0,
+        "wind_exposure_fraction": 0.9873375541486171,
         "nominal_reference_wind_exposure_fraction_approx": 0.9933355548150616,
-        "headwind_fraction": 0.028323892035988004,
-        "mean_speed_when_opposing_wind": 0.2530691993341115,
-        "rms_reference_tracking_error": 1.119368359588919,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.05498167277574142,
+        "headwind_fraction": 0.0,
+        "mean_speed_when_opposing_wind": null,
+        "rms_reference_tracking_error": 0.5491091324750199,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.0,
         "cells_ever_reaching_target_fraction": 1.0,
         "regional_target_attainment": [
           {
@@ -4932,36 +4932,36 @@
           }
         ],
         "cells_ever_above_0_7_fraction": 1.0,
-        "warm_planning_median": 3.005972124985419,
-        "warm_planning_p95": 3.4310100884060373,
-        "warm_planning_max": 3.662952958024107,
-        "first_call_seconds": 9.93566004303284,
+        "warm_planning_median": 2.296444541949313,
+        "warm_planning_p95": 2.5012348338845185,
+        "warm_planning_max": 2.59108066605404,
+        "first_call_seconds": 2.39224745798856,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 9.93566004303284
+            "recorded_seconds": 2.39224745798856
           }
         ],
-        "median_fields_seconds": 0.05160149995936081,
-        "median_geometry_seconds": 0.3132437499589287,
-        "median_search_selection_seconds": 2.61691179103218,
-        "source": "output/disturbance_suite/final300_perimeter_seed9101/perimeter/two_perimeter_blind_filter_9101.json",
-        "sha256": "a7fe7528c8052f949c7e0fc966eb4c70d338d14f63ecb818c352db5fcdc6947b",
+        "median_fields_seconds": 0.04017279198160395,
+        "median_geometry_seconds": 0.24977762502385303,
+        "median_search_selection_seconds": 1.9983808749821037,
+        "source": "output/disturbance_suite/sensor25_network300/perimeter/two_perimeter_blind_filter_9101.json",
+        "sha256": "a81e61777ba8b4c641decea1d6a861a9d4790b1fa0b589516b94e825a129b02e",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "8e4bb4dbfaf53329bacff27468dc191a6dc7b2ab996991f47ca25b04d3de0739",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
-          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "2e6135c470e6193e0740ece48517e3c3c2d9878682c0c1e45829d991f9eb41f6",
+          "src/voi_diffusion_ipp/quarter/benchmark_environments.py": "8bc3f51bc3f326242527b870914b6f075fb1195ce8d5f4031d6143be8bf40f4e",
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -4989,9 +4989,9 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 31.2721673483144,
+      "reduction_percent": 2.491480286699754,
       "valid_safe_comparison": true,
-      "substantial_reduction": true,
+      "substantial_reduction": false,
       "settings": {
         "dt": 0.2,
         "horizon": 12.0,
@@ -5019,6 +5019,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.6,
         "prior_std": 1.8,
@@ -5453,7 +5454,7 @@
           1.8
         ]
       },
-      "playback_url": "data/perimeter-99c2d037c35d.json.deflate"
+      "playback_url": "data/perimeter-202e6e4aaf9e.json.deflate"
     },
     {
       "case": "interchange",
@@ -5467,29 +5468,29 @@
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 123.62828935519792,
-        "cost_first60": 19.3200145510491,
-        "cost_after60": 104.30827480414882,
+        "cost": 146.5630446912255,
+        "cost_first60": 21.762478122022003,
+        "cost_after60": 124.80056656920351,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.2451876699924469,
-        "dense_cost_before_failure": 123.62828975346036,
+        "minimum_surface_gap": 0.28461262583732605,
+        "dense_cost_before_failure": 146.56304514629335,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 123.62828935519792,
-        "maximum_integral_step_discrepancy": 1.567726334167352e-09,
+        "saved_cost_increments_sum": 146.5630446912255,
+        "maximum_integral_step_discrepancy": 1.8362576762950833e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
-        "continued_prefix_verified": true,
+        "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.9130289903365545,
-        "nominal_reference_wind_exposure_fraction_approx": 0.7190936354548484,
-        "headwind_fraction": 0.07030989670109963,
-        "mean_speed_when_opposing_wind": 0.3626474090528217,
-        "rms_reference_tracking_error": 2.224082511599398,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.21326224591802734,
-        "cells_ever_reaching_target_fraction": 0.5,
+        "wind_exposure_fraction": 0.9576807730756415,
+        "nominal_reference_wind_exposure_fraction_approx": 0.797400866377874,
+        "headwind_fraction": 0.042652449183605466,
+        "mean_speed_when_opposing_wind": 0.3940250548739034,
+        "rms_reference_tracking_error": 2.6978502279027614,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.34721759413528824,
+        "cells_ever_reaching_target_fraction": 0.5773809523809523,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -5501,43 +5502,39 @@
           },
           {
             "site": 3,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.0
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.0
-          },
-          {
-            "site": 5,
             "fraction_ever_reaching_target": 1.0
           },
           {
+            "site": 5,
+            "fraction_ever_reaching_target": 0.4642857142857143
+          },
+          {
             "site": 6,
-            "fraction_ever_reaching_target": 0.0
+            "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.5238095238095238,
-        "warm_planning_median": 3.5203903339861427,
-        "warm_planning_p95": 5.185676997381961,
-        "warm_planning_max": 5.382049208972603,
-        "first_call_seconds": 5.375485957949422,
+        "cells_ever_above_0_7_fraction": 0.6011904761904762,
+        "warm_planning_median": 4.24142908299109,
+        "warm_planning_p95": 5.927308204525616,
+        "warm_planning_max": 6.08370958303567,
+        "first_call_seconds": 24.093307333008852,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 5.375485957949422
-          },
-          {
-            "mission_time": 59.99999999999663,
-            "recorded_seconds": 4.939079249976203
+            "recorded_seconds": 24.093307333008852
           }
         ],
-        "median_fields_seconds": 0.026650374522432685,
-        "median_geometry_seconds": 0.28780620847828686,
-        "median_search_selection_seconds": 3.1860572915466037,
-        "source": "output/disturbance_suite/final300_revised9_seed9101/interchange/two_interchange_aware_9101.json",
-        "sha256": "01817a4abf2f32dac92e949e0a28e6ecf869554a84a185db1924f6915b81b809",
+        "median_fields_seconds": 0.02960866701323539,
+        "median_geometry_seconds": 0.3288114580209367,
+        "median_search_selection_seconds": 3.8725747079588473,
+        "source": "output/disturbance_suite/sensor25_network300/interchange/two_interchange_aware_9101.json",
+        "sha256": "680b43ffe57dec08a8efefc86c2f2231d723c62a57bf9d757ab31b599e35f88d",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "1b3196d6367945b4c3a96fc170373e26a18dcfcfe347cbdde2d7b25aae1f6aa6",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
@@ -5545,12 +5542,12 @@
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -5580,29 +5577,29 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 156.9600179810077,
-        "cost_first60": 25.539039896335453,
-        "cost_after60": 131.42097808467224,
+        "cost": 179.82122740987688,
+        "cost_first60": 25.47157544735819,
+        "cost_after60": 154.3496519625187,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.3685603439807892,
-        "dense_cost_before_failure": 156.960018642735,
+        "minimum_surface_gap": 0.2444959580898285,
+        "dense_cost_before_failure": 179.8212281619493,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 156.9600179810077,
-        "maximum_integral_step_discrepancy": 2.638747295322097e-09,
+        "saved_cost_increments_sum": 179.82122740987688,
+        "maximum_integral_step_discrepancy": 2.565350205700756e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
-        "continued_prefix_verified": true,
+        "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 1.0,
-        "nominal_reference_wind_exposure_fraction_approx": 0.9626791069643452,
-        "headwind_fraction": 0.02299233588803732,
-        "mean_speed_when_opposing_wind": 0.2377767108022381,
-        "rms_reference_tracking_error": 3.563343935804329,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.5271576141286238,
-        "cells_ever_reaching_target_fraction": 0.16666666666666666,
+        "wind_exposure_fraction": 0.9893368877040987,
+        "nominal_reference_wind_exposure_fraction_approx": 0.5948017327557481,
+        "headwind_fraction": 0.07830723092302566,
+        "mean_speed_when_opposing_wind": 0.33008553939093777,
+        "rms_reference_tracking_error": 3.7421722903771046,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.44018660446517827,
+        "cells_ever_reaching_target_fraction": 0.375,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -5622,35 +5619,31 @@
           },
           {
             "site": 5,
-            "fraction_ever_reaching_target": 0.0
+            "fraction_ever_reaching_target": 0.39285714285714285
           },
           {
             "site": 6,
-            "fraction_ever_reaching_target": 0.0
+            "fraction_ever_reaching_target": 0.8571428571428571
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.16666666666666666,
-        "warm_planning_median": 1.770855770475464,
-        "warm_planning_p95": 2.2166551768837963,
-        "warm_planning_max": 2.8626114589278586,
-        "first_call_seconds": 1.5060363340307958,
+        "cells_ever_above_0_7_fraction": 0.39285714285714285,
+        "warm_planning_median": 2.5571675000246614,
+        "warm_planning_p95": 3.419739311287412,
+        "warm_planning_max": 3.5179037500638515,
+        "first_call_seconds": 6.76487283303868,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 1.5060363340307958
-          },
-          {
-            "mission_time": 59.99999999999663,
-            "recorded_seconds": 1.5076782919932157
+            "recorded_seconds": 6.76487283303868
           }
         ],
-        "median_fields_seconds": 0.02898683346575126,
-        "median_geometry_seconds": 0.30623981251847,
-        "median_search_selection_seconds": 1.4241574994812254,
-        "source": "output/disturbance_suite/final300_revised9_seed9101/interchange/two_interchange_blind_filter_9101.json",
-        "sha256": "a8a578d56200ece42688d3099ae195da294dab74359c24025e0d76619103b7a3",
+        "median_fields_seconds": 0.04266887501580641,
+        "median_geometry_seconds": 0.43013683398021385,
+        "median_search_selection_seconds": 2.053222917020321,
+        "source": "output/disturbance_suite/sensor25_network300/interchange/two_interchange_blind_filter_9101.json",
+        "sha256": "dfd4aa387b6920139672ef0d2def4a47909ac93102c36771313e4e2a74c14410",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "1b3196d6367945b4c3a96fc170373e26a18dcfcfe347cbdde2d7b25aae1f6aa6",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
@@ -5658,12 +5651,12 @@
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -5691,7 +5684,7 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 21.235808363530477,
+      "reduction_percent": 18.495137196925075,
       "valid_safe_comparison": true,
       "substantial_reduction": true,
       "settings": {
@@ -5721,6 +5714,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.65,
         "prior_std": 1.8,
@@ -6156,7 +6150,7 @@
         ]
       },
       "metadata_note": "The recorded geometry has west, east, north and south branches; an earlier title called it three-branch.",
-      "playback_url": "data/interchange-732f974e832f.json.deflate"
+      "playback_url": "data/interchange-488211f3b4b3.json.deflate"
     },
     {
       "case": "distributed",
@@ -6170,29 +6164,29 @@
       "seed": 9101,
       "aware": {
         "method": "aware",
-        "cost": 113.5015262439847,
-        "cost_first60": 19.31669204798527,
-        "cost_after60": 94.18483419599943,
+        "cost": 121.76096619782038,
+        "cost_first60": 20.94265384390019,
+        "cost_after60": 100.81831235392019,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.5432024002075195,
-        "dense_cost_before_failure": 113.50152677513647,
+        "minimum_surface_gap": 0.7200015783309937,
+        "dense_cost_before_failure": 121.76096672267043,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 113.5015262439847,
-        "maximum_integral_step_discrepancy": 1.8200704034188053e-09,
+        "saved_cost_increments_sum": 121.76096619782038,
+        "maximum_integral_step_discrepancy": 1.9063286131951185e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
-        "continued_prefix_verified": true,
+        "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.24225258247250916,
-        "nominal_reference_wind_exposure_fraction_approx": 0.27090969676774407,
-        "headwind_fraction": 0.09063645451516161,
-        "mean_speed_when_opposing_wind": 1.3537370463140515,
-        "rms_reference_tracking_error": 0.9253476711409001,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.06564478507164279,
-        "cells_ever_reaching_target_fraction": 0.5773809523809523,
+        "wind_exposure_fraction": 0.42819060313228924,
+        "nominal_reference_wind_exposure_fraction_approx": 0.3912029323558814,
+        "headwind_fraction": 0.20626457847384205,
+        "mean_speed_when_opposing_wind": 0.9408367622170137,
+        "rms_reference_tracking_error": 0.7671285080633511,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.001999333555481506,
+        "cells_ever_reaching_target_fraction": 0.5059523809523809,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -6208,7 +6202,7 @@
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.75
+            "fraction_ever_reaching_target": 1.0
           },
           {
             "site": 5,
@@ -6216,31 +6210,27 @@
           },
           {
             "site": 6,
-            "fraction_ever_reaching_target": 1.0
+            "fraction_ever_reaching_target": 0.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.6071428571428571,
-        "warm_planning_median": 3.6763265834888443,
-        "warm_planning_p95": 5.537693975114962,
-        "warm_planning_max": 5.670933667046484,
-        "first_call_seconds": 30.884843125008047,
+        "cells_ever_above_0_7_fraction": 0.5059523809523809,
+        "warm_planning_median": 5.880933499080129,
+        "warm_planning_p95": 7.509557458607014,
+        "warm_planning_max": 8.03203633299563,
+        "first_call_seconds": 30.476199249911588,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 30.884843125008047
-          },
-          {
-            "mission_time": 59.99999999999663,
-            "recorded_seconds": 21.719546582957264
+            "recorded_seconds": 30.476199249911588
           }
         ],
-        "median_fields_seconds": 0.02634541699080728,
-        "median_geometry_seconds": 0.4903942290111445,
-        "median_search_selection_seconds": 3.1612073334981687,
-        "source": "output/disturbance_suite/final300_distributed_clearance_seed9101/distributed/two_distributed_aware_9101.json",
-        "sha256": "07655362fc8220e6d2ec08efb99bef0dcba0a7c2a2fd8efb78b8c659abee209e",
+        "median_fields_seconds": 0.0400205830228515,
+        "median_geometry_seconds": 0.7334330000448972,
+        "median_search_selection_seconds": 5.102871707989834,
+        "source": "output/disturbance_suite/sensor25_distributed300/distributed/two_distributed_aware_9101.json",
+        "sha256": "61268914635784b840e27677a60e29497ad420875592c6b68dc67fbf8c99a9f6",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "1b3196d6367945b4c3a96fc170373e26a18dcfcfe347cbdde2d7b25aae1f6aa6",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
@@ -6248,12 +6238,12 @@
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -6283,29 +6273,29 @@
       },
       "blind_filter": {
         "method": "blind_filter",
-        "cost": 151.8227782342583,
-        "cost_first60": 23.3091481202282,
-        "cost_after60": 128.5136301140301,
+        "cost": 140.97889567469247,
+        "cost_first60": 22.167749273823574,
+        "cost_after60": 118.81114640086889,
         "completed_seconds": 299.99999999987216,
         "success": true,
         "failure": null,
-        "minimum_surface_gap": 0.7362974882125854,
-        "dense_cost_before_failure": 151.82277888680727,
+        "minimum_surface_gap": 0.5456019639968872,
+        "dense_cost_before_failure": 140.97889629162594,
         "dense_steps": 30000,
-        "saved_cost_increments_sum": 151.8227782342583,
-        "maximum_integral_step_discrepancy": 2.2012474291260853e-09,
+        "saved_cost_increments_sum": 140.97889567469247,
+        "maximum_integral_step_discrepancy": 2.0209699868461994e-09,
         "source_snapshot_hashes_verified": true,
         "physical_state_continuity_verified": true,
-        "continued_prefix_verified": true,
+        "continued_prefix_verified": null,
         "dense_cost_matches_report": true,
         "unobserved_remainder_penalty": 0.0,
-        "wind_exposure_fraction": 0.003998667110963012,
-        "nominal_reference_wind_exposure_fraction_approx": 0.06897700766411197,
-        "headwind_fraction": 0.003998667110963012,
-        "mean_speed_when_opposing_wind": 1.2387855853717464,
-        "rms_reference_tracking_error": 1.1577086871231441,
-        "nearly_stationary_with_reference_error_over_1m_fraction": 0.4161946017994002,
-        "cells_ever_reaching_target_fraction": 0.3630952380952381,
+        "wind_exposure_fraction": 0.5741419526824392,
+        "nominal_reference_wind_exposure_fraction_approx": 0.3938687104298567,
+        "headwind_fraction": 0.13295568143952016,
+        "mean_speed_when_opposing_wind": 0.6049112043770992,
+        "rms_reference_tracking_error": 1.742342738417604,
+        "nearly_stationary_with_reference_error_over_1m_fraction": 0.3055648117294235,
+        "cells_ever_reaching_target_fraction": 0.6130952380952381,
         "regional_target_attainment": [
           {
             "site": 1,
@@ -6321,7 +6311,7 @@
           },
           {
             "site": 4,
-            "fraction_ever_reaching_target": 0.0
+            "fraction_ever_reaching_target": 1.0
           },
           {
             "site": 5,
@@ -6329,31 +6319,27 @@
           },
           {
             "site": 6,
-            "fraction_ever_reaching_target": 0.0
+            "fraction_ever_reaching_target": 1.0
           }
         ],
-        "cells_ever_above_0_7_fraction": 0.3630952380952381,
-        "warm_planning_median": 1.6381559790170286,
-        "warm_planning_p95": 2.333470960709383,
-        "warm_planning_max": 2.472204414953012,
-        "first_call_seconds": 9.478688042028807,
+        "cells_ever_above_0_7_fraction": 0.6130952380952381,
+        "warm_planning_median": 2.7674388739978895,
+        "warm_planning_p95": 2.9895633164152966,
+        "warm_planning_max": 3.203587625059299,
+        "first_call_seconds": 12.901450167002622,
         "process_start_calls": [
           {
             "mission_time": 0.0,
-            "recorded_seconds": 9.478688042028807
-          },
-          {
-            "mission_time": 59.99999999999663,
-            "recorded_seconds": 5.582784625992645
+            "recorded_seconds": 12.901450167002622
           }
         ],
-        "median_fields_seconds": 0.026218916522338986,
-        "median_geometry_seconds": 0.4757568539935164,
-        "median_search_selection_seconds": 1.132800312479958,
-        "source": "output/disturbance_suite/final300_distributed_clearance_seed9101/distributed/two_distributed_blind_filter_9101.json",
-        "sha256": "87a33dd1bc4ecfedb4d335b2ad828ab106597e1dc87a060821b978b4d710dca2",
+        "median_fields_seconds": 0.03872966603375971,
+        "median_geometry_seconds": 0.7428989579784684,
+        "median_search_selection_seconds": 1.9436192919965833,
+        "source": "output/disturbance_suite/sensor25_distributed300/distributed/two_distributed_blind_filter_9101.json",
+        "sha256": "cae46e9a40eb783509cc6ad4a33bc448868fe08238bee5d677ba565f6d56a40d",
         "source_hashes": {
-          "scripts/run_full_control_quarter.py": "1b3196d6367945b4c3a96fc170373e26a18dcfcfe347cbdde2d7b25aae1f6aa6",
+          "scripts/run_full_control_quarter.py": "726aa37e5940ec0370fe64e677735157579471ffc6499fa5ead7d77b1a5e3cb2",
           "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
           "src/voi_diffusion_ipp/experiments/urban_quad.py": "680af00ad84d32c3d4d9244b258c4b9f1dbaad0a7c5bafc7ab3a32e0ce188094",
           "src/voi_diffusion_ipp/quarter/mbd_core.py": "3240fe27669d58f739b6ad0c860eeefd5d1249ea4b9aa454531132de7eafed7c",
@@ -6361,12 +6347,12 @@
           "src/voi_diffusion_ipp/quarter/planner.py": "4b6c4a1db99c6e332967ba934febd058cc7f13c59494df5c3076427f54a4e1c5",
           "src/voi_diffusion_ipp/quarter/diffusion.py": "5c28fdb2198c71c27adc9044ae712244922e044d8eb6ef878c790e90539d67a0",
           "src/voi_diffusion_ipp/quarter/execution.py": "9b408b3ceed798473686ecca492efb5a0edde0a35c8e42d7f361f52106b941ec",
-          "src/voi_diffusion_ipp/quarter/sensing.py": "1b6b31ebf292139477722e4a95ad91c97dd5e7379410b7a2364ce5c35b828eed",
+          "src/voi_diffusion_ipp/quarter/sensing.py": "725c28eb7b110e9f703b2df42721745f855b6719a02be159ceabf8a3c9ba427a",
           "src/voi_diffusion_ipp/quarter/multimode.py": "cd2a2714e218a20fd47546774b9a9edfb06b23bd4e585de037d93a24fbdcd0cf",
           "src/voi_diffusion_ipp/quarter/__init__.py": "f838e86a8a9e69dbd463f6b252c3d768925edca6c6c0c38dad79585f6909691e",
           "src/voi_diffusion_ipp/quarter/modes.py": "611696ffb181a07fd8197d7ac5d0ede4e5cc7513e3157200018a058f01132511",
           "src/voi_diffusion_ipp/quarter/suite_engine.py": "9d90a5fb31712d3ffb7e55f35cfaefa47982c5a8fdb99dd1d9905b8cad667a9c",
-          "src/voi_diffusion_ipp/quarter/environment.py": "b9490b65612ae5010f2152faa7324415f2e79400fe5efc2ae63a22663126e62d",
+          "src/voi_diffusion_ipp/quarter/environment.py": "7a7eb70ae906556fe7310241939609f164a45bdfa8129835fbeef20325cef4e7",
           "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
           "src/voi_diffusion_ipp/quarter/continuous.py": "332d5d4014a0502066df6747be9364a4ff453517399e37397ed1afdd82041f25",
           "src/voi_diffusion_ipp/quarter/rrt.py": "ff8e3ca5fb8031aeaa19b585680df425eff2da29500b4a3bacb6f9bf3d8cd238",
@@ -6394,9 +6380,9 @@
           "src/voi_diffusion_ipp/wind/physical.py": "d12351e4e1da060c5bb7e6f1b71a84926c208e2b37ce78534e5795717a880c70"
         }
       },
-      "reduction_percent": 25.240779042486615,
+      "reduction_percent": 13.631777568478963,
       "valid_safe_comparison": true,
-      "substantial_reduction": true,
+      "substantial_reduction": false,
       "settings": {
         "dt": 0.2,
         "horizon": 12.0,
@@ -6424,6 +6410,7 @@
         "spline": "full",
         "sensor_sigma": 2.2,
         "sensor_R": 0.3,
+        "sensor_half_angle_degrees": 25.0,
         "observation_std": 0.25,
         "wind_strength": 3.5,
         "prior_std": 1.8,
@@ -6858,7 +6845,7 @@
           1.8
         ]
       },
-      "playback_url": "data/distributed-c292886d4fad.json.deflate"
+      "playback_url": "data/distributed-c3e93ef7e5e0.json.deflate"
     }
   ],
   "pending": [],
@@ -6878,50 +6865,63 @@
     "substantial_reduction": "at least15 percent lower integrated monitoring deficit, both full missions completed without contact"
   },
   "case_selection": {
-    "manifest": "docs/disturbance_suite/final_cases.json",
-    "sha256": "f5259491a19b5bf30b6fdcd0a222a13f726633bb3ba955316dc19502768a9296",
+    "manifest": "docs/disturbance_suite/sensor25_cases.json",
+    "sha256": "eefc5913cdbaaf1d5d0b2e2aa249c630b071c065245ba12d55fd301724a28f01",
     "declaration": {
-      "selection_basis": "Development-selected scenario profiles. Both methods, seed 9101, same per-case settings. Older unfavorable and failed profiles remain in their original cohort folders. No held-out-seed claim.",
+      "selection_basis": "All ten previously selected environments rerun with a 25-degree camera half-angle. No environment, wind, Gaussian sensing quality or optimizer retuning. Same paired seed9101 and five-minute duration. After a slalom baseline contact, a common50Hz execution-filter update rate is tested instead of20Hz, with the original buffers unchanged. The invalid0.9m-buffer trial is retained separately. This is a development sensing-range revision, not a held-out benchmark; small and unfavorable outcomes are not removed.",
+      "sensor_half_angle_degrees": 25.0,
+      "nominal_height_m": 3.2,
       "cases": {
         "original": {
-          "root": "output/disturbance_suite/final300_part1_seed9101",
-          "reason": "Required original compact A/B geometry and middle-passage field."
+          "root": "output/disturbance_suite/sensor25_pair300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "reversed": {
-          "root": "output/disturbance_suite/final300_part1_seed9101",
-          "reason": "Exact negative of the required original physical field."
+          "root": "output/disturbance_suite/sensor25_pair300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "courtyards": {
-          "root": "output/disturbance_suite/final300_part2_seed9101",
-          "reason": "Four-courtyard monitoring and directed outer-street flow."
+          "root": "output/disturbance_suite/sensor25_complex300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "exhaust": {
-          "root": "output/disturbance_suite/final300_part1_seed9101",
-          "reason": "Sheltered staging and feasible side approaches to local exhaust inspection."
+          "root": "output/disturbance_suite/sensor25_complex300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "slalom": {
-          "root": "output/disturbance_suite/final300_part1_seed9101",
-          "reason": "Continuous survey, opposed outer-street flow and a sheltered central street."
+          "root": "output/disturbance_suite/sensor25_slalom_control50_300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution.",
+          "additional_configuration_changes": {
+            "execution_dt": [
+              0.05,
+              0.02
+            ]
+          },
+          "protocol_note": "Both planners use 50 Hz execution-filter updates here (20 Hz in the previous checkpoint), with the same original 0.7 m execution buffer and 0.6 m geometric planning clearance. The 20 Hz narrower-footprint baseline contacted a building; that failed pair is retained and excluded from this comparison.",
+          "excluded_contact_pairs": [
+            "output/disturbance_suite/sensor25_complex300/slalom",
+            "output/disturbance_suite/sensor25_slalom_buffer300/slalom"
+          ]
         },
         "atrium": {
-          "root": "output/disturbance_suite/final300_part2_seed9101",
-          "reason": "Gated inner/outer monitoring, south/east jets and sheltered west approach."
+          "root": "output/disturbance_suite/sensor25_complex300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "freight": {
-          "root": "output/disturbance_suite/final300_revised9_seed9101",
-          "reason": "Revised after corridor stalls: service aisles admit the common controller clearance; the loading-lane jet still penalizes direct transfers."
+          "root": "output/disturbance_suite/sensor25_network300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "perimeter": {
-          "root": "output/disturbance_suite/final300_perimeter_seed9101",
-          "reason": "Selected circulation opposes the blind default tour. The opposite-flow counterexample is retained separately."
+          "root": "output/disturbance_suite/sensor25_network300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "interchange": {
-          "root": "output/disturbance_suite/final300_revised9_seed9101",
-          "reason": "Revised after weak long missions: horizontal branch jets and sheltered vertical branches provide feasible alternatives."
+          "root": "output/disturbance_suite/sensor25_network300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         },
         "distributed": {
-          "root": "output/disturbance_suite/final300_distributed_clearance_seed9101",
-          "reason": "Rerun after a contact, with the same larger execution and geometric route clearance for both planners."
+          "root": "output/disturbance_suite/sensor25_distributed300",
+          "reason": "Same fixed scenario and paired protocol; narrower physical sensing cone in both prediction and execution."
         }
       }
     }
@@ -6936,259 +6936,271 @@
       {
         "case": "original",
         "method": "aware",
-        "source": "output/disturbance_suite/final300_part1_seed9101/original/two_original_aware_9101.json",
+        "source": "output/disturbance_suite/sensor25_pair300/original/two_original_aware_9101.json",
         "horizon": 12.0,
         "decision_dt": 0.2,
         "prediction_dt": 0.1,
         "commit": 5.0,
-        "posterior_setup_seconds": 2.569496290991083,
+        "sensor_half_angle_degrees": 25.0,
+        "sensor_radius_at_3_2m": 1.4921845060959957,
+        "posterior_setup_seconds": 2.6047109580249526,
         "first_pipeline_call": {
-          "fields": 0.4133179999771528,
-          "geometry": 0.039024916011840105,
-          "search_selection": 17.071083749993704,
-          "total": 17.523426665982697
+          "fields": 0.4123188750236295,
+          "geometry": 0.039503083971794695,
+          "search_selection": 17.511185125040356,
+          "total": 17.96300708403578
         },
         "repeats": [
           {
-            "fields": 0.021754166984464973,
-            "geometry": 0.0226707499823533,
-            "search_selection": 2.819121041044127,
-            "total": 2.8635459580109455
+            "fields": 0.02863804198568687,
+            "geometry": 0.023009375028777868,
+            "search_selection": 2.830240207957104,
+            "total": 2.8818876249715686
           },
           {
-            "fields": 0.021812291990499943,
-            "geometry": 0.022487667039968073,
-            "search_selection": 2.8254169169813395,
-            "total": 2.8697168760118075
+            "fields": 0.022005666978657246,
+            "geometry": 0.022464165987912565,
+            "search_selection": 2.805566833994817,
+            "total": 2.850036666961387
           },
           {
-            "fields": 0.021803541982080787,
-            "geometry": 0.022921084018889815,
-            "search_selection": 2.837757083005272,
-            "total": 2.8824817090062425
+            "fields": 0.021764125034678727,
+            "geometry": 0.02266762498766184,
+            "search_selection": 2.828213083965238,
+            "total": 2.8726448339875787
           }
         ],
-        "median_total": 2.8697168760118075,
-        "max_total": 2.8824817090062425,
+        "median_total": 2.8726448339875787,
+        "max_total": 2.8818876249715686,
         "median_components": {
-          "fields": 0.021803541982080787,
-          "geometry": 0.0226707499823533,
-          "search_selection": 2.8254169169813395
+          "fields": 0.022005666978657246,
+          "geometry": 0.02266762498766184,
+          "search_selection": 2.828213083965238
         }
       },
       {
         "case": "original",
         "method": "blind_filter",
-        "source": "output/disturbance_suite/final300_part1_seed9101/original/two_original_aware_9101.json",
+        "source": "output/disturbance_suite/sensor25_pair300/original/two_original_aware_9101.json",
         "horizon": 12.0,
         "decision_dt": 0.2,
         "prediction_dt": 0.1,
         "commit": 5.0,
-        "posterior_setup_seconds": 2.569496290991083,
+        "sensor_half_angle_degrees": 25.0,
+        "sensor_radius_at_3_2m": 1.4921845060959957,
+        "posterior_setup_seconds": 2.6047109580249526,
         "first_pipeline_call": {
-          "fields": 0.02176195802167058,
-          "geometry": 0.022353709035087377,
-          "search_selection": 6.254835792002268,
-          "total": 6.298951459059026
+          "fields": 0.021797541994601488,
+          "geometry": 0.022704166010953486,
+          "search_selection": 6.351765458995942,
+          "total": 6.396267167001497
         },
         "repeats": [
           {
-            "fields": 0.02872699999716133,
-            "geometry": 0.02256383397616446,
-            "search_selection": 0.9316296249744482,
-            "total": 0.982920458947774
+            "fields": 0.025750458997208625,
+            "geometry": 0.02366466698003933,
+            "search_selection": 0.9208051250316203,
+            "total": 0.9702202510088682
           },
           {
-            "fields": 0.02240587497362867,
-            "geometry": 0.022968416975345463,
-            "search_selection": 0.9266938749933615,
-            "total": 0.9720681669423357
+            "fields": 0.024084707954898477,
+            "geometry": 0.024510707997251302,
+            "search_selection": 0.9383285419899039,
+            "total": 0.9869239579420537
           },
           {
-            "fields": 0.021970874979160726,
-            "geometry": 0.0227553749573417,
-            "search_selection": 0.9182102079503238,
-            "total": 0.9629364578868262
+            "fields": 0.023912290984299034,
+            "geometry": 0.023827875033020973,
+            "search_selection": 0.9475968329934403,
+            "total": 0.9953369990107603
           }
         ],
-        "median_total": 0.9720681669423357,
-        "max_total": 0.982920458947774,
+        "median_total": 0.9869239579420537,
+        "max_total": 0.9953369990107603,
         "median_components": {
-          "fields": 0.02240587497362867,
-          "geometry": 0.0227553749573417,
-          "search_selection": 0.9266938749933615
+          "fields": 0.024084707954898477,
+          "geometry": 0.023827875033020973,
+          "search_selection": 0.9383285419899039
         }
       },
       {
         "case": "courtyards",
         "method": "aware",
-        "source": "output/disturbance_suite/final300_part2_seed9101/courtyards/two_courtyards_aware_9101.json",
+        "source": "output/disturbance_suite/sensor25_complex300/courtyards/two_courtyards_aware_9101.json",
         "horizon": 12.0,
         "decision_dt": 0.2,
         "prediction_dt": 0.1,
         "commit": 5.0,
-        "posterior_setup_seconds": 0.06042295799124986,
+        "sensor_half_angle_degrees": 25.0,
+        "sensor_radius_at_3_2m": 1.4921845060959957,
+        "posterior_setup_seconds": 0.06072658399352804,
         "first_pipeline_call": {
-          "fields": 0.383965959015768,
-          "geometry": 0.11417650000657886,
-          "search_selection": 16.926408291968983,
-          "total": 17.42455075099133
+          "fields": 0.3845517090521753,
+          "geometry": 0.11413395800627768,
+          "search_selection": 17.15080870804377,
+          "total": 17.649494375102222
         },
         "repeats": [
           {
-            "fields": 0.02694070799043402,
-            "geometry": 0.11182854202343151,
-            "search_selection": 2.7891200829762965,
-            "total": 2.927889332990162
+            "fields": 0.024065457982942462,
+            "geometry": 0.11231291596777737,
+            "search_selection": 2.820055707998108,
+            "total": 2.956434081948828
           },
           {
-            "fields": 0.02174341696081683,
-            "geometry": 0.11569916596636176,
-            "search_selection": 2.8320325830136426,
-            "total": 2.969475165940821
+            "fields": 0.02178833301877603,
+            "geometry": 0.1178548340103589,
+            "search_selection": 2.8051119160372764,
+            "total": 2.9447550830664113
           },
           {
-            "fields": 0.021538500033784658,
-            "geometry": 0.11287150002317503,
-            "search_selection": 2.813386125024408,
-            "total": 2.947796125081368
+            "fields": 0.02265183301642537,
+            "geometry": 0.11396137502742931,
+            "search_selection": 2.8385940000298433,
+            "total": 2.975207208073698
           }
         ],
-        "median_total": 2.947796125081368,
-        "max_total": 2.969475165940821,
+        "median_total": 2.956434081948828,
+        "max_total": 2.975207208073698,
         "median_components": {
-          "fields": 0.02174341696081683,
-          "geometry": 0.11287150002317503,
-          "search_selection": 2.813386125024408
+          "fields": 0.02265183301642537,
+          "geometry": 0.11396137502742931,
+          "search_selection": 2.820055707998108
         }
       },
       {
         "case": "courtyards",
         "method": "blind_filter",
-        "source": "output/disturbance_suite/final300_part2_seed9101/courtyards/two_courtyards_aware_9101.json",
+        "source": "output/disturbance_suite/sensor25_complex300/courtyards/two_courtyards_aware_9101.json",
         "horizon": 12.0,
         "decision_dt": 0.2,
         "prediction_dt": 0.1,
         "commit": 5.0,
-        "posterior_setup_seconds": 0.06042295799124986,
+        "sensor_half_angle_degrees": 25.0,
+        "sensor_radius_at_3_2m": 1.4921845060959957,
+        "posterior_setup_seconds": 0.06072658399352804,
         "first_pipeline_call": {
-          "fields": 0.021785875025670975,
-          "geometry": 0.11376458295853809,
-          "search_selection": 6.279124333988875,
-          "total": 6.414674791973084
+          "fields": 0.021647249988745898,
+          "geometry": 0.11503574997186661,
+          "search_selection": 6.378558999975212,
+          "total": 6.515241999935824
         },
         "repeats": [
           {
-            "fields": 0.02202529099304229,
-            "geometry": 0.11117704201024026,
-            "search_selection": 0.9211018750211224,
-            "total": 1.054304208024405
+            "fields": 0.024401333008427173,
+            "geometry": 0.11543987499317154,
+            "search_selection": 0.9416914160246961,
+            "total": 1.0815326240262948
           },
           {
-            "fields": 0.02187154197599739,
-            "geometry": 0.11636920797172934,
-            "search_selection": 0.923358540982008,
-            "total": 1.0615992909297347
+            "fields": 0.026265916996635497,
+            "geometry": 0.11928191699553281,
+            "search_selection": 0.9464454999542795,
+            "total": 1.0919933339464478
           },
           {
-            "fields": 0.02249654196202755,
-            "geometry": 0.11214029195252806,
-            "search_selection": 0.9240000830031931,
-            "total": 1.0586369169177487
+            "fields": 0.023932832991704345,
+            "geometry": 0.1186979579506442,
+            "search_selection": 0.9794528749771416,
+            "total": 1.1220836659194902
           }
         ],
-        "median_total": 1.0586369169177487,
-        "max_total": 1.0615992909297347,
+        "median_total": 1.0919933339464478,
+        "max_total": 1.1220836659194902,
         "median_components": {
-          "fields": 0.02202529099304229,
-          "geometry": 0.11214029195252806,
-          "search_selection": 0.923358540982008
+          "fields": 0.024401333008427173,
+          "geometry": 0.1186979579506442,
+          "search_selection": 0.9464454999542795
         }
       },
       {
         "case": "distributed",
         "method": "aware",
-        "source": "output/disturbance_suite/final300_distributed_clearance_seed9101/distributed/two_distributed_aware_9101.json",
+        "source": "output/disturbance_suite/sensor25_distributed300/distributed/two_distributed_aware_9101.json",
         "horizon": 12.0,
         "decision_dt": 0.2,
         "prediction_dt": 0.1,
         "commit": 5.0,
-        "posterior_setup_seconds": 0.06067837501177564,
+        "sensor_half_angle_degrees": 25.0,
+        "sensor_radius_at_3_2m": 1.4921845060959957,
+        "posterior_setup_seconds": 0.06057558400789276,
         "first_pipeline_call": {
-          "fields": 0.3868938749656081,
-          "geometry": 0.40604720800183713,
-          "search_selection": 17.81364800001029,
-          "total": 18.606589082977735
+          "fields": 0.39589929196517915,
+          "geometry": 0.41078325000125915,
+          "search_selection": 17.567491665948182,
+          "total": 18.37417420791462
         },
         "repeats": [
           {
-            "fields": 0.024094499996863306,
-            "geometry": 0.5124777080491185,
-            "search_selection": 2.937544832995627,
-            "total": 3.474117041041609
+            "fields": 0.024222875013947487,
+            "geometry": 0.4035429999930784,
+            "search_selection": 2.8223746660514735,
+            "total": 3.2501405410584994
           },
           {
-            "fields": 0.02176904201041907,
-            "geometry": 0.40231612499337643,
-            "search_selection": 2.822921374987345,
-            "total": 3.2470065419911407
+            "fields": 0.022182249987963587,
+            "geometry": 0.40340262500103563,
+            "search_selection": 2.8298102080007084,
+            "total": 3.2553950829897076
           },
           {
-            "fields": 0.022366916004102677,
-            "geometry": 0.40420779201667756,
-            "search_selection": 2.8305797079810873,
-            "total": 3.2571544160018675
+            "fields": 0.02312529197661206,
+            "geometry": 0.4197015840327367,
+            "search_selection": 2.8761116660316475,
+            "total": 3.3189385420409963
           }
         ],
-        "median_total": 3.2571544160018675,
-        "max_total": 3.474117041041609,
+        "median_total": 3.2553950829897076,
+        "max_total": 3.3189385420409963,
         "median_components": {
-          "fields": 0.022366916004102677,
-          "geometry": 0.40420779201667756,
-          "search_selection": 2.8305797079810873
+          "fields": 0.02312529197661206,
+          "geometry": 0.4035429999930784,
+          "search_selection": 2.8298102080007084
         }
       },
       {
         "case": "distributed",
         "method": "blind_filter",
-        "source": "output/disturbance_suite/final300_distributed_clearance_seed9101/distributed/two_distributed_aware_9101.json",
+        "source": "output/disturbance_suite/sensor25_distributed300/distributed/two_distributed_aware_9101.json",
         "horizon": 12.0,
         "decision_dt": 0.2,
         "prediction_dt": 0.1,
         "commit": 5.0,
-        "posterior_setup_seconds": 0.06067837501177564,
+        "sensor_half_angle_degrees": 25.0,
+        "sensor_radius_at_3_2m": 1.4921845060959957,
+        "posterior_setup_seconds": 0.06057558400789276,
         "first_pipeline_call": {
-          "fields": 0.02223054098431021,
-          "geometry": 0.40558620798401535,
-          "search_selection": 7.074611374991946,
-          "total": 7.5024281239602715
+          "fields": 0.02362558402819559,
+          "geometry": 0.4115209999727085,
+          "search_selection": 7.201811417005956,
+          "total": 7.63695800100686
         },
         "repeats": [
           {
-            "fields": 0.022502832987811416,
-            "geometry": 0.40088458301033825,
-            "search_selection": 0.9323510000249371,
-            "total": 1.3557384160230868
+            "fields": 0.0271610000054352,
+            "geometry": 0.41584683302789927,
+            "search_selection": 0.9434015830047429,
+            "total": 1.3864094160380773
           },
           {
-            "fields": 0.028087624988984317,
-            "geometry": 0.40769158297916874,
-            "search_selection": 0.9207139170030132,
-            "total": 1.3564931249711663
+            "fields": 0.024456708983052522,
+            "geometry": 0.4139820419950411,
+            "search_selection": 0.9466072500217706,
+            "total": 1.3850460009998642
           },
           {
-            "fields": 0.023681709019001573,
-            "geometry": 0.40224374999525025,
-            "search_selection": 0.9215336659690365,
-            "total": 1.3474591249832883
+            "fields": 0.024859540979377925,
+            "geometry": 0.4113411250291392,
+            "search_selection": 0.9549757500062697,
+            "total": 1.3911764160147868
           }
         ],
-        "median_total": 1.3557384160230868,
-        "max_total": 1.3564931249711663,
+        "median_total": 1.3864094160380773,
+        "max_total": 1.3911764160147868,
         "median_components": {
-          "fields": 0.023681709019001573,
-          "geometry": 0.40224374999525025,
-          "search_selection": 0.9215336659690365
+          "fields": 0.024859540979377925,
+          "geometry": 0.4139820419950411,
+          "search_selection": 0.9466072500217706
         }
       }
     ]
