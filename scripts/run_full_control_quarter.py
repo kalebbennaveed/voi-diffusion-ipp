@@ -1,9 +1,9 @@
-"""MBD trajectory optimization experiments. No geometric route library is imported.
+"""MBD trajectory optimization experiments with optional geometric initialization.
 
 Planning and execution clocks are separate. Each run records its complete
 configuration, code hashes, decisions, predictions and raw optimization audit.
 """
-import argparse,json,time,hashlib,os,platform,shutil
+import argparse,json,time,hashlib,os,platform
 from functools import cache
 from pathlib import Path
 from dataclasses import asdict,replace
@@ -11,7 +11,7 @@ import numpy as np
 import jax
 import jax.numpy as jnp
 from scipy.spatial.transform import Rotation
-from voi_diffusion_ipp.quarter.environment import environment,initial_belief,wind,metadata,table_sampler,TABLE_BASIS
+from voi_diffusion_ipp.quarter.environment import environment,initial_belief,wind,metadata,table_sampler,planning_sampler
 from voi_diffusion_ipp.quarter.continuous import ControlSettings,optimizer,rollout,continuation,nominal_reference
 from voi_diffusion_ipp.quarter.execution import executor
 from voi_diffusion_ipp.quarter.rrt import demonstrations
@@ -24,6 +24,12 @@ from voi_diffusion_ipp.quadrotor.aerodynamics import infer_wind
 
 REVISION='quarter-full-control-mbd-v1'
 METHODS=('proposed','blind','blind_filter','aware','optimistic','fading','no_learning')
+
+
+def optimism_fraction(cfg,method,clock,mission_seconds):
+    if method!='fading':return cfg.optimism
+    duration=cfg.optimism_anneal_seconds if cfg.optimism_anneal_seconds is not None else mission_seconds*.5
+    return cfg.optimism+(1-cfg.optimism)*min(max(clock/duration,0.),1.)
 
 
 def write(path,data):
@@ -39,17 +45,20 @@ def source_hashes():
     return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 
 
-def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,resume=None):
-    started=time.perf_counter();env=environment(layout,cfg.environment_scale,cfg.inspection_scale,case);vehicle=VehicleConfig()
+def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,resume=None,engine=None):
+    started=time.perf_counter();env=environment(layout,cfg.environment_scale,cfg.inspection_scale,case,cfg.geometry,cfg.detour_depth);vehicle=VehicleConfig()
     plan=optimizer(env,cfg,'proposed' if method=='no_learning' else method)
     blind=method in ('blind','blind_filter')
-    b=initial_belief(cfg);sample=table_sampler(cfg.construction_worlds+cfg.worlds+cfg.validation_worlds,cfg.environment_scale)
+    b=initial_belief(cfg);sample=table_sampler(cfg.construction_worlds+cfg.worlds+cfg.validation_worlds,cfg.environment_scale,cfg.geometry)
+    shared_mode_inputs=cfg.initialization=='modes'
+    fast_sample=planning_sampler(cfg) if cfg.multimode or shared_mode_inputs else None
+    controller_sample=table_sampler(cfg.construction_worlds,cfg.environment_scale,cfg.geometry) if cfg.multimode or shared_mode_inputs else sample
     condition=jax.jit(lambda bb,p,y:bb.condition(p,y,relocate=cfg.wind_relocate));prediction=jax.jit(lambda bb,p:bb.predict(p))
     observation_period=min(cfg.observation_period,cfg.commit)
     execution_cfg=replace(cfg,commit=observation_period) if cfg.online_estimation else cfg
-    execute=executor(env,execution_cfg,lambda p:wind(p,case,cfg.wind_strength,cfg.environment_scale),filter_on=method!='blind')
+    execute=executor(env,execution_cfg,lambda p:wind(p,case,cfg.wind_strength,cfg.environment_scale,cfg.geometry,cfg.wind_at_start),filter_on=method!='blind')
     predict=jax.jit(lambda th,x,q,m,c,f:rollout(th,x,q,m,c,f,env,cfg,not blind))
-    actual_wind=jax.jit(lambda p:wind(p,case,cfg.wind_strength,cfg.environment_scale))
+    actual_wind=jax.jit(lambda p:wind(p,case,cfg.wind_strength,cfg.environment_scale,cfg.geometry,cfg.wind_at_start))
     @jax.jit
     def monitoring(q,old_position,states):
         def step(carry,packed):
@@ -59,9 +68,20 @@ def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,
             cost=.005*(deficit(q)+deficit(qn))
             return (qn,packed[:2]),(qn,cost,env.clearance(jnp.r_[packed[:2],packed[3:5]])-.275)
         return jax.lax.scan(step,(q,old_position),states)[1]
-    key=jax.random.PRNGKey(seed);construction_key=jax.random.split(key,3)[1];rng=np.random.default_rng(seed+9001)
-    state=State(np.array([-28.*cfg.environment_scale,8.*cfg.environment_scale,3.2]),np.zeros(3),np.eye(3),np.zeros(3),np.full(4,np.sqrt(vehicle.mass*vehicle.gravity/(4*vehicle.thrust_coefficient))))
+    if engine is not None:
+        plan=engine.planner(env,method)
+        execute=engine.execution(env,case)
+        predict=engine.prediction(env,blind)
+        actual_wind=engine.wind(case)
+        monitoring=engine.monitoring(env)
+    key=jax.random.PRNGKey(seed);construction_key=jax.random.fold_in(key,271828);rng=np.random.default_rng(seed+9001)
+    start_xy=(np.asarray((env.regions[0,:2]+env.regions[0,2:])/2) if cfg.geometry in ('compact','compact_passages','compact_detour','suite') else
+              np.array([-28.*cfg.environment_scale,8.*cfg.environment_scale]))
+    state=State(np.r_[start_xy,3.2],np.zeros(3),np.eye(3),np.zeros(3),np.full(4,np.sqrt(vehicle.mass*vehicle.gravity/(4*vehicle.thrust_coefficient))))
     plant=Quadrotor(vehicle,np.zeros(3),np.zeros(3));q=jnp.full(len(env.cells),.35,dtype=jnp.float32).at[:42].set(.65)
+    if cfg.geometry=='suite':
+        inside=jnp.all((env.cells>=env.regions[0,:2])&(env.cells<=env.regions[0,2:]),axis=1)
+        q=jnp.where(inside,.65,.35).astype(jnp.float32)
     previous=jnp.zeros(2*cfg.steps)
     xx,zz=np.meshgrid(np.linspace(float(env.bounds[0,0]),float(env.bounds[1,0]),49),np.linspace(float(env.bounds[0,1]),float(env.bounds[1,1]),41));grid=np.c_[xx.ravel(),zz.ravel()].astype(np.float32)
     grid_wind=np.asarray(actual_wind(jnp.array(grid)))
@@ -79,7 +99,11 @@ def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,
             raise ValueError('Continue only an unterminated physical mission at a saved replanning boundary')
         if target.resolve()==resume.resolve():raise ValueError('Continuation must preserve the original recording in a different directory')
         if (old['layout'],old['case'],old['method'],old['seed'])!=(layout,case,method,seed):raise ValueError('Continuation identity mismatch')
-        if asdict(ControlSettings(**old['config']))!=asdict(cfg):raise ValueError('Continuation must preserve every model and optimizer setting')
+        # JSON stores tuple-valued settings as lists. Compare their serialized
+        # values so a faithful round-trip is accepted without allowing a model
+        # or optimizer setting to change.
+        if json.dumps(asdict(ControlSettings(**old['config'])),sort_keys=True)!=json.dumps(asdict(cfg),sort_keys=True):
+            raise ValueError('Continuation must preserve every model and optimizer setting')
         if seconds<=old['completed_seconds']:raise ValueError('Continuation must extend the saved physical time')
         runner=str(Path(__file__).resolve().relative_to(Path(__file__).resolve().parents[1]))
         for name,digest in old['source_hashes'].items():
@@ -117,25 +141,34 @@ def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,
             original_mission_seconds=old['mission_seconds'],continued_at_seconds=clock,prefix_source_hashes=old['source_hashes'],
             restoration='Unrounded 100 Hz state and clarity; chronological observed posterior; original random-number streams; shifted previous trajectory')
         print(f'CONTINUING {resume} at {clock:g} s to {seconds:g} s',flush=True)
+    if blind:score_description='zero-disturbance monitoring plus soft constraint penalties'
+    elif method in ('proposed','optimistic','fading','no_learning'):
+        score_description=('favorable-tail monitoring plus mean constraint penalty' if cfg.penalty_aggregation=='mean' else 'favorable-tail total cost')
+    else:score_description='expected monitoring plus expected constraint penalty'
     def result(completed):
         return dict(revision=REVISION,completed=completed,plan_only=plan_only,status='planning_only' if plan_only else ('failed' if failure else ('completed' if completed else 'running')),layout=layout,case=case,method=method,seed=seed,mission_seconds=seconds,completed_seconds=clock,cost=None if plan_only else cost,success=None if plan_only else failure is None,failure=failure,min_clearance=None if plan_only else minimum,config=asdict(cfg),vehicle=asdict(vehicle),frames=frames,beliefs=beliefs,plans=plans,observations=observations,wall_seconds=prefix_wall_seconds+time.perf_counter()-started,source_hashes=hashes,continuation=continuation_record,
-            runtime=dict(jax=jax.__version__,devices=list(map(str,jax.devices())),machine=platform.machine(),xla_flags=os.environ.get('XLA_FLAGS','')),
-            environment={**metadata(layout,cfg.environment_scale,cfg.inspection_scale,case),'grid':grid.tolist(),'grid_shape':[41,49],'wind':grid_wind.tolist(),'wind_units':'m/s'},
-            model=dict(planner=f'full nominal acceleration sequence; 2 independent coordinates per {cfg.dt:g} s interval; MBD Eqs. 6, 8, 9',decision_dimension=2*cfg.steps,decision_map='a = umax * tanh(theta), elementwise',parameter_domain=[-cfg.latent_bound,cfg.latent_bound],execution='nonlinear rigid-body quadrotor and motor dynamics; flatness mapping and geometric attitude tracking',planning_step=cfg.dt,execution_step=.01,schedule='cosine finite interval',cosine_end=cfg.cosine_end,cosine_cumulative=np.asarray(cosine_schedule(cfg.iterations,cfg.cosine_end)[1]).tolist(),belief='POAM, actual observations only; frozen posterior within each planning call',filter='state-dependent policy-value projection with explicit infeasibility fallback',planning_filter=cfg.prediction_filter,penalty_aggregation=cfg.penalty_aggregation,prediction_control_step=cfg.dt/cfg.prediction_substeps,observation_period=min(cfg.observation_period,cfg.commit),estimator_update_period=(min(cfg.observation_period,cfg.commit) if cfg.online_estimation else cfg.commit),inducing_relocation=cfg.wind_relocate,sampler_support_grid=cfg.wind_support_nodes,prediction_termination=cfg.terminate_predictions,kernel_fixed=True,execution_filter=cfg.execution_filter if method!='blind' else 'off',execution_margin=cfg.execution_margin,filter_rate_hz=1/cfg.execution_dt,planning_filter_rate_hz=1/cfg.dt,scoring=('favorable-tail monitoring plus mean soft constraint penalty' if cfg.penalty_aggregation=='mean' else 'legacy favorable-tail total cost') if not blind else 'zero-disturbance monitoring plus soft constraint penalties',selection='independent common validation field bank; evaluated parameters only',collision_penalty='remaining mission without sensing',sensing='finite 45-degree nadir footprint; Gaussian quality and building visibility',realtime=False),rms_tracking_error=float(np.sqrt(np.mean(np.square(errors)))) if errors else 0.,planning_seconds=[p['seconds'] for p in plans])
+            runtime=dict(jax=jax.__version__,devices=list(map(str,jax.devices())),machine=platform.machine(),xla_flags=os.environ.get('XLA_FLAGS',''),construction_key=np.asarray(construction_key).tolist(),construction_key_scheme='fold_in(seed,271828); disjoint from performance/search streams'),
+            environment={**metadata(layout,cfg.environment_scale,cfg.inspection_scale,case,cfg.geometry,cfg.detour_depth),'wind_at_start':cfg.wind_at_start,'grid':grid.tolist(),'grid_shape':[41,49],'wind':grid_wind.tolist(),'wind_units':'m/s'},
+            model=dict(planner=f'full nominal acceleration sequence; 2 independent coordinates per {cfg.dt:g} s interval; MBD Eqs. 6, 8, 9',decision_dimension=2*cfg.steps,decision_map='a = umax * tanh(theta), elementwise',parameter_domain=[-cfg.latent_bound,cfg.latent_bound],execution='nonlinear rigid-body quadrotor and motor dynamics; flatness mapping and geometric attitude tracking',planning_step=cfg.dt,execution_step=.01,schedule='cosine finite interval',cosine_end=cfg.cosine_end,cosine_cumulative=np.asarray(cosine_schedule(cfg.iterations,cfg.cosine_end)[1]).tolist(),belief='POAM, actual observations only; frozen posterior within each planning call',filter='state-dependent policy-value projection with explicit infeasibility fallback',planning_filter=('off' if blind else cfg.prediction_filter),penalty_aggregation=cfg.penalty_aggregation,prediction_control_step=cfg.dt/cfg.prediction_substeps,observation_period=min(cfg.observation_period,cfg.commit),estimator_update_period=(min(cfg.observation_period,cfg.commit) if cfg.online_estimation else cfg.commit),inducing_relocation=cfg.wind_relocate,sampler_support_grid=cfg.wind_support_nodes,prediction_termination=cfg.terminate_predictions,kernel_fixed=True,execution_filter=cfg.execution_filter if method!='blind' else 'off',execution_margin=cfg.execution_margin,filter_rate_hz=1/cfg.execution_dt,planning_filter_rate_hz=1/cfg.dt,scoring=score_description,selection='independent common validation field bank; evaluated parameters only',collision_penalty='remaining mission without sensing',sensing='finite 45-degree nadir footprint; Gaussian quality and building visibility',realtime=False),rms_tracking_error=float(np.sqrt(np.mean(np.square(errors)))) if errors else 0.,planning_seconds=[p['seconds'] for p in plans])
     for iteration in range(start_iteration,1 if plan_only else round(seconds/cfg.commit)):
+        complete_planning_started=time.perf_counter()
         key,ks,kp=jax.random.split(key,3)
-        mean,fields=sample(b,ks);fields.block_until_ready()
+        mean,fields=(fast_sample(b,ks,construction_key if cfg.common_construction else jax.random.fold_in(ks,37))
+                     if fast_sample is not None else sample(b,ks));fields.block_until_ready()
         construction=fields[:cfg.construction_worlds];worlds=fields[cfg.construction_worlds:cfg.construction_worlds+cfg.worlds];validation=fields[-cfg.validation_worlds:]
-        if cfg.common_construction:
+        if cfg.common_construction and fast_sample is None:
             # Common base draws remove resampling-induced changes to the filter.
             # The field distribution still changes with the learned posterior.
             # Performance/validation fields above retain their independent keys.
             _,stable_fields=sample(b,construction_key)
             construction=stable_fields[:cfg.construction_worlds]
+        field_seconds=time.perf_counter()-complete_planning_started
+        diagnostic_started=time.perf_counter()
         mu,cov=prediction(b,jnp.array(grid));std=np.sqrt(np.maximum(np.asarray(cov)[:,0,0],0))
         beliefs.append(dict(t=round(clock,4),mean=np.asarray(mu).round(4).tolist(),std=std.round(4).tolist(),rmse=float(np.sqrt(np.mean((np.asarray(mu)-grid_wind)**2)))))
+        diagnostic_seconds=time.perf_counter()-diagnostic_started
         x=jnp.array(np.r_[state.position[:2],state.velocity[:2]],jnp.float32)
-        eta=cfg.optimism if method!='fading' else cfg.optimism+(1-cfg.optimism)*min(clock/(seconds*.5),1.)
+        eta=optimism_fraction(cfg,method,clock,seconds)
         start=time.perf_counter()
         demonstration_controls=None;rrt_record=None;rrt_seconds=0.
         if cfg.initialization=='rrt':
@@ -144,6 +177,15 @@ def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,
             demonstration_controls=jnp.asarray(demonstration_controls)
             rrt_seconds=time.perf_counter()-rrt_start
             print(f'  RRT: {rrt_record["found"]} initial trajectories, {rrt_seconds:.2f}s',flush=True)
+        elif cfg.initialization=='modes':
+            from voi_diffusion_ipp.quarter.modes import demonstrations as geometric_demonstrations,select_initial_modes
+            rrt_start=time.perf_counter()
+            bank,record=geometric_demonstrations(x,env,cfg,seed+100003*iteration)
+            demonstration_controls,selection=select_initial_modes(bank,record,x,env,cfg,q)
+            demonstration_controls=jnp.asarray(demonstration_controls)
+            rrt_record=dict(**record,selection=selection)
+            rrt_seconds=time.perf_counter()-rrt_start
+            print(f'  Initial trajectories: {cfg.mode_count} modes, {rrt_seconds:.3f}s',flush=True)
         chain_results=[];chain_audits=[];planning_elapsed=0.;audit_elapsed=0.
         for chain in range(cfg.chains):
             chain_key=kp if chain==0 else jax.random.fold_in(kp,chain)
@@ -165,15 +207,29 @@ def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,
         nominal,aa=nominal_reference(theta,x,cfg)
         index=int(search.finalist_indices[int(chosen)])
         n_initial=len(search.initial_parameters)
-        origin=('previous trajectory' if index==n_initial-1 else ('RRT initialization' if index>=2 else 'initialization')) if index<n_initial else ('final denoised vector' if index==int(search.evaluations)-1 else 'diffusion proposal')
+        if cfg.multimode:
+            origin=('previous trajectory' if index==n_initial-1 else 'geometry initialization') if index<n_initial else ('final denoised vector' if index>=int(search.evaluations)-cfg.mode_count else 'diffusion proposal')
+        else:origin=('previous trajectory' if index==n_initial-1 else ('RRT initialization' if index>=2 else 'initialization')) if index<n_initial else ('final denoised vector' if index==int(search.evaluations)-1 else 'diffusion proposal')
         audit=None
         if iteration==0 or audit_all:
             audit=target.stem+f'_search_{iteration:04d}.npz'
             np.savez_compressed(out/audit,**{name:np.asarray(value) for name,value in search._asdict().items()},initial_state=np.asarray(x),clarity=np.asarray(q),mean=np.asarray(mean),construction=np.asarray(construction),performance_fields=np.asarray(worlds),validation_fields=np.asarray(validation),chosen_index=np.asarray(chosen),chosen_theta=np.asarray(theta),nominal=np.asarray(nominal),accelerations=np.asarray(aa),rng_key=np.asarray(kp),eta=eta)
         plans.append(dict(t=clock,seconds=elapsed,compilation_included=iteration==start_iteration,predicted_optimistic=float(score),predicted_mean=float(expected),mean_field_monitor=float(pred.monitor),mean_field_constraint_penalty=float(pred.penalty),trace=np.asarray(search.trace).tolist(),evaluations=sum(int(r[3].evaluations) for r in chain_results),policy=theta.tolist(),decision_dimension=int(theta.size),decision_origin=origin,archive_index=index,audit=audit,chain_audits=chain_audits,winning_chain=winning_chain,chain_validation_costs=[float(r[1]) for r in chain_results],max_slack=float(pred.max_slack),points=np.asarray(pred.x[:,:2]).round(4).tolist(),nominal_points=np.asarray(nominal[:,:2]).round(4).tolist(),accelerations=np.asarray(aa).round(6).tolist(),initial_cost=float(search.initial_cost),best_training_cost=float(search.trace[-1,0])))
-        plans[-1].update(rrt=rrt_record,rrt_seconds=rrt_seconds,total_planning_seconds=elapsed+rrt_seconds,
+        plans[-1].update(optimism_fraction=eta if method in ('proposed','optimistic','fading','no_learning') else 1.,
+            archive_mixture=cfg.mixture if method in ('proposed','fading','no_learning') else 0.,
+            rrt=rrt_record,rrt_seconds=rrt_seconds,total_planning_seconds=elapsed+rrt_seconds,
             guidance=(None if cfg.guidance_mode=='off' else f'MBD Eq. 13; Gaussian on {cfg.guidance_mode} positions; objective selects final trajectory') if rrt_record else None,
             guidance_used_fraction=float(np.mean(np.asarray(search.guidance_log_weights)>-np.asarray(search.sample_costs)/cfg.temperature)))
+        plans[-1].update(field_seconds=field_seconds,diagnostic_seconds=diagnostic_seconds,
+            complete_planning_seconds=field_seconds+rrt_seconds+elapsed,
+            planning_time_definition='Posterior field generation + geometry initialization + synchronized MBD and final selection; excludes reporting and execution')
+        if cfg.multimode:
+            mode_index=(index if index<cfg.mode_count else
+                (index-(int(search.evaluations)-cfg.mode_count) if index>=int(search.evaluations)-cfg.mode_count else
+                 (None if index==n_initial-1 else int(np.asarray(search.proposal_modes)[(index-n_initial)%cfg.proposals]))))
+            plans[-1].update(mode_trace=np.asarray(search.mode_trace).tolist(),
+                selected_mode=mode_index,
+                unique_validation_entries=int(np.sum(np.asarray(search.finalist_unique))))
         print(f'{layout}/{case}/{method} plan {iteration} {elapsed:.2f}s initial={float(search.initial_cost):.4f} best={float(search.trace[-1,0]):.4f} independent={float(score):.4f} origin={origin} dim={theta.size}',flush=True)
         if plan_only:break
         execution_initial_state=state.pack().copy()
@@ -184,7 +240,7 @@ def run(layout,case,method,seconds,seed,cfg,out,plan_only=False,audit_all=False,
             for chunk in range(round(cfg.commit/observation_period)):
                 cm,cc=mean,construction
                 if chunk:
-                    cm,cf=sample(b,construction_key if cfg.common_construction else ks)
+                    cm,cf=controller_sample(b,construction_key if cfg.common_construction else ks)
                     cc=cf[:cfg.construction_worlds]
                 controller_means.append(np.asarray(cm));controller_fields.append(np.asarray(cc))
                 current,part=execute(current,theta,cm,cc,x,jnp.array(round(chunk*observation_period/cfg.dt)))

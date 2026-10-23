@@ -79,7 +79,7 @@ def search(evaluate,seeds,previous,key,cfg,eta,rho,cold,log_guidance=None):
     # initial iterate only, never the proposal, score, or reverse update.
     initial_iterate=jnp.zeros_like(noise) if cfg.initialization=='zero' else noise
     y=jnp.where(cold,initial_iterate,jnp.sqrt(abar[-1])*previous+jnp.sqrt(1-abar[-1])*noise)
-    if cfg.initialization=='rrt':
+    if cfg.initialization in ('rrt','modes'):
         y=jnp.sqrt(abar[-1])*guide+jnp.sqrt(1-abar[-1])*noise
     def iteration(carry,j):
         y,parameters,means,opts,key=carry;i=n-1-j

@@ -1,0 +1,45 @@
+{
+  "selection_basis": "Development-selected scenario profiles. Both methods, seed 9101, same per-case settings. Older unfavorable and failed profiles remain in their original cohort folders. No held-out-seed claim.",
+  "cases": {
+    "original": {
+      "root": "output/disturbance_suite/final300_part1_seed9101",
+      "reason": "Required original compact A/B geometry and middle-passage field."
+    },
+    "reversed": {
+      "root": "output/disturbance_suite/final300_part1_seed9101",
+      "reason": "Exact negative of the required original physical field."
+    },
+    "courtyards": {
+      "root": "output/disturbance_suite/final300_part2_seed9101",
+      "reason": "Four-courtyard monitoring and directed outer-street flow."
+    },
+    "exhaust": {
+      "root": "output/disturbance_suite/final300_part1_seed9101",
+      "reason": "Sheltered staging and feasible side approaches to local exhaust inspection."
+    },
+    "slalom": {
+      "root": "output/disturbance_suite/final300_part1_seed9101",
+      "reason": "Continuous survey, opposed outer-street flow and a sheltered central street."
+    },
+    "atrium": {
+      "root": "output/disturbance_suite/final300_part2_seed9101",
+      "reason": "Gated inner/outer monitoring, south/east jets and sheltered west approach."
+    },
+    "freight": {
+      "root": "output/disturbance_suite/final300_revised9_seed9101",
+      "reason": "Revised after corridor stalls: service aisles admit the common controller clearance; the loading-lane jet still penalizes direct transfers."
+    },
+    "perimeter": {
+      "root": "output/disturbance_suite/final300_perimeter_seed9101",
+      "reason": "Selected circulation opposes the blind default tour. The opposite-flow counterexample is retained separately."
+    },
+    "interchange": {
+      "root": "output/disturbance_suite/final300_revised9_seed9101",
+      "reason": "Revised after weak long missions: horizontal branch jets and sheltered vertical branches provide feasible alternatives."
+    },
+    "distributed": {
+      "root": "output/disturbance_suite/final300_distributed_clearance_seed9101",
+      "reason": "Rerun after a contact, with the same larger execution and geometric route clearance for both planners."
+    }
+  }
+}

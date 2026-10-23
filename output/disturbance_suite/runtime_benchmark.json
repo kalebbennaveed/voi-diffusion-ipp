@@ -1,0 +1,267 @@
+{
+  "devices": [
+    "TFRT_CPU_0"
+  ],
+  "jax": "0.4.38",
+  "scope": "isolated repeated planning from saved initial state; no other mission jobs; excludes process import and reporting",
+  "rows": [
+    {
+      "case": "original",
+      "method": "aware",
+      "source": "output/disturbance_suite/final300_part1_seed9101/original/two_original_aware_9101.json",
+      "horizon": 12.0,
+      "decision_dt": 0.2,
+      "prediction_dt": 0.1,
+      "commit": 5.0,
+      "posterior_setup_seconds": 2.569496290991083,
+      "first_pipeline_call": {
+        "fields": 0.4133179999771528,
+        "geometry": 0.039024916011840105,
+        "search_selection": 17.071083749993704,
+        "total": 17.523426665982697
+      },
+      "repeats": [
+        {
+          "fields": 0.021754166984464973,
+          "geometry": 0.0226707499823533,
+          "search_selection": 2.819121041044127,
+          "total": 2.8635459580109455
+        },
+        {
+          "fields": 0.021812291990499943,
+          "geometry": 0.022487667039968073,
+          "search_selection": 2.8254169169813395,
+          "total": 2.8697168760118075
+        },
+        {
+          "fields": 0.021803541982080787,
+          "geometry": 0.022921084018889815,
+          "search_selection": 2.837757083005272,
+          "total": 2.8824817090062425
+        }
+      ],
+      "median_total": 2.8697168760118075,
+      "max_total": 2.8824817090062425,
+      "median_components": {
+        "fields": 0.021803541982080787,
+        "geometry": 0.0226707499823533,
+        "search_selection": 2.8254169169813395
+      }
+    },
+    {
+      "case": "original",
+      "method": "blind_filter",
+      "source": "output/disturbance_suite/final300_part1_seed9101/original/two_original_aware_9101.json",
+      "horizon": 12.0,
+      "decision_dt": 0.2,
+      "prediction_dt": 0.1,
+      "commit": 5.0,
+      "posterior_setup_seconds": 2.569496290991083,
+      "first_pipeline_call": {
+        "fields": 0.02176195802167058,
+        "geometry": 0.022353709035087377,
+        "search_selection": 6.254835792002268,
+        "total": 6.298951459059026
+      },
+      "repeats": [
+        {
+          "fields": 0.02872699999716133,
+          "geometry": 0.02256383397616446,
+          "search_selection": 0.9316296249744482,
+          "total": 0.982920458947774
+        },
+        {
+          "fields": 0.02240587497362867,
+          "geometry": 0.022968416975345463,
+          "search_selection": 0.9266938749933615,
+          "total": 0.9720681669423357
+        },
+        {
+          "fields": 0.021970874979160726,
+          "geometry": 0.0227553749573417,
+          "search_selection": 0.9182102079503238,
+          "total": 0.9629364578868262
+        }
+      ],
+      "median_total": 0.9720681669423357,
+      "max_total": 0.982920458947774,
+      "median_components": {
+        "fields": 0.02240587497362867,
+        "geometry": 0.0227553749573417,
+        "search_selection": 0.9266938749933615
+      }
+    },
+    {
+      "case": "courtyards",
+      "method": "aware",
+      "source": "output/disturbance_suite/final300_part2_seed9101/courtyards/two_courtyards_aware_9101.json",
+      "horizon": 12.0,
+      "decision_dt": 0.2,
+      "prediction_dt": 0.1,
+      "commit": 5.0,
+      "posterior_setup_seconds": 0.06042295799124986,
+      "first_pipeline_call": {
+        "fields": 0.383965959015768,
+        "geometry": 0.11417650000657886,
+        "search_selection": 16.926408291968983,
+        "total": 17.42455075099133
+      },
+      "repeats": [
+        {
+          "fields": 0.02694070799043402,
+          "geometry": 0.11182854202343151,
+          "search_selection": 2.7891200829762965,
+          "total": 2.927889332990162
+        },
+        {
+          "fields": 0.02174341696081683,
+          "geometry": 0.11569916596636176,
+          "search_selection": 2.8320325830136426,
+          "total": 2.969475165940821
+        },
+        {
+          "fields": 0.021538500033784658,
+          "geometry": 0.11287150002317503,
+          "search_selection": 2.813386125024408,
+          "total": 2.947796125081368
+        }
+      ],
+      "median_total": 2.947796125081368,
+      "max_total": 2.969475165940821,
+      "median_components": {
+        "fields": 0.02174341696081683,
+        "geometry": 0.11287150002317503,
+        "search_selection": 2.813386125024408
+      }
+    },
+    {
+      "case": "courtyards",
+      "method": "blind_filter",
+      "source": "output/disturbance_suite/final300_part2_seed9101/courtyards/two_courtyards_aware_9101.json",
+      "horizon": 12.0,
+      "decision_dt": 0.2,
+      "prediction_dt": 0.1,
+      "commit": 5.0,
+      "posterior_setup_seconds": 0.06042295799124986,
+      "first_pipeline_call": {
+        "fields": 0.021785875025670975,
+        "geometry": 0.11376458295853809,
+        "search_selection": 6.279124333988875,
+        "total": 6.414674791973084
+      },
+      "repeats": [
+        {
+          "fields": 0.02202529099304229,
+          "geometry": 0.11117704201024026,
+          "search_selection": 0.9211018750211224,
+          "total": 1.054304208024405
+        },
+        {
+          "fields": 0.02187154197599739,
+          "geometry": 0.11636920797172934,
+          "search_selection": 0.923358540982008,
+          "total": 1.0615992909297347
+        },
+        {
+          "fields": 0.02249654196202755,
+          "geometry": 0.11214029195252806,
+          "search_selection": 0.9240000830031931,
+          "total": 1.0586369169177487
+        }
+      ],
+      "median_total": 1.0586369169177487,
+      "max_total": 1.0615992909297347,
+      "median_components": {
+        "fields": 0.02202529099304229,
+        "geometry": 0.11214029195252806,
+        "search_selection": 0.923358540982008
+      }
+    },
+    {
+      "case": "distributed",
+      "method": "aware",
+      "source": "output/disturbance_suite/final300_distributed_clearance_seed9101/distributed/two_distributed_aware_9101.json",
+      "horizon": 12.0,
+      "decision_dt": 0.2,
+      "prediction_dt": 0.1,
+      "commit": 5.0,
+      "posterior_setup_seconds": 0.06067837501177564,
+      "first_pipeline_call": {
+        "fields": 0.3868938749656081,
+        "geometry": 0.40604720800183713,
+        "search_selection": 17.81364800001029,
+        "total": 18.606589082977735
+      },
+      "repeats": [
+        {
+          "fields": 0.024094499996863306,
+          "geometry": 0.5124777080491185,
+          "search_selection": 2.937544832995627,
+          "total": 3.474117041041609
+        },
+        {
+          "fields": 0.02176904201041907,
+          "geometry": 0.40231612499337643,
+          "search_selection": 2.822921374987345,
+          "total": 3.2470065419911407
+        },
+        {
+          "fields": 0.022366916004102677,
+          "geometry": 0.40420779201667756,
+          "search_selection": 2.8305797079810873,
+          "total": 3.2571544160018675
+        }
+      ],
+      "median_total": 3.2571544160018675,
+      "max_total": 3.474117041041609,
+      "median_components": {
+        "fields": 0.022366916004102677,
+        "geometry": 0.40420779201667756,
+        "search_selection": 2.8305797079810873
+      }
+    },
+    {
+      "case": "distributed",
+      "method": "blind_filter",
+      "source": "output/disturbance_suite/final300_distributed_clearance_seed9101/distributed/two_distributed_aware_9101.json",
+      "horizon": 12.0,
+      "decision_dt": 0.2,
+      "prediction_dt": 0.1,
+      "commit": 5.0,
+      "posterior_setup_seconds": 0.06067837501177564,
+      "first_pipeline_call": {
+        "fields": 0.02223054098431021,
+        "geometry": 0.40558620798401535,
+        "search_selection": 7.074611374991946,
+        "total": 7.5024281239602715
+      },
+      "repeats": [
+        {
+          "fields": 0.022502832987811416,
+          "geometry": 0.40088458301033825,
+          "search_selection": 0.9323510000249371,
+          "total": 1.3557384160230868
+        },
+        {
+          "fields": 0.028087624988984317,
+          "geometry": 0.40769158297916874,
+          "search_selection": 0.9207139170030132,
+          "total": 1.3564931249711663
+        },
+        {
+          "fields": 0.023681709019001573,
+          "geometry": 0.40224374999525025,
+          "search_selection": 0.9215336659690365,
+          "total": 1.3474591249832883
+        }
+      ],
+      "median_total": 1.3557384160230868,
+      "max_total": 1.3564931249711663,
+      "median_components": {
+        "fields": 0.023681709019001573,
+        "geometry": 0.40224374999525025,
+        "search_selection": 0.9215336659690365
+      }
+    }
+  ]
+}

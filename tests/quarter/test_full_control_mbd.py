@@ -32,6 +32,20 @@ def test_no_archive_is_exactly_original_proposal_weight():
     np.testing.assert_array_equal(ratio,np.zeros(6))
 
 
+def test_single_chain_modes_initialization_uses_the_best_common_seed():
+    cfg=ControlSettings(horizon=.2,commit=.1,iterations=2,proposals=8,batch_size=8,initialization='modes',cosine_end=.2)
+    seeds=jnp.array([[3.,0.,0.,0.],[-2.,0.,0.,0.]])
+    evaluate=lambda theta:jnp.array([jnp.sum((theta-jnp.array([-2.,0.,0.,0.]))**2)])
+    key=jax.random.PRNGKey(119)
+    result=search(evaluate,seeds,jnp.zeros(4),key,cfg,1.,0.,True)
+    _,noise_key=jax.random.split(key)
+    from voi_diffusion_ipp.quarter.diffusion import cosine_schedule
+    _,abar=cosine_schedule(cfg.iterations,cfg.cosine_end)
+    expected=jnp.sqrt(abar[-1])*seeds[1]+jnp.sqrt(1-abar[-1])*jax.random.normal(noise_key,(4,))
+    np.testing.assert_allclose(result.before[0],expected,atol=1e-7)
+    np.testing.assert_array_equal(result.initial_parameters[:2],seeds)
+
+
 def test_paper_joint_trajectory_and_control_rollout_have_same_control_update():
     """Sec. 4.2 overwrites sampled states by rollout before Eq. (10d).
 

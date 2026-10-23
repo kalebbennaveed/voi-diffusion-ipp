@@ -32,7 +32,7 @@ def executor(env,cfg,load,filter_on=True,dt=.01):
     def execute(packed,theta,mean_array,construction,reference_origin=None,start_index=0):
         x0=jnp.r_[packed[:2],packed[3:5]] if reference_origin is None else reference_origin
         reference,acceleration=nominal_reference(theta,x0,cfg)
-        basis=table_basis(cfg.environment_scale)
+        basis=table_basis(cfg.environment_scale,cfg.geometry)
         mean=TableMean(basis,mean_array);fields=InnerFields(basis,construction)
         def interval(packed,inputs):
             ref,a=inputs

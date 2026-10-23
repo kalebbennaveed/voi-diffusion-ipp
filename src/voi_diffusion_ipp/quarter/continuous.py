@@ -1,8 +1,9 @@
 """MBD trajectory optimization for monitoring using dynamics rollout.
 
 There are exactly 2*T/dt independent decision coordinates: both nominal
-accelerations at every configured integration interval. No route library, target selection,
-dwell schedule, waypoint tracker, spline knots, or truncated temporal basis.
+accelerations at every configured integration interval. Geometry may initialize
+distinct routes; diffusion may change every coordinate. There are no fixed route,
+target, or dwell decisions, spline knots, or truncated temporal basis.
 """
 from dataclasses import dataclass,replace
 from typing import NamedTuple
@@ -27,6 +28,7 @@ class ControlSettings(Settings):
     latent_bound:float=12.
     cosine_end:float=.65
     batch_size:int=64
+    validation_batch_size:int=0
     chains:int=1
     environment_scale:float=1.
     inspection_scale:float=1.
@@ -56,16 +58,39 @@ class ControlSettings(Settings):
     wind_support_nodes:int=0
     wind_relocate:bool=False
     terminate_predictions:bool=False
+    geometry:str='quarter'
+    multimode:bool=False
+    mode_count:int=4
+    initialization_effort:float|None=None
+    optimism_anneal_seconds:float|None=None
+    detour_depth:float=2.
+    wind_at_start:bool=False
+    initial_wind_observations:tuple=()
+    wind_inducing_count:int=36
+    wind_kernel_lengths:tuple=()
 
     def __post_init__(self):
         super().__post_init__()
         if self.horizon<=0 or abs(self.horizon/self.dt-round(self.horizon/self.dt))>1e-6:raise ValueError('Horizon must be positive and divisible by dt')
         if self.commit<=0 or self.commit>self.horizon:raise ValueError('Commit must be positive and no longer than horizon')
         if min(self.iterations,self.proposals,self.worlds,self.validation_worlds,self.construction_worlds,self.batch_size,self.chains)<1:raise ValueError('All sampling and iteration counts must be positive')
+        if self.validation_batch_size<0:raise ValueError('Validation batch size must be nonnegative; zero selects serial execution')
         if self.temperature<=0 or not 0<self.cosine_end<1 or self.latent_bound<=0:raise ValueError('Invalid temperature, cosine interval, or parameter bound')
         if not .35<=self.environment_scale<=1.5:raise ValueError('Invalid environment scale')
         if not .4<=self.inspection_scale<=1.5:raise ValueError('Invalid inspection region scale')
-        if self.initialization not in ('gaussian','zero','rrt'):raise ValueError('Unknown MBD initialization')
+        if self.initialization not in ('gaussian','zero','rrt','modes'):raise ValueError('Unknown MBD initialization')
+        if self.geometry not in ('quarter','compact','compact_passages','compact_detour','suite'):raise ValueError('Unknown geometry preset')
+        if not 0<=self.detour_depth<=3:raise ValueError('Detour depth must lie in [0,3] metres')
+        if self.initial_wind_observations:
+            import numpy as np
+            observations=np.asarray(self.initial_wind_observations,float)
+            if observations.ndim!=2 or observations.shape[1]!=4 or not np.all(np.isfinite(observations)):
+                raise ValueError('Initial wind observations must be finite [x,y,wind_x,wind_y] rows')
+        if self.mode_count<1:raise ValueError('At least one trajectory mode is required')
+        if self.initialization_effort is not None and not 0<self.initialization_effort<1:
+            raise ValueError('Initialization acceleration fraction must lie strictly between zero and one')
+        if self.optimism_anneal_seconds is not None and self.optimism_anneal_seconds<=0:
+            raise ValueError('Optimism annealing duration must be positive')
         if min(self.rrt_paths,self.rrt_visits)<1 or self.guidance_sigma<=0:raise ValueError('Invalid RRT guidance configuration')
         if self.execution_filter not in ('hard','soft'):raise ValueError('Unknown execution filter')
         if self.execution_dt<=0 or abs(self.execution_dt/.01-round(self.execution_dt/.01))>1e-6 or abs(self.dt/self.execution_dt-round(self.dt/self.execution_dt))>1e-6:raise ValueError('Execution control period must be a physics-step multiple and divide planning dt')
@@ -142,7 +167,7 @@ def segment_contact(p0,p1,env,radius=.275):
 
 
 def rollout(theta,x0,q0,mean_array,construction,physical,env,cfg,filter_on=True):
-    basis=table_basis(cfg.environment_scale)
+    basis=table_basis(cfg.environment_scale,cfg.geometry)
     mean=TableMean(basis,mean_array);inner=InnerFields(basis,construction);world=WorldField(basis,physical)
     prediction_cfg=replace(cfg,safety_margin=cfg.execution_margin) if cfg.prediction_filter=='hard' else cfg
     reference,aa=nominal_reference(theta,x0,cfg)
@@ -208,9 +233,9 @@ def optimizer(env,cfg,method):
         rho=cfg.mixture if method in ('proposed','fading') else 0.
         initials=initial_sequences(x,cfg)
         guidance=None
-        if cfg.initialization=='rrt':
+        if cfg.initialization in ('rrt','modes'):
             if demonstrations is None:raise ValueError('RRT guidance requires generated demonstrations')
-            initials=jnp.concatenate((initials,demonstrations))
+            initials=(demonstrations if cfg.multimode or cfg.initialization=='modes' else jnp.concatenate((initials,demonstrations)))
             def guidance(theta,selected,selected_cost):
                 points=(rollout(theta,x,q,mean,construction,mean,env,cfg,not blind).x[:,:2]
                         if cfg.guidance_mode=='executed' else nominal_reference(theta,x,cfg)[0][:,:2])
@@ -219,15 +244,25 @@ def optimizer(env,cfg,method):
                 # covariance is (H+1)*sigma^2 I; sigma is the RMS position scale.
                 return -selected_cost/cfg.temperature-jnp.mean(jnp.sum((points-reference)**2,axis=1))/(2*cfg.guidance_sigma**2)
             if cfg.guidance_mode=='off':guidance=None
-        result=search(lambda th:values(th,worlds),initials,previous,key,cfg,fraction,rho,cold,guidance)
+        if cfg.multimode:
+            from .multimode import search as mode_search
+            result=mode_search(lambda th:values(th,worlds),initials,previous,key,cfg,fraction,rho,cold,guidance)
+        else:result=search(lambda th:values(th,worlds),initials,previous,key,cfg,fraction,rho,cold,guidance)
         candidates=result.finalists
-        if cfg.validate_initials:
+        if cfg.validate_initials and not cfg.multimode:
             # A geometrically distinct initial trajectory must not disappear
             # just because it missed the top four on a tiny training bank.
             candidates=jnp.concatenate((candidates,result.initial_parameters))
             candidate_indices=jnp.concatenate((result.finalist_indices,jnp.arange(len(result.initial_parameters))))
             result=result._replace(finalists=candidates,finalist_indices=candidate_indices)
-        costs=jax.lax.map(lambda th:values(th,validation),candidates,batch_size=cfg.batch_size)
+        if cfg.multimode:
+            # Serial execution skips exact repeated finalists. A declared
+            # batch can trade that skipped work for parallel array execution;
+            # the evaluated costs and selection rule are unchanged.
+            costs=jax.lax.map(lambda item:jax.lax.cond(item[1],lambda th:values(th,validation),
+                lambda th:jnp.full(cfg.validation_worlds,jnp.inf),item[0]),(candidates,result.finalist_unique),
+                batch_size=cfg.validation_batch_size or None)
+        else:costs=jax.lax.map(lambda th:values(th,validation),candidates,batch_size=cfg.batch_size)
         scores=lower_tail(costs,fraction)
         valid=jnp.all(jnp.isfinite(costs),axis=1)&jnp.all(jnp.abs(result.finalists)<=cfg.latent_bound,axis=1)
         scores=jnp.where(valid,scores,jnp.inf);i=jnp.argmin(scores)
