@@ -35,6 +35,7 @@ class StationaryFlow {
     const loaded=await Promise.all([1,2].map(async scenario=>{
       const root=`data/scenario${scenario}/`,response=await fetch(root+'metadata.json');if(!response.ok)throw new Error('Wind metadata unavailable');
       const meta=await response.json(),raw=await fetch(root+meta.data_file);if(!raw.ok)throw new Error('Wind field unavailable');
+      const region=meta.monitoring_region_metrics;if(region)document.querySelector(`#monitoring-speeds-${scenario}`).textContent=`Mean wind in A: ${region.A.mean_m_s.toFixed(2)} m/s · B: ${region.B.mean_m_s.toFixed(2)} m/s`;
       const record=new StationaryFlow(meta,await raw.arrayBuffer()),container=document.querySelector(`#map${scenario}`),image=container.querySelector(`#s${scenario}-heat`);
       record.paint(image);
       const probe=document.querySelector(`#probe${scenario}`),svg=container.querySelector('svg');
@@ -62,6 +63,8 @@ class StationaryFlow {
     document.querySelector('#heatmap').addEventListener('change',e=>{for(const item of loaded)item.image.style.display=e.target.checked?'':'none';});
     document.addEventListener('visibilitychange',()=>{for(const item of loaded)(document.hidden||!playing)?item.renderer.pause():item.renderer.play();});
     for(const item of loaded)item.renderer.play();
-    const response=await fetch('data/validation.json');if(response.ok){const v=await response.json();document.querySelector('#verification').textContent=v.summary;}
+    const response=await fetch('data/validation.json');if(response.ok){const v=await response.json();document.querySelector('#verification').textContent=v.summary;
+      const s2=v.scenarios.find(s=>s.scenario===2);if(s2?.monitoring_regions){const before=s2.monitoring_regions_before,after=s2.monitoring_regions;document.querySelector('#shelter-wind-comparison').textContent=`Scenario 2, horizontal wind: A mean ${before.A.mean_m_s.toFixed(2)} → ${after.A.mean_m_s.toFixed(2)} m/s; B mean ${before.B.mean_m_s.toFixed(2)} → ${after.B.mean_m_s.toFixed(2)} m/s. Revised 95th percentiles: A ${after.A.p95_m_s.toFixed(2)}, B ${after.B.p95_m_s.toFixed(2)} m/s. Local maxima: A ${after.A.max_m_s.toFixed(2)}, B ${after.B.max_m_s.toFixed(2)} m/s. These are measurements of the computed horizontal slice.`;}
+      const robot=await(await fetch('data/robot/manifest.json')).json(),upper=robot.cases.filter(c=>c.scenario===2&&c.route==='upper');const success=upper.length===2&&upper.every(c=>c.unfiltered.target_region_reached&&!c.unfiltered.contact);document.querySelector('#shelter-outcome').innerHTML=`<b>Scenario 2 · upper bypass</b><strong>${success?'Both directions reach the target':'Review the computed outcomes'}</strong><span>Without the safety filter · same reference and controller</span><span>Minimum clearance: ${Math.min(...upper.map(c=>c.unfiltered.min_clearance_m)).toFixed(3)} m · maximum control component: ${Math.max(...upper.map(c=>c.unfiltered.max_control_component_m_s2)).toFixed(2)} / 1.60 m/s²</span><a href="#robot-review">Inspect the robot runs ↓</a>`;}
   }catch(error){status.textContent=`Wind display could not load: ${error.message}`;status.dataset.state='error';}
 })();

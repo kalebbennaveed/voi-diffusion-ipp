@@ -19,6 +19,7 @@ const design = {
     {id:1,central:'Wind toward the lower-left monitoring region',upper:'Sheltered bypass; computed speed',lower:'Sheltered bypass; computed speed'},
     {id:2,central:'Same central wind toward the lower-left monitoring region',upper:'Sheltered bypass; computed speed',lower:'Stronger incoming wind toward the lower-left; robot impassability not established'}
   ],
+  airflowOpenings:{centralInletY:[1.60,2.275],lowerInletY:[.35,1.15],southOutletX:[2.95,4.45]},
   physicalScale:{metersPerLayoutUnit:.01,domainMeters:[8,4.625,2],obstacleHeightMeters:1.5}, windMagnitude:{centralInletPeakMps:5,lowerInletPeakMps:8}, windField:'Fixed vector mean from 3D MRT LBM / Smagorinsky LES; no time dependence',
   intendedRobotModel:'Nominal double integrator; separate robot review adds the existing relative-air-velocity quadratic force as acceleration.',
   illustrativePaths: {scenario1:'A -> central passage -> B -> lower bypass -> A',scenario2:'A -> central passage -> B -> upper bypass -> A',dynamicallyValidated:false},
@@ -29,6 +30,10 @@ const design = {
   }
 };
 const routeColors={central:'#c16a5d',upper:'#b49843',lower:'#3b9ba7'};
+function renderWindOpenings(scenario){
+  const segment=(bounds,side,color)=>side==='east'?`<path d="M800 ${462.5-bounds[0]*100}V${462.5-bounds[1]*100}" stroke="${color}" stroke-width="5"/>`:`<path d="M${bounds[0]*100} 462.5H${bounds[1]*100}" stroke="${color}" stroke-width="5"/>`;
+  return `<g class="air-openings" aria-label="External air openings outside the monitoring regions">${segment(design.airflowOpenings.centralInletY,'east','#506f9a')}${scenario===2?segment(design.airflowOpenings.lowerInletY,'east','#506f9a'):''}${segment(design.airflowOpenings.southOutletX,'south','#2a8d83')}</g>`;
+}
 function renderMap(scenario) {
   const id=`s${scenario}`;
   const zones = `<image id="${id}-heat" width="800" height="462.5" preserveAspectRatio="none"/>`;
@@ -53,7 +58,7 @@ function renderMap(scenario) {
       <path d="M-7 -5L7 0L-7 5L-4 0Z" transform="translate(${scenario===1?'510 449':'233 16'}) rotate(${scenario===1?'0':'0'})" fill="#16704f" stroke="white" stroke-width="1"/>
       <circle cx="650" cy="110" r="6" fill="#16704f" stroke="white" stroke-width="2"/>
     </g>
-    <rect width="800" height="462.5" fill="none" stroke="#667b72" stroke-width="1.5"/>
+    <rect width="800" height="462.5" fill="none" stroke="#667b72" stroke-width="1.5"/>${renderWindOpenings(scenario)}
   </svg>`;
 }
 for(const scenario of [1,2])document.querySelector(`#map${scenario}`).innerHTML=renderMap(scenario);

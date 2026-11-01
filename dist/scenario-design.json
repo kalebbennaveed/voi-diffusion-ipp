@@ -146,8 +146,40 @@
   "windValidationStatus": "Provisional CFD preview; refined Scenario 2 failed its stability gate. Not validated for robot dynamics or research conclusions.",
   "robotReview": {
     "model": "p_dot=v; v_dot=u+(0.1/0.680)*norm(w_xy(p)-v)*(w_xy(p)-v)",
-    "windFieldChanged": false,
+    "windFieldChanged": true,
     "manifest": "data/robot/manifest.json",
-    "filter": "Existing full flow-policy RPCBF; known-wind diagnostic"
+    "filter": "Existing full flow-policy RPCBF; known-wind diagnostic",
+    "change": "New CFD solve with relocated air openings. Same robot model, route references, controller, and filter."
+  },
+  "airflowBoundaryRevision": {
+    "id": "sheltered-monitoring-ports-v2",
+    "centralEastInletY_m": [
+      1.6,
+      2.275
+    ],
+    "centralDirection": [
+      -1,
+      0,
+      0
+    ],
+    "scenario2LowerEastInletY_m": [
+      0.35,
+      1.15
+    ],
+    "lowerDirection": [
+      -1,
+      -0.6,
+      0
+    ],
+    "southOutletX_m": [
+      2.95,
+      4.45
+    ],
+    "westBoundary": "no-slip",
+    "interiorWindModification": "none",
+    "averagingInterval_s": [
+      16,
+      32
+    ]
   }
 }

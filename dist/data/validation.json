@@ -1,5 +1,163 @@
 {
+  "environment_revision": "sheltered-monitoring-ports-v2",
   "time_independent": true,
+  "physical_change": "External wind openings moved below A; south pressure outlet x=2.95\u20134.45m outside B; west perimeter closed. Same columns, regions, air properties, solver, force law, and robot controller.",
+  "interior_velocity_modification": "None: exported vector mean of the newly solved CFD field, no ROI blending, clipping, or speed cap.",
+  "full_scene_grid_convergence_established": false,
+  "scenarios": [
+    {
+      "scenario": 1,
+      "grid": [
+        64,
+        37,
+        16
+      ],
+      "monitoring_regions_before": {
+        "A": {
+          "mean_m_s": 1.5478354692459106,
+          "p95_m_s": 4.395322322845459,
+          "max_m_s": 4.543406009674072
+        },
+        "B": {
+          "mean_m_s": 0.9396892786026001,
+          "p95_m_s": 3.099647283554077,
+          "max_m_s": 3.4607150554656982
+        }
+      },
+      "monitoring_regions": {
+        "A": {
+          "mean_m_s": 0.3287677764892578,
+          "p95_m_s": 0.9599956274032593,
+          "max_m_s": 3.457449436187744
+        },
+        "B": {
+          "mean_m_s": 0.3760656416416168,
+          "p95_m_s": 0.5992929935455322,
+          "max_m_s": 0.7480540871620178
+        }
+      },
+      "fixed_field_mean_speeds_m_s": {
+        "central_passage": 1.5495411157608032,
+        "lower_bypass": 0.15076377987861633,
+        "upper_bypass": 0.35565686225891113,
+        "whole_fluid_slice": 0.5264359712600708
+      },
+      "sampling_windows_s": [
+        [
+          16,
+          24.0
+        ],
+        [
+          24.0,
+          32
+        ]
+      ],
+      "sampling_vector_relative_L2": 0.11477280115630051,
+      "sampling_region_means_m_s": [
+        {
+          "A": {
+            "mean_m_s": 0.3352003801506676,
+            "p95_m_s": 0.9203663678195095,
+            "max_m_s": 3.4489605534868533
+          },
+          "B": {
+            "mean_m_s": 0.3976855742705262,
+            "p95_m_s": 0.634212609077083,
+            "max_m_s": 0.7642197768318486
+          }
+        },
+        {
+          "A": {
+            "mean_m_s": 0.3245691040992822,
+            "p95_m_s": 0.9928947217329541,
+            "max_m_s": 3.4659689263939173
+          },
+          "B": {
+            "mean_m_s": 0.359733505753522,
+            "p95_m_s": 0.5900851323528281,
+            "max_m_s": 0.7352777982757758
+          }
+        }
+      ],
+      "max_recorded_density_change": 0.0013012698400316491
+    },
+    {
+      "scenario": 2,
+      "grid": [
+        64,
+        37,
+        16
+      ],
+      "monitoring_regions_before": {
+        "A": {
+          "mean_m_s": 1.730795979499817,
+          "p95_m_s": 4.310842514038086,
+          "max_m_s": 4.531020164489746
+        },
+        "B": {
+          "mean_m_s": 2.16644549369812,
+          "p95_m_s": 3.945140838623047,
+          "max_m_s": 4.280539035797119
+        }
+      },
+      "monitoring_regions": {
+        "A": {
+          "mean_m_s": 0.3611123561859131,
+          "p95_m_s": 0.919074296951294,
+          "max_m_s": 3.438467502593994
+        },
+        "B": {
+          "mean_m_s": 0.2479815036058426,
+          "p95_m_s": 0.7323242425918579,
+          "max_m_s": 1.6458204984664917
+        }
+      },
+      "fixed_field_mean_speeds_m_s": {
+        "central_passage": 2.136042833328247,
+        "lower_bypass": 3.5010697841644287,
+        "upper_bypass": 0.6129603385925293,
+        "whole_fluid_slice": 0.927109956741333
+      },
+      "sampling_windows_s": [
+        [
+          16,
+          24.0
+        ],
+        [
+          24.0,
+          32
+        ]
+      ],
+      "sampling_vector_relative_L2": 0.11352351904797167,
+      "sampling_region_means_m_s": [
+        {
+          "A": {
+            "mean_m_s": 0.35108608623618226,
+            "p95_m_s": 0.8716106619159313,
+            "max_m_s": 3.4214492642945107
+          },
+          "B": {
+            "mean_m_s": 0.26005554842068773,
+            "p95_m_s": 0.8107216776328007,
+            "max_m_s": 1.7014248961688456
+          }
+        },
+        {
+          "A": {
+            "mean_m_s": 0.3810035974188472,
+            "p95_m_s": 0.967113283573618,
+            "max_m_s": 3.4555273253809506
+          },
+          "B": {
+            "mean_m_s": 0.24587002845899159,
+            "p95_m_s": 0.6762069442488803,
+            "max_m_s": 1.5999290654332576
+          }
+        }
+      ],
+      "max_recorded_density_change": 0.0025045071593964296
+    }
+  ],
   "analytic_solver_check": {
     "test": "Analytic periodic Taylor-Green vortex, diffusive refinement, D3Q19 MRT",
     "checks": [
@@ -19,96 +177,9 @@
     "acceptance": "Each velocity error < 0.02; fine error less than half coarse; periodic mass error < 1e-10.",
     "passed": true
   },
-  "scenarios": [
-    {
-      "scenario": 1,
-      "grid": [
-        64,
-        37,
-        16
-      ],
-      "slice_height_m": 0.75,
-      "fixed_field_mean_speeds_m_s": {
-        "central_passage": 3.4870963096618652,
-        "lower_bypass": 0.39622852206230164,
-        "upper_bypass": 1.0588322877883911,
-        "whole_fluid_slice": 0.9379997849464417
-      },
-      "sampling_comparison": "Mean vector fields over 8\u201312 s versus 12\u201316 s",
-      "sampling_passage_relative_changes": {
-        "central_passage": 0.0009037108112086005,
-        "lower_bypass": 0.02183927669320424,
-        "upper_bypass": 0.032415207789513636,
-        "whole_fluid_slice": 0.014092054636384509
-      },
-      "sampling_vector_relative_L2": 0.11957653779120199,
-      "boundary_checks": [
-        {
-          "links": 10524,
-          "min_q": 0.00021898393600583432,
-          "max_q": 0.9979555258286101,
-          "unresolved": 0,
-          "junction_halfway_no_slip_links": 212
-        }
-      ]
-    },
-    {
-      "scenario": 2,
-      "grid": [
-        64,
-        37,
-        16
-      ],
-      "slice_height_m": 0.75,
-      "fixed_field_mean_speeds_m_s": {
-        "central_passage": 4.254124641418457,
-        "lower_bypass": 4.337419509887695,
-        "upper_bypass": 2.3203303813934326,
-        "whole_fluid_slice": 1.7304049730300903
-      },
-      "sampling_comparison": "Mean vector fields over 8\u201312 s versus 12\u201316 s",
-      "sampling_passage_relative_changes": {
-        "central_passage": 0.008359403249746307,
-        "lower_bypass": 7.635924781158295e-06,
-        "upper_bypass": 0.010085190662166234,
-        "whole_fluid_slice": 0.005094918049332743
-      },
-      "sampling_vector_relative_L2": 0.06669150602561134,
-      "boundary_checks": [
-        {
-          "links": 10524,
-          "min_q": 0.00021898393600583432,
-          "max_q": 0.9979555258286101,
-          "unresolved": 0,
-          "junction_halfway_no_slip_links": 212
-        }
-      ]
-    }
-  ],
-  "full_scene_grid_convergence_established": false,
-  "comparison_note": "Both resolutions use the same 0.75 m slice and 8\u201316 s averaging window. Passage masks are sampled on each grid; these are sensitivity checks, not a rigorous grid-convergence or experimental validation study.",
-  "summary": "The displayed fields are fixed in time. Taylor\u2013Green solver check passed (1.96% \u2192 0.49% relative velocity error). The 128-cell Scenario 2 run failed its numerical stability gate and was rejected. Both displayed fields use the completed 64-cell computations. Their passage speeds change by up to 3.2% between averaging blocks, but this does not establish accuracy. This is a provisional scenario preview, not a validated wind model. Scenario 1 also shows up to 138% passage-speed change with refinement, so its numerical accuracy is unresolved.",
-  "refinement_failure": {
-    "scenario": 2,
-    "grid": [
-      128,
-      74,
-      32
-    ],
-    "status": "failed",
-    "reason": "Numerical stability gate failed before the requested 16-second run completed.",
-    "reported_lattice_speed": 0.25729268739586664,
-    "allowed_lattice_speed": 0.2,
-    "reported_relative_density_change": 0.028209049551463528,
-    "last_periodic_diagnostic_time_s": 10.9828125,
-    "exported_to_webpage": false,
-    "display_policy": "Keep both scenario displays at the completed 64-cell resolution and explicitly label the preview unvalidated. Do not claim grid convergence or silently modify molecular viscosity, geometry, or wind conditions.",
-    "root_cause": "Not yet established. The failure rejects the refined result; stability of the coarse run does not prove its accuracy."
-  },
-  "scenario1_refinement_sensitivity": {
-    "central_passage": 0.006831830483925318,
-    "lower_bypass": 0.6355988458245109,
-    "upper_bypass": 1.378391082794224,
-    "whole_fluid_slice": 0.10119695446010316
+  "summary": "The revised fixed fields come from new 3D CFD solves with wind openings below A and an outlet outside B. Monitoring-region speeds are measured from the resulting fields; no calm-zone mask is applied. Taylor\u2013Green solver verification remains applicable. These redesigned full scenes have not established grid convergence or experimental accuracy.",
+  "source_sha256": {
+    "scripts/airflow/simulate_sheltered_airflow.py": "d7fd79a77f7946664b1e918cee6d648a7e647348765c9f3eb2abca574ecaed97",
+    "scripts/airflow/export_sheltered_wind.py": "1e8db2d4a83dca0feae7fcf818010d23b3e9437462fca7b7544cbc30383c7b62"
   }
 }

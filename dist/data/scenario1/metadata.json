@@ -39,9 +39,45 @@
   "temperature_K": 293.15,
   "dynamic_viscosity_Pa_s": 1.8134058821488238e-05,
   "kinematic_viscosity_m2_s": 1.506151064907661e-05,
-  "wind_source": "Prescribed incoming external wind at east boundary; central 5 m/s peak and scenario 2 lower 8 m/s peak. Direction (-1,-0.6,0), normalized. Gaussian inlet profiles in y only; sine profile in z. Interior velocities computed by CFD.",
-  "boundary_conditions": "No-slip floor, roof, north/south boundaries, and circular cylinders with analytic link intersections. Library-documented halfway no-slip fallback at junctions lacking a second fluid node (counts recorded). Pressure outlet west; prescribed velocity inlet east.",
+  "wind_source": "East boundary openings below monitoring region A: central y=1.60\u20132.275 m with 5 m/s peak; Scenario 2 lower y=0.35\u20131.15 m with 8 m/s peak. Compact sin^2 port profiles, sine profile over height. Central incoming direction (-1,0,0), lower (-1,-0.6,0) normalized. Obstacles redirect the central flow. Interior velocities computed by CFD; no ROI masking or scaling.",
+  "boundary_conditions": "No-slip floor, roof, and perimeter except east wind openings and south pressure-outlet opening x=2.95\u20134.45 m, outside B. West boundary is closed, preventing forced throughflow across B. Same circular columns and analytic surface intersections; recorded halfway fallback at stencil junctions.",
   "initial_condition": "Air initially at rest; imposed inlet starts at t=0",
+  "environment_revision": "sheltered-monitoring-ports-v2",
+  "openings": {
+    "central_inlet": {
+      "side": "east",
+      "y_m": [
+        1.6,
+        2.275
+      ],
+      "peak_m_s": 5.0,
+      "direction": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "lower_inlet": {
+      "side": "east",
+      "y_m": [
+        0.35,
+        1.15
+      ],
+      "peak_m_s": 0.0,
+      "direction": [
+        -1.0,
+        -0.6,
+        0.0
+      ]
+    },
+    "outlet": {
+      "side": "south",
+      "x_m": [
+        2.95,
+        4.45
+      ]
+    }
+  },
   "slice_height_m": 0.75,
   "requested_slice_height_m": 0.75,
   "slice_interpolation": "Linear interpolation between neighboring vertical CFD cell centers",
@@ -49,139 +85,267 @@
   "diagnostics": [
     {
       "time_s": 0.9984375,
-      "max_speed_m_s": 5.020327303218172,
-      "max_lattice_mach": 0.04891197352387004,
-      "max_relative_density_change": 0.009215640963935678,
-      "mean_speed_m_s": 0.849227708834827,
-      "wall_seconds": 5.151004874991486
+      "max_speed_m_s": 4.773362961082565,
+      "max_lattice_mach": 0.04650585284003863,
+      "max_relative_density_change": 0.001043241355517921,
+      "mean_speed_m_s": 0.238095125135054,
+      "wall_seconds": 1.5726533340057358
     },
     {
       "time_s": 1.996875,
-      "max_speed_m_s": 5.601425970680318,
-      "max_lattice_mach": 0.05457349336530446,
-      "max_relative_density_change": 0.0021310137529464424,
-      "mean_speed_m_s": 1.1093195109171285,
-      "wall_seconds": 10.201841958987643
+      "max_speed_m_s": 4.769365550121985,
+      "max_lattice_mach": 0.0464669069213248,
+      "max_relative_density_change": 0.0009080394017974003,
+      "mean_speed_m_s": 0.29248528577870964,
+      "wall_seconds": 3.1509010000008857
     },
     {
       "time_s": 2.9953125,
-      "max_speed_m_s": 4.919816828186579,
-      "max_lattice_mach": 0.047932721495727276,
-      "max_relative_density_change": 0.004362700086845361,
-      "mean_speed_m_s": 0.8085772852470314,
-      "wall_seconds": 15.741345833986998
+      "max_speed_m_s": 4.768699088537232,
+      "max_lattice_mach": 0.04646041372886558,
+      "max_relative_density_change": 0.000954120368099165,
+      "mean_speed_m_s": 0.32886962720559987,
+      "wall_seconds": 4.678472084007808
     },
     {
       "time_s": 3.99375,
-      "max_speed_m_s": 4.909797897035144,
-      "max_lattice_mach": 0.04783510919564829,
-      "max_relative_density_change": 0.001372321009855515,
-      "mean_speed_m_s": 0.7867549269316668,
-      "wall_seconds": 21.1137515839946
+      "max_speed_m_s": 4.768904776433358,
+      "max_lattice_mach": 0.046462417701977655,
+      "max_relative_density_change": 0.0010826361684559416,
+      "mean_speed_m_s": 0.34891694786475225,
+      "wall_seconds": 6.2257841670070775
     },
     {
       "time_s": 4.9921875,
-      "max_speed_m_s": 5.206096401210339,
-      "max_lattice_mach": 0.05072188205248759,
-      "max_relative_density_change": 0.0019217754038063362,
-      "mean_speed_m_s": 0.924729221452146,
-      "wall_seconds": 26.352760291993036
+      "max_speed_m_s": 4.768947927922661,
+      "max_lattice_mach": 0.04646283811769457,
+      "max_relative_density_change": 0.0012011559147302453,
+      "mean_speed_m_s": 0.36137119386121036,
+      "wall_seconds": 7.7856170420127455
     },
     {
       "time_s": 5.990625,
-      "max_speed_m_s": 5.203919030228854,
-      "max_lattice_mach": 0.050700668393424006,
-      "max_relative_density_change": 0.0018670345314537595,
-      "mean_speed_m_s": 0.9310250970261631,
-      "wall_seconds": 31.652162083992152
+      "max_speed_m_s": 4.769215955183112,
+      "max_lattice_mach": 0.046465449449879716,
+      "max_relative_density_change": 0.001229733840902858,
+      "mean_speed_m_s": 0.3721477154507973,
+      "wall_seconds": 9.313608125012252
     },
     {
       "time_s": 6.9890625,
-      "max_speed_m_s": 4.916274754895495,
-      "max_lattice_mach": 0.04789821183439064,
-      "max_relative_density_change": 0.00174206294426682,
-      "mean_speed_m_s": 0.836047827755025,
-      "wall_seconds": 36.923832249987754
+      "max_speed_m_s": 4.769286866560226,
+      "max_lattice_mach": 0.0464661403242372,
+      "max_relative_density_change": 0.0012336956007079625,
+      "mean_speed_m_s": 0.38188293774758486,
+      "wall_seconds": 10.873674709000625
     },
     {
       "time_s": 7.9875,
-      "max_speed_m_s": 4.917136855621708,
-      "max_lattice_mach": 0.04790661109709776,
-      "max_relative_density_change": 0.0008960554275321275,
-      "mean_speed_m_s": 0.8408307190955749,
-      "wall_seconds": 42.22217529198679
+      "max_speed_m_s": 4.76946910474297,
+      "max_lattice_mach": 0.04646791583181489,
+      "max_relative_density_change": 0.001245507608218288,
+      "mean_speed_m_s": 0.39045958852828927,
+      "wall_seconds": 12.436652667005546
     },
     {
       "time_s": 8.9859375,
-      "max_speed_m_s": 5.091413797964024,
-      "max_lattice_mach": 0.04960455401492388,
-      "max_relative_density_change": 0.0007654191806767408,
-      "mean_speed_m_s": 0.8842095682424309,
-      "wall_seconds": 47.58972254199034
+      "max_speed_m_s": 4.76956409889126,
+      "max_lattice_mach": 0.04646884133945324,
+      "max_relative_density_change": 0.001245448307294117,
+      "mean_speed_m_s": 0.39820402848325526,
+      "wall_seconds": 13.975345250000828
     },
     {
       "time_s": 9.984375,
-      "max_speed_m_s": 5.039262245790877,
-      "max_lattice_mach": 0.04909645261335061,
-      "max_relative_density_change": 0.0013382905066121609,
-      "mean_speed_m_s": 0.8712599421200552,
-      "wall_seconds": 53.40183620899916
+      "max_speed_m_s": 4.769633175747996,
+      "max_lattice_mach": 0.04646951434047164,
+      "max_relative_density_change": 0.0012485705695017835,
+      "mean_speed_m_s": 0.4061831293686234,
+      "wall_seconds": 15.610458375012968
     },
     {
       "time_s": 10.9828125,
-      "max_speed_m_s": 4.952238628750419,
-      "max_lattice_mach": 0.04824860015363036,
-      "max_relative_density_change": 0.0010900170886518623,
-      "mean_speed_m_s": 0.8487191305370152,
-      "wall_seconds": 58.79145679199428
+      "max_speed_m_s": 4.76974841254518,
+      "max_lattice_mach": 0.04647063706790202,
+      "max_relative_density_change": 0.0012467407253258234,
+      "mean_speed_m_s": 0.4137016131748103,
+      "wall_seconds": 17.158610542013776
     },
     {
       "time_s": 11.98125,
-      "max_speed_m_s": 4.9930993254866,
-      "max_lattice_mach": 0.04864669716926633,
-      "max_relative_density_change": 0.0007534339767205633,
-      "mean_speed_m_s": 0.8588901052138588,
-      "wall_seconds": 64.20847899999353
+      "max_speed_m_s": 4.769738319219182,
+      "max_lattice_mach": 0.04647053873078889,
+      "max_relative_density_change": 0.0012449501266353913,
+      "mean_speed_m_s": 0.41938993503539,
+      "wall_seconds": 18.734710042001097
     },
     {
       "time_s": 12.979687499999999,
-      "max_speed_m_s": 5.031930743053795,
-      "max_lattice_mach": 0.049025023352645546,
-      "max_relative_density_change": 0.0009398183278954697,
-      "mean_speed_m_s": 0.8699870562298292,
-      "wall_seconds": 69.69412904199271
+      "max_speed_m_s": 4.769672157607043,
+      "max_lattice_mach": 0.04646989413237413,
+      "max_relative_density_change": 0.001233497416868401,
+      "mean_speed_m_s": 0.423275886400335,
+      "wall_seconds": 20.29246220900677
     },
     {
       "time_s": 13.978125,
-      "max_speed_m_s": 5.000715163319888,
-      "max_lattice_mach": 0.04872089664590704,
-      "max_relative_density_change": 0.0010930215367941365,
-      "mean_speed_m_s": 0.8624364522403849,
-      "wall_seconds": 75.13837804200011
+      "max_speed_m_s": 4.769579296371627,
+      "max_lattice_mach": 0.04646898940524904,
+      "max_relative_density_change": 0.0012258126452826534,
+      "mean_speed_m_s": 0.4258905669058423,
+      "wall_seconds": 21.9040373750031
     },
     {
       "time_s": 14.9765625,
-      "max_speed_m_s": 4.980566019798063,
-      "max_lattice_mach": 0.048524587856670055,
-      "max_relative_density_change": 0.0009698670301285794,
-      "mean_speed_m_s": 0.8563135540208611,
-      "wall_seconds": 80.7795929999993
+      "max_speed_m_s": 4.769636060755182,
+      "max_lattice_mach": 0.046469542448478666,
+      "max_relative_density_change": 0.0012244549766811108,
+      "mean_speed_m_s": 0.42807665922508165,
+      "wall_seconds": 23.500772917002905
     },
     {
       "time_s": 15.975,
-      "max_speed_m_s": 4.997535075518001,
-      "max_lattice_mach": 0.04868991373165168,
-      "max_relative_density_change": 0.0009055532125084031,
-      "mean_speed_m_s": 0.8589063330597938,
-      "wall_seconds": 86.46962979198724
+      "max_speed_m_s": 4.769809754269088,
+      "max_lattice_mach": 0.046471234707178205,
+      "max_relative_density_change": 0.0012460631851813897,
+      "mean_speed_m_s": 0.4304205232964486,
+      "wall_seconds": 25.030743875002372
     },
     {
-      "time_s": 16.0003125,
-      "max_speed_m_s": 4.992489738665694,
-      "max_lattice_mach": 0.04864075809544827,
-      "max_relative_density_change": 0.0009088641933476804,
-      "mean_speed_m_s": 0.8576351412061357,
-      "wall_seconds": 86.60141970899713
+      "time_s": 16.9734375,
+      "max_speed_m_s": 4.7699835338520575,
+      "max_lattice_mach": 0.0464729278044302,
+      "max_relative_density_change": 0.0012797664569894618,
+      "mean_speed_m_s": 0.43271380145541694,
+      "wall_seconds": 26.617046292012674
+    },
+    {
+      "time_s": 17.971875,
+      "max_speed_m_s": 4.77007223272233,
+      "max_lattice_mach": 0.04647379197852331,
+      "max_relative_density_change": 0.0013004250378791937,
+      "mean_speed_m_s": 0.43474965692214645,
+      "wall_seconds": 28.17310254200129
+    },
+    {
+      "time_s": 18.9703125,
+      "max_speed_m_s": 4.770136163066253,
+      "max_lattice_mach": 0.046474414838169796,
+      "max_relative_density_change": 0.0013012698400316491,
+      "mean_speed_m_s": 0.43644939094725527,
+      "wall_seconds": 29.69831616700685
+    },
+    {
+      "time_s": 19.96875,
+      "max_speed_m_s": 4.770221706123721,
+      "max_lattice_mach": 0.046475248265854745,
+      "max_relative_density_change": 0.0012932186373841859,
+      "mean_speed_m_s": 0.4377205340507051,
+      "wall_seconds": 31.344812625000486
+    },
+    {
+      "time_s": 20.967187499999998,
+      "max_speed_m_s": 4.770316573462405,
+      "max_lattice_mach": 0.046476172538014254,
+      "max_relative_density_change": 0.0012845420251004214,
+      "mean_speed_m_s": 0.43842496594627467,
+      "wall_seconds": 32.93176695900911
+    },
+    {
+      "time_s": 21.965625,
+      "max_speed_m_s": 4.770388562527779,
+      "max_lattice_mach": 0.046476873912057605,
+      "max_relative_density_change": 0.001276105703211794,
+      "mean_speed_m_s": 0.4385218594315978,
+      "wall_seconds": 34.86353820899967
+    },
+    {
+      "time_s": 22.9640625,
+      "max_speed_m_s": 4.770418332174319,
+      "max_lattice_mach": 0.04647716395134697,
+      "max_relative_density_change": 0.0012680420081347954,
+      "mean_speed_m_s": 0.43814673682234473,
+      "wall_seconds": 36.81150033400627
+    },
+    {
+      "time_s": 23.9625,
+      "max_speed_m_s": 4.770404599187323,
+      "max_lattice_mach": 0.046477030153796374,
+      "max_relative_density_change": 0.0012616865932022492,
+      "mean_speed_m_s": 0.437525483960401,
+      "wall_seconds": 38.90928462501324
+    },
+    {
+      "time_s": 24.9609375,
+      "max_speed_m_s": 4.770372769239524,
+      "max_lattice_mach": 0.046476720041433175,
+      "max_relative_density_change": 0.0012585387216930144,
+      "mean_speed_m_s": 0.43694587352094566,
+      "wall_seconds": 40.923346334006055
+    },
+    {
+      "time_s": 25.959374999999998,
+      "max_speed_m_s": 4.770351759826264,
+      "max_lattice_mach": 0.04647651535122015,
+      "max_relative_density_change": 0.0012580006256646126,
+      "mean_speed_m_s": 0.4365278034090996,
+      "wall_seconds": 42.8628330000065
+    },
+    {
+      "time_s": 26.9578125,
+      "max_speed_m_s": 4.770338848163403,
+      "max_lattice_mach": 0.04647638955565468,
+      "max_relative_density_change": 0.0012583044510210417,
+      "mean_speed_m_s": 0.43620081553024376,
+      "wall_seconds": 44.979487333999714
+    },
+    {
+      "time_s": 27.95625,
+      "max_speed_m_s": 4.770322680476609,
+      "max_lattice_mach": 0.04647623203734548,
+      "max_relative_density_change": 0.0012589019627669007,
+      "mean_speed_m_s": 0.43591852246161555,
+      "wall_seconds": 46.92229258400039
+    },
+    {
+      "time_s": 28.9546875,
+      "max_speed_m_s": 4.770312824721406,
+      "max_lattice_mach": 0.04647613601483372,
+      "max_relative_density_change": 0.0012606034326425597,
+      "mean_speed_m_s": 0.43563753640744635,
+      "wall_seconds": 48.89276845900167
+    },
+    {
+      "time_s": 29.953125,
+      "max_speed_m_s": 4.770327495117737,
+      "max_lattice_mach": 0.046476278945362666,
+      "max_relative_density_change": 0.0012637754071338492,
+      "mean_speed_m_s": 0.4353678230096858,
+      "wall_seconds": 50.830878709006356
+    },
+    {
+      "time_s": 30.951562499999998,
+      "max_speed_m_s": 4.770367835172581,
+      "max_lattice_mach": 0.04647667196987587,
+      "max_relative_density_change": 0.0012671137508950547,
+      "mean_speed_m_s": 0.43507649782357055,
+      "wall_seconds": 52.80430483400414
+    },
+    {
+      "time_s": 31.95,
+      "max_speed_m_s": 4.770416777079438,
+      "max_lattice_mach": 0.04647714880039065,
+      "max_relative_density_change": 0.0012690879032029034,
+      "mean_speed_m_s": 0.4345973952938271,
+      "wall_seconds": 54.551482167007634
+    },
+    {
+      "time_s": 31.999921875,
+      "max_speed_m_s": 4.770426565453203,
+      "max_lattice_mach": 0.046477244166419504,
+      "max_relative_density_change": 0.0012690517145723668,
+      "mean_speed_m_s": 0.4346320243408964,
+      "wall_seconds": 54.612181500007864
     }
   ],
   "curved_boundary_checks": [
@@ -193,7 +357,7 @@
       "junction_halfway_no_slip_links": 212
     }
   ],
-  "wall_seconds": 86.68450495899015,
+  "wall_seconds": 54.65130604201113,
   "limitations": [
     "LES models unresolved eddies; not DNS or an approximation-free or measured wind field.",
     "Finite spatial/time discretization; near-wall turbulence is not wall-resolved at these grids.",
@@ -202,12 +366,12 @@
     "Air velocity is not assigned directly to the robot additive-acceleration disturbance. Robot coupling remains separate."
   ],
   "time_dependence": "none",
-  "field_definition": "Fixed vector mean of the 3D CFD horizontal slice over solver time 8\u201316 s; no temporal interpolation or gusts in the environment",
+  "field_definition": "Fixed vector mean of redesigned 3D CFD horizontal slice over 16\u201332 s",
   "averaging_interval_s": [
-    8,
-    16
+    16,
+    31.999921875
   ],
-  "averaging_method": "Trapezoidal vector average, linearly interpolated window endpoints; no extrapolation, speed clipping, or minimum wind",
+  "averaging_method": "Trapezoidal vector average with interpolated endpoints; no interior masking, rescaling, or clipping.",
   "data_shape": [
     37,
     64,
@@ -219,12 +383,24 @@
     "x from west",
     "u/v/w"
   ],
-  "velocity_sha256": "f98a50e7a1fb4c6b19c054e5851325498394f2d5fb4e8e8b8fcf26bbe0ba9f47",
+  "velocity_sha256": "11c6c3145fe78537cc6ec4428f276465bac161aa01436a2ba357a6b51e1eb06e",
   "generator": {
-    "source_directory": "stationary_s1_n64",
-    "transient_velocity_sha256": "994764889e386bac157fb1ee5628d7f196735ec3a0919a921170fe1f3a4b4f1a"
+    "source_directory": "results/airflow/sheltered_v2_s1_n64",
+    "transient_velocity_sha256": "01d5d0bf96a2e8b2c6f889f53c8f4f9636f0f76c10eb4bbf42484ca82d0a7276"
   },
-  "stationary_model_limit": "A mean-flow environment, not the instantaneous turbulent flow and not an exact steady Navier\u2013Stokes solution",
-  "validation_status": "Provisional numerical field; full-scene accuracy and grid convergence not established",
-  "intended_use": "Scenario visualization; not validated for robot performance or research conclusions"
+  "stationary_model_limit": "Prescribed stationary mean-flow environment, not an exact steady Navier\u2013Stokes solution.",
+  "validation_status": "Provisional CFD; monitor-region speeds measured in the computed field. Full-scene grid convergence not established.",
+  "intended_use": "Designed scenario and conditional robot-response review",
+  "monitoring_region_metrics": {
+    "A": {
+      "mean_m_s": 0.3287677764892578,
+      "p95_m_s": 0.9599956274032593,
+      "max_m_s": 3.457449436187744
+    },
+    "B": {
+      "mean_m_s": 0.3760656416416168,
+      "p95_m_s": 0.5992929935455322,
+      "max_m_s": 0.7480540871620178
+    }
+  }
 }

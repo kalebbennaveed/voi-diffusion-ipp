@@ -14,8 +14,8 @@
     return a.map((v,i)=>i===14?v:v+(b[i]-v)*f);
   }
   function setPlaying(value){playing=value;$('robot-play').textContent=value?'Ⅱ Pause robots':'▶ Play robots';$('robot-play').setAttribute('aria-pressed',String(value));}
-  function tag(summary){return summary.status==='collision'?'collision':summary.target_region_reached?'reached':'stopped';}
-  function label(summary){return summary.status==='collision'?'Contact · run stopped':summary.target_region_reached?'Finished in target region':'Finished outside target region';}
+  function tag(summary){return summary.status==='collision'?'collision':summary.min_clearance_m<.06||summary.infeasible_steps>0?'caution':summary.target_region_reached?'reached':'stopped';}
+  function label(summary){return summary.status==='collision'?'Contact · run stopped':summary.min_clearance_m<.06?'Target region · safety margin breached':summary.infeasible_steps>0?'Finished · QP infeasibility recorded':summary.target_region_reached?'Finished in target region':'Finished outside target region';}
   function panel(record,method){
     const id=record.id+'-'+method,result=record[method],summary=result.summary;
     const article=document.createElement('article');article.className='robot-card';article.dataset.case=record.id;
@@ -34,7 +34,7 @@
     <line class="control-arrow" stroke="#476fc0" stroke-width="2.7" marker-end="url(#${id}-control)"/>
     <circle class="robot-dot" r="6.5" fill="${colors[method]}" stroke="white" stroke-width="2.4"/>
     <path class="contact-marker" d="M-8 -8L8 8M-8 8L8 -8" stroke="#a93136" stroke-width="3" display="none"/>
-    </g><circle cx="${start[0]}" cy="${start[1]}" r="10" fill="none" stroke="#66766d" stroke-width="1.2"/><circle cx="${goal[0]}" cy="${goal[1]}" r="11" fill="none" stroke="#66766d" stroke-width="1.2"/><text x="${goal[0]+16}" y="${goal[1]+5}" fill="#43594c" font-size="15">goal</text><rect width="800" height="462.5" fill="none" stroke="#85938d"/></svg></div>
+    </g><circle cx="${start[0]}" cy="${start[1]}" r="10" fill="none" stroke="#66766d" stroke-width="1.2"/><circle cx="${goal[0]}" cy="${goal[1]}" r="11" fill="none" stroke="#66766d" stroke-width="1.2"/><text x="${goal[0]+16}" y="${goal[1]+5}" fill="#43594c" font-size="15">goal</text><rect width="800" height="462.5" fill="none" stroke="#85938d"/>${renderWindOpenings(record.scenario)}</svg></div>
     <div class="live-metrics"><div><span>Tracking error</span><b data-live="error">—</b></div><div><span>Robot speed</span><b data-live="speed">—</b></div><div><span>Wind acceleration</span><b data-live="air">—</b></div><div><span>Clearance</span><b data-live="clearance">—</b></div></div>
     <div class="robot-readout" role="status"></div>
     <div class="run-summary">Full run: minimum clearance <b>${summary.min_clearance_m.toFixed(3)} m</b> · final goal error <b>${summary.endpoint_error_m.toFixed(2)} m</b>${method==='rpcbf'?` · <b>${summary.infeasible_steps}</b> infeasible QP steps`:''}</div>`;
@@ -98,7 +98,9 @@
     $('robot-time').addEventListener('input',e=>{time=Number(e.target.value);setPlaying(false);draw();});
     $('robot-still').addEventListener('change',draw);
     const maxDifference=Math.max(...manifest.timestep_refinement.map(c=>c.max_common_time_position_difference_m));
-    $('robot-verification').textContent=`All six directed reference trajectories pass the 0.06 m clearance and acceleration checks. Halving the integration step from 0.01 to 0.005 s in central B → A (Scenario 1) and lower B → A (Scenario 2), with and without RPCBF, gives a maximum common-time position difference of ${(1000*maxDifference).toFixed(2)} mm. Outcomes ${manifest.timestep_refinement.every(c=>c.same_outcome)?'agree':'differ; inspect the downloadable checks'}.`;
+    const upperDifference=Math.max(...manifest.timestep_refinement.filter(c=>c.scenario===2&&c.route==='upper').map(c=>c.max_common_time_position_difference_m));
+    document.querySelector('.robot-numerical-note').textContent=`Numerical check: halving the integration step changes the Scenario 2 upper-bypass paths by at most ${(upperDifference*1000).toFixed(3)} mm, with the same outcomes in both directions. The difficult lower-bypass RPCBF run remains step-sensitive (up to ${(maxDifference*100).toFixed(1)} cm). CFD grid convergence remains unestablished.`;
+    $('robot-verification').textContent=`All six directed reference trajectories pass the 0.06 m clearance and acceleration checks. Halving the integration step from 0.01 to 0.005 s in central B → A (Scenario 1), lower B → A (Scenario 2), and both directions of the Scenario 2 upper bypass, with and without RPCBF, gives a maximum common-time position difference of ${(1000*maxDifference).toFixed(2)} mm. Outcomes ${manifest.timestep_refinement.every(c=>c.same_outcome)?'agree':'differ; inspect the downloadable checks'}.`;
     await loadSelection();
     function frame(stamp){const dt=previous===null?0:Math.min(.1,(stamp-previous)/1000);previous=stamp;if(playing&&!document.hidden){time=Math.min(horizon,time+dt*Number($('robot-speed').value));draw();if(time>=horizon)setPlaying(false);}requestAnimationFrame(frame);}requestAnimationFrame(frame);
   }catch(e){status.textContent=`Robot review could not load: ${e.message}`;status.classList.add('run-warning');}

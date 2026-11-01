@@ -60,30 +60,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.07831284498004237,
-        "endpoint_speed_m_s": 8.601313708787884e-05,
-        "min_clearance_m": 0.06487773972076016,
-        "max_tracking_error_m": 1.8101522159752592,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.0005608594288798797,
+        "endpoint_speed_m_s": 5.545178443169597e-06,
+        "min_clearance_m": 0.11729465558637786,
+        "max_tracking_error_m": 0.503108725425462,
+        "max_control_component_m_s2": 0.8802492184428334,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 2.7612812130986186,
+        "max_air_acceleration_m_s2": 1.6528568282300995,
         "final_time_s": 21.1
       },
       "rpcbf": {
-        "status": "outside target region",
+        "status": "target region reached",
         "contact": null,
-        "target_region_reached": false,
-        "endpoint_error_m": 2.176451918256553,
-        "endpoint_speed_m_s": 0.20254585690941546,
-        "min_clearance_m": 0.08267299913365656,
-        "max_tracking_error_m": 2.9717143705513545,
-        "max_control_component_m_s2": 1.6,
+        "target_region_reached": true,
+        "endpoint_error_m": 0.0005624663205534633,
+        "endpoint_speed_m_s": 7.595149256950638e-06,
+        "min_clearance_m": 0.2007751214226019,
+        "max_tracking_error_m": 0.7001733168865782,
+        "max_control_component_m_s2": 0.8852993285817377,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 4.440892098500626e-16,
+        "max_constraint_residual": 2.220446049250313e-16,
         "initial_barrier_values": [
           -5.363906145166653,
           -7.449981104022317,
@@ -93,7 +93,7 @@
           -6.489999872832544,
           -3.6899999278818396
         ],
-        "max_air_acceleration_m_s2": 2.9843701819537665,
+        "max_air_acceleration_m_s2": 1.4536250478679271,
         "final_time_s": 21.1
       },
       "still_air": {
@@ -128,37 +128,37 @@
       "unfiltered": {
         "status": "collision",
         "contact": {
-          "time_s": 8.438659676008934,
+          "time_s": 6.210570456379043,
           "position_m": [
-            4.094558118550137,
-            1.8591162801046401
+            4.604445462154893,
+            1.5720032182048362
           ]
         },
         "target_region_reached": false,
-        "endpoint_error_m": 2.9259732078823717,
-        "endpoint_speed_m_s": 0.9293209371068415,
+        "endpoint_error_m": 2.7216398431180133,
+        "endpoint_speed_m_s": 0.8267791907671934,
         "min_clearance_m": 0.0,
-        "max_tracking_error_m": 2.4242837390603627,
-        "max_control_component_m_s2": 1.6,
+        "max_tracking_error_m": 0.47456763743053154,
+        "max_control_component_m_s2": 1.2979462510498316,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 2.89236711530497,
-        "final_time_s": 8.438659676008934
+        "max_air_acceleration_m_s2": 1.470061541011607,
+        "final_time_s": 6.210570456379043
       },
       "rpcbf": {
-        "status": "outside target region",
+        "status": "target region reached",
         "contact": null,
-        "target_region_reached": false,
-        "endpoint_error_m": 3.8619158588648554,
-        "endpoint_speed_m_s": 0.603559806109781,
-        "min_clearance_m": 0.09808232964564478,
-        "max_tracking_error_m": 4.470306633611366,
-        "max_control_component_m_s2": 1.6,
+        "target_region_reached": true,
+        "endpoint_error_m": 0.0008143746320063433,
+        "endpoint_speed_m_s": 1.4955539485467831e-05,
+        "min_clearance_m": 0.1834175789502388,
+        "max_tracking_error_m": 1.02403796406404,
+        "max_control_component_m_s2": 1.3750678701605474,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 6.245004513516506e-16,
+        "max_constraint_residual": 2.220446049250313e-16,
         "initial_barrier_values": [
           -5.363906145166653,
           -7.449981104022317,
@@ -168,7 +168,7 @@
           -6.489999872832544,
           -3.6899999278818396
         ],
-        "max_air_acceleration_m_s2": 3.9667999417278894,
+        "max_air_acceleration_m_s2": 1.6338897828387209,
         "final_time_s": 21.1
       },
       "still_air": {
@@ -204,30 +204,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.0025126159183422045,
-        "endpoint_speed_m_s": 1.5140152611263583e-06,
-        "min_clearance_m": 0.10822628856910654,
-        "max_tracking_error_m": 0.5604104668064783,
-        "max_control_component_m_s2": 1.103979643327204,
+        "endpoint_error_m": 0.005397921259637943,
+        "endpoint_speed_m_s": 4.82693293260561e-07,
+        "min_clearance_m": 0.14035102760243345,
+        "max_tracking_error_m": 0.15048142696795214,
+        "max_control_component_m_s2": 0.5603731293990688,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 1.5124566924791103,
+        "max_air_acceleration_m_s2": 0.7530476950921964,
         "final_time_s": 21.1
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.002510623813149155,
-        "endpoint_speed_m_s": 1.297670978184207e-06,
-        "min_clearance_m": 0.10610576852549525,
-        "max_tracking_error_m": 1.0215747011183676,
-        "max_control_component_m_s2": 1.6,
-        "infeasible_steps": 1,
-        "max_slack": 0.007224822788632235,
-        "max_constraint_residual": 0.007254822788632209,
+        "endpoint_error_m": 0.005398106972521347,
+        "endpoint_speed_m_s": 4.912675978038225e-07,
+        "min_clearance_m": 0.2099175780926601,
+        "max_tracking_error_m": 0.4127201023583312,
+        "max_control_component_m_s2": 0.8964634077946424,
+        "infeasible_steps": 0,
+        "max_slack": 0.0,
+        "max_constraint_residual": 2.220446049250313e-16,
         "initial_barrier_values": [
           -17.799155901236762,
           -7.632231100451244,
@@ -237,7 +237,7 @@
           -1.4399999718563277,
           -1.0399999796740145
         ],
-        "max_air_acceleration_m_s2": 1.770074549357193,
+        "max_air_acceleration_m_s2": 0.8367053727733983,
         "final_time_s": 21.1
       },
       "still_air": {
@@ -273,30 +273,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.7758068563578385,
-        "endpoint_speed_m_s": 0.002428377959284693,
-        "min_clearance_m": 0.09756113227535534,
-        "max_tracking_error_m": 0.8682111505369381,
-        "max_control_component_m_s2": 1.2574527213796771,
+        "endpoint_error_m": 0.004444490147927975,
+        "endpoint_speed_m_s": 1.2570170132626685e-06,
+        "min_clearance_m": 0.15377438047722114,
+        "max_tracking_error_m": 0.24647701127607283,
+        "max_control_component_m_s2": 0.8071569952133291,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 1.7313122928337643,
+        "max_air_acceleration_m_s2": 0.931710372240927,
         "final_time_s": 21.1
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.7775112700678032,
-        "endpoint_speed_m_s": 0.0017325897391460272,
-        "min_clearance_m": 0.08818375766559661,
-        "max_tracking_error_m": 0.9256644081807757,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.004444783134383535,
+        "endpoint_speed_m_s": 1.4937987931278736e-06,
+        "min_clearance_m": 0.20770280702859134,
+        "max_tracking_error_m": 0.42006881398602774,
+        "max_control_component_m_s2": 0.902856394957241,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 8.881784197001252e-16,
+        "max_constraint_residual": 4.440892098500626e-16,
         "initial_barrier_values": [
           -17.799155901236762,
           -7.632231100451244,
@@ -306,7 +306,7 @@
           -1.4399999718563277,
           -1.0399999796740145
         ],
-        "max_air_acceleration_m_s2": 1.6746625984521695,
+        "max_air_acceleration_m_s2": 0.9942755481479871,
         "final_time_s": 21.1
       },
       "still_air": {
@@ -342,30 +342,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.07833360819034771,
-        "endpoint_speed_m_s": 3.995164874090075e-05,
-        "min_clearance_m": 0.05713415175060065,
-        "max_tracking_error_m": 1.183799331478365,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.0005565402533997856,
+        "endpoint_speed_m_s": 1.5821517390186343e-06,
+        "min_clearance_m": 0.07208819320653002,
+        "max_tracking_error_m": 0.4219615385070022,
+        "max_control_component_m_s2": 0.9033320747925193,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 2.1960738857723947,
+        "max_air_acceleration_m_s2": 1.548619687639685,
         "final_time_s": 25.700000000000003
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.07831009734857762,
-        "endpoint_speed_m_s": 6.68751108106773e-05,
-        "min_clearance_m": 0.07326640148071983,
-        "max_tracking_error_m": 1.2400096274290153,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.000556589918879766,
+        "endpoint_speed_m_s": 1.6752130722439847e-06,
+        "min_clearance_m": 0.11153080954731732,
+        "max_tracking_error_m": 0.4614847267187536,
+        "max_control_component_m_s2": 0.9557781643848023,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 8.881784197001252e-16,
+        "max_constraint_residual": 1.1102230246251565e-16,
         "initial_barrier_values": [
           -5.363906145166653,
           -7.449981104022317,
@@ -375,7 +375,7 @@
           -6.489999872832544,
           -3.6899999278818396
         ],
-        "max_air_acceleration_m_s2": 2.144032647376101,
+        "max_air_acceleration_m_s2": 1.5683435361104925,
         "final_time_s": 25.700000000000003
       },
       "still_air": {
@@ -410,37 +410,37 @@
       "unfiltered": {
         "status": "collision",
         "contact": {
-          "time_s": 8.797689268138079,
+          "time_s": 6.344162709054258,
           "position_m": [
-            4.8309309596098915,
-            0.4869434583955312
+            3.936062437394638,
+            0.0
           ]
         },
         "target_region_reached": false,
-        "endpoint_error_m": 3.466349522419005,
-        "endpoint_speed_m_s": 1.1553487374635782,
+        "endpoint_error_m": 4.358830212905605,
+        "endpoint_speed_m_s": 0.8736423694504031,
         "min_clearance_m": 0.0,
-        "max_tracking_error_m": 2.1849978731862993,
-        "max_control_component_m_s2": 1.6,
+        "max_tracking_error_m": 0.30495165423269166,
+        "max_control_component_m_s2": 0.846471572152475,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 3.094391989865308,
-        "final_time_s": 8.797689268138079
+        "max_air_acceleration_m_s2": 1.230032299146129,
+        "final_time_s": 6.344162709054258
       },
       "rpcbf": {
-        "status": "outside target region",
+        "status": "target region reached",
         "contact": null,
-        "target_region_reached": false,
-        "endpoint_error_m": 2.687100396368733,
-        "endpoint_speed_m_s": 0.1169256782434902,
-        "min_clearance_m": 0.08241980618694611,
-        "max_tracking_error_m": 4.043108847503815,
+        "target_region_reached": true,
+        "endpoint_error_m": 0.0007023172207461692,
+        "endpoint_speed_m_s": 9.210064978081595e-05,
+        "min_clearance_m": 0.038355536078872654,
+        "max_tracking_error_m": 3.1760148271921205,
         "max_control_component_m_s2": 1.6,
-        "infeasible_steps": 0,
-        "max_slack": 0.0,
-        "max_constraint_residual": 8.881784197001252e-16,
+        "infeasible_steps": 11,
+        "max_slack": 0.03866942878198463,
+        "max_constraint_residual": 0.03866942878198463,
         "initial_barrier_values": [
           -5.363906145166653,
           -7.449981104022317,
@@ -450,7 +450,7 @@
           -6.489999872832544,
           -3.6899999278818396
         ],
-        "max_air_acceleration_m_s2": 4.069119569705297,
+        "max_air_acceleration_m_s2": 2.1856876067281488,
         "final_time_s": 25.700000000000003
       },
       "still_air": {
@@ -486,30 +486,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.0025136364511235978,
-        "endpoint_speed_m_s": 2.952131952274704e-06,
-        "min_clearance_m": 0.044446714374049456,
-        "max_tracking_error_m": 1.0184520813080686,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.005397530370991212,
+        "endpoint_speed_m_s": 3.486824577406235e-07,
+        "min_clearance_m": 0.09976513010698185,
+        "max_tracking_error_m": 0.3774358899703876,
+        "max_control_component_m_s2": 0.84173199262621,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 2.0702554569776117,
+        "max_air_acceleration_m_s2": 1.6286861665228394,
         "final_time_s": 25.700000000000003
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.002514252498103032,
-        "endpoint_speed_m_s": 3.7126087275520815e-06,
-        "min_clearance_m": 0.13821996851460205,
-        "max_tracking_error_m": 2.3771136755065863,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.005397567243413343,
+        "endpoint_speed_m_s": 3.926696453652827e-07,
+        "min_clearance_m": 0.09316956409668953,
+        "max_tracking_error_m": 0.4186243075291619,
+        "max_control_component_m_s2": 1.3382353438395784,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 8.881784197001252e-16,
+        "max_constraint_residual": 2.220446049250313e-16,
         "initial_barrier_values": [
           -17.799155901236762,
           -7.632231100451244,
@@ -519,7 +519,7 @@
           -1.4399999718563277,
           -1.0399999796740145
         ],
-        "max_air_acceleration_m_s2": 2.1517700692862918,
+        "max_air_acceleration_m_s2": 1.7220085625677355,
         "final_time_s": 25.700000000000003
       },
       "still_air": {
@@ -554,37 +554,37 @@
       "unfiltered": {
         "status": "collision",
         "contact": {
-          "time_s": 4.829909282130437,
+          "time_s": 7.259080881048111,
           "position_m": [
-            5.760426326835727,
-            1.9152645671180932
+            6.079646909970214,
+            0.7087248840332684
           ]
         },
         "target_region_reached": false,
-        "endpoint_error_m": 4.434176979855442,
-        "endpoint_speed_m_s": 0.6490244793903437,
+        "endpoint_error_m": 4.632631857290897,
+        "endpoint_speed_m_s": 0.7229028393578337,
         "min_clearance_m": 0.0,
-        "max_tracking_error_m": 1.204384681567097,
-        "max_control_component_m_s2": 1.6,
+        "max_tracking_error_m": 0.3909361046431254,
+        "max_control_component_m_s2": 0.826966255828406,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 2.027237237990687,
-        "final_time_s": 4.829909282130437
+        "max_air_acceleration_m_s2": 1.5494825396737641,
+        "final_time_s": 7.259080881048111
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.7770542280550397,
-        "endpoint_speed_m_s": 0.0019178985734529315,
-        "min_clearance_m": 0.13830657938149982,
-        "max_tracking_error_m": 2.4195421858498696,
-        "max_control_component_m_s2": 1.6,
-        "infeasible_steps": 1,
-        "max_slack": 0.075313432328736,
-        "max_constraint_residual": 0.07534343232873586,
+        "endpoint_error_m": 0.00444431846774433,
+        "endpoint_speed_m_s": 1.2725487199220692e-06,
+        "min_clearance_m": 0.0905191546088937,
+        "max_tracking_error_m": 0.6111458533523061,
+        "max_control_component_m_s2": 1.384972465270526,
+        "infeasible_steps": 0,
+        "max_slack": 0.0,
+        "max_constraint_residual": 2.220446049250313e-16,
         "initial_barrier_values": [
           -17.799155901236762,
           -7.632231100451244,
@@ -594,7 +594,7 @@
           -1.4399999718563277,
           -1.0399999796740145
         ],
-        "max_air_acceleration_m_s2": 2.2642117192089644,
+        "max_air_acceleration_m_s2": 1.6418872952564345,
         "final_time_s": 25.700000000000003
       },
       "still_air": {
@@ -630,30 +630,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.0783735612852698,
-        "endpoint_speed_m_s": 4.221713430788123e-06,
-        "min_clearance_m": 0.10879103102608423,
-        "max_tracking_error_m": 0.49540745564839234,
-        "max_control_component_m_s2": 0.7575692671207048,
+        "endpoint_error_m": 0.0005563810438567286,
+        "endpoint_speed_m_s": 3.777367365846394e-07,
+        "min_clearance_m": 0.10308135853872624,
+        "max_tracking_error_m": 0.2454122679040445,
+        "max_control_component_m_s2": 0.7577061263031335,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 0.7091475314583191,
+        "max_air_acceleration_m_s2": 0.3389498816784942,
         "final_time_s": 28.8
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.07837354179788605,
-        "endpoint_speed_m_s": 4.222423688492865e-06,
-        "min_clearance_m": 0.13518429771995044,
-        "max_tracking_error_m": 0.550993349455064,
-        "max_control_component_m_s2": 0.7863594094876205,
+        "endpoint_error_m": 0.0005563749689538562,
+        "endpoint_speed_m_s": 3.764884504347266e-07,
+        "min_clearance_m": 0.13296285827458454,
+        "max_tracking_error_m": 0.3093425889255999,
+        "max_control_component_m_s2": 0.7389303521206225,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 1.6653345369377348e-16,
+        "max_constraint_residual": 1.1102230246251565e-16,
         "initial_barrier_values": [
           -5.363906145166653,
           -7.449981104022317,
@@ -663,7 +663,7 @@
           -6.489999872832544,
           -3.6899999278818396
         ],
-        "max_air_acceleration_m_s2": 0.8252702000944013,
+        "max_air_acceleration_m_s2": 0.3720692247434075,
         "final_time_s": 28.8
       },
       "still_air": {
@@ -696,39 +696,33 @@
         "max_accel_component_m_s2": 0.7987740553859304
       },
       "unfiltered": {
-        "status": "collision",
-        "contact": {
-          "time_s": 4.263615792063258,
-          "position_m": [
-            0.0,
-            1.0914465468267196
-          ]
-        },
-        "target_region_reached": false,
-        "endpoint_error_m": 6.940618301668202,
-        "endpoint_speed_m_s": 0.5476670218734566,
-        "min_clearance_m": 0.0,
-        "max_tracking_error_m": 1.0039645668000743,
-        "max_control_component_m_s2": 1.3728868106489611,
+        "status": "target region reached",
+        "contact": null,
+        "target_region_reached": true,
+        "endpoint_error_m": 0.0008217437483098704,
+        "endpoint_speed_m_s": 9.120743084089881e-07,
+        "min_clearance_m": 0.09004682800104358,
+        "max_tracking_error_m": 0.2901678005057394,
+        "max_control_component_m_s2": 0.7649153939195126,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 1.5878289207380187,
-        "final_time_s": 4.263615792063258
+        "max_air_acceleration_m_s2": 0.40320383948745026,
+        "final_time_s": 28.8
       },
       "rpcbf": {
-        "status": "outside target region",
+        "status": "target region reached",
         "contact": null,
-        "target_region_reached": false,
-        "endpoint_error_m": 6.910857134162438,
-        "endpoint_speed_m_s": 3.5250917593484755e-12,
-        "min_clearance_m": 0.06000000000353329,
-        "max_tracking_error_m": 6.910857134162438,
-        "max_control_component_m_s2": 1.6,
+        "target_region_reached": true,
+        "endpoint_error_m": 0.0008217472611355936,
+        "endpoint_speed_m_s": 9.184652241214929e-07,
+        "min_clearance_m": 0.1301685793801337,
+        "max_tracking_error_m": 0.363260256171051,
+        "max_control_component_m_s2": 0.7444689717283606,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 4.440892098500626e-16,
+        "max_constraint_residual": 1.1102230246251565e-16,
         "initial_barrier_values": [
           -5.363906145166653,
           -7.449981104022317,
@@ -738,7 +732,7 @@
           -6.489999872832544,
           -3.6899999278818396
         ],
-        "max_air_acceleration_m_s2": 1.6042119379089126,
+        "max_air_acceleration_m_s2": 0.4803097843007746,
         "final_time_s": 28.8
       },
       "still_air": {
@@ -774,30 +768,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.002512514656409605,
-        "endpoint_speed_m_s": 2.0727320184390795e-07,
-        "min_clearance_m": 0.14711545161067896,
-        "max_tracking_error_m": 0.08235661638900316,
-        "max_control_component_m_s2": 0.8189999730768563,
+        "endpoint_error_m": 0.005396097691252341,
+        "endpoint_speed_m_s": 1.5577253535356887e-07,
+        "min_clearance_m": 0.14626766923837842,
+        "max_tracking_error_m": 0.0796988127377738,
+        "max_control_component_m_s2": 0.8295880266415374,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 0.12694841728029782,
+        "max_air_acceleration_m_s2": 0.19098559024185036,
         "final_time_s": 28.8
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.002512517940104198,
-        "endpoint_speed_m_s": 2.0963259815468614e-07,
-        "min_clearance_m": 0.08862136541736643,
-        "max_tracking_error_m": 0.26538397690035676,
-        "max_control_component_m_s2": 0.8084428170240067,
+        "endpoint_error_m": 0.0053960937003590575,
+        "endpoint_speed_m_s": 1.5098006331272209e-07,
+        "min_clearance_m": 0.08529872807181693,
+        "max_tracking_error_m": 0.28317058089808395,
+        "max_control_component_m_s2": 0.8246839586229041,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 1.249000902703301e-16,
+        "max_constraint_residual": 1.3877787807814457e-16,
         "initial_barrier_values": [
           -17.799155901236762,
           -7.632231100451244,
@@ -807,7 +801,7 @@
           -1.4399999718563277,
           -1.0399999796740145
         ],
-        "max_air_acceleration_m_s2": 0.13197238868411462,
+        "max_air_acceleration_m_s2": 0.19098559024185036,
         "final_time_s": 28.8
       },
       "still_air": {
@@ -843,30 +837,30 @@
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 0.8147946408890027,
-        "endpoint_speed_m_s": 0.009801597575605767,
-        "min_clearance_m": 0.1264923509246989,
-        "max_tracking_error_m": 1.2255128003095108,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.004442906838313947,
+        "endpoint_speed_m_s": 9.60269544073057e-08,
+        "min_clearance_m": 0.14941441822048063,
+        "max_tracking_error_m": 0.029693885471342763,
+        "max_control_component_m_s2": 0.821158696337884,
         "infeasible_steps": 0,
         "max_slack": 0.0,
         "max_constraint_residual": 0.0,
         "initial_barrier_values": null,
-        "max_air_acceleration_m_s2": 1.8082749238754052,
+        "max_air_acceleration_m_s2": 0.06307213706866724,
         "final_time_s": 28.8
       },
       "rpcbf": {
         "status": "target region reached",
         "contact": null,
         "target_region_reached": true,
-        "endpoint_error_m": 1.442191001077378,
-        "endpoint_speed_m_s": 1.974359974685848e-06,
-        "min_clearance_m": 0.06000189888311611,
-        "max_tracking_error_m": 1.442191001077378,
-        "max_control_component_m_s2": 1.6,
+        "endpoint_error_m": 0.004442906462505919,
+        "endpoint_speed_m_s": 9.250027208304002e-08,
+        "min_clearance_m": 0.08832831246696138,
+        "max_tracking_error_m": 0.22100522068066927,
+        "max_control_component_m_s2": 0.8143663046556411,
         "infeasible_steps": 0,
         "max_slack": 0.0,
-        "max_constraint_residual": 2.220446049250313e-16,
+        "max_constraint_residual": 6.938893903907228e-17,
         "initial_barrier_values": [
           -17.799155901236762,
           -7.632231100451244,
@@ -876,7 +870,7 @@
           -1.4399999718563277,
           -1.0399999796740145
         ],
-        "max_air_acceleration_m_s2": 1.8632321845600388,
+        "max_air_acceleration_m_s2": 0.07786214617104405,
         "final_time_s": 28.8
       },
       "still_air": {
@@ -905,7 +899,7 @@
       "method": "unfiltered",
       "coarse_substep_s": 0.01,
       "fine_substep_s": 0.005,
-      "max_common_time_position_difference_m": 4.854894437395938e-06,
+      "max_common_time_position_difference_m": 2.247220505382824e-06,
       "same_outcome": true,
       "coarse_contact": null,
       "fine_contact": null
@@ -917,7 +911,7 @@
       "method": "rpcbf",
       "coarse_substep_s": 0.01,
       "fine_substep_s": 0.005,
-      "max_common_time_position_difference_m": 0.04236901947095294,
+      "max_common_time_position_difference_m": 3.7215588132643544e-06,
       "same_outcome": true,
       "coarse_contact": null,
       "fine_contact": null
@@ -929,20 +923,20 @@
       "method": "unfiltered",
       "coarse_substep_s": 0.01,
       "fine_substep_s": 0.005,
-      "max_common_time_position_difference_m": 1.5103142200045168e-05,
+      "max_common_time_position_difference_m": 8.246211250530006e-07,
       "same_outcome": true,
       "coarse_contact": {
-        "time_s": 8.797689268138079,
+        "time_s": 6.344162709054258,
         "position_m": [
-          4.8309309596098915,
-          0.4869434583955312
+          3.936062437394638,
+          0.0
         ]
       },
       "fine_contact": {
-        "time_s": 8.797699352274009,
+        "time_s": 6.344153923752983,
         "position_m": [
-          4.830925464394928,
-          0.48694772139357834
+          3.93605414067446,
+          2.168404344971009e-19
         ]
       }
     },
@@ -953,84 +947,84 @@
       "method": "rpcbf",
       "coarse_substep_s": 0.01,
       "fine_substep_s": 0.005,
-      "max_common_time_position_difference_m": 0.049726904356696126,
+      "max_common_time_position_difference_m": 0.12362626050548463,
+      "same_outcome": true,
+      "coarse_contact": null,
+      "fine_contact": null
+    },
+    {
+      "scenario": 2,
+      "route": "upper",
+      "direction": "B-A",
+      "method": "unfiltered",
+      "coarse_substep_s": 0.01,
+      "fine_substep_s": 0.005,
+      "max_common_time_position_difference_m": 4.0000000023354687e-07,
+      "same_outcome": true,
+      "coarse_contact": null,
+      "fine_contact": null
+    },
+    {
+      "scenario": 2,
+      "route": "upper",
+      "direction": "B-A",
+      "method": "rpcbf",
+      "coarse_substep_s": 0.01,
+      "fine_substep_s": 0.005,
+      "max_common_time_position_difference_m": 1.0440306510114659e-06,
+      "same_outcome": true,
+      "coarse_contact": null,
+      "fine_contact": null
+    },
+    {
+      "scenario": 2,
+      "route": "upper",
+      "direction": "A-B",
+      "method": "unfiltered",
+      "coarse_substep_s": 0.01,
+      "fine_substep_s": 0.005,
+      "max_common_time_position_difference_m": 1.414213563983854e-07,
+      "same_outcome": true,
+      "coarse_contact": null,
+      "fine_contact": null
+    },
+    {
+      "scenario": 2,
+      "route": "upper",
+      "direction": "A-B",
+      "method": "rpcbf",
+      "coarse_substep_s": 0.01,
+      "fine_substep_s": 0.005,
+      "max_common_time_position_difference_m": 2.23606797979837e-07,
       "same_outcome": true,
       "coarse_contact": null,
       "fine_contact": null
     }
   ],
   "source_sha256": {
-    "scripts/airflow/robot_review.py": "056d1b9d21466c16f3ad0eb3ec1edd6bb7d4fea7e39064974c9975286eccec78",
+    "scripts/airflow/robot_review.py": "c78fbbd8f9078f20d148ce448f47f4ff1aba74c6cc518d6b4799c5b3c4f32304",
     "src/voi_diffusion_ipp/safety/flow_policy_value.py": "e81dfeccf50e9bc5311dec38e72c990bcaca360183e9ade7ad6343fcfeabfbe6",
     "src/voi_diffusion_ipp/safety/qp.py": "ae298f1bf46f32264188be81475438df2cf2a72bd62ce51e924a887bed960f88",
     "src/voi_diffusion_ipp/safety/spline.py": "4cd9f4814a78aa42c7f6f13270a6aed55cacb60dd50ebae4e58b245c586b6582",
     "src/voi_diffusion_ipp/quadrotor/aerodynamics.py": "b5af8239e9160f560bdc6a15df1e5afe309ee9c611423d667171ca50cfd82e07",
-    "scripts/airflow/refine_robot_review.py": "3d16e37a9226391cad7650961d5c3a12083bac734e88178bf6b20d32a4a8e7a1",
-    "tests/test_airflow_robot_review.py": "ed57c3ad32da5bad9751b0749c1233594a35aaec50daa9dc460eba3e88602661",
-    "scripts/airflow/ROBOT_REVIEW.txt": "9ccafff9715f8cceebc0ee090b7ae9da99147eceeaae4f799014b5f71d9d20a7"
+    "tests/test_airflow_robot_review.py": "da3345613028a7d0b225a771ca4ac8ca1913bd8c27b9576291a6a9e177c24d28",
+    "scripts/airflow/ROBOT_REVIEW.txt": "586eac34a4d301e61a84b8e9cde29f12f5fd7d9a24916dcaae52cb9cbb0e045a",
+    "scripts/airflow/SHELTERED_REVIEW.txt": "336802929ee877eac312f932424682d9b801bd6c09b5ad795ef8ec7fccb48492"
   },
   "wind_sha256": {
-    "1": "f98a50e7a1fb4c6b19c054e5851325498394f2d5fb4e8e8b8fcf26bbe0ba9f47",
-    "2": "c8ebe36bc09c5ea5f25405fa04449dbdfdcfe9e81b860c9ce282fedfce3d37c8"
+    "1": "11c6c3145fe78537cc6ec4428f276465bac161aa01436a2ba357a6b51e1eb06e",
+    "2": "c6bc07546fb3c302b49917942fcacff3c0cbb4e904b0f124a3cd264fd86c579f"
   },
-  "additional_refinement": [
-    {
-      "scenario": 1,
-      "route": "central",
-      "method": "rpcbf",
-      "coarse_substep_s": 0.005,
-      "fine_substep_s": 0.0025,
-      "max_position_difference_m": 0.008958621337014014,
-      "same_outcome": true,
-      "min_clearance_coarse_m": 0.08276168656038019,
-      "min_clearance_fine_m": 0.08337605349155952
-    },
-    {
-      "scenario": 1,
-      "route": "central",
-      "method": "rpcbf",
-      "coarse_substep_s": 0.0025,
-      "fine_substep_s": 0.00125,
-      "max_position_difference_m": 0.0035973516508673946,
-      "same_outcome": true,
-      "min_clearance_coarse_m": 0.08337605349155952,
-      "min_clearance_fine_m": 0.08320105413558077
-    },
-    {
-      "scenario": 2,
-      "route": "lower",
-      "method": "rpcbf",
-      "coarse_substep_s": 0.005,
-      "fine_substep_s": 0.0025,
-      "max_position_difference_m": 0.016741871211128207,
-      "same_outcome": true,
-      "min_clearance_coarse_m": 0.08242077009018,
-      "min_clearance_fine_m": 0.0824064181021088
-    },
-    {
-      "scenario": 2,
-      "route": "lower",
-      "method": "rpcbf",
-      "coarse_substep_s": 0.0025,
-      "fine_substep_s": 0.00125,
-      "max_position_difference_m": 0.018259249432547725,
-      "same_outcome": true,
-      "min_clearance_coarse_m": 0.0824064181021088,
-      "min_clearance_fine_m": 0.08240464809692716
-    }
-  ],
+  "environment_revision": "sheltered-monitoring-ports-v2",
   "verification": {
-    "pytest": "11 passed",
+    "pytest": "13 passed",
     "tests": [
       "tests/test_airflow_robot_review.py",
       "tests/test_rpcbf.py"
     ],
-    "ui": "All 12 cases loaded; both/single-scenario selection, case table selection, playback time and contact marker verified in browser."
-  },
-  "versions": {
-    "python": "3.11.15",
-    "jax": "0.4.38",
-    "numpy": "2.4.6",
-    "scipy": "1.16.3"
+    "references_unchanged_from_previous_review": true,
+    "robot_parameters_and_safety_source_unchanged": true,
+    "upper_bypass_both_directions_no_contact": true,
+    "cfd_grid_convergence_established": false
   }
 }
