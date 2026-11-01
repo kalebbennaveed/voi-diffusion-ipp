@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Monitoring scenarios · Design review</title>
+  <meta name="description" content="Two proposed monitoring environments with spatial wind disturbances and clearly illustrative paths, ready for scenario review.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header><div><p class="eyebrow">MONITORING ENVIRONMENT / DESIGN REVIEW</p><h1>Two scenarios. One shared geometry.</h1><p class="intro">Review the regions, obstacles, and wind placement before implementing the planner.</p></div><span class="status"><i></i> Proposed · awaiting your confirmation</span></header>
+  <section class="controls" aria-label="Map layers">
+    <div><label><input id="wind" type="checkbox" checked> Wind field</label><label><input id="paths" type="checkbox" checked> Illustrative path</label><label><input id="routes" type="checkbox" checked> Route guides</label></div>
+    <span class="path-note"><b>Dashed green paths are hand-drawn examples.</b> No robot simulation or optimization.</span>
+  </section>
+  <section class="scenarios" aria-label="Both proposed scenarios">
+    <article class="scenario"><div class="scenario-heading"><span class="number">01</span><div><h2>Central passage wind</h2><p>Lower and upper bypasses remain relatively calm.</p></div></div><canvas id="map1" aria-label="Scenario 1: monitoring regions A and B, two circular obstacles, wind in the central passage, and an illustrative loop through the central and lower routes." role="img"></canvas><div class="scenario-footer"><b>Example loop</b><span>A → central passage → B → lower bypass → A</span></div></article>
+    <article class="scenario"><div class="scenario-heading"><span class="number">02</span><div><h2>Central + lower bypass wind</h2><p>The longer upper bypass remains relatively calm.</p></div></div><canvas id="map2" aria-label="Scenario 2: the same monitoring regions and obstacles, wind in both the central passage and lower bypass, and an illustrative loop through the central and upper routes." role="img"></canvas><div class="scenario-footer"><b>Example loop</b><span>A → central passage → B → upper bypass → A</span></div></article>
+  </section>
+  <section class="legend" aria-label="Map legend"><div class="wind-scale"><b>Wind disturbance magnitude</b><div><span>0</span><i></i><span>2 m/s²</span></div><small>Arrows show direction; both maps use the same scale.</small></div><div class="keys"><span><i class="line red"></i>Short central passage</span><span><i class="line cyan"></i>Lower bypass</span><span><i class="line yellow"></i>Longer upper bypass</span><span><i class="line path"></i>Illustrative path</span><span><i class="region"></i>Monitoring region</span><span><i class="obstacle"></i>Circular obstacle</span></div></section>
+  <section class="geometry"><div><span>WORKSPACE</span><strong>5.6 × 5.6 m</strong><p>Equal axes on both maps</p></div><div><span>MONITORING REGIONS</span><strong>1.4 × 1.2 m each</strong><p>A upper-right · B lower-left</p></div><div><span>OBSTACLES</span><strong>Two circles · radius 0.35 m</strong><p>0.90 m gap between their surfaces</p></div><div><span>ROBOT MODEL FOR LATER</span><strong>ṗ = v &nbsp; v̇ = u + d(p)</strong><p>Double integrator · not executed in this preview</p></div></section>
+  <details><summary>Inspect the proposed geometry and wind definitions</summary><div class="definitions"><div><h3>Shared environment</h3><p>Bounds: [−2.8, 2.8] m on each axis. Region centers: A = (1.10, 0.25), B = (−1.10, −0.25) m. Circle centers: ±0.8 n, with radius 0.35 m. Labels follow your reference screenshot.</p><p>The layout is a proposal for review. The green loops only illustrate possible passage choices; they do not establish feasibility, safety, or a preferred route.</p></div><div><h3>Continuous spatial disturbance</h3><p>The field is a synthetic additive acceleration d(p), in m/s². It is evaluated directly from the equations below for the map. It is not an airflow/CFD model. Shading shows magnitude, not belief uncertainty or clarity.</p><p class="equation">t = (B − A) / ‖B − A‖, &nbsp; n = (−tᵧ, tₓ)<br>s = p · t, &nbsp; r = p · n<br>d₁(p) = 1.8 exp{−½[(s / L)⁴ + (r / 0.35)²]} (t + 0.2 n)<br>d₂(p) = d₁(p) + 1.8 W(s; −1.3, 1.3, 0.35) W(r; 0.85, 1.95, 0.25) t<br>L = 0.7050321357924049 m</p><p>W(x; a, b, e) = S((x − a) / e) S((b − x) / e), where S(z) = 6z⁵ − 15z⁴ + 10z³ for z clamped to [0, 1]. The same field definition applies at every position, independent of the chosen route.</p></div></div><a href="scenario-design.json" download>Download these scenario definitions ↗</a></details>
+  <footer>Scenario design only · No planner, learned wind belief, or clarity results are presented.</footer>
+</main>
+<script src="app.js" defer></script>
+</body></html>

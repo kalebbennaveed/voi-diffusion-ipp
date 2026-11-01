@@ -1,0 +1,67 @@
+{
+  "status": "Proposed scenario geometry; awaiting user confirmation",
+  "bounds": [
+    [
+      -2.8,
+      -2.8
+    ],
+    [
+      2.8,
+      2.8
+    ]
+  ],
+  "regionA": [
+    1.1,
+    0.25
+  ],
+  "regionB": [
+    -1.1,
+    -0.25
+  ],
+  "regionSize": [
+    1.4,
+    1.2
+  ],
+  "obstacleNormalOffset": 0.8,
+  "obstacleRadius": 0.35,
+  "central": {
+    "amplitude": 1.8,
+    "longitudinalWidth": 0.7050321357924049,
+    "transverseWidth": 0.35,
+    "crossFraction": 0.2
+  },
+  "lower": {
+    "amplitude": 1.8,
+    "axialWindow": [
+      -1.3,
+      1.3,
+      0.35
+    ],
+    "normalWindow": [
+      0.85,
+      1.95,
+      0.25
+    ]
+  },
+  "units": {
+    "position": "m",
+    "disturbance": "m/s^2"
+  },
+  "intendedRobotModel": "p_dot = v; v_dot = u + d(p); not simulated in this preview",
+  "illustrativePaths": {
+    "scenario1": "A -> central -> B -> lower -> A",
+    "scenario2": "A -> central -> B -> upper -> A",
+    "physicalValidation": false
+  },
+  "routeNormalOffsets": {
+    "central": 0,
+    "lower": 1.53,
+    "upper": -1.68
+  },
+  "windFormula": {
+    "central": "1.8 exp(-0.5 ((s/L)^4 + (r/0.35)^2)) (t + 0.2 n)",
+    "lowerAddition": "1.8 W(s;-1.3,1.3,0.35) W(r;0.85,1.95,0.25) t",
+    "coordinates": "t=(B-A)/norm(B-A); n=(-t_y,t_x); s=p dot t; r=p dot n",
+    "window": "W(x;a,b,e)=S((x-a)/e)S((b-x)/e); S(z)=z^3(10-15z+6z^2), z clamped to [0,1]"
+  }
+}
