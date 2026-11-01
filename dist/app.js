@@ -20,7 +20,7 @@ const design = {
     {id:2,central:'Same central wind toward the lower-left monitoring region',upper:'Sheltered bypass; computed speed',lower:'Stronger incoming wind toward the lower-left; robot impassability not established'}
   ],
   physicalScale:{metersPerLayoutUnit:.01,domainMeters:[8,4.625,2],obstacleHeightMeters:1.5}, windMagnitude:{centralInletPeakMps:5,lowerInletPeakMps:8}, windField:'Fixed vector mean from 3D MRT LBM / Smagorinsky LES; no time dependence',
-  intendedRobotModel:'p_dot = v; v_dot = u + d(p). Not simulated in this layout preview.',
+  intendedRobotModel:'Nominal double integrator; separate robot review adds the existing relative-air-velocity quadratic force as acceleration.',
   illustrativePaths: {scenario1:'A -> central passage -> B -> lower bypass -> A',scenario2:'A -> central passage -> B -> upper bypass -> A',dynamicallyValidated:false},
   routes: {
     central:'M 650 110 C 600 155 555 208 505 242 C 465 268 425 300 374 331 C 308 368 224 375 145 375',

@@ -143,5 +143,11 @@
     "data/scenario2/metadata.json"
   ],
   "reviewStatus": "Scenario design for review; robot model and planner are not running.",
-  "windValidationStatus": "Provisional CFD preview; refined Scenario 2 failed its stability gate. Not validated for robot dynamics or research conclusions."
+  "windValidationStatus": "Provisional CFD preview; refined Scenario 2 failed its stability gate. Not validated for robot dynamics or research conclusions.",
+  "robotReview": {
+    "model": "p_dot=v; v_dot=u+(0.1/0.680)*norm(w_xy(p)-v)*(w_xy(p)-v)",
+    "windFieldChanged": false,
+    "manifest": "data/robot/manifest.json",
+    "filter": "Existing full flow-policy RPCBF; known-wind diagnostic"
+  }
 }
