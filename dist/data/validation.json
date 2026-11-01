@@ -1,0 +1,114 @@
+{
+  "time_independent": true,
+  "analytic_solver_check": {
+    "test": "Analytic periodic Taylor-Green vortex, diffusive refinement, D3Q19 MRT",
+    "checks": [
+      {
+        "n": 16,
+        "steps": 40,
+        "relative_velocity_L2_error": 0.019577416807134165,
+        "relative_mass_error": 0.0
+      },
+      {
+        "n": 32,
+        "steps": 160,
+        "relative_velocity_L2_error": 0.004880999114086235,
+        "relative_mass_error": 0.0
+      }
+    ],
+    "acceptance": "Each velocity error < 0.02; fine error less than half coarse; periodic mass error < 1e-10.",
+    "passed": true
+  },
+  "scenarios": [
+    {
+      "scenario": 1,
+      "grid": [
+        64,
+        37,
+        16
+      ],
+      "slice_height_m": 0.75,
+      "fixed_field_mean_speeds_m_s": {
+        "central_passage": 3.4870963096618652,
+        "lower_bypass": 0.39622852206230164,
+        "upper_bypass": 1.0588322877883911,
+        "whole_fluid_slice": 0.9379997849464417
+      },
+      "sampling_comparison": "Mean vector fields over 8\u201312 s versus 12\u201316 s",
+      "sampling_passage_relative_changes": {
+        "central_passage": 0.0009037108112086005,
+        "lower_bypass": 0.02183927669320424,
+        "upper_bypass": 0.032415207789513636,
+        "whole_fluid_slice": 0.014092054636384509
+      },
+      "sampling_vector_relative_L2": 0.11957653779120199,
+      "boundary_checks": [
+        {
+          "links": 10524,
+          "min_q": 0.00021898393600583432,
+          "max_q": 0.9979555258286101,
+          "unresolved": 0,
+          "junction_halfway_no_slip_links": 212
+        }
+      ]
+    },
+    {
+      "scenario": 2,
+      "grid": [
+        64,
+        37,
+        16
+      ],
+      "slice_height_m": 0.75,
+      "fixed_field_mean_speeds_m_s": {
+        "central_passage": 4.254124641418457,
+        "lower_bypass": 4.337419509887695,
+        "upper_bypass": 2.3203303813934326,
+        "whole_fluid_slice": 1.7304049730300903
+      },
+      "sampling_comparison": "Mean vector fields over 8\u201312 s versus 12\u201316 s",
+      "sampling_passage_relative_changes": {
+        "central_passage": 0.008359403249746307,
+        "lower_bypass": 7.635924781158295e-06,
+        "upper_bypass": 0.010085190662166234,
+        "whole_fluid_slice": 0.005094918049332743
+      },
+      "sampling_vector_relative_L2": 0.06669150602561134,
+      "boundary_checks": [
+        {
+          "links": 10524,
+          "min_q": 0.00021898393600583432,
+          "max_q": 0.9979555258286101,
+          "unresolved": 0,
+          "junction_halfway_no_slip_links": 212
+        }
+      ]
+    }
+  ],
+  "full_scene_grid_convergence_established": false,
+  "comparison_note": "Both resolutions use the same 0.75 m slice and 8\u201316 s averaging window. Passage masks are sampled on each grid; these are sensitivity checks, not a rigorous grid-convergence or experimental validation study.",
+  "summary": "The displayed fields are fixed in time. Taylor\u2013Green solver check passed (1.96% \u2192 0.49% relative velocity error). The 128-cell Scenario 2 run failed its numerical stability gate and was rejected. Both displayed fields use the completed 64-cell computations. Their passage speeds change by up to 3.2% between averaging blocks, but this does not establish accuracy. This is a provisional scenario preview, not a validated wind model. Scenario 1 also shows up to 138% passage-speed change with refinement, so its numerical accuracy is unresolved.",
+  "refinement_failure": {
+    "scenario": 2,
+    "grid": [
+      128,
+      74,
+      32
+    ],
+    "status": "failed",
+    "reason": "Numerical stability gate failed before the requested 16-second run completed.",
+    "reported_lattice_speed": 0.25729268739586664,
+    "allowed_lattice_speed": 0.2,
+    "reported_relative_density_change": 0.028209049551463528,
+    "last_periodic_diagnostic_time_s": 10.9828125,
+    "exported_to_webpage": false,
+    "display_policy": "Keep both scenario displays at the completed 64-cell resolution and explicitly label the preview unvalidated. Do not claim grid convergence or silently modify molecular viscosity, geometry, or wind conditions.",
+    "root_cause": "Not yet established. The failure rejects the refined result; stability of the coarse run does not prove its accuracy."
+  },
+  "scenario1_refinement_sensitivity": {
+    "central_passage": 0.006831830483925318,
+    "lower_bypass": 0.6355988458245109,
+    "upper_bypass": 1.378391082794224,
+    "whole_fluid_slice": 0.10119695446010316
+  }
+}

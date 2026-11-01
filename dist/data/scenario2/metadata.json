@@ -1,0 +1,230 @@
+{
+  "scenario": 2,
+  "solver": "lbmpy 1.4.1 / D3Q19 MRT / Smagorinsky LES Cs=0.16",
+  "equations": "3D isothermal low-Mach filtered Navier-Stokes; molecular plus Smagorinsky subgrid viscosity",
+  "units": "m, s, m/s",
+  "domain_m": [
+    8.0,
+    4.625,
+    2.0
+  ],
+  "obstacles": [
+    [
+      2.16,
+      3.3125,
+      0.98,
+      1.5
+    ],
+    [
+      3.73,
+      2.6325,
+      0.855,
+      1.5
+    ],
+    [
+      5.355,
+      1.1625,
+      0.855,
+      1.5
+    ]
+  ],
+  "grid": [
+    64,
+    37,
+    16
+  ],
+  "dx_m": 0.125,
+  "dt_s": 0.000703125,
+  "density_kg_m3": 1.204,
+  "temperature_K": 293.15,
+  "dynamic_viscosity_Pa_s": 1.8134058821488238e-05,
+  "kinematic_viscosity_m2_s": 1.506151064907661e-05,
+  "wind_source": "Prescribed incoming external wind at east boundary; central 5 m/s peak and scenario 2 lower 8 m/s peak. Direction (-1,-0.6,0), normalized. Gaussian inlet profiles in y only; sine profile in z. Interior velocities computed by CFD.",
+  "boundary_conditions": "No-slip floor, roof, north/south boundaries, and circular cylinders with analytic link intersections. Library-documented halfway no-slip fallback at junctions lacking a second fluid node (counts recorded). Pressure outlet west; prescribed velocity inlet east.",
+  "initial_condition": "Air initially at rest; imposed inlet starts at t=0",
+  "slice_height_m": 0.75,
+  "requested_slice_height_m": 0.75,
+  "slice_interpolation": "Linear interpolation between neighboring vertical CFD cell centers",
+  "data_dtype": "little-endian float32",
+  "diagnostics": [
+    {
+      "time_s": 0.9984375,
+      "max_speed_m_s": 8.192065804352227,
+      "max_lattice_mach": 0.07981354233048182,
+      "max_relative_density_change": 0.014150344564658801,
+      "mean_speed_m_s": 1.7989115269098335,
+      "wall_seconds": 5.14188587499666
+    },
+    {
+      "time_s": 1.996875,
+      "max_speed_m_s": 8.571530810583715,
+      "max_lattice_mach": 0.08351058860197333,
+      "max_relative_density_change": 0.005434718558658513,
+      "mean_speed_m_s": 2.1659601029387385,
+      "wall_seconds": 10.290465416008374
+    },
+    {
+      "time_s": 2.9953125,
+      "max_speed_m_s": 7.8401113450365445,
+      "max_lattice_mach": 0.0763845254246276,
+      "max_relative_density_change": 0.007013506843041473,
+      "mean_speed_m_s": 1.6722045973176554,
+      "wall_seconds": 15.725113291002344
+    },
+    {
+      "time_s": 3.99375,
+      "max_speed_m_s": 7.829974938507833,
+      "max_lattice_mach": 0.07628576858711192,
+      "max_relative_density_change": 0.0016936069809987409,
+      "mean_speed_m_s": 1.6044413427094906,
+      "wall_seconds": 21.151260665996233
+    },
+    {
+      "time_s": 4.9921875,
+      "max_speed_m_s": 7.833516858127321,
+      "max_lattice_mach": 0.0763202767512591,
+      "max_relative_density_change": 0.002207464270227555,
+      "mean_speed_m_s": 1.7722221313561963,
+      "wall_seconds": 26.36350950000633
+    },
+    {
+      "time_s": 5.990625,
+      "max_speed_m_s": 7.834574416914149,
+      "max_lattice_mach": 0.07633058031998222,
+      "max_relative_density_change": 0.003216376805053267,
+      "mean_speed_m_s": 1.769868916207444,
+      "wall_seconds": 31.50289616599912
+    },
+    {
+      "time_s": 6.9890625,
+      "max_speed_m_s": 7.833508522432834,
+      "max_lattice_mach": 0.07632019553837328,
+      "max_relative_density_change": 0.0030570376274066113,
+      "mean_speed_m_s": 1.6889019824803841,
+      "wall_seconds": 36.68726016599976
+    },
+    {
+      "time_s": 7.9875,
+      "max_speed_m_s": 7.832859556338563,
+      "max_lattice_mach": 0.07631387280073015,
+      "max_relative_density_change": 0.0020965782496649155,
+      "mean_speed_m_s": 1.6955525103032134,
+      "wall_seconds": 41.90499645800446
+    },
+    {
+      "time_s": 8.9859375,
+      "max_speed_m_s": 7.832915565931636,
+      "max_lattice_mach": 0.0763144184901978,
+      "max_relative_density_change": 0.0022779962474479554,
+      "mean_speed_m_s": 1.7241282168555117,
+      "wall_seconds": 47.27646820800146
+    },
+    {
+      "time_s": 9.984375,
+      "max_speed_m_s": 7.832864893526817,
+      "max_lattice_mach": 0.07631392479981204,
+      "max_relative_density_change": 0.002632481495468353,
+      "mean_speed_m_s": 1.7200436101550811,
+      "wall_seconds": 53.02978858300776
+    },
+    {
+      "time_s": 10.9828125,
+      "max_speed_m_s": 7.832633004350483,
+      "max_lattice_mach": 0.07631166555323941,
+      "max_relative_density_change": 0.0025206929188492655,
+      "mean_speed_m_s": 1.7127623457640262,
+      "wall_seconds": 58.413278166000964
+    },
+    {
+      "time_s": 11.98125,
+      "max_speed_m_s": 7.832631886048716,
+      "max_lattice_mach": 0.07631165465786484,
+      "max_relative_density_change": 0.0023980995300589836,
+      "mean_speed_m_s": 1.7198271136033787,
+      "wall_seconds": 63.8801181660092
+    },
+    {
+      "time_s": 12.979687499999999,
+      "max_speed_m_s": 7.832820288796818,
+      "max_lattice_mach": 0.07631349022548234,
+      "max_relative_density_change": 0.0024557364977333407,
+      "mean_speed_m_s": 1.7256489462623648,
+      "wall_seconds": 69.35444850000204
+    },
+    {
+      "time_s": 13.978125,
+      "max_speed_m_s": 7.832923219153995,
+      "max_lattice_mach": 0.07631449305390385,
+      "max_relative_density_change": 0.0024939378652582,
+      "mean_speed_m_s": 1.72452360965956,
+      "wall_seconds": 74.86238166599651
+    },
+    {
+      "time_s": 14.9765625,
+      "max_speed_m_s": 7.832967733506513,
+      "max_lattice_mach": 0.07631492674770514,
+      "max_relative_density_change": 0.0024685138169064924,
+      "mean_speed_m_s": 1.7227928691560825,
+      "wall_seconds": 80.41517433300032
+    },
+    {
+      "time_s": 15.975,
+      "max_speed_m_s": 7.832992153886012,
+      "max_lattice_mach": 0.07631516467023157,
+      "max_relative_density_change": 0.002453928384836823,
+      "mean_speed_m_s": 1.7218843401830384,
+      "wall_seconds": 86.26038283300295
+    },
+    {
+      "time_s": 16.0003125,
+      "max_speed_m_s": 7.832990419508869,
+      "max_lattice_mach": 0.07631514777256658,
+      "max_relative_density_change": 0.0024549551473258546,
+      "mean_speed_m_s": 1.7216158952940785,
+      "wall_seconds": 86.39847120799823
+    }
+  ],
+  "curved_boundary_checks": [
+    {
+      "links": 10524,
+      "min_q": 0.00021898393600583432,
+      "max_q": 0.9979555258286101,
+      "unresolved": 0,
+      "junction_halfway_no_slip_links": 212
+    }
+  ],
+  "wall_seconds": 86.48154679100844,
+  "limitations": [
+    "LES models unresolved eddies; not DNS or an approximation-free or measured wind field.",
+    "Finite spatial/time discretization; near-wall turbulence is not wall-resolved at these grids.",
+    "Quiet zones and route impassability are design targets, not imposed solution properties.",
+    "A horizontal velocity slice is exported for animated streamlets; these are not three-dimensional particle trajectories.",
+    "Air velocity is not assigned directly to the robot additive-acceleration disturbance. Robot coupling remains separate."
+  ],
+  "time_dependence": "none",
+  "field_definition": "Fixed vector mean of the 3D CFD horizontal slice over solver time 8\u201316 s; no temporal interpolation or gusts in the environment",
+  "averaging_interval_s": [
+    8,
+    16
+  ],
+  "averaging_method": "Trapezoidal vector average, linearly interpolated window endpoints; no extrapolation, speed clipping, or minimum wind",
+  "data_shape": [
+    37,
+    64,
+    3
+  ],
+  "data_file": "stationary-velocity.f32",
+  "data_axes": [
+    "y from south",
+    "x from west",
+    "u/v/w"
+  ],
+  "velocity_sha256": "c8ebe36bc09c5ea5f25405fa04449dbdfdcfe9e81b860c9ce282fedfce3d37c8",
+  "generator": {
+    "source_directory": "stationary_s2_n64",
+    "transient_velocity_sha256": "ac4ac3e45656a2e2869b0f0e4467c700256b7804d03d55360f09163850028892"
+  },
+  "stationary_model_limit": "A mean-flow environment, not the instantaneous turbulent flow and not an exact steady Navier\u2013Stokes solution",
+  "validation_status": "Provisional numerical field; full-scene accuracy and grid convergence not established",
+  "intended_use": "Scenario visualization; not validated for robot performance or research conclusions"
+}

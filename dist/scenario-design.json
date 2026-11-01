@@ -1,6 +1,6 @@
 {
-  "status": "User sketch transcribed for visual confirmation; no physical parameters selected",
-  "coordinates": "Image-relative layout units; origin upper-left, y downward; not meters",
+  "status": "Designed physical environment with stationary CFD-derived wind fields",
+  "coordinates": "Display units of 0.01 m; origin upper-left, y downward",
   "bounds": [
     [
       0,
@@ -8,7 +8,7 @@
     ],
     [
       800,
-      462
+      462.5
     ]
   ],
   "regions": [
@@ -24,28 +24,28 @@
       "x": 0,
       "y": 287,
       "width": 290,
-      "height": 175
+      "height": 175.5
     }
   ],
   "obstacles": [
     {
       "center": [
         216,
-        131
+        131.25
       ],
       "radius": 98
     },
     {
       "center": [
         373,
-        199
+        199.25
       ],
       "radius": 85.5
     },
     {
       "center": [
         535.5,
-        346
+        346.25
       ],
       "radius": 85.5
     }
@@ -54,20 +54,31 @@
   "scenarios": [
     {
       "id": 1,
-      "central": "High wind toward the lower-left monitoring region",
-      "upper": "No wind",
-      "lower": "No wind"
+      "central": "Wind toward the lower-left monitoring region",
+      "upper": "Sheltered bypass; computed speed",
+      "lower": "Sheltered bypass; computed speed"
     },
     {
       "id": 2,
-      "central": "Same high wind toward the lower-left monitoring region",
-      "upper": "No wind",
-      "lower": "High wind; intended impassable, as marked in the sketch; direction unspecified"
+      "central": "Same central wind toward the lower-left monitoring region",
+      "upper": "Sheltered bypass; computed speed",
+      "lower": "Stronger incoming wind toward the lower-left; robot impassability not established"
     }
   ],
-  "physicalScale": null,
-  "windMagnitude": null,
-  "windField": null,
+  "physicalScale": {
+    "metersPerLayoutUnit": 0.01,
+    "domainMeters": [
+      8,
+      4.625,
+      2
+    ],
+    "obstacleHeightMeters": 1.5
+  },
+  "windMagnitude": {
+    "centralInletPeakMps": 5,
+    "lowerInletPeakMps": 8
+  },
+  "windField": "Fixed vector mean from 3D MRT LBM / Smagorinsky LES; no time dependence",
   "intendedRobotModel": "p_dot = v; v_dot = u + d(p). Not simulated in this layout preview.",
   "illustrativePaths": {
     "scenario1": "A -> central passage -> B -> lower bypass -> A",
@@ -78,5 +89,59 @@
     "central": "M 650 110 C 600 155 555 208 505 242 C 465 268 425 300 374 331 C 308 368 224 375 145 375",
     "upper": "M 650 110 C 600 70 535 37 470 28 C 386 15 330 16 250 16 C 170 12 110 18 82 64 C 52 105 53 205 76 280 C 90 317 110 350 145 375",
     "lower": "M 650 110 C 680 175 700 246 695 309 C 693 365 641 430 575 444 C 536 454 483 449 431 440 C 337 425 231 403 145 375"
-  }
+  },
+  "timeDependence": "none",
+  "stationaryWindDefinition": "Vector mean of 3D CFD over 8\u201316 s at height 0.75 m, fixed for all environment times.",
+  "monitoringRegionsMeters": [
+    {
+      "label": "A",
+      "lowerLeft": [
+        4.98,
+        2.295
+      ],
+      "width": 3.02,
+      "height": 2.33
+    },
+    {
+      "label": "B",
+      "lowerLeft": [
+        0,
+        0
+      ],
+      "width": 2.9,
+      "height": 1.7550000000000001
+    }
+  ],
+  "cylindersMeters": [
+    {
+      "center": [
+        2.16,
+        3.3125
+      ],
+      "radius": 0.98,
+      "height": 1.5
+    },
+    {
+      "center": [
+        3.73,
+        2.6325000000000003
+      ],
+      "radius": 0.855,
+      "height": 1.5
+    },
+    {
+      "center": [
+        5.355,
+        1.1625
+      ],
+      "radius": 0.855,
+      "height": 1.5
+    }
+  ],
+  "windFiles": [
+    "data/scenario1/metadata.json",
+    "data/scenario2/metadata.json"
+  ],
+  "reviewStatus": "Scenario design for review; robot model and planner are not running.",
+  "windValidationStatus": "Provisional CFD preview; refined Scenario 2 failed its stability gate. Not validated for robot dynamics or research conclusions."
 }
