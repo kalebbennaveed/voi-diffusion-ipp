@@ -19,8 +19,8 @@ const design = {
     {id:1,central:'Wind toward the lower-left monitoring region',upper:'Sheltered bypass; computed speed',lower:'Sheltered bypass; computed speed'},
     {id:2,central:'Same central wind toward the lower-left monitoring region',upper:'Sheltered bypass; computed speed',lower:'Stronger incoming wind toward the lower-left; robot impassability not established'}
   ],
-  airflowOpenings:{centralInletY:[1.60,2.275],lowerInletY:[.35,1.15],southOutletX:[2.95,4.45]},
-  physicalScale:{metersPerLayoutUnit:.01,domainMeters:[8,4.625,2],obstacleHeightMeters:1.5}, windMagnitude:{centralInletPeakMps:5,lowerInletPeakMps:8}, windField:'Fixed vector mean from 3D MRT LBM / Smagorinsky LES; no time dependence',
+  airflowOpenings:{centralInletX:[6.4, 7.2],lowerInletY:[.35,1.15],southOutletX:[2.95,4.45]},
+  physicalScale:{metersPerLayoutUnit:.01,domainMeters:[8,4.625,2],obstacleHeightMeters:1.5}, windMagnitude:{centralInletPeakMps:24.0,lowerInletPeakMps:18}, windField:'Fixed vector mean from 3D MRT LBM / Smagorinsky LES; no time dependence',
   intendedRobotModel:'Nominal double integrator; separate robot review adds the existing relative-air-velocity quadratic force as acceleration.',
   illustrativePaths: {scenario1:'A -> central passage -> B -> lower bypass -> A',scenario2:'A -> central passage -> B -> upper bypass -> A',dynamicallyValidated:false},
   routes: {
@@ -31,8 +31,8 @@ const design = {
 };
 const routeColors={central:'#c16a5d',upper:'#b49843',lower:'#3b9ba7'};
 function renderWindOpenings(scenario){
-  const segment=(bounds,side,color)=>side==='east'?`<path d="M800 ${462.5-bounds[0]*100}V${462.5-bounds[1]*100}" stroke="${color}" stroke-width="5"/>`:`<path d="M${bounds[0]*100} 462.5H${bounds[1]*100}" stroke="${color}" stroke-width="5"/>`;
-  return `<g class="air-openings" aria-label="External air openings outside the monitoring regions">${segment(design.airflowOpenings.centralInletY,'east','#506f9a')}${scenario===2?segment(design.airflowOpenings.lowerInletY,'east','#506f9a'):''}${segment(design.airflowOpenings.southOutletX,'south','#2a8d83')}</g>`;
+  const segment=(bounds,side,color)=>side==='north'?`<path d="M${bounds[0]*100} 0H${bounds[1]*100}" stroke="${color}" stroke-width="5" stroke-dasharray="7 4"><title>Elevated central inlet: z = 1.5–2.0 m; robot slice z = 0.75 m</title></path>`:side==='east'?`<path d="M800 ${462.5-bounds[0]*100}V${462.5-bounds[1]*100}" stroke="${color}" stroke-width="5"/>`:`<path d="M${bounds[0]*100} 462.5H${bounds[1]*100}" stroke="${color}" stroke-width="5"/>`;
+  return `<g class="air-openings" aria-label="Physical airflow openings; dashed north inlet is above the robot plane">${segment(design.airflowOpenings.centralInletX,'north','#506f9a')}${scenario===2?segment(design.airflowOpenings.lowerInletY,'east','#506f9a'):''}${segment(design.airflowOpenings.southOutletX,'south','#2a8d83')}</g>`;
 }
 function renderMap(scenario) {
   const id=`s${scenario}`;

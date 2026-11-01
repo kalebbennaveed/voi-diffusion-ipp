@@ -1,7 +1,7 @@
 {
-  "environment_revision": "sheltered-monitoring-ports-v2",
+  "environment_revision": "directional-sheltered-ports-v8",
   "time_independent": true,
-  "physical_change": "External wind openings moved below A; south pressure outlet x=2.95\u20134.45m outside B; west perimeter closed. Same columns, regions, air properties, solver, force law, and robot controller.",
+  "physical_change": "Elevated north central inflow aimed through the central gap toward the outlet outside B; strong lower inflow only in Scenario 2. South pressure outlet outside B and closed west perimeter retained. Same columns, regions, air properties, solver, force law, and robot controller.",
   "interior_velocity_modification": "None: exported vector mean of the newly solved CFD field, no ROI blending, clipping, or speed cap.",
   "full_scene_grid_convergence_established": false,
   "scenarios": [
@@ -26,21 +26,27 @@
       },
       "monitoring_regions": {
         "A": {
-          "mean_m_s": 0.3287677764892578,
-          "p95_m_s": 0.9599956274032593,
-          "max_m_s": 3.457449436187744
+          "mean_m_s": 0.6473585963249207,
+          "p95_m_s": 1.7015511989593506,
+          "max_m_s": 6.107428550720215
         },
         "B": {
-          "mean_m_s": 0.3760656416416168,
-          "p95_m_s": 0.5992929935455322,
-          "max_m_s": 0.7480540871620178
+          "mean_m_s": 0.529294490814209,
+          "p95_m_s": 1.083487629890442,
+          "max_m_s": 1.5471998453140259
         }
       },
       "fixed_field_mean_speeds_m_s": {
-        "central_passage": 1.5495411157608032,
-        "lower_bypass": 0.15076377987861633,
-        "upper_bypass": 0.35565686225891113,
-        "whole_fluid_slice": 0.5264359712600708
+        "central_passage": 3.969517707824707,
+        "lower_bypass": 0.057944655418395996,
+        "upper_bypass": 0.8765291571617126,
+        "whole_fluid_slice": 0.6599745750427246
+      },
+      "fixed_horizontal_mean_speeds_m_s": {
+        "central_passage": 3.88500714302063,
+        "lower_bypass": 0.022910796105861664,
+        "upper_bypass": 0.8734759092330933,
+        "whole_fluid_slice": 0.608801543712616
       },
       "sampling_windows_s": [
         [
@@ -52,34 +58,34 @@
           32
         ]
       ],
-      "sampling_vector_relative_L2": 0.11477280115630051,
+      "sampling_vector_relative_L2": 0.2796382910624863,
       "sampling_region_means_m_s": [
         {
           "A": {
-            "mean_m_s": 0.3352003801506676,
-            "p95_m_s": 0.9203663678195095,
-            "max_m_s": 3.4489605534868533
+            "mean_m_s": 0.6378411327715218,
+            "p95_m_s": 1.7104711827437007,
+            "max_m_s": 6.013472059891267
           },
           "B": {
-            "mean_m_s": 0.3976855742705262,
-            "p95_m_s": 0.634212609077083,
-            "max_m_s": 0.7642197768318486
+            "mean_m_s": 0.6110210730366089,
+            "p95_m_s": 1.342269722254541,
+            "max_m_s": 1.9762338039428287
           }
         },
         {
           "A": {
-            "mean_m_s": 0.3245691040992822,
-            "p95_m_s": 0.9928947217329541,
-            "max_m_s": 3.4659689263939173
+            "mean_m_s": 0.6711680444371914,
+            "p95_m_s": 1.7714854927453203,
+            "max_m_s": 6.201626350170539
           },
           "B": {
-            "mean_m_s": 0.359733505753522,
-            "p95_m_s": 0.5900851323528281,
-            "max_m_s": 0.7352777982757758
+            "mean_m_s": 0.4611887686127797,
+            "p95_m_s": 0.8382232544263488,
+            "max_m_s": 1.1229754526247133
           }
         }
       ],
-      "max_recorded_density_change": 0.0013012698400316491
+      "max_recorded_density_change": 0.0006887700964544052
     },
     {
       "scenario": 2,
@@ -102,21 +108,27 @@
       },
       "monitoring_regions": {
         "A": {
-          "mean_m_s": 0.3611123561859131,
-          "p95_m_s": 0.919074296951294,
-          "max_m_s": 3.438467502593994
+          "mean_m_s": 0.7315679788589478,
+          "p95_m_s": 2.197143077850342,
+          "max_m_s": 6.241689205169678
         },
         "B": {
-          "mean_m_s": 0.2479815036058426,
-          "p95_m_s": 0.7323242425918579,
-          "max_m_s": 1.6458204984664917
+          "mean_m_s": 0.3796500265598297,
+          "p95_m_s": 0.7657654881477356,
+          "max_m_s": 0.9073187112808228
         }
       },
       "fixed_field_mean_speeds_m_s": {
-        "central_passage": 2.136042833328247,
-        "lower_bypass": 3.5010697841644287,
-        "upper_bypass": 0.6129603385925293,
-        "whole_fluid_slice": 0.927109956741333
+        "central_passage": 4.353055000305176,
+        "lower_bypass": 5.218014717102051,
+        "upper_bypass": 0.687268853187561,
+        "whole_fluid_slice": 1.1862339973449707
+      },
+      "fixed_horizontal_mean_speeds_m_s": {
+        "central_passage": 4.255176067352295,
+        "lower_bypass": 5.162170886993408,
+        "upper_bypass": 0.6836028099060059,
+        "whole_fluid_slice": 1.087989091873169
       },
       "sampling_windows_s": [
         [
@@ -128,34 +140,34 @@
           32
         ]
       ],
-      "sampling_vector_relative_L2": 0.11352351904797167,
+      "sampling_vector_relative_L2": 0.11815306512922998,
       "sampling_region_means_m_s": [
         {
           "A": {
-            "mean_m_s": 0.35108608623618226,
-            "p95_m_s": 0.8716106619159313,
-            "max_m_s": 3.4214492642945107
+            "mean_m_s": 0.7671079260663533,
+            "p95_m_s": 2.0178617689480043,
+            "max_m_s": 6.122409231429792
           },
           "B": {
-            "mean_m_s": 0.26005554842068773,
-            "p95_m_s": 0.8107216776328007,
-            "max_m_s": 1.7014248961688456
+            "mean_m_s": 0.3908137881562629,
+            "p95_m_s": 0.799277671986073,
+            "max_m_s": 0.8896297411973122
           }
         },
         {
           "A": {
-            "mean_m_s": 0.3810035974188472,
-            "p95_m_s": 0.967113283573618,
-            "max_m_s": 3.4555273253809506
+            "mean_m_s": 0.7450003744055135,
+            "p95_m_s": 2.299090578591191,
+            "max_m_s": 6.361305815900513
           },
           "B": {
-            "mean_m_s": 0.24587002845899159,
-            "p95_m_s": 0.6762069442488803,
-            "max_m_s": 1.5999290654332576
+            "mean_m_s": 0.3711369726501943,
+            "p95_m_s": 0.7430533213380859,
+            "max_m_s": 0.9329328475975798
           }
         }
       ],
-      "max_recorded_density_change": 0.0025045071593964296
+      "max_recorded_density_change": 0.0006871718040386554
     }
   ],
   "analytic_solver_check": {
@@ -177,9 +189,5 @@
     "acceptance": "Each velocity error < 0.02; fine error less than half coarse; periodic mass error < 1e-10.",
     "passed": true
   },
-  "summary": "The revised fixed fields come from new 3D CFD solves with wind openings below A and an outlet outside B. Monitoring-region speeds are measured from the resulting fields; no calm-zone mask is applied. Taylor\u2013Green solver verification remains applicable. These redesigned full scenes have not established grid convergence or experimental accuracy.",
-  "source_sha256": {
-    "scripts/airflow/simulate_sheltered_airflow.py": "d7fd79a77f7946664b1e918cee6d648a7e647348765c9f3eb2abca574ecaed97",
-    "scripts/airflow/export_sheltered_wind.py": "1e8db2d4a83dca0feae7fcf818010d23b3e9437462fca7b7544cbc30383c7b62"
-  }
+  "summary": "The revised fixed fields come from new 3D CFD solves with an elevated north central inlet above the monitoring plane, a strong lower opening in Scenario 2, an outlet outside B. Monitoring-region speeds are measured from the resulting fields; no calm-zone mask is applied. Taylor\u2013Green solver verification remains applicable. These redesigned full scenes have not established grid convergence or experimental accuracy."
 }

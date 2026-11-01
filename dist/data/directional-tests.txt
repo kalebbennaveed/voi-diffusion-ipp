@@ -1,0 +1,44 @@
+.........F..FF...                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_redesign_shelters_monitoring_regions_without_erasing_route_wind _____
+
+    def test_redesign_shelters_monitoring_regions_without_erasing_route_wind():
+        validation=json.loads((r.SITE/'data/validation.json').read_text())
+        assert validation['environment_revision']=='directional-sheltered-ports-v8'
+        for row in validation['scenarios']:
+            for region in row['monitoring_regions'].values():
+>               assert region['mean_m_s'] < .5
+E               assert 0.6473585963249207 < 0.5
+
+tests/test_airflow_robot_review.py:105: AssertionError
+___________ test_scenario_one_lower_remains_easy_in_both_directions ____________
+
+    def test_scenario_one_lower_remains_easy_in_both_directions():
+        manifest=json.loads((r.SITE/'data/robot/manifest.json').read_text())
+        for case in manifest['cases']:
+            if case['route']!='lower' or case['scenario']!=1:continue
+            plain=case['unfiltered'];assert plain['target_region_reached']
+>           assert plain['min_clearance_m']>=.06
+E           assert 0.045992530400367417 >= 0.06
+
+tests/test_airflow_robot_review.py:151: AssertionError
+_______________ test_both_upper_bypasses_remain_smooth_and_clear _______________
+
+    def test_both_upper_bypasses_remain_smooth_and_clear():
+        manifest=json.loads((r.SITE/'data/robot/manifest.json').read_text())
+        cases=[c for c in manifest['cases'] if c['route']=='upper']
+        assert len(cases)==4
+        for case in cases:
+            for method in ('unfiltered','rpcbf'):
+                result=case[method]
+                assert result['target_region_reached'] and result['contact'] is None
+                assert result['min_clearance_m']>.06
+>               assert result['endpoint_error_m']<.02
+E               assert 0.020776608713852444 < 0.02
+
+tests/test_airflow_robot_review.py:166: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_airflow_robot_review.py::test_redesign_shelters_monitoring_regions_without_erasing_route_wind
+FAILED tests/test_airflow_robot_review.py::test_scenario_one_lower_remains_easy_in_both_directions
+FAILED tests/test_airflow_robot_review.py::test_both_upper_bypasses_remain_smooth_and_clear
+3 failed, 14 passed in 19.19s

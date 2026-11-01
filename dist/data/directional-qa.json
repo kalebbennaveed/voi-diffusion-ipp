@@ -1,0 +1,30 @@
+{
+  "robot_model_unchanged": true,
+  "all_12_reference_records_unchanged": true,
+  "core_physics_and_rpcbf_source_hashes_unchanged": true,
+  "all_24_timestep_refinements_same_outcome": true,
+  "max_timestep_position_difference_m": 0.007220762794192982,
+  "tests": {
+    "passed": 14,
+    "failed": 3,
+    "command": "ROBOT_REVIEW_SITE=results/airflow/directional_v8_review PYTHONPATH=src .venv/bin/python -m pytest tests/test_airflow_robot_review.py tests/test_rpcbf.py -q"
+  },
+  "unmet_additional_design_checks": [
+    {
+      "check": "monitoring mean < 0.5 m/s and p95 < 1 m/s",
+      "result": "Not met; see validation.json for all region means, p95, and maxima."
+    },
+    {
+      "check": "Scenario 1 lower without filter: clearance >= 0.06 m and max tracking error < 0.3 m",
+      "minimum_clearance_m": 0.045992530400367417,
+      "max_tracking_error_m": 0.30263849368990986,
+      "filtered_minimum_clearance_m": 0.09376118686952904
+    },
+    {
+      "check": "Upper: endpoint error < 0.02 m and unfiltered max tracking error < 0.3 m",
+      "max_endpoint_error_m": 0.0207766105079447,
+      "max_unfiltered_tracking_error_m": 0.45052844423768135,
+      "result": "All upper runs reach their target through the upper passage without contact; strict tracking-error targets are not all met."
+    }
+  ]
+}
