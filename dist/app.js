@@ -1,88 +1,81 @@
 'use strict';
-// Scenario-design preview only. These loops have no physical time, controls,
-// dynamics integration, learned belief, clarity evaluation, or planner output.
+// A layout transcription only: source-image proportions, no assumed physical scale.
+// Wind zones communicate the user's design intent. They do not evaluate d(p).
 const design = {
-  status: 'Proposed scenario geometry; awaiting user confirmation',
-  bounds: [[-2.8, -2.8], [2.8, 2.8]],
-  regionA: [1.1, .25], regionB: [-1.1, -.25], regionSize: [1.4, 1.2],
-  obstacleNormalOffset: .8, obstacleRadius: .35,
-  central: {amplitude: 1.8, longitudinalWidth: .7050321357924049, transverseWidth: .35, crossFraction: .2},
-  lower: {amplitude: 1.8, axialWindow: [-1.3, 1.3, .35], normalWindow: [.85, 1.95, .25]},
-  units: {position: 'm', disturbance: 'm/s^2'},
-  intendedRobotModel: 'p_dot = v; v_dot = u + d(p); not simulated in this preview',
-  illustrativePaths: {scenario1: 'A -> central -> B -> lower -> A', scenario2: 'A -> central -> B -> upper -> A', physicalValidation: false},
-  routeNormalOffsets: {central: 0, lower: 1.53, upper: -1.68}
+  status: 'User sketch transcribed for visual confirmation; no physical parameters selected',
+  coordinates: 'Image-relative layout units; origin upper-left, y downward; not meters',
+  bounds: [[0,0],[800,462]],
+  regions: [
+    {label:'A', x:498, y:0, width:302, height:233},
+    {label:'B', x:0, y:287, width:290, height:175}
+  ],
+  obstacles: [
+    {center:[216,131],radius:98},
+    {center:[373,199],radius:85.5},
+    {center:[535.5,346],radius:85.5}
+  ],
+  geometryNote: 'Relative positions and sizes traced from the sketch. The first two circles overlap, as drawn, and form one connected obstacle cluster.',
+  scenarios: [
+    {id:1,central:'High wind toward the lower-left monitoring region',upper:'No wind',lower:'No wind'},
+    {id:2,central:'Same high wind toward the lower-left monitoring region',upper:'No wind',lower:'High wind; intended impassable, as marked in the sketch; direction unspecified'}
+  ],
+  physicalScale:null, windMagnitude:null, windField:null,
+  intendedRobotModel:'p_dot = v; v_dot = u + d(p). Not simulated in this layout preview.',
+  illustrativePaths: {scenario1:'A -> central passage -> B -> lower bypass -> A',scenario2:'A -> central passage -> B -> upper bypass -> A',dynamicallyValidated:false},
+  routes: {
+    central:'M 650 110 C 600 155 555 208 505 242 C 465 268 425 300 374 331 C 308 368 224 375 145 375',
+    upper:'M 650 110 C 600 70 535 37 470 28 C 386 15 330 16 250 16 C 170 12 110 18 82 64 C 52 105 53 205 76 280 C 90 317 110 350 145 375',
+    lower:'M 650 110 C 680 175 700 246 695 309 C 693 365 641 430 575 444 C 536 454 483 449 431 440 C 337 425 231 403 145 375'
+  }
 };
-const norm = Math.hypot(design.regionB[0]-design.regionA[0], design.regionB[1]-design.regionA[1]);
-const t = design.regionA.map((v,i)=>(design.regionB[i]-v)/norm), n = [-t[1],t[0]];
-const circles = [-1,1].map(sign=>n.map(v=>sign*design.obstacleNormalOffset*v));
-function smooth(z) { z=Math.max(0,Math.min(1,z)); return z*z*z*(10+z*(-15+6*z)); }
-function windowAt(x,w) { return smooth((x-w[0])/w[2])*smooth((w[1]-x)/w[2]); }
-function windAt(x,y,scenario) {
-  const s=x*t[0]+y*t[1], r=x*n[0]+y*n[1], w=design.central;
-  const central=w.amplitude*Math.exp(-.5*((s/w.longitudinalWidth)**4+(r/w.transverseWidth)**2));
-  const lower=scenario===2?design.lower.amplitude*windowAt(s,design.lower.axialWindow)*windowAt(r,design.lower.normalWindow):0;
-  return t.map((v,i)=>central*(v+w.crossFraction*n[i])+lower*v);
+const routeColors={central:'#c16a5d',upper:'#b49843',lower:'#3b9ba7'};
+function renderMap(scenario) {
+  const id=`s${scenario}`;
+  const zones = `<g class="wind-layer" clip-path="url(#${id}-mapclip)">
+    <path d="M 508 240 L 374 344" fill="none" stroke="#c8e1ec" stroke-width="40" stroke-linecap="round"/>
+    <g stroke="#3f6e87" stroke-width="2.4" marker-end="url(#${id}-windarrow)">
+      <path d="M 497 242 l -37 29"/><path d="M 478 232 l -36 29"/>
+      <path d="M 454 276 l -37 29"/><path d="M 435 266 l -36 29"/>
+      <path d="M 412 309 l -25 20"/>
+    </g>
+    ${scenario===2?`<path d="M 617 277 A 107 107 0 0 1 460 422" fill="none" stroke="#ead6b4" stroke-width="64"/>
+    <path d="M 617 277 A 107 107 0 0 1 460 422" fill="none" stroke="url(#${id}-hatch)" stroke-width="64"/>`:''}
+  </g>`;
+  const guides=Object.entries(design.routes).map(([name,d])=>`<path data-route="${name}" d="${d}" fill="none" stroke="${routeColors[name]}" stroke-width="2" stroke-dasharray="4 5"/>`).join('');
+  const selected=['central',scenario===1?'lower':'upper'];
+  const examples=selected.map(name=>`<path d="${design.routes[name]}" fill="none" stroke="#fffffff0" stroke-width="6"/><path d="${design.routes[name]}" fill="none" stroke="#16704f" stroke-width="3" stroke-dasharray="9 6"/>`).join('');
+  const regions=design.regions.map(r=>`<g><rect x="${r.x}" y="${r.y}" width="${r.width}" height="${r.height}" fill="#eef2e8" stroke="#3c6252" stroke-width="1.8"/><text x="${r.x+18}" y="${r.y+30}" class="region-label">Monitoring region ${r.label}</text></g>`).join('');
+  const circles=design.obstacles.map(o=>`<circle cx="${o.center[0]}" cy="${o.center[1]}" r="${o.radius}" fill="#6a7a82"/>`).join('');
+  return `<svg viewBox="-5 -5 810 472" role="img" aria-labelledby="${id}-title ${id}-desc" xmlns="http://www.w3.org/2000/svg">
+    <title id="${id}-title">Scenario ${scenario}, following your sketch</title>
+    <desc id="${id}-desc">Three circular obstacles. The first two overlap in the upper-left to center; the third sits lower-right. Large rectangular monitoring regions occupy the lower-left and upper-right corners. The narrow diagonal central passage has high wind toward the lower-left. ${scenario===1?'Both outer bypasses have no wind.':'The lower bypass has high wind and is intended impassable; the upper bypass has no wind.'} Dashed green lines are illustrative paths only.</desc>
+    <defs>
+      <clipPath id="${id}-mapclip"><rect width="800" height="462"/></clipPath>
+      <marker id="${id}-windarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 1L9 5L0 9" fill="none" stroke="#3f6e87" stroke-width="1.8"/></marker>
+      <pattern id="${id}-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(36)"><path d="M0 0V10" stroke="#b98946" stroke-width="1.3" opacity=".7"/></pattern>
+    </defs>
+    <rect width="800" height="462" fill="#fdfefd"/>
+    ${zones}${regions}
+    <g class="route-layer">${guides}</g>
+    <g class="obstacles">${circles}</g>
+    <g class="example-layer">${examples}<path d="M-7 -5L7 0L-7 5L-4 0Z" transform="translate(447 281) rotate(142)" fill="#16704f" stroke="white" stroke-width="1"/>
+      <path d="M-7 -5L7 0L-7 5L-4 0Z" transform="translate(${scenario===1?'510 449':'233 16'}) rotate(${scenario===1?'0':'0'})" fill="#16704f" stroke="white" stroke-width="1"/>
+      <circle cx="650" cy="110" r="6" fill="#16704f" stroke="white" stroke-width="2"/>
+    </g>
+    <g class="wind-layer zone-labels">
+      <text x="375" y="65" text-anchor="middle" class="calm">No wind</text>
+      <text x="394" y="312" text-anchor="middle" transform="rotate(-39 394 312)" class="central-label">High wind</text>
+      ${scenario===1?'<text x="703" y="423" text-anchor="middle" class="calm">No wind</text>':'<text x="704" y="397" text-anchor="middle" class="strong-wind">High wind</text><text x="704" y="420" text-anchor="middle" class="blocked-label">Impassable*</text>'}
+    </g>
+    <rect width="800" height="462" fill="none" stroke="#667b72" stroke-width="1.5"/>
+  </svg>`;
 }
-function routePoint(f,h) { return design.regionA.map((v,i)=>v+f*(design.regionB[i]-v)+h*Math.sin(Math.PI*f)**2*n[i]); }
-const colors={central:'#ce665d',lower:'#31a5b1',upper:'#bea03c',path:'#087f52'};
-const shades=[[252,253,252],[220,236,243],[133,183,210],[49,107,150]];
-function heatColor(m) { const z=Math.min(1,m/2)*3,k=Math.min(2,Math.floor(z)),a=z-k; return shades[k].map((v,i)=>Math.round(v*(1-a)+shades[k+1][i]*a)); }
-function drawMap(canvas,scenario) {
-  const box=canvas.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
-  canvas.width=Math.round(box.width*dpr); canvas.height=Math.round(box.height*dpr);
-  const c=canvas.getContext('2d');c.scale(dpr,dpr);
-  const w=box.width,h=box.height,pad=34,size=Math.min(w-2*pad,h-36),left=(w-size)/2,top=5,scale=size/5.6;
-  const X=x=>left+(x+2.8)*scale,Y=y=>top+(2.8-y)*scale;
-  c.clearRect(0,0,w,h);
-  const heat=document.createElement('canvas');heat.width=480;heat.height=480;
-  const hc=heat.getContext('2d'), pixels=hc.createImageData(480,480);
-  const showWind=document.querySelector('#wind').checked;
-  for(let j=0;j<480;j++)for(let i=0;i<480;i++){
-    const d=showWind?windAt(-2.8+(i+.5)*5.6/480,2.8-(j+.5)*5.6/480,scenario):[0,0];
-    const rgb=heatColor(Math.hypot(...d)),k=(j*480+i)*4;pixels.data.set([...rgb,255],k);
+for(const scenario of [1,2])document.querySelector(`#map${scenario}`).innerHTML=renderMap(scenario);
+function updateLayers(){
+  for(const [control,layer] of [['wind','wind-layer'],['paths','example-layer'],['routes','route-layer']]) {
+    const hidden=!document.querySelector(`#${control}`).checked;
+    document.querySelectorAll(`.${layer}`).forEach(el=>el.style.display=hidden?'none':'');
   }
-  hc.putImageData(pixels,0,0);c.drawImage(heat,left,top,size,size);
-  c.lineWidth=.6;c.strokeStyle='#17303b12';
-  for(let z=-2;z<=2;z++) {c.beginPath();c.moveTo(X(z),Y(-2.8));c.lineTo(X(z),Y(2.8));c.moveTo(X(-2.8),Y(z));c.lineTo(X(2.8),Y(z));c.stroke();}
-  function linePath(h,stroke,width,dash=[]) {c.beginPath();for(let i=0;i<=240;i++){const p=routePoint(i/240,h);i?c.lineTo(X(p[0]),Y(p[1])):c.moveTo(X(p[0]),Y(p[1]));}c.strokeStyle=stroke;c.lineWidth=width;c.setLineDash(dash);c.stroke();c.setLineDash([]);}
-  if(document.querySelector('#routes').checked)for(const key of ['upper','lower','central'])linePath(design.routeNormalOffsets[key],colors[key],2);
-  // Rectangle boundaries are the full monitoring regions; not sensing footprints.
-  for(const [label,p] of [['A',design.regionA],['B',design.regionB]]) {
-    c.fillStyle='#eff3cf77';c.strokeStyle='#254650';c.lineWidth=1.8;
-    c.fillRect(X(p[0]-.7),Y(p[1]+.6),1.4*scale,1.2*scale);c.strokeRect(X(p[0]-.7),Y(p[1]+.6),1.4*scale,1.2*scale);
-    c.font=`600 ${Math.max(15,size/30)}px -apple-system,BlinkMacSystemFont,sans-serif`;c.fillStyle='#163d48';c.textAlign='left';c.fillText(label,X(p[0]-.7)+7,Y(p[1]+.6)+21);
-  }
-  if(showWind)for(let y=-2.6;y<=2.61;y+=.24)for(let x=-2.6;x<=2.61;x+=.24){
-    if(circles.some(p=>Math.hypot(x-p[0],y-p[1])<design.obstacleRadius+.05))continue;
-    const d=windAt(x,y,scenario),mag=Math.hypot(...d);if(mag<.08)continue;
-    const len=mag*.105*scale,angle=Math.atan2(-d[1],d[0]),sx=X(x),sy=Y(y);
-    c.strokeStyle='#224f70b0';c.fillStyle='#224f70b0';c.lineWidth=1.05;c.beginPath();c.moveTo(sx,sy);c.lineTo(sx+len*Math.cos(angle),sy+len*Math.sin(angle));c.stroke();
-    if(len>3){const ex=sx+len*Math.cos(angle),ey=sy+len*Math.sin(angle),a=Math.min(3,len*.4);c.beginPath();c.moveTo(ex,ey);c.lineTo(ex-a*Math.cos(angle-.55),ey-a*Math.sin(angle-.55));c.lineTo(ex-a*Math.cos(angle+.55),ey-a*Math.sin(angle+.55));c.closePath();c.fill();}
-  }
-  for(const p of circles){c.beginPath();c.arc(X(p[0]),Y(p[1]),design.obstacleRadius*scale,0,2*Math.PI);c.fillStyle='#687b83';c.fill();c.strokeStyle='#536870';c.lineWidth=1;c.stroke();}
-  if(document.querySelector('#paths').checked){
-    const offset=scenario===1?design.routeNormalOffsets.lower:design.routeNormalOffsets.upper;
-    for(const height of [0,offset]){linePath(height,'#ffffffd9',5.5);linePath(height,colors.path,2.8,[7,5]);}
-    // Direction arrows describe only traversal order, never velocity.
-    for(const [f,height,direction] of [[.36,0,1],[.42,offset,-1]]){
-      const p=routePoint(f,height),q=routePoint(f+.005*direction,height),a=Math.atan2(Y(q[1])-Y(p[1]),X(q[0])-X(p[0]));
-      c.save();c.translate(X(p[0]),Y(p[1]));c.rotate(a);c.fillStyle=colors.path;c.strokeStyle='white';c.lineWidth=1.4;c.beginPath();c.moveTo(7,0);c.lineTo(-5,-5);c.lineTo(-3,0);c.lineTo(-5,5);c.closePath();c.fill();c.stroke();c.restore();
-    }
-    c.beginPath();c.arc(X(design.regionA[0]),Y(design.regionA[1]),5.5,0,Math.PI*2);c.fillStyle=colors.path;c.fill();c.strokeStyle='white';c.lineWidth=2;c.stroke();
-  }
-  const small=Math.max(10,Math.min(12,size/40));
-  function label(text,x,y,color){c.font=`500 ${small}px -apple-system,BlinkMacSystemFont,sans-serif`;c.textAlign='center';const tw=c.measureText(text).width;c.fillStyle='#ffffffdd';c.fillRect(X(x)-tw/2-5,Y(y)-small+1,tw+10,small+7);c.fillStyle=color;c.fillText(text,X(x),Y(y));}
-  label('Upper bypass · longer',-.28,2.08,'#907323');
-  label(scenario===1?'Lower bypass · relatively calm':'Lower bypass · additional wind',.34,-2.25,scenario===1?'#267f89':'#315e80');
-  c.strokeStyle='#a9bab1';c.lineWidth=.8;c.strokeRect(left,top,size,size);
-  c.fillStyle='#84938c';c.font='10px -apple-system,BlinkMacSystemFont,sans-serif';c.textAlign='center';
-  for(let z=-2;z<=2;z++){c.fillText(z,X(z),top+size+16);c.textAlign='right';c.fillText(z,left-8,Y(z)+3);c.textAlign='center';}
-  c.fillText('x (m)',left+size+17,top+size+16);c.textAlign='left';c.fillText('y (m)',Math.max(1,left-33),top+10);
 }
-let scheduled=false;
-function draw(){scheduled=false;drawMap(document.querySelector('#map1'),1);drawMap(document.querySelector('#map2'),2);}
-function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(draw);}}
-document.querySelectorAll('input').forEach(input=>input.addEventListener('change',schedule));
-new ResizeObserver(schedule).observe(document.querySelector('.scenarios'));
-draw();
+document.querySelectorAll('input').forEach(input=>input.addEventListener('change',updateLayers));
+updateLayers();
