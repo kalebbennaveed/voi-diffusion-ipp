@@ -33,8 +33,8 @@ class StationaryFlow {
   const status=document.querySelector('#flow-status'),button=document.querySelector('#play-flow');
   try{
     const loaded=await Promise.all([1,2].map(async scenario=>{
-      const root=`data/scenario${scenario}/`,response=await fetch(root+'metadata.json');if(!response.ok)throw new Error('Wind metadata unavailable');
-      const meta=await response.json(),raw=await fetch(root+meta.data_file);if(!raw.ok)throw new Error('Wind field unavailable');
+      const root=`data/scenario${scenario}/`,response=await fetch(root+'metadata.json',{cache:'no-store'});if(!response.ok)throw new Error('Wind metadata unavailable');
+      const meta=await response.json(),raw=await fetch(root+meta.data_file,{cache:'no-store'});if(!raw.ok)throw new Error('Wind field unavailable');
       const region=meta.monitoring_region_metrics;if(region)document.querySelector(`#monitoring-speeds-${scenario}`).textContent=`Mean wind in A: ${region.A.mean_m_s.toFixed(2)} m/s · B: ${region.B.mean_m_s.toFixed(2)} m/s`;
       const record=new StationaryFlow(meta,await raw.arrayBuffer()),container=document.querySelector(`#map${scenario}`),image=container.querySelector(`#s${scenario}-heat`);
       record.paint(image);
@@ -51,10 +51,10 @@ class StationaryFlow {
       renderer.setSpeed(.25);return {record,renderer,image};
     }));
     button.disabled=false;document.querySelector('#restart-flow').disabled=false;document.querySelector('#flow-speed').disabled=false;
-    const meta=loaded[0].record.meta;document.querySelector('#wind-boundaries').textContent=meta.wind_source+' '+meta.boundary_conditions;
+    const meta=loaded[0].record.meta;document.querySelector('#wind-boundaries').textContent=loaded.map((item,i)=>`Scenario ${i+1}: ${item.record.meta.wind_source} ${item.record.meta.boundary_conditions}`).join('\n\n');
     status.textContent='Wind is fixed in time · only the streamlets move · provisional CFD field, numerical validation incomplete';status.dataset.state='ready';
     document.querySelector('#computation-grid').textContent=meta.grid.join(' × ')+' cells';
-    document.querySelector('#grid-spec').textContent=`The solver uses cubic cells of ${meta.dx_m} m and a time step of ${meta.dt_s} s.`;
+    document.querySelector('#grid-spec').textContent=`The solver uses cubic cells of ${meta.dx_m} m. Physical time steps: ${loaded.map((item,i)=>`Scenario ${i+1}: ${item.record.meta.dt_s} s`).join('; ')}.`;
     let playing=true;
     button.addEventListener('click',()=>{playing=!playing;for(const item of loaded)playing?item.renderer.play():item.renderer.pause();button.textContent=playing?'Ⅱ Pause particles':'▶ Animate particles';button.setAttribute('aria-pressed',String(playing));});
     document.querySelector('#restart-flow').addEventListener('click',()=>{for(const item of loaded)item.renderer.restart();});
@@ -63,11 +63,12 @@ class StationaryFlow {
     document.querySelector('#heatmap').addEventListener('change',e=>{for(const item of loaded)item.image.style.display=e.target.checked?'':'none';});
     document.addEventListener('visibilitychange',()=>{for(const item of loaded)(document.hidden||!playing)?item.renderer.pause():item.renderer.play();});
     for(const item of loaded)item.renderer.play();
-    const response=await fetch('data/validation.json');if(response.ok){const v=await response.json();document.querySelector('#verification').textContent=v.summary;
+    const response=await fetch('data/validation.json',{cache:'no-store'});if(response.ok){const v=await response.json();document.querySelector('#verification').textContent=v.summary;
       for(const row of v.scenarios){const speeds=row.fixed_horizontal_mean_speeds_m_s;if(speeds)document.querySelector(`#map${row.scenario}`).closest('.scenario').querySelector('.scenario-heading p').textContent=`Horizontal wind in the measured passages: central ${speeds.central_passage.toFixed(2)} m/s · lower ${speeds.lower_bypass.toFixed(2)} m/s · upper ${speeds.upper_bypass.toFixed(2)} m/s.`;}
       const s2=v.scenarios.find(s=>s.scenario===2);if(s2?.monitoring_regions){const before=s2.monitoring_regions_before,after=s2.monitoring_regions;document.querySelector('#shelter-wind-comparison').textContent=`Scenario 2, horizontal wind: A mean ${before.A.mean_m_s.toFixed(2)} → ${after.A.mean_m_s.toFixed(2)} m/s; B mean ${before.B.mean_m_s.toFixed(2)} → ${after.B.mean_m_s.toFixed(2)} m/s. Revised 95th percentiles: A ${after.A.p95_m_s.toFixed(2)}, B ${after.B.p95_m_s.toFixed(2)} m/s. Local maxima: A ${after.A.max_m_s.toFixed(2)}, B ${after.B.max_m_s.toFixed(2)} m/s. These are measurements of the computed horizontal slice.`;}
-      const robot=await(await fetch('data/robot/manifest.json')).json(),returns=robot.cases.filter(c=>c.route==='central'&&c.direction==='B-A'),lower=robot.cases.find(c=>c.scenario===2&&c.route==='lower'&&c.direction==='B-A');
-      const delays=returns.map(c=>c.rpcbf.passage_crossings.find(e=>e.route==='central'&&e.direction==='B-A').time_s-c.still_air.passage_crossings[0].time_s);
-      document.querySelector('#shelter-outcome').innerHTML=`<b>Central B → A · both scenarios</b><strong>Without filter: contact</strong><span>RPCBF: central passage crossed safely, ${delays.map(d=>d.toFixed(1)).join(' / ')} s later than still air</span><span>Same robot, actuator bounds, tracker, and references</span><a href="#robot-review">Compare the computed runs ↓</a>`;}
+      const robot=await(await fetch('data/robot/manifest.json',{cache:'no-store'})).json(),returns=robot.cases.filter(c=>c.route==='central'&&c.direction==='B-A'),lower=robot.cases.find(c=>c.scenario===2&&c.route==='lower'&&c.direction==='B-A');
+      const transits=returns.map(c=>c.rpcbf.central_transit),still=returns[0].still_air.central_transit;
+      const timing=transits.every(t=>t?.duration_s)&&still?.duration_s?`RPCBF: ${transits.map(t=>t.duration_s.toFixed(2)).join(' / ')} s through the central throat<br>Still air: ${still.duration_s.toFixed(2)} s over the same 1.2 m`:'See the recorded central passage outcomes below.';
+      document.querySelector('#shelter-outcome').innerHTML=`<b>Central B → A · both scenarios</b><strong>${returns.every(c=>c.unfiltered.contact)?'Without filter: contact':'Computed robot response'}</strong><span>${timing}</span><span>Same robot, actuator bounds, tracker, and references</span><a href="#robot-review">Compare the computed runs ↓</a>`;}
   }catch(error){status.textContent=`Wind display could not load: ${error.message}`;status.dataset.state='error';}
 })();

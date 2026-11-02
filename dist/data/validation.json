@@ -1,7 +1,7 @@
 {
-  "environment_revision": "directional-sheltered-ports-v8",
+  "environment_revision": "directional-sheltered-ports-v11",
   "time_independent": true,
-  "physical_change": "Elevated north central inflow aimed through the central gap toward the outlet outside B; strong lower inflow only in Scenario 2. South pressure outlet outside B and closed west perimeter retained. Same columns, regions, air properties, solver, force law, and robot controller.",
+  "physical_change": "Physical inlet and pressure-outlet conditions are recorded separately for each scenario. Same columns, monitoring regions, air properties, solver, force law and robot controller. Strong lower inflow is present only in Scenario 2.",
   "interior_velocity_modification": "None: exported vector mean of the newly solved CFD field, no ROI blending, clipping, or speed cap.",
   "full_scene_grid_convergence_established": false,
   "scenarios": [
@@ -24,29 +24,78 @@
           "max_m_s": 3.4607150554656982
         }
       },
+      "openings": {
+        "central_inlet": {
+          "side": "north",
+          "x_m": [
+            5.6,
+            6.4
+          ],
+          "z_m": [
+            1.5,
+            2.0
+          ],
+          "peak_m_s": 28.0,
+          "direction": [
+            -1.4575,
+            -2.7275,
+            -1.0
+          ]
+        },
+        "lower_inlet": {
+          "side": "east",
+          "y_m": [
+            0.35,
+            1.15
+          ],
+          "z_m": [
+            0.25,
+            1.25
+          ],
+          "peak_m_s": 0.0,
+          "direction": [
+            -1.0,
+            -0.6,
+            0.0
+          ]
+        },
+        "outlet": {
+          "side": "floor",
+          "x_m": [
+            4.0,
+            4.9
+          ],
+          "y_m": [
+            1.35,
+            2.25
+          ],
+          "z_m": 0.0
+        }
+      },
+      "boundary_conditions": "No-slip roof, floor and perimeter except the elevated north inlet, Scenario 2 east lower inlet, and floor pressure outlet x=4\u20134.9 m, y=1.35\u20132.25 m at z=0, outside B and below the robot plane. The south perimeter is closed. Same analytic circular-column boundaries and recorded stencil-junction fallback.",
       "monitoring_regions": {
         "A": {
-          "mean_m_s": 0.6473585963249207,
-          "p95_m_s": 1.7015511989593506,
-          "max_m_s": 6.107428550720215
+          "mean_m_s": 0.5572975277900696,
+          "p95_m_s": 1.5079275369644165,
+          "max_m_s": 6.159802436828613
         },
         "B": {
-          "mean_m_s": 0.529294490814209,
-          "p95_m_s": 1.083487629890442,
-          "max_m_s": 1.5471998453140259
+          "mean_m_s": 1.0033645629882812,
+          "p95_m_s": 2.3350026607513428,
+          "max_m_s": 2.695279598236084
         }
       },
       "fixed_field_mean_speeds_m_s": {
-        "central_passage": 3.969517707824707,
-        "lower_bypass": 0.057944655418395996,
-        "upper_bypass": 0.8765291571617126,
-        "whole_fluid_slice": 0.6599745750427246
+        "central_passage": 5.479307174682617,
+        "lower_bypass": 0.750750720500946,
+        "upper_bypass": 0.7526953816413879,
+        "whole_fluid_slice": 0.90682452917099
       },
       "fixed_horizontal_mean_speeds_m_s": {
-        "central_passage": 3.88500714302063,
-        "lower_bypass": 0.022910796105861664,
-        "upper_bypass": 0.8734759092330933,
-        "whole_fluid_slice": 0.608801543712616
+        "central_passage": 4.917809963226318,
+        "lower_bypass": 0.703701913356781,
+        "upper_bypass": 0.7499750852584839,
+        "whole_fluid_slice": 0.7856132388114929
       },
       "sampling_windows_s": [
         [
@@ -58,34 +107,34 @@
           32
         ]
       ],
-      "sampling_vector_relative_L2": 0.2796382910624863,
+      "sampling_vector_relative_L2": 0.14759152042819593,
       "sampling_region_means_m_s": [
         {
           "A": {
-            "mean_m_s": 0.6378411327715218,
-            "p95_m_s": 1.7104711827437007,
-            "max_m_s": 6.013472059891267
+            "mean_m_s": 0.5604707959321594,
+            "p95_m_s": 1.525587866743293,
+            "max_m_s": 6.102905177229527
           },
           "B": {
-            "mean_m_s": 0.6110210730366089,
-            "p95_m_s": 1.342269722254541,
-            "max_m_s": 1.9762338039428287
+            "mean_m_s": 0.9876208980264368,
+            "p95_m_s": 2.3143328849764604,
+            "max_m_s": 2.6954579707508084
           }
         },
         {
           "A": {
-            "mean_m_s": 0.6711680444371914,
-            "p95_m_s": 1.7714854927453203,
-            "max_m_s": 6.201626350170539
+            "mean_m_s": 0.557895844894773,
+            "p95_m_s": 1.4956930109157653,
+            "max_m_s": 6.217070601816846
           },
           "B": {
-            "mean_m_s": 0.4611887686127797,
-            "p95_m_s": 0.8382232544263488,
-            "max_m_s": 1.1229754526247133
+            "mean_m_s": 1.036833883362126,
+            "p95_m_s": 2.3383010520683607,
+            "max_m_s": 2.6959665458014426
           }
         }
       ],
-      "max_recorded_density_change": 0.0006887700964544052
+      "max_recorded_density_change": 0.0008963187070547551
     },
     {
       "scenario": 2,
@@ -106,29 +155,85 @@
           "max_m_s": 4.280539035797119
         }
       },
+      "openings": {
+        "central_inlet": {
+          "side": "north",
+          "x_m": [
+            6.3999999999999995,
+            7.2
+          ],
+          "z_m": [
+            1.5,
+            2.0
+          ],
+          "peak_m_s": 30.0,
+          "direction": [
+            -2.2575,
+            -2.7275,
+            -1.0
+          ]
+        },
+        "lower_inlet": {
+          "side": "east",
+          "y_m": [
+            0.35,
+            1.15
+          ],
+          "z_m": [
+            0.25,
+            1.25
+          ],
+          "peak_m_s": 18.0,
+          "direction": [
+            -1.0,
+            -0.6,
+            0.0
+          ]
+        },
+        "outlet": {
+          "side": "floor",
+          "x_m": [
+            4.0,
+            4.9
+          ],
+          "y_m": [
+            1.35,
+            2.25
+          ],
+          "z_m": 0.0
+        },
+        "lower_outlet": {
+          "side": "south",
+          "x_m": [
+            2.95,
+            4.45
+          ]
+        }
+      },
+      "boundary_conditions": "No-slip roof, floor and perimeter except the elevated north inlet, Scenario 2 east lower inlet, and floor pressure outlet x=4\u20134.9 m, y=1.35\u20132.25 m at z=0, outside B and below the robot plane. Additional south outlet x=2.95\u20134.45 m for the lower flow. Same analytic circular-column boundaries and recorded stencil-junction fallback.",
       "monitoring_regions": {
         "A": {
-          "mean_m_s": 0.7315679788589478,
-          "p95_m_s": 2.197143077850342,
-          "max_m_s": 6.241689205169678
+          "mean_m_s": 0.9725653529167175,
+          "p95_m_s": 2.8522610664367676,
+          "max_m_s": 7.875024318695068
         },
         "B": {
-          "mean_m_s": 0.3796500265598297,
-          "p95_m_s": 0.7657654881477356,
-          "max_m_s": 0.9073187112808228
+          "mean_m_s": 0.3219371438026428,
+          "p95_m_s": 0.543391764163971,
+          "max_m_s": 0.8007347583770752
         }
       },
       "fixed_field_mean_speeds_m_s": {
-        "central_passage": 4.353055000305176,
-        "lower_bypass": 5.218014717102051,
-        "upper_bypass": 0.687268853187561,
-        "whole_fluid_slice": 1.1862339973449707
+        "central_passage": 5.013134956359863,
+        "lower_bypass": 4.968862533569336,
+        "upper_bypass": 1.0473910570144653,
+        "whole_fluid_slice": 1.2772369384765625
       },
       "fixed_horizontal_mean_speeds_m_s": {
-        "central_passage": 4.255176067352295,
-        "lower_bypass": 5.162170886993408,
-        "upper_bypass": 0.6836028099060059,
-        "whole_fluid_slice": 1.087989091873169
+        "central_passage": 4.824510097503662,
+        "lower_bypass": 4.918574810028076,
+        "upper_bypass": 1.042980432510376,
+        "whole_fluid_slice": 1.1711986064910889
       },
       "sampling_windows_s": [
         [
@@ -140,34 +245,34 @@
           32
         ]
       ],
-      "sampling_vector_relative_L2": 0.11815306512922998,
+      "sampling_vector_relative_L2": 0.049286400888182896,
       "sampling_region_means_m_s": [
         {
           "A": {
-            "mean_m_s": 0.7671079260663533,
-            "p95_m_s": 2.0178617689480043,
-            "max_m_s": 6.122409231429792
+            "mean_m_s": 0.9624570735413627,
+            "p95_m_s": 2.858805283172151,
+            "max_m_s": 7.853715857225374
           },
           "B": {
-            "mean_m_s": 0.3908137881562629,
-            "p95_m_s": 0.799277671986073,
-            "max_m_s": 0.8896297411973122
+            "mean_m_s": 0.3611976078051256,
+            "p95_m_s": 0.5689939813517559,
+            "max_m_s": 0.7766141209236225
           }
         },
         {
           "A": {
-            "mean_m_s": 0.7450003744055135,
-            "p95_m_s": 2.299090578591191,
-            "max_m_s": 6.361305815900513
+            "mean_m_s": 0.9850233964321912,
+            "p95_m_s": 2.845783825862111,
+            "max_m_s": 7.89635658618807
           },
           "B": {
-            "mean_m_s": 0.3711369726501943,
-            "p95_m_s": 0.7430533213380859,
-            "max_m_s": 0.9329328475975798
+            "mean_m_s": 0.2924152541546368,
+            "p95_m_s": 0.5637824936095414,
+            "max_m_s": 0.8349456872335121
           }
         }
       ],
-      "max_recorded_density_change": 0.0006871718040386554
+      "max_recorded_density_change": 0.0006839465106887044
     }
   ],
   "analytic_solver_check": {
@@ -189,5 +294,5 @@
     "acceptance": "Each velocity error < 0.02; fine error less than half coarse; periodic mass error < 1e-10.",
     "passed": true
   },
-  "summary": "The revised fixed fields come from new 3D CFD solves with an elevated north central inlet above the monitoring plane, a strong lower opening in Scenario 2, an outlet outside B. Monitoring-region speeds are measured from the resulting fields; no calm-zone mask is applied. Taylor\u2013Green solver verification remains applicable. These redesigned full scenes have not established grid convergence or experimental accuracy."
+  "summary": "The fixed fields are vector means of new 3D CFD solves with the inlet and outlet geometry recorded in each scenario configuration. Monitoring-region speeds are measured from the resulting fields; no calm-zone mask is applied. Taylor\u2013Green solver verification remains applicable. These full scenes have not established grid convergence or experimental accuracy."
 }

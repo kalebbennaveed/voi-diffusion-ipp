@@ -19,8 +19,8 @@ const design = {
     {id:1,central:'Wind toward the lower-left monitoring region',upper:'Sheltered bypass; computed speed',lower:'Sheltered bypass; computed speed'},
     {id:2,central:'Same central wind toward the lower-left monitoring region',upper:'Sheltered bypass; computed speed',lower:'Stronger incoming wind toward the lower-left; robot impassability not established'}
   ],
-  airflowOpenings:{centralInletX:[6.4, 7.2],lowerInletY:[.35,1.15],southOutletX:[2.95,4.45]},
-  physicalScale:{metersPerLayoutUnit:.01,domainMeters:[8,4.625,2],obstacleHeightMeters:1.5}, windMagnitude:{centralInletPeakMps:24.0,lowerInletPeakMps:18}, windField:'Fixed vector mean from 3D MRT LBM / Smagorinsky LES; no time dependence',
+  airflowOpenings:{"scenarios": {"1": {"centralInletX": [5.6, 6.4], "lowerInletY": [0.35, 1.15], "floorOutlet": {"side": "floor", "x_m": [4.0, 4.9], "y_m": [1.35, 2.25], "z_m": 0.0}, "southOutletX": null}, "2": {"centralInletX": [6.3999999999999995, 7.2], "lowerInletY": [0.35, 1.15], "floorOutlet": {"side": "floor", "x_m": [4.0, 4.9], "y_m": [1.35, 2.25], "z_m": 0.0}, "southOutletX": [2.95, 4.45]}}},
+  physicalScale:{metersPerLayoutUnit:.01,domainMeters:[8,4.625,2],obstacleHeightMeters:1.5}, windMagnitude:{"centralInletPeakByScenarioMps": {"1": 28.0, "2": 30.0}, "lowerInletPeakMps": 18}, windField:'Fixed vector mean from 3D MRT LBM / Smagorinsky LES; no time dependence',
   intendedRobotModel:'Nominal double integrator; separate robot review adds the existing relative-air-velocity quadratic force as acceleration.',
   illustrativePaths: {scenario1:'A -> central passage -> B -> lower bypass -> A',scenario2:'A -> central passage -> B -> upper bypass -> A',dynamicallyValidated:false},
   routes: {
@@ -30,9 +30,16 @@ const design = {
   }
 };
 const routeColors={central:'#c16a5d',upper:'#b49843',lower:'#3b9ba7'};
+let openingDiagramId=0;
 function renderWindOpenings(scenario){
+  const openings=design.airflowOpenings.scenarios?.[scenario]||design.airflowOpenings;
   const segment=(bounds,side,color)=>side==='north'?`<path d="M${bounds[0]*100} 0H${bounds[1]*100}" stroke="${color}" stroke-width="5" stroke-dasharray="7 4"><title>Elevated central inlet: z = 1.5–2.0 m; robot slice z = 0.75 m</title></path>`:side==='east'?`<path d="M800 ${462.5-bounds[0]*100}V${462.5-bounds[1]*100}" stroke="${color}" stroke-width="5"/>`:`<path d="M${bounds[0]*100} 462.5H${bounds[1]*100}" stroke="${color}" stroke-width="5"/>`;
-  return `<g class="air-openings" aria-label="Physical airflow openings; dashed north inlet is above the robot plane">${segment(design.airflowOpenings.centralInletX,'north','#506f9a')}${scenario===2?segment(design.airflowOpenings.lowerInletY,'east','#506f9a'):''}${segment(design.airflowOpenings.southOutletX,'south','#2a8d83')}</g>`;
+  let floor='';
+  if(openings.floorOutlet){
+    const f=openings.floorOutlet,id=`floor-opening-${++openingDiagramId}`,x=100*f.x_m[0],y=462.5-100*f.y_m[1],width=100*(f.x_m[1]-f.x_m[0]),height=100*(f.y_m[1]-f.y_m[0]);
+    floor=`<defs><mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="462.5"><rect width="800" height="462.5" fill="white"/>${design.obstacles.map(o=>`<circle cx="${o.center[0]}" cy="${o.center[1]}" r="${o.radius}" fill="black"/>`).join('')}</mask></defs><rect x="${x}" y="${y}" width="${width}" height="${height}" mask="url(#${id})" fill="#2a8d8312" stroke="#2a8d83" stroke-width="2" stroke-dasharray="5 5"><title>Floor pressure outlet at z = 0, below the robot plane. Solid column footprints remain closed.</title></rect>`;
+  }
+  return `<g class="air-openings" aria-label="Physical airflow openings; dashed north inlet is above and dashed floor outlet below the robot plane">${segment(openings.centralInletX,'north','#506f9a')}${scenario===2?segment(openings.lowerInletY,'east','#506f9a'):''}${openings.southOutletX?segment(openings.southOutletX,'south','#2a8d83'):''}${floor}</g>`;
 }
 function renderMap(scenario) {
   const id=`s${scenario}`;

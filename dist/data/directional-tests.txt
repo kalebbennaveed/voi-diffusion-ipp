@@ -1,16 +1,33 @@
-.........F..FF...                                                        [100%]
+.........FF..FF...                                                       [100%]
 =================================== FAILURES ===================================
 _____ test_redesign_shelters_monitoring_regions_without_erasing_route_wind _____
 
     def test_redesign_shelters_monitoring_regions_without_erasing_route_wind():
         validation=json.loads((r.SITE/'data/validation.json').read_text())
-        assert validation['environment_revision']=='directional-sheltered-ports-v8'
+        assert validation['environment_revision']=='directional-sheltered-ports-v11'
         for row in validation['scenarios']:
             for region in row['monitoring_regions'].values():
 >               assert region['mean_m_s'] < .5
-E               assert 0.6473585963249207 < 0.5
+E               assert 0.5572975277900696 < 0.5
 
 tests/test_airflow_robot_review.py:105: AssertionError
+____________ test_central_and_scenario_two_lower_wind_oppose_return ____________
+
+    def test_central_and_scenario_two_lower_wind_oppose_return():
+        manifest=json.loads((r.SITE/'data/robot/manifest.json').read_text())
+        cases={c['id']:c for c in manifest['cases']}
+        for scenario,route in ((1,'central'),(2,'central'),(2,'lower')):
+            ab=cases[f's{scenario}-{route}-A-B']['directional_authority']
+            ba=cases[f's{scenario}-{route}-B-A']['directional_authority']
+            assert ab['air_work_per_mass_m2_s2']>0
+            assert ba['air_work_per_mass_m2_s2']<0
+            assert ba['max_opposing_air_acceleration_m_s2']>4
+            assert ba['max_required_control_component_m_s2']>2*r.CFG.umax
+            assert ba['reference_time_over_actuator_limit_s']>.5
+>       assert cases['s2-lower-B-A']['directional_authority']['max_opposing_air_acceleration_m_s2']>8
+E       assert 7.932664256124825 > 8
+
+tests/test_airflow_robot_review.py:131: AssertionError
 ___________ test_scenario_one_lower_remains_easy_in_both_directions ____________
 
     def test_scenario_one_lower_remains_easy_in_both_directions():
@@ -19,9 +36,9 @@ ___________ test_scenario_one_lower_remains_easy_in_both_directions ____________
             if case['route']!='lower' or case['scenario']!=1:continue
             plain=case['unfiltered'];assert plain['target_region_reached']
 >           assert plain['min_clearance_m']>=.06
-E           assert 0.045992530400367417 >= 0.06
+E           assert 0.042006625171514336 >= 0.06
 
-tests/test_airflow_robot_review.py:151: AssertionError
+tests/test_airflow_robot_review.py:173: AssertionError
 _______________ test_both_upper_bypasses_remain_smooth_and_clear _______________
 
     def test_both_upper_bypasses_remain_smooth_and_clear():
@@ -34,11 +51,12 @@ _______________ test_both_upper_bypasses_remain_smooth_and_clear _______________
                 assert result['target_region_reached'] and result['contact'] is None
                 assert result['min_clearance_m']>.06
 >               assert result['endpoint_error_m']<.02
-E               assert 0.020776608713852444 < 0.02
+E               assert 0.09070856561523713 < 0.02
 
-tests/test_airflow_robot_review.py:166: AssertionError
+tests/test_airflow_robot_review.py:188: AssertionError
 =========================== short test summary info ============================
 FAILED tests/test_airflow_robot_review.py::test_redesign_shelters_monitoring_regions_without_erasing_route_wind
+FAILED tests/test_airflow_robot_review.py::test_central_and_scenario_two_lower_wind_oppose_return
 FAILED tests/test_airflow_robot_review.py::test_scenario_one_lower_remains_easy_in_both_directions
 FAILED tests/test_airflow_robot_review.py::test_both_upper_bypasses_remain_smooth_and_clear
-3 failed, 14 passed in 19.19s
+4 failed, 14 passed in 30.05s

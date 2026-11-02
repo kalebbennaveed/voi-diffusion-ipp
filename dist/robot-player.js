@@ -25,7 +25,9 @@
     const start=screen(record.reference.samples[0].slice(1,3)),goal=screen(record.reference.samples.at(-1).slice(1,3));
     const crossing=(summary.passage_crossings||[]).find(e=>e.direction===record.direction&&e.route===record.route),baseline=(record.still_air.summary.passage_crossings||[]).find(e=>e.direction===record.direction&&e.route===record.route);
     const crossingText=crossing&&baseline?`<br>${record.route[0].toUpperCase()+record.route.slice(1)} crossing: <b>${crossing.speed_m_s.toFixed(2)} m/s</b> at <b>${crossing.time_s.toFixed(2)} s</b> · still air: ${baseline.speed_m_s.toFixed(2)} m/s at ${baseline.time_s.toFixed(2)} s`:'';
-    article.innerHTML=`<div class="robot-card-heading"><h4>Scenario ${record.scenario}</h4><span class="outcome ${tag(summary,record)}">${label(summary,record)}</span></div>
+    const transit=summary.central_transit,stillTransit=record.still_air.summary.central_transit;
+    const transitText=record.route==='central'&&transit?.duration_s&&stillTransit?.duration_s?`<div class="throat-metric"><b>${transit.duration_s.toFixed(2)} s through the 1.2 m throat</b><span>${transit.mean_forward_speed_m_s.toFixed(2)} m/s mean forward progress · still air ${stillTransit.duration_s.toFixed(2)} s / ${stillTransit.mean_forward_speed_m_s.toFixed(2)} m/s</span></div>`:'';
+    article.innerHTML=`<div class="robot-card-heading"><h4>Scenario ${record.scenario}</h4><span class="outcome ${tag(summary,record)}">Full run: ${label(summary,record)}</span></div>
     <div class="robot-map"><svg viewBox="-5 -5 810 472.5" role="img" aria-label="Scenario ${record.scenario}, ${record.route} route, ${record.direction.replace('-',' to ')}, ${method==='rpcbf'?'RPCBF':'without safety filter'}">
     <defs><clipPath id="${id}-clip"><rect width="800" height="462.5"/></clipPath><marker id="${id}-air" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b14076"/></marker><marker id="${id}-control" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#476fc0"/></marker></defs>
     <rect width="800" height="462.5" fill="#fafdfe"/><image class="robot-heat" width="800" height="462.5"/>${regions}${circles}
@@ -39,7 +41,7 @@
     <path class="contact-marker" d="M-8 -8L8 8M-8 8L8 -8" stroke="#a93136" stroke-width="3" display="none"/>
     </g><circle cx="${start[0]}" cy="${start[1]}" r="10" fill="none" stroke="#66766d" stroke-width="1.2"/><circle cx="${goal[0]}" cy="${goal[1]}" r="11" fill="none" stroke="#66766d" stroke-width="1.2"/><text x="${goal[0]+16}" y="${goal[1]+5}" fill="#43594c" font-size="15">goal</text><rect width="800" height="462.5" fill="none" stroke="#85938d"/>${renderWindOpenings(record.scenario)}</svg></div>
     <div class="live-metrics"><div><span>Tracking error</span><b data-live="error">—</b></div><div><span>Robot speed</span><b data-live="speed">—</b></div><div><span>Wind acceleration</span><b data-live="air">—</b></div><div><span>Clearance</span><b data-live="clearance">—</b></div></div>
-    <div class="robot-readout" role="status"></div>
+    <div class="robot-readout" role="status"></div>${transitText}
     <div class="run-summary">Full run: minimum clearance <b>${summary.min_clearance_m.toFixed(3)} m</b> · final goal error <b>${summary.endpoint_error_m.toFixed(2)} m</b> · maximum tracking error <b>${summary.max_tracking_error_m.toFixed(2)} m</b> · actual passage: <b>${summary.passage_crossings?(summary.passage_crossings.map(e=>e.route).filter((r,i,a)=>a.indexOf(r)===i).join(", ")||"none crossed"):"not recorded"}</b>${method==='rpcbf'?` · <b>${summary.infeasible_steps}</b> infeasible QP steps`:''}${crossingText}</div>`;
     fields[record.scenario].paint(article.querySelector('.robot-heat'));
     return {article,record,method,result};
@@ -53,7 +55,7 @@
     for(const [sel,i] of [['.air-arrow',7],['.control-arrow',9]])set(sel,{x1:p[0],y1:p[1],x2:p[0]+20*s[i],y2:p[1]-20*s[i+1],display:stopped?'none':''});
     set('.contact-marker',{transform:`translate(${p[0]} ${p[1]})`,display:stopped?'':'none'});
     article.querySelector('.still-trace').style.display=$('robot-still').checked?'':'none';
-    const vals={error:s[11].toFixed(2)+' m',speed:Math.hypot(s[3],s[4]).toFixed(2)+' m/s',air:Math.hypot(s[7],s[8]).toFixed(2)+' m/s²',clearance:s[12].toFixed(3)+' m'};
+    const vals={error:s[11].toFixed(2)+' m',speed:stopped?'Stopped':Math.hypot(s[3],s[4]).toFixed(2)+' m/s',air:stopped?'—':Math.hypot(s[7],s[8]).toFixed(2)+' m/s²',clearance:s[12].toFixed(3)+' m'};
     for(const [k,v] of Object.entries(vals))article.querySelector(`[data-live=${k}]`).textContent=v;
     const speed=Math.hypot(r[3],r[4]),along=speed>1e-4?(s[7]*r[3]+s[8]*r[4])/speed:null;
     const windText=along===null?'Reference at rest':`Air force ${along<0?'opposes':'assists'} reference motion: ${Math.abs(along).toFixed(2)} m/s² along route`;
@@ -66,6 +68,14 @@
       const line=(method)=>rec[method].samples.map(s=>`${(42+540*s[0]/horizon).toFixed(2)},${(143-112*s[11]/ymax).toFixed(2)}`).join(' ');
       return `<div class="error-chart"><h4>Scenario ${rec.scenario} · tracking error</h4><svg viewBox="0 0 610 170" role="img" aria-label="Tracking error versus time, scenario ${rec.scenario}"><path d="M42 24V143H584" fill="none" stroke="#becac2"/><text x="38" y="22" text-anchor="end">${ymax.toFixed(1)} m</text><text x="34" y="147" text-anchor="end">0</text><text x="42" y="162">0 s</text><text x="582" y="162" text-anchor="end">${horizon.toFixed(1)} s</text>${['still_air','unfiltered','rpcbf'].map(k=>`<polyline points="${line(k)}" fill="none" stroke="${k==='still_air'?colors.still:colors[k]}" stroke-width="${k==='still_air'?1.3:2}"/>`).join('')}<line class="chart-time" y1="25" y2="143" stroke="#43594c" stroke-dasharray="3 3"/></svg></div>`;
     }).join('');
+    if(records[0]?.route==='central')$('robot-charts').insertAdjacentHTML('beforeend',records.map(rec=>{
+      const dx=design.obstacles[2].center[0]-design.obstacles[1].center[0],dy=design.obstacles[2].center[1]-design.obstacles[1].center[1],norm=Math.hypot(dx,dy),sense=rec.direction==='B-A'?1:-1;
+      const forward=s=>sense*(dy*s[3]+dx*s[4])/norm,methods=['still_air','unfiltered','rpcbf'];
+      const values=methods.flatMap(k=>rec[k].samples.map(forward)),low=Math.min(-.2,...values),high=Math.max(1,...values),y=v=>143-112*(v-low)/(high-low);
+      const trace=k=>rec[k].samples.map(s=>`${42+540*s[0]/horizon},${y(forward(s))}`).join(' '),transit=rec.rpcbf.summary.central_transit;
+      const band=transit?.duration_s?`<rect x="${42+540*transit.entry_time_s/horizon}" y="25" width="${540*transit.duration_s/horizon}" height="118" fill="#e5f0e8"/>`:'';
+      return `<div class="error-chart"><h4>Scenario ${rec.scenario} · forward speed</h4><p class="speed-caption">Shaded interval: RPCBF crossing the 1.2 m central throat. Negative speed means backward motion.</p><svg viewBox="0 0 610 170" role="img" aria-label="Forward speed in meters per second, scenario ${rec.scenario}">${band}<path d="M42 24V143H584" fill="none" stroke="#becac2"/><path d="M42 ${y(0)}H584" stroke="#c3cdc5" stroke-dasharray="3 4"/><text x="38" y="22" text-anchor="end">${high.toFixed(1)} m/s</text><text x="38" y="147" text-anchor="end">${low.toFixed(1)}</text><text x="42" y="162">0 s</text><text x="582" y="162" text-anchor="end">${horizon.toFixed(1)} s</text>${methods.map(k=>`<polyline points="${trace(k)}" fill="none" stroke="${k==='still_air'?colors.still:colors[k]}" stroke-width="${k==='still_air'?1.3:2}"/>`).join('')}<line class="chart-time" y1="25" y2="143" stroke="#43594c" stroke-dasharray="3 3"/></svg></div>`;
+    }).join(''));
   }
   function draw(){
     $('robot-time').value=String(time);$('robot-clock').textContent=`${time.toFixed(1)} / ${horizon.toFixed(1)} s`;
@@ -77,7 +87,7 @@
     try{
       const loaded=await Promise.all(scenarios.map(async s=>{
         const id=`s${s}-${route}-${direction}`;
-        if(!cache.has(id)){const response=await fetch(`data/robot/${id}.json`);if(!response.ok)throw Error(`Missing run ${id}`);cache.set(id,await response.json());}
+        if(!cache.has(id)){const response=await fetch(`data/robot/${id}.json`,{cache:'no-store'});if(!response.ok)throw Error(`Missing run ${id}`);cache.set(id,await response.json());}
         return cache.get(id);
       }));
       if(generation!==version)return;records=loaded;panels=[];time=0;horizon=records[0].reference.samples.at(-1)[0];$('robot-time').max=horizon;
@@ -92,8 +102,8 @@
     }catch(e){status.textContent=`Robot review could not load: ${e.message}`;status.classList.add('run-warning');}
   }
   try{
-    const response=await fetch('data/robot/manifest.json');if(!response.ok)throw Error('Simulation results are not available yet');manifest=await response.json();
-    for(const s of [1,2]){const meta=await (await fetch(`data/scenario${s}/metadata.json`)).json();fields[s]=new StationaryFlow(meta,await(await fetch(`data/scenario${s}/${meta.data_file}`)).arrayBuffer());}
+    const response=await fetch('data/robot/manifest.json',{cache:'no-store'});if(!response.ok)throw Error('Simulation results are not available yet');manifest=await response.json();
+    for(const s of [1,2]){const meta=await (await fetch(`data/scenario${s}/metadata.json`,{cache:'no-store'})).json();fields[s]=new StationaryFlow(meta,await(await fetch(`data/scenario${s}/${meta.data_file}`,{cache:'no-store'})).arrayBuffer());}
     $('robot-cases').innerHTML=manifest.cases.map(c=>`<tr><td><button data-case-select="${c.id}" aria-pressed="false">Scenario ${c.scenario} · ${c.route} · ${c.direction.replace('-',' → ')}</button></td><td><span class="outcome ${tag(c.unfiltered,c)}">${label(c.unfiltered,c)}</span></td><td><span class="outcome ${tag(c.rpcbf,c)}">${label(c.rpcbf,c)}</span></td><td>${c.rpcbf.infeasible_steps}</td></tr>`).join('');
     root.querySelectorAll('[data-case-select]').forEach(button=>button.addEventListener('click',()=>{const c=manifest.cases.find(c=>c.id===button.dataset.caseSelect);$('robot-scenario').value=String(c.scenario);$('robot-route').value=c.route;$('robot-direction').value=c.direction;loadSelection();root.scrollIntoView({behavior:'smooth',block:'start'});}));
     for(const id of ['robot-scenario','robot-route','robot-direction'])$(id).addEventListener('change',loadSelection);
