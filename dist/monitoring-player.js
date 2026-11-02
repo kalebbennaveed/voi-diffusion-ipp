@@ -6,6 +6,16 @@ async function monitoringComparison(root){
   let env,manifest,records=[],panels=[],time=0,duration=60,playing=false,previous=null,version=0;
   const dataDirectory=root.dataset.monitoringDirectory||'data/monitoring';
   const cache=new Map();
+  async function readRecord(id){
+    const filename=manifest.runs?.find(run=>run.id===id)?.file||`${id}.json`;
+    const response=await fetch(`${dataDirectory}/${filename}`,{cache:'no-store'});
+    if(!response.ok)throw Error('This mission has not finished its first planning period yet. Computation continues.');
+    if(!filename.endsWith('.gz'))return response.json();
+    const bytes=new Uint8Array(await response.arrayBuffer());
+    // Some hosts decode Content-Encoding themselves; inspect the actual bytes.
+    if(bytes[0]!==0x1f||bytes[1]!==0x8b)return JSON.parse(new TextDecoder().decode(bytes));
+    return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json();
+  }
   // The same fixed scales apply to both methods and both scenarios.
   const scales={
     clarity:{title:'Clarity q',unit:'dimensionless',max:1,stops:['#fff7ec','#fee8c8','#fdbb84','#fc8d59','#e34a33','#b30000','#7f0000'],low:'Low clarity',high:'High clarity',note:'Local target: 0.70 in A/B · 0.35 elsewhere'},
@@ -147,7 +157,7 @@ async function monitoringComparison(root){
     try{
       const scenario=Number($('monitor-scenario').value);
       const ids=['aware','baseline'].map(method=>`s${scenario}-${method}`);
-      const loaded=await Promise.all(ids.map(async id=>{if(manifest.state==='computing'||!cache.get(id)?.summary.completed){const response=await fetch(`${dataDirectory}/${id}.json`,{cache:'no-store'});if(!response.ok)throw Error('This mission has not finished its first planning period yet. Computation continues.');cache.set(id,await response.json());}return cache.get(id);}));
+      const loaded=await Promise.all(ids.map(async id=>{if(manifest.state==='computing'||!cache.get(id)?.summary.completed)cache.set(id,await readRecord(id));return cache.get(id);}));
       if(generation!==version)return;records=loaded;$('monitor-seeds-label').hidden=!records.some(r=>r.plans.some(p=>p.initialization));duration=Math.min(...records.map(r=>r.summary.simulated_seconds));time=preserve?Math.min(savedTime,duration):0;
       $('monitor-time').max=duration;panels=records.map(makePanel);$('monitor-panels').replaceChildren(...panels.map(p=>p.article));panels.forEach(chart);draw();
       $('monitor-play').disabled=false;$('monitor-restart').disabled=false;

@@ -249,7 +249,8 @@
       "id": "s1-aware",
       "scenario": 1,
       "method": "aware",
-      "file": "s1-aware.json",
+      "file": "s1-aware.json.gz",
+      "decoded_sha256": "15c5f8715347befeec027d438adfaffce1c91930f82e4af3dd00f9997c8f01e5",
       "summary": {
         "completed": true,
         "simulated_seconds": 300.0,
@@ -301,7 +302,8 @@
       "id": "s1-baseline",
       "scenario": 1,
       "method": "baseline",
-      "file": "s1-baseline.json",
+      "file": "s1-baseline.json.gz",
+      "decoded_sha256": "830b55f62e0154fa1934771d9325b206f375b2febee39f9e7f5643c2c8d10992",
       "summary": {
         "completed": true,
         "simulated_seconds": 300.0,
@@ -342,7 +344,8 @@
       "id": "s2-aware",
       "scenario": 2,
       "method": "aware",
-      "file": "s2-aware.json",
+      "file": "s2-aware.json.gz",
+      "decoded_sha256": "b4f08982efd43a918a16926285fbfc9fc39a6d7b15023269d89122b3692bc139",
       "summary": {
         "completed": true,
         "simulated_seconds": 300.0,
@@ -371,7 +374,8 @@
       "id": "s2-baseline",
       "scenario": 2,
       "method": "baseline",
-      "file": "s2-baseline.json",
+      "file": "s2-baseline.json.gz",
+      "decoded_sha256": "e7b621f82011c800e59d510a132cf1862123ac7f039747c0cc63be91d24008c9",
       "summary": {
         "completed": true,
         "simulated_seconds": 300.0,
