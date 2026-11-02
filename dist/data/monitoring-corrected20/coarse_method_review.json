@@ -1,0 +1,134 @@
+{
+  "paper": "https://proceedings.neurips.cc/paper_files/paper/2024/file/6a5c38a730b17f3827c09cf6b192be04-Paper-Conference.pdf",
+  "equations": [
+    6,
+    8,
+    9
+  ],
+  "old_runs": [
+    {
+      "source": "output/hard_passage_mbd/detour2_pilot60/two_crosswind_aware_8301.json",
+      "cost": 9.295447238109773,
+      "success": true,
+      "seconds": 59.99999999999663,
+      "settings": {
+        "multimode": true,
+        "mode_count": 7,
+        "guidance_mode": "off",
+        "sensor_sigma": 2.2,
+        "horizon": 10.0,
+        "initial_wind_observations": null,
+        "prediction_filter": "hard",
+        "terminate_predictions": true,
+        "tracking_kp": 4.411764705882352,
+        "tracking_kv": 7.352941176470588
+      }
+    },
+    {
+      "source": "output/hard_passage_mbd/detour2_soft15_pilot60/two_crosswind_aware_8301.json",
+      "cost": 7.980343478382565,
+      "success": true,
+      "seconds": 59.99999999999663,
+      "settings": {
+        "multimode": true,
+        "mode_count": 7,
+        "guidance_mode": "off",
+        "sensor_sigma": 2.2,
+        "horizon": 15.0,
+        "initial_wind_observations": null,
+        "prediction_filter": "soft",
+        "terminate_predictions": true,
+        "tracking_kp": 4.411764705882352,
+        "tracking_kv": 7.352941176470588
+      }
+    },
+    {
+      "source": "output/hard_passage_mbd/detour_ac300_seed8301/two_crosswind_aware_8301.json",
+      "cost": 25.395175098485197,
+      "success": true,
+      "seconds": 299.99999999987216,
+      "settings": {
+        "multimode": true,
+        "mode_count": 7,
+        "guidance_mode": "off",
+        "sensor_sigma": 2.2,
+        "horizon": 12.0,
+        "initial_wind_observations": [
+          [
+            -3.0,
+            1.0,
+            -2.6296619862443333,
+            -0.39613463543353306
+          ],
+          [
+            -1.0,
+            1.0,
+            -3.6580161422756583,
+            -0.26545605170507564
+          ],
+          [
+            1.0,
+            1.0,
+            -3.825449194019229,
+            0.30962301578483964
+          ],
+          [
+            3.0,
+            1.0,
+            -3.0001444259293137,
+            0.4087250454491342
+          ],
+          [
+            -3.0,
+            -3.6,
+            -3.55310728540565,
+            -0.033498416788079126
+          ],
+          [
+            -1.0,
+            -3.6,
+            -3.61264527759977,
+            -0.011721457926303802
+          ],
+          [
+            1.0,
+            -3.6,
+            -3.92787895599203,
+            -0.0933228229033708
+          ],
+          [
+            3.0,
+            -3.6,
+            -2.8307529411423835,
+            -0.12441987856316045
+          ]
+        ],
+        "prediction_filter": "soft",
+        "terminate_predictions": true,
+        "tracking_kp": 4.411764705882352,
+        "tracking_kv": 7.352941176470588
+      }
+    }
+  ],
+  "restored": [
+    "Independent diffusion chains initialized from geometrically distinct alternatives",
+    "Original monitoring reference tracker before RPCBF",
+    "Absorbing predicted failure with continued no-sensing clarity decay cost"
+  ],
+  "online_initialization": "Known collision-free graph rebuilt at every call; no region-name destinations, offline graph, or access to hidden wind. Approximate clarity scoring initializes candidates only.",
+  "retained_models": [
+    "p_dot=v; v_dot=u+(0.1/0.680)*norm(w-v)*(w-v)",
+    "Existing stationary CFD fields, unchanged",
+    "Full online POAM posterior and coherent field sampler",
+    "Full spline policy-value RPCBF, relaxed in proposed planning, original hard execution QP",
+    "Original clarity ODE at .01 seconds, Q=.16 in A/B and .02 outside"
+  ],
+  "excluded": [
+    "Optimistic objective",
+    "Anticipated belief updates",
+    "Exploration bonus",
+    "37-parameter adaptive policy",
+    "Belief lookup-table replacement"
+  ],
+  "historical_comparison_limit": "Archived studies have different geometry, sensor scale and sometimes prior measurements. They support software design comparisons, not direct performance claims for the current environment."
+}

@@ -1,0 +1,322 @@
+{
+  "checks": "All exported intervals replayed from stored controls; independent paired-input, cost, region clarity and measurement checks.",
+  "refinement_scope": "Local held-control .01 to .005 s integration check, starting at each saved state. This is not a reoptimized or re-filtered mission.",
+  "runs": [
+    {
+      "id": "s1-aware",
+      "seconds": 20.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 1.4736524951276384e-07,
+      "max_local_clarity_refinement": 1.2852187168954643e-06,
+      "observations": 100,
+      "plans": 4,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.978435030889017e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 3,
+          "time_s": 15.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.992588520380536e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "diffusion_equation_audits": [
+        {
+          "cycle": 0,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 1.3322676295501878e-15
+        },
+        {
+          "cycle": 1,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 1.3322676295501878e-15
+        },
+        {
+          "cycle": 2,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        },
+        {
+          "cycle": 3,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 1.3322676295501878e-15
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 20.0,
+        "planned_seconds": 20.0,
+        "contact": null,
+        "integrated_deficit": 2.0780160032427317,
+        "min_clearance_m": 0.0230406393817012,
+        "infeasible_execution_steps": 40,
+        "max_execution_slack": 3.952143616983296,
+        "max_control_component_m_s2": 1.6000000000000008,
+        "fallback_periods": 0,
+        "wall_seconds": 599.1633375000092,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.2197345358599611,
+          0.34813348378174586
+        ],
+        "final_whole_clarity": 0.4844226591675102
+      }
+    },
+    {
+      "id": "s1-baseline",
+      "seconds": 20.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 9.295828267719518e-07,
+      "max_local_clarity_refinement": 3.310206576623287e-06,
+      "observations": 100,
+      "plans": 4,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.98085958255956e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 3,
+          "time_s": 15.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.990141078131671e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "diffusion_equation_audits": [
+        {
+          "cycle": 0,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 1.3322676295501878e-15
+        },
+        {
+          "cycle": 1,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        },
+        {
+          "cycle": 2,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        },
+        {
+          "cycle": 3,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 20.0,
+        "planned_seconds": 20.0,
+        "contact": null,
+        "integrated_deficit": 2.0444380523386965,
+        "min_clearance_m": 0.018883365813044173,
+        "infeasible_execution_steps": 28,
+        "max_execution_slack": 7.392084151845469,
+        "max_control_component_m_s2": 1.6000000000000008,
+        "fallback_periods": 0,
+        "wall_seconds": 190.98815016700246,
+        "passage_crossings": [
+          {
+            "time_s": 11.288697498978628,
+            "position_m": [
+              4.699107259124878,
+              1.7558306640531882
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 1.157457383130121,
+            "forward_speed_m_s": 1.1446223632745172
+          }
+        ],
+        "final_region_clarity": [
+          0.5018187513764016,
+          0.23371550269963415
+        ],
+        "final_whole_clarity": 0.526788342476307
+      }
+    },
+    {
+      "id": "s2-aware",
+      "seconds": 20.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 7.021666937153402e-16,
+      "max_local_clarity_refinement": 1.0701048935857216e-09,
+      "observations": 100,
+      "plans": 4,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.982143384513193e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 3,
+          "time_s": 15.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.999699065866281e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "diffusion_equation_audits": [
+        {
+          "cycle": 0,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        },
+        {
+          "cycle": 1,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 1.3322676295501878e-15
+        },
+        {
+          "cycle": 2,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        },
+        {
+          "cycle": 3,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 20.0,
+        "planned_seconds": 20.0,
+        "contact": null,
+        "integrated_deficit": 1.9791972852742754,
+        "min_clearance_m": 0.8739684273908048,
+        "infeasible_execution_steps": 0,
+        "max_execution_slack": 0.0,
+        "max_control_component_m_s2": 0.011593354523003741,
+        "fallback_periods": 0,
+        "wall_seconds": 596.846551124996,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.21971496437054844,
+          0.5681994982969591
+        ],
+        "final_whole_clarity": 0.4875140179755835
+      }
+    },
+    {
+      "id": "s2-baseline",
+      "seconds": 20.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 5.550998011242899e-07,
+      "max_local_clarity_refinement": 9.83006551269483e-07,
+      "observations": 100,
+      "plans": 4,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.98085958255956e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 3,
+          "time_s": 15.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.977626854354967e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "diffusion_equation_audits": [
+        {
+          "cycle": 0,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 1.3322676295501878e-15
+        },
+        {
+          "cycle": 1,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        },
+        {
+          "cycle": 2,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        },
+        {
+          "cycle": 3,
+          "modes": 8,
+          "proposals": 64,
+          "finite_proposals": 64,
+          "max_reverse_equation_error": 8.881784197001252e-16
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 20.0,
+        "planned_seconds": 20.0,
+        "contact": null,
+        "integrated_deficit": 2.5116599195806164,
+        "min_clearance_m": 0.09053880638551481,
+        "infeasible_execution_steps": 71,
+        "max_execution_slack": 1.0602702937159267,
+        "max_control_component_m_s2": 1.6000000000000023,
+        "fallback_periods": 0,
+        "wall_seconds": 111.15787399999681,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.2221306234546191,
+          0.23525845351664496
+        ],
+        "final_whole_clarity": 0.4628633030454831
+      }
+    }
+  ]
+}

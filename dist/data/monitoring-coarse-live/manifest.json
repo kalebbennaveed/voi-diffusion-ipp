@@ -1,0 +1,245 @@
+{
+  "schema": 1,
+  "state": "computing",
+  "duration_s": 60.0,
+  "planner_settings": {
+    "scenario": "corridor",
+    "dt": 0.2,
+    "stage_steps": 12,
+    "future_steps": 32,
+    "mission_horizons": 5,
+    "knots": 3,
+    "branches": 2,
+    "worlds": 2,
+    "inner_samples": 3,
+    "backup_steps": 8,
+    "backup_dt": 0.15,
+    "backup_gain": 2.0,
+    "cbf_alpha": 1.0,
+    "umax": 1.6,
+    "linear_drag": 0.0,
+    "safety_margin": 0.06,
+    "diffusion_steps": 4,
+    "proposals": 16,
+    "temperature": 0.025,
+    "beta_min": 0.005,
+    "beta_max": 0.18,
+    "mbd_latent_bound": 8.0,
+    "diffusion_reference_steps": 0,
+    "candidate_chunk": 1,
+    "terminal_seconds": 0.0,
+    "sensor_sigma": 0.5,
+    "sensor_R": 0.1,
+    "clarity_decay": 0.16,
+    "clarity_decay_pattern": "uniform",
+    "initial_clarity": "cold",
+    "wind_std": 1.8,
+    "wind_length": 1.1,
+    "observation_std": 0.1,
+    "ig_weight": 0.025,
+    "measurements": true,
+    "shared_future": false,
+    "independent_cells": false,
+    "spline": "full",
+    "safety_filter": "rpcbf",
+    "shield_terminal_speed": 0.2,
+    "shield_substeps": 4,
+    "shield_latch": true,
+    "wind_backend": "poam",
+    "poam_train_steps": 10,
+    "hypothetical_relocation": false,
+    "budgeted_policy": "compact",
+    "budgeted_feedback_features": "probe",
+    "budgeted_update_steps": 0,
+    "poam_inducing_x": 6,
+    "poam_inducing_y": 4,
+    "poam_spectral_nodes": 32,
+    "poam_support_x": 0,
+    "poam_support_y": 0,
+    "grid_nx": 25,
+    "grid_ny": 19,
+    "whole_field": true,
+    "reject_collisions": false,
+    "warm_starts": 1,
+    "obstacle_radius": 0.79,
+    "control_representation": "acceleration",
+    "branch_rule": "crosswind",
+    "recourse_samples": 3,
+    "waypoint_x_limit": 2.25,
+    "waypoint_y_limit": 1.65,
+    "future_updates": false,
+    "require_feasible_candidates": false,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "methods": [
+      "proposed",
+      "passive",
+      "weighted_ig",
+      "heuristic",
+      "cem",
+      "mppi",
+      "oracle"
+    ],
+    "horizon_seconds": 30.0,
+    "commit_seconds": 5.0,
+    "mission_seconds": 60.0,
+    "execution_dt": 0.05,
+    "physics_dt": 0.01,
+    "slack_weight": 15.0,
+    "background_decay": 0.02,
+    "region_target": 0.7,
+    "background_target": 0.35,
+    "initial_q": 0.74,
+    "reference_tracking": true,
+    "multimode": true,
+    "tracking_kp": 4.411764705882352,
+    "tracking_kv": 7.352941176470588,
+    "legacy_safety_costs": true,
+    "planning_clearance": 0.6,
+    "violation_weight": 1.0,
+    "speed_max": 3.1,
+    "speed_penalty": 2.0
+  },
+  "runs": [
+    {
+      "id": "s1-aware",
+      "scenario": 1,
+      "method": "aware",
+      "summary": {
+        "completed": false,
+        "simulated_seconds": 25.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 2.7312113524794306,
+        "min_clearance_m": 0.8717803339628557,
+        "infeasible_execution_steps": 0,
+        "max_execution_slack": 0.0,
+        "max_control_component_m_s2": 0.107033982388832,
+        "fallback_periods": 0,
+        "wall_seconds": 769.1533154159988,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.18686868686868865,
+          0.5619163849267521
+        ],
+        "final_whole_clarity": 0.4608184114998897
+      }
+    },
+    {
+      "id": "s1-baseline",
+      "scenario": 1,
+      "method": "baseline",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": {
+          "time_s": 12.600796650355566,
+          "position_m": [
+            3.4394298201779097,
+            1.7038976169683514e-21
+          ]
+        },
+        "integrated_deficit": 11.407007677079564,
+        "min_clearance_m": 0.0,
+        "infeasible_execution_steps": 6,
+        "max_execution_slack": 0.8057956033339702,
+        "max_control_component_m_s2": 1.6000000000000014,
+        "fallback_periods": 0,
+        "wall_seconds": 166.72132700000657,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.0913637807230634,
+          0.09981538933118381
+        ],
+        "final_whole_clarity": 0.2798309424924649
+      }
+    },
+    {
+      "id": "s2-aware",
+      "scenario": 2,
+      "method": "aware",
+      "summary": {
+        "completed": false,
+        "simulated_seconds": 25.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 2.7311963556850167,
+        "min_clearance_m": 0.8737236175014688,
+        "infeasible_execution_steps": 0,
+        "max_execution_slack": 0.0,
+        "max_control_component_m_s2": 0.011593354523003741,
+        "fallback_periods": 0,
+        "wall_seconds": 766.1099940840068,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.18686868686868865,
+          0.5619203781869679
+        ],
+        "final_whole_clarity": 0.46083938004520597
+      }
+    },
+    {
+      "id": "s2-baseline",
+      "scenario": 2,
+      "method": "baseline",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 8.115697608836362,
+        "min_clearance_m": 0.005073919623933554,
+        "infeasible_execution_steps": 14,
+        "max_execution_slack": 0.39991750796685954,
+        "max_control_component_m_s2": 1.600000000000001,
+        "fallback_periods": 0,
+        "wall_seconds": 423.0135944999929,
+        "passage_crossings": [
+          {
+            "time_s": 24.810205157510932,
+            "position_m": [
+              4.667642831138126,
+              1.7842938696781263
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.9829975153444771,
+            "forward_speed_m_s": 0.98231641742821
+          },
+          {
+            "time_s": 44.69693450464387,
+            "position_m": [
+              4.572797850986066,
+              1.8700920978772202
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 1.5652219689132219,
+            "forward_speed_m_s": 1.563052125206588
+          },
+          {
+            "time_s": 58.814021059896156,
+            "position_m": [
+              4.368503128370738,
+              2.054900246950779
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 1.5759454086914348,
+            "forward_speed_m_s": 1.5742222272375708
+          }
+        ],
+        "final_region_clarity": [
+          0.23474759314838975,
+          0.45152972875587594
+        ],
+        "final_whole_clarity": 0.4276778757514336
+      }
+    }
+  ],
+  "note": "Only completed integration intervals are shown. Final mission audit and source package are pending."
+}

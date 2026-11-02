@@ -1,0 +1,196 @@
+{
+  "checks": "All exported intervals replayed from stored controls; independent paired-input, cost, region clarity and measurement checks.",
+  "refinement_scope": "Local held-control .01 to .005 s integration check, starting at each saved state. This is not a reoptimized or re-filtered mission.",
+  "runs": [
+    {
+      "id": "s1-aware",
+      "seconds": 60.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 9.13100518802552e-08,
+      "max_local_clarity_refinement": 2.045737366229705e-06,
+      "observations": 300,
+      "plans": 30,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.996649023425448e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 29,
+          "time_s": 58.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.986981241295041e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 8.48076354662265,
+        "min_clearance_m": 0.14059930201671178,
+        "infeasible_execution_steps": 0,
+        "max_execution_slack": 0.0,
+        "max_control_component_m_s2": 1.6,
+        "fallback_periods": 2,
+        "wall_seconds": 2205.1847456250107,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.09131293316788183,
+          0.42471914720329723
+        ],
+        "final_whole_clarity": 0.39400360754053976
+      }
+    },
+    {
+      "id": "s1-baseline",
+      "seconds": 60.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 2.0134697602888495e-06,
+      "max_local_clarity_refinement": 2.354820748229347e-06,
+      "observations": 300,
+      "plans": 30,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.989179255600329e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 29,
+          "time_s": 58.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.975629708096375e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 10.033372416708128,
+        "min_clearance_m": 0.15901712026213644,
+        "infeasible_execution_steps": 61,
+        "max_execution_slack": 2.748261414908558,
+        "max_control_component_m_s2": 1.6000000000000003,
+        "fallback_periods": 0,
+        "wall_seconds": 169.62598754200735,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.09282734575706464,
+          0.37949577672220514
+        ],
+        "final_whole_clarity": 0.3836208088703678
+      }
+    },
+    {
+      "id": "s2-aware",
+      "seconds": 60.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 1.0510707827024621e-07,
+      "max_local_clarity_refinement": 2.0833468408754108e-06,
+      "observations": 300,
+      "plans": 30,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.987940569467497e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 29,
+          "time_s": 58.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.999664665605863e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 8.058828485280843,
+        "min_clearance_m": 0.25649905188778727,
+        "infeasible_execution_steps": 0,
+        "max_execution_slack": 0.0,
+        "max_control_component_m_s2": 1.6,
+        "fallback_periods": 1,
+        "wall_seconds": 2695.2860083330015,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.09131293188553,
+          0.6573848577899059
+        ],
+        "final_whole_clarity": 0.39910333126602326
+      }
+    },
+    {
+      "id": "s2-baseline",
+      "seconds": 60.0,
+      "max_state_replay_error": 0.0,
+      "max_clarity_replay_error": 0.0,
+      "max_cost_replay_error": 0.0,
+      "max_local_position_refinement_m": 8.719651964472774e-06,
+      "max_local_clarity_refinement": 1.6183835843674999e-06,
+      "observations": 146,
+      "plans": 15,
+      "selected_forecast_replays": [
+        {
+          "cycle": 0,
+          "time_s": 0.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.989179255600329e-07,
+          "expected_cost_error": 0.0
+        },
+        {
+          "cycle": 14,
+          "time_s": 28.0,
+          "valid": true,
+          "max_exported_forecast_state_error": 4.977977319242655e-07,
+          "expected_cost_error": 0.0
+        }
+      ],
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": {
+          "time_s": 29.25562865371731,
+          "position_m": [
+            3.3422646763444748,
+            -1.9196241304355343e-20
+          ]
+        },
+        "integrated_deficit": 11.098239468372082,
+        "min_clearance_m": -1.9196241304355343e-20,
+        "infeasible_execution_steps": 3,
+        "max_execution_slack": 2.466914553365485,
+        "max_control_component_m_s2": 1.6,
+        "fallback_periods": 0,
+        "wall_seconds": 122.85595333299716,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.09138250046439096,
+          0.11524214137934932
+        ],
+        "final_whole_clarity": 0.2914856542108973
+      }
+    }
+  ]
+}

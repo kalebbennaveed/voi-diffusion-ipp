@@ -1,0 +1,21 @@
+{
+  "runs": 26,
+  "grid": [
+    64,
+    37
+  ],
+  "includes": [
+    "graph construction",
+    "clarity scoring",
+    "compiled searches",
+    "path recovery",
+    "bottleneck discovery",
+    "passage-preserving pruning",
+    "reference retiming"
+  ],
+  "median_graph_ms": 8.827354497043416,
+  "median_total_ms": 13.739187503233552,
+  "p95_total_ms": 17.480843252997147,
+  "under_5ms": false,
+  "concurrent_work": "other JAX verification running; end-to-end CPU measurement, no real-time guarantee"
+}

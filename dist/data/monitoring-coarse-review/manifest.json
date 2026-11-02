@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "state": "computing",
+  "duration_s": 60.0,
+  "planner_settings": {
+    "scenario": "corridor",
+    "dt": 0.2,
+    "stage_steps": 12,
+    "future_steps": 32,
+    "mission_horizons": 5,
+    "knots": 3,
+    "branches": 2,
+    "worlds": 2,
+    "inner_samples": 3,
+    "backup_steps": 8,
+    "backup_dt": 0.15,
+    "backup_gain": 2.0,
+    "cbf_alpha": 1.0,
+    "umax": 1.6,
+    "linear_drag": 0.0,
+    "safety_margin": 0.06,
+    "diffusion_steps": 4,
+    "proposals": 16,
+    "temperature": 0.025,
+    "beta_min": 0.005,
+    "beta_max": 0.18,
+    "mbd_latent_bound": 8.0,
+    "diffusion_reference_steps": 0,
+    "candidate_chunk": 1,
+    "terminal_seconds": 0.0,
+    "sensor_sigma": 0.5,
+    "sensor_R": 0.1,
+    "clarity_decay": 0.16,
+    "clarity_decay_pattern": "uniform",
+    "initial_clarity": "cold",
+    "wind_std": 1.8,
+    "wind_length": 1.1,
+    "observation_std": 0.1,
+    "ig_weight": 0.025,
+    "measurements": true,
+    "shared_future": false,
+    "independent_cells": false,
+    "spline": "full",
+    "safety_filter": "rpcbf",
+    "shield_terminal_speed": 0.2,
+    "shield_substeps": 4,
+    "shield_latch": true,
+    "wind_backend": "poam",
+    "poam_train_steps": 10,
+    "hypothetical_relocation": false,
+    "budgeted_policy": "compact",
+    "budgeted_feedback_features": "probe",
+    "budgeted_update_steps": 0,
+    "poam_inducing_x": 6,
+    "poam_inducing_y": 4,
+    "poam_spectral_nodes": 32,
+    "poam_support_x": 0,
+    "poam_support_y": 0,
+    "grid_nx": 25,
+    "grid_ny": 19,
+    "whole_field": true,
+    "reject_collisions": false,
+    "warm_starts": 1,
+    "obstacle_radius": 0.79,
+    "control_representation": "acceleration",
+    "branch_rule": "crosswind",
+    "recourse_samples": 3,
+    "waypoint_x_limit": 2.25,
+    "waypoint_y_limit": 1.65,
+    "future_updates": false,
+    "require_feasible_candidates": false,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "methods": [
+      "proposed",
+      "passive",
+      "weighted_ig",
+      "heuristic",
+      "cem",
+      "mppi",
+      "oracle"
+    ],
+    "horizon_seconds": 30.0,
+    "commit_seconds": 5.0,
+    "mission_seconds": 60.0,
+    "execution_dt": 0.05,
+    "physics_dt": 0.01,
+    "slack_weight": 15.0,
+    "background_decay": 0.02,
+    "region_target": 0.7,
+    "background_target": 0.35,
+    "initial_q": 0.74,
+    "reference_tracking": true,
+    "multimode": true,
+    "tracking_kp": 4.411764705882352,
+    "tracking_kv": 7.352941176470588,
+    "legacy_safety_costs": true,
+    "planning_clearance": 0.06,
+    "violation_weight": 1.0,
+    "speed_max": 3.1,
+    "speed_penalty": 2.0
+  },
+  "runs": [
+    {
+      "id": "s1-aware",
+      "scenario": 1,
+      "method": "aware",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 8.444969288368922,
+        "min_clearance_m": 0.0230406393817012,
+        "infeasible_execution_steps": 40,
+        "max_execution_slack": 3.952143616983296,
+        "max_control_component_m_s2": 1.6000000000000008,
+        "fallback_periods": 0,
+        "wall_seconds": 1710.861933332999,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.09134559813663506,
+          0.6326299189547667
+        ],
+        "final_whole_clarity": 0.4086067509486265
+      }
+    },
+    {
+      "id": "s1-baseline",
+      "scenario": 1,
+      "method": "baseline",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": {
+          "time_s": 38.15348303588753,
+          "position_m": [
+            2.105782020594301,
+            2.334000939852693
+          ]
+        },
+        "integrated_deficit": 9.381103649458707,
+        "min_clearance_m": -1.1102230246251565e-16,
+        "infeasible_execution_steps": 35,
+        "max_execution_slack": 7.392084151845469,
+        "max_control_component_m_s2": 1.6000000000000008,
+        "fallback_periods": 0,
+        "wall_seconds": 364.224994084012,
+        "passage_crossings": [
+          {
+            "time_s": 11.288697498978628,
+            "position_m": [
+              4.699107259124878,
+              1.7558306640531882
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 1.157457383130121,
+            "forward_speed_m_s": 1.1446223632745172
+          },
+          {
+            "time_s": 21.77137770261637,
+            "position_m": [
+              4.6029644022229785,
+              1.8428029715275214
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 1.3665851507100069,
+            "forward_speed_m_s": 1.358749780632508
+          }
+        ],
+        "final_region_clarity": [
+          0.11636620866899365,
+          0.1535678351831481
+        ],
+        "final_whole_clarity": 0.3337819202766398
+      }
+    },
+    {
+      "id": "s2-aware",
+      "scenario": 2,
+      "method": "aware",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": null,
+        "integrated_deficit": 8.242584311895465,
+        "min_clearance_m": 0.3418039518211462,
+        "infeasible_execution_steps": 0,
+        "max_execution_slack": 0.0,
+        "max_control_component_m_s2": 1.6000000000000003,
+        "fallback_periods": 0,
+        "wall_seconds": 1692.5471142919996,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.09131889362640135,
+          0.6288976171178599
+        ],
+        "final_whole_clarity": 0.38100427857375513
+      }
+    },
+    {
+      "id": "s2-baseline",
+      "scenario": 2,
+      "method": "baseline",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 60.0,
+        "planned_seconds": 60.0,
+        "contact": {
+          "time_s": 22.754756985193413,
+          "position_m": [
+            3.944696024379856,
+            1.8048946489325457
+          ]
+        },
+        "integrated_deficit": 11.743737689356257,
+        "min_clearance_m": -1.1102230246251565e-16,
+        "infeasible_execution_steps": 77,
+        "max_execution_slack": 1.0602702937159267,
+        "max_control_component_m_s2": 1.6000000000000023,
+        "fallback_periods": 0,
+        "wall_seconds": 182.02423724999244,
+        "passage_crossings": [],
+        "final_region_clarity": [
+          0.09166186303506836,
+          0.09451615555759862
+        ],
+        "final_whole_clarity": 0.28395679590910644
+      }
+    }
+  ],
+  "note": "Only completed integration intervals are shown. Final mission audit and source package are pending."
+}

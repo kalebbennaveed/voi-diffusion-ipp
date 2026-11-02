@@ -1,0 +1,32 @@
+{
+  "test_count": 36,
+  "result": "passed",
+  "command": "PYTHONPATH=src:scripts/airflow .venv/bin/python -m pytest -q tests/test_mbd.py tests/test_mbd_target.py tests/test_monitoring_mbd.py tests/quarter/test_filter_runtime.py tests/quarter/test_method.py",
+  "checks": [
+    "Analytic Gaussian-convolution and independent quadrature tests for MBD score",
+    "Original reverse update and finite-domain proposal weighting",
+    "Independent reverse chains for all route starts",
+    "Late-state upper/lower passage retention",
+    "Exact reordered full-model cost against full forecast, including contact",
+    "Unchanged full wind-force plant and Riccati clarity dynamics",
+    "Original relaxed RPCBF and execution RPCBF modules",
+    "Original clearance/speed costs separately accounted"
+  ],
+  "source_sha256": {
+    "scripts/airflow/run_monitoring_mbd.py": "adbb8cc184df197824abf56091e350bc85880d6d135112dc67b80157bbeb0b1b",
+    "scripts/airflow/monitoring_mbd.py": "165fafed29f1c05fd09837fc9ddfb9356f29bc6b5d83edfd668651139725a404",
+    "scripts/airflow/monitoring_routes.py": "665b58394648951839cc354cb0866f8e76b186655f67ac775fd4d228a4efc106",
+    "scripts/airflow/robot_review.py": "a20e9cb44da55853682b44c38dd8c0d53db6bab7026a715b70815040d0ed79c9",
+    "src/voi_diffusion_ipp/clarity.py": "a2b06cf0847968ee537ff369ca96d183deaa75e72a0aebf626f39a927836b3d5",
+    "src/voi_diffusion_ipp/planning/mbd.py": "6fd420319e7d4587361d05d9bebbbd987796ec4429e7f5b91e97e560d0dc192e",
+    "src/voi_diffusion_ipp/quarter/filter.py": "9afde16c84bc0031e7af96ee3b48829a9e3196360ab0155369e5dceade3619a6",
+    "src/voi_diffusion_ipp/safety/flow_policy_value.py": "e81dfeccf50e9bc5311dec38e72c990bcaca360183e9ade7ad6343fcfeabfbe6",
+    "src/voi_diffusion_ipp/safety/rpcbf.py": "ea5f3db70a58cd33f2348811262b3f0f9f6d4110228b424fc9903845cbe3e26d",
+    "src/voi_diffusion_ipp/safety/qp.py": "ae298f1bf46f32264188be81475438df2cf2a72bd62ce51e924a887bed960f88",
+    "src/voi_diffusion_ipp/safety/spline.py": "4cd9f4814a78aa42c7f6f13270a6aed55cacb60dd50ebae4e58b245c586b6582",
+    "src/voi_diffusion_ipp/wind/poam.py": "77d0e9bacba9ec16107492dc9dab50a01067c4aca9fd8a9cf964e19147c9b88f",
+    "src/voi_diffusion_ipp/wind/poam_belief.py": "a29a8160148784f801ee0dcbc0616b5dfa862e718b51e998d340280b3a4dbf7b",
+    "src/voi_diffusion_ipp/wind/gp.py": "3d1feec0574a7e1f703bbb60c668f962246f1d2f57b8fb8bef423f9bf4c91aac",
+    "src/voi_diffusion_ipp/quadrotor/aerodynamics.py": "b5af8239e9160f560bdc6a15df1e5afe309ee9c611423d667171ca50cfd82e07"
+  }
+}
