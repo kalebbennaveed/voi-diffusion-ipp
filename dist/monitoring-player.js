@@ -8,7 +8,7 @@
   const cache=new Map();
   // The same fixed scales apply to both methods and both scenarios.
   const scales={
-    clarity:{title:'Clarity q',unit:'dimensionless',max:1,stops:['#440154','#443983','#31688e','#21918c','#35b779','#90d743','#fde725'],low:'Low clarity',high:'High clarity',note:'Local target: 0.70 in A/B · 0.35 elsewhere'},
+    clarity:{title:'Clarity q',unit:'dimensionless',max:1,stops:['#fff7ec','#fee8c8','#fdbb84','#fc8d59','#e34a33','#b30000','#7f0000'],low:'Low clarity',high:'High clarity',note:'Local target: 0.70 in A/B · 0.35 elsewhere'},
     deficit:{title:'Deficit below local target',unit:'dimensionless',max:.7,stops:['#fff7ec','#fee8c8','#fdbb84','#fc8d59','#e34a33','#b30000','#7f0000'],low:'Target met',high:'Large deficit',note:'max(target − q, 0) · targets are 0.70 in A/B and 0.35 elsewhere'},
     uncertainty:{title:'Wind-belief standard deviation σ',unit:'m/s',max:3,stops:['#f7fbff','#d6e6f4','#94c4df','#4a98c9','#1764ab','#08306b'],low:'Less uncertain',high:'More uncertain',note:'Posterior standard deviation per wind component; ≥3 m/s uses the darkest color'},
     decay:{title:'Clarity process noise Q',unit:'s⁻¹',max:.16,stops:['#fcfbfd','#dadaeb','#bcbddc','#9e9ac8','#756bb1','#54278f'],low:'Slower decay',high:'Faster decay',note:'Q = 0.02 s⁻¹ in the background · 0.16 s⁻¹ in A/B'}
