@@ -1,0 +1,37 @@
+{
+  "checks": [
+    {
+      "id": "s1-aware",
+      "observations": 1501,
+      "posterior_frames": 61,
+      "changed_mean_frames": 60,
+      "max_map_rounding_error": 4.999980713807145e-06,
+      "initial_survey_measurements": 0
+    },
+    {
+      "id": "s1-baseline",
+      "observations": 1501,
+      "posterior_frames": 61,
+      "changed_mean_frames": 60,
+      "max_map_rounding_error": 4.999988100183594e-06,
+      "initial_survey_measurements": 0
+    },
+    {
+      "id": "s2-aware",
+      "observations": 1501,
+      "posterior_frames": 61,
+      "changed_mean_frames": 60,
+      "max_map_rounding_error": 4.99994487634936e-06,
+      "initial_survey_measurements": 0
+    },
+    {
+      "id": "s2-baseline",
+      "observations": 1501,
+      "posterior_frames": 61,
+      "changed_mean_frames": 60,
+      "max_map_rounding_error": 4.999990197825099e-06,
+      "initial_survey_measurements": 0
+    }
+  ],
+  "scope": "Every local measurement verified against the fixed physical field and seeded noise; every online posterior update replayed; every displayed mean and standard-deviation map checked."
+}

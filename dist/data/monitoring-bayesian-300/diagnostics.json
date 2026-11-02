@@ -1,0 +1,2687 @@
+[
+  {
+    "file": "exploration_benchmark.json",
+    "report": {
+      "horizon_s": 15.0,
+      "decision_s": 5.0,
+      "root_candidates": 4,
+      "observation_branches": 2,
+      "conditional_worlds": 2,
+      "continuation_choices": 4,
+      "calls": [
+        {
+          "compilation_included": true,
+          "original_mbd_s": 16.74451591700199,
+          "lookahead": {
+            "root_fields": 0.43947595899226144,
+            "prefix_rollouts": 2.0955867919838056,
+            "posterior_and_fields": 1.327580624987604,
+            "continuation_geometry": 0.3578239170019515,
+            "continuation_rollouts": 4.351204875012627,
+            "total": 8.571678875014186
+          },
+          "total_s": 25.529685708024772,
+          "selected": 0,
+          "scores": [
+            1.2816083431243896,
+            1.281615972518921,
+            1.5697333812713623,
+            1.4735910892486572
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "compilation_included": false,
+          "original_mbd_s": 0.7574787499906961,
+          "lookahead": {
+            "root_fields": 0.019028499984415248,
+            "prefix_rollouts": 0.03012795900576748,
+            "posterior_and_fields": 0.21207654199679382,
+            "continuation_geometry": 0.09517799998866394,
+            "continuation_rollouts": 0.5019973749876954,
+            "total": 0.8584210829867516
+          },
+          "total_s": 1.6448890420142561,
+          "selected": 0,
+          "scores": [
+            1.2816083431243896,
+            1.281615972518921,
+            1.5697333812713623,
+            1.4735910892486572
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ]
+        }
+      ],
+      "budget_passed": false
+    }
+  },
+  {
+    "file": "active_sensing_benchmark.json",
+    "report": {
+      "mode": "active",
+      "horizon_s": 15.0,
+      "calls": [
+        {
+          "compilation_included": true,
+          "geometry_s": 0.016081832989584655,
+          "field_sampling_s": 0.44302375000552274,
+          "optimization_validation_s": 25.796336917002918,
+          "total_s": 26.25544466698193,
+          "score": -49.32272720336914,
+          "expected": 1.5527701377868652,
+          "information": 49.32272720336914,
+          "budget": 1.6019355058670044
+        },
+        {
+          "compilation_included": false,
+          "geometry_s": 0.010893166996538639,
+          "field_sampling_s": 0.022519040998304263,
+          "optimization_validation_s": 1.6790527499979362,
+          "total_s": 1.7124669169716071,
+          "score": -49.32272720336914,
+          "expected": 1.5527701377868652,
+          "information": 49.32272720336914,
+          "budget": 1.6019355058670044
+        }
+      ],
+      "budget_passed": false
+    }
+  },
+  {
+    "file": "active_sensing_w1v2_benchmark.json",
+    "report": {
+      "mode": "active",
+      "horizon_s": 15.0,
+      "search_worlds": 1,
+      "validation_worlds": 2,
+      "calls": [
+        {
+          "compilation_included": true,
+          "geometry_s": 0.012501874996814877,
+          "field_sampling_s": 0.44472462497651577,
+          "optimization_validation_s": 24.947613500000443,
+          "total_s": 25.40484212501906,
+          "score": -40.998741149902344,
+          "expected": 1.4453001022338867,
+          "information": 40.998741149902344,
+          "budget": 1.6020026206970215
+        },
+        {
+          "compilation_included": false,
+          "geometry_s": 0.010822457988979295,
+          "field_sampling_s": 0.01920599999721162,
+          "optimization_validation_s": 0.8502047500223853,
+          "total_s": 0.8802352499915287,
+          "score": -40.998741149902344,
+          "expected": 1.4453001022338867,
+          "information": 40.998741149902344,
+          "budget": 1.6020026206970215
+        },
+        {
+          "compilation_included": false,
+          "geometry_s": 0.01046604200382717,
+          "field_sampling_s": 0.014957209001295269,
+          "optimization_validation_s": 0.8582402089959942,
+          "total_s": 0.8836658330110367,
+          "score": -40.998741149902344,
+          "expected": 1.4453001022338867,
+          "information": 40.998741149902344,
+          "budget": 1.6020026206970215
+        }
+      ],
+      "budget_passed": true
+    }
+  },
+  {
+    "file": "thompson_benchmark.json",
+    "report": {
+      "mode": "thompson",
+      "horizon_s": 15.0,
+      "search_worlds": 1,
+      "validation_worlds": 1,
+      "calls": [
+        {
+          "compilation_included": true,
+          "geometry_s": 0.011368832987500355,
+          "field_sampling_s": 0.43667062500026077,
+          "optimization_validation_s": 22.33482916597859,
+          "total_s": 22.782870707975235,
+          "score": 1.2815858125686646,
+          "expected": 1.2815858125686646,
+          "information": 0.0,
+          "budget": 1.6019822359085083
+        },
+        {
+          "compilation_included": false,
+          "geometry_s": 0.01084262499352917,
+          "field_sampling_s": 0.01724241700139828,
+          "optimization_validation_s": 0.6956740000168793,
+          "total_s": 0.7237612919998355,
+          "score": 1.2815858125686646,
+          "expected": 1.2815858125686646,
+          "information": 0.0,
+          "budget": 1.6019822359085083
+        },
+        {
+          "compilation_included": false,
+          "geometry_s": 0.010826167010236531,
+          "field_sampling_s": 0.014133958000456914,
+          "optimization_validation_s": 0.6941296669829171,
+          "total_s": 0.7190916250110604,
+          "score": 1.2815858125686646,
+          "expected": 1.2815858125686646,
+          "information": 0.0,
+          "budget": 1.6019822359085083
+        }
+      ],
+      "budget_passed": true
+    }
+  },
+  {
+    "file": "bayesian_budgeted_benchmark.json",
+    "report": {
+      "horizon_s": 15.0,
+      "decision_s": 5.0,
+      "root_candidates": 4,
+      "observation_branches": 1,
+      "conditional_worlds": 1,
+      "continuation_choices": 4,
+      "calls": [
+        {
+          "compilation_included": true,
+          "original_mbd_s": 19.0966368750087,
+          "lookahead": {
+            "root_fields": 0.43893866598955356,
+            "prefix_rollouts": 2.0527503750054166,
+            "posterior_and_fields": 1.2284377500182018,
+            "continuation_geometry": 0.3091975830029696,
+            "continuation_rollouts": 3.6797045420098584,
+            "total": 7.709036040992942
+          },
+          "total_s": 27.019700375007233,
+          "selected": 1,
+          "scores": [
+            1.307353138923645,
+            1.2815370559692383,
+            1.4588978290557861,
+            1.366451382637024
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "compilation_included": false,
+          "original_mbd_s": 0.8935582499834709,
+          "lookahead": {
+            "root_fields": 0.013850457995431498,
+            "prefix_rollouts": 0.01593666701228358,
+            "posterior_and_fields": 0.09159133301000111,
+            "continuation_geometry": 0.046968833019491285,
+            "continuation_rollouts": 0.15637429201160558,
+            "total": 0.3248129170096945
+          },
+          "total_s": 1.247034124971833,
+          "selected": 1,
+          "scores": [
+            1.307353138923645,
+            1.2815370559692383,
+            1.4588978290557861,
+            1.366451382637024
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ],
+      "budget_passed": false
+    }
+  },
+  {
+    "file": "bayesian_budgeted_w1v1_benchmark.json",
+    "report": {
+      "horizon_s": 15.0,
+      "decision_s": 5.0,
+      "root_candidates": 4,
+      "observation_branches": 1,
+      "conditional_worlds": 1,
+      "continuation_choices": 4,
+      "calls": [
+        {
+          "compilation_included": true,
+          "original_mbd_s": 15.813376625010278,
+          "lookahead": {
+            "root_fields": 0.43583266698988155,
+            "prefix_rollouts": 2.021303000015905,
+            "posterior_and_fields": 1.2270039590075612,
+            "continuation_geometry": 0.2995770830020774,
+            "continuation_rollouts": 4.181133750011213,
+            "total": 8.164922333991854
+          },
+          "total_s": 24.184644458000548,
+          "selected": 1,
+          "scores": [
+            1.335671305656433,
+            1.2815370559692383,
+            1.4588978290557861,
+            1.366451382637024
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "compilation_included": false,
+          "original_mbd_s": 0.7809311250166502,
+          "lookahead": {
+            "root_fields": 0.013532500015571713,
+            "prefix_rollouts": 0.01606262501445599,
+            "posterior_and_fields": 0.09053008301998489,
+            "continuation_geometry": 0.04514079200453125,
+            "continuation_rollouts": 0.3050280839961488,
+            "total": 0.47038833299302496
+          },
+          "total_s": 1.2790986670006532,
+          "selected": 1,
+          "scores": [
+            1.335671305656433,
+            1.2815370559692383,
+            1.4588978290557861,
+            1.366451382637024
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ],
+      "budget_passed": false
+    }
+  },
+  {
+    "file": "bayesian_legacy_proposals_benchmark.json",
+    "report": {
+      "horizon_s": 15.0,
+      "decision_s": 5.0,
+      "root_candidates": 4,
+      "observation_branches": 2,
+      "conditional_worlds": 1,
+      "continuation_choices": 4,
+      "calls": [
+        {
+          "compilation_included": true,
+          "original_mbd_s": 16.028188208991196,
+          "lookahead": {
+            "root_fields": 0.4354699579998851,
+            "prefix_rollouts": 2.0886695419903845,
+            "posterior_and_fields": 1.3256165829952806,
+            "continuation_geometry": 0.3542310000048019,
+            "continuation_rollouts": 4.321130416006781,
+            "total": 8.525125332991593
+          },
+          "total_s": 24.76292058400577,
+          "selected": 0,
+          "scores": [
+            1.2816083431243896,
+            1.281615972518921,
+            1.5697505474090576,
+            1.4735910892486572
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "compilation_included": false,
+          "original_mbd_s": 0.41606162500102073,
+          "lookahead": {
+            "root_fields": 0.016442874999484047,
+            "prefix_rollouts": 0.030217833002097905,
+            "posterior_and_fields": 0.18948466700385325,
+            "continuation_geometry": 0.09484949999023229,
+            "continuation_rollouts": 0.29878933299914934,
+            "total": 0.62979112501489
+          },
+          "total_s": 1.0759037919924594,
+          "selected": 0,
+          "scores": [
+            1.2816083431243896,
+            1.281615972518921,
+            1.5697505474090576,
+            1.4735910892486572
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ]
+        }
+      ],
+      "budget_passed": false
+    }
+  },
+  {
+    "file": "bayesian_three_roots_benchmark.json",
+    "report": {
+      "horizon_s": 15.0,
+      "decision_s": 5.0,
+      "root_candidates": 3,
+      "observation_branches": 2,
+      "conditional_worlds": 1,
+      "continuation_choices": 4,
+      "calls": [
+        {
+          "compilation_included": true,
+          "original_mbd_s": 15.868469416018343,
+          "lookahead": {
+            "root_fields": 0.44674204199691303,
+            "prefix_rollouts": 2.092622666998068,
+            "posterior_and_fields": 1.278621250006836,
+            "continuation_geometry": 0.3308855420036707,
+            "continuation_rollouts": 4.256909541989444,
+            "total": 8.40578795899637
+          },
+          "total_s": 24.482444458000828,
+          "selected": 0,
+          "scores": [
+            1.2816071510314941,
+            1.2816176414489746,
+            1.5699703693389893
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "compilation_included": false,
+          "original_mbd_s": 0.4138870830065571,
+          "lookahead": {
+            "root_fields": 0.017001833009999245,
+            "prefix_rollouts": 0.025005291012348607,
+            "posterior_and_fields": 0.1590979159809649,
+            "continuation_geometry": 0.06740225001703948,
+            "continuation_rollouts": 0.22955516702495515,
+            "total": 0.49806933299987577
+          },
+          "total_s": 0.9404472500027623,
+          "selected": 0,
+          "scores": [
+            1.2816071510314941,
+            1.2816176414489746,
+            1.5699703693389893
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "compilation_included": false,
+          "original_mbd_s": 0.4149170000164304,
+          "lookahead": {
+            "root_fields": 0.013640542019857094,
+            "prefix_rollouts": 0.024813750002067536,
+            "posterior_and_fields": 0.10210866600391455,
+            "continuation_geometry": 0.06591783300973475,
+            "continuation_rollouts": 0.2296183329890482,
+            "total": 0.4361050419975072
+          },
+          "total_s": 0.8795987500052433,
+          "selected": 0,
+          "scores": [
+            1.2816071510314941,
+            1.2816176414489746,
+            1.5699703693389893
+          ],
+          "prefix_contacts": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ]
+        }
+      ],
+      "budget_passed": true
+    }
+  },
+  {
+    "file": "inducing_information_benchmark.json",
+    "report": {
+      "mode": "inducing",
+      "horizon_s": 15.0,
+      "search_worlds": 1,
+      "validation_worlds": 2,
+      "calls": [
+        {
+          "compilation_included": true,
+          "geometry_s": 0.01333074999274686,
+          "field_sampling_s": 0.46156349999364465,
+          "optimization_validation_s": 25.89525770797627,
+          "total_s": 26.370154457981698,
+          "score": -15.435325622558594,
+          "expected": 1.445298194885254,
+          "information": 15.435325622558594,
+          "budget": 1.5987008810043335
+        },
+        {
+          "compilation_included": false,
+          "geometry_s": 0.011707166995620355,
+          "field_sampling_s": 0.021967750013573095,
+          "optimization_validation_s": 0.868799416028196,
+          "total_s": 0.9024764999921899,
+          "score": -15.435325622558594,
+          "expected": 1.445298194885254,
+          "information": 15.435325622558594,
+          "budget": 1.5987008810043335
+        },
+        {
+          "compilation_included": false,
+          "geometry_s": 0.011003082996467128,
+          "field_sampling_s": 0.015786208008648828,
+          "optimization_validation_s": 0.8708148330042604,
+          "total_s": 0.8976062500150874,
+          "score": -15.435325622558594,
+          "expected": 1.445298194885254,
+          "information": 15.435325622558594,
+          "budget": 1.5987008810043335
+        }
+      ],
+      "budget_passed": true
+    }
+  },
+  {
+    "file": "monitoring_stall_diagnostic.json",
+    "report": [
+      {
+        "scenario": 1,
+        "variant": "forecast_soft_2",
+        "state": [
+          1.5893577021274545,
+          4.368409586669459,
+          -0.0003236287355225411,
+          -6.458686232200187e-07
+        ],
+        "reference": [
+          2.702265419914877,
+          4.404372571625311,
+          1.0013034681744197,
+          -0.027248192578553015
+        ],
+        "nominal": [
+          12.17178776715671,
+          -0.30131500835759467
+        ],
+        "u": [
+          1.6,
+          0.38991396044972665
+        ],
+        "actual_acceleration": [
+          1.6969947881139742,
+          0.40065972504192027
+        ],
+        "slack": 0.02674561152542132,
+        "feasible": null,
+        "wall_s": 1.7631315840117168
+      },
+      {
+        "scenario": 1,
+        "variant": "execution_hard_8",
+        "state": [
+          1.5893577021274545,
+          4.368409586669459,
+          -0.0003236287355225411,
+          -6.458686232200187e-07
+        ],
+        "reference": [
+          2.702265419914877,
+          4.404372571625311,
+          1.0013034681744197,
+          -0.027248192578553015
+        ],
+        "nominal": [
+          12.17178776715671,
+          -0.30131500835759467
+        ],
+        "u": [
+          -0.0971951886699801,
+          -0.011044280738066847
+        ],
+        "actual_acceleration": [
+          -0.0002004005560059391,
+          -0.00029851614587322363
+        ],
+        "slack": 0.0,
+        "feasible": true,
+        "wall_s": 0.7598607909749262
+      },
+      {
+        "scenario": 1,
+        "variant": "posterior_mean_only_hard",
+        "state": [
+          1.5893577021274545,
+          4.368409586669459,
+          -0.0003236287355225411,
+          -6.458686232200187e-07
+        ],
+        "reference": [
+          2.702265419914877,
+          4.404372571625311,
+          1.0013034681744197,
+          -0.027248192578553015
+        ],
+        "nominal": [
+          12.17178776715671,
+          -0.30131500835759467
+        ],
+        "u": [
+          1.5999999999999996,
+          -0.30131500835759467
+        ],
+        "actual_acceleration": [
+          1.6969947881139738,
+          -0.29056924376540105
+        ],
+        "slack": 0.0,
+        "feasible": true,
+        "wall_s": 0.6541002499870956
+      },
+      {
+        "scenario": 1,
+        "variant": "known_wind_hard",
+        "state": [
+          1.5893577021274545,
+          4.368409586669459,
+          -0.0003236287355225411,
+          -6.458686232200187e-07
+        ],
+        "reference": [
+          2.702265419914877,
+          4.404372571625311,
+          1.0013034681744197,
+          -0.027248192578553015
+        ],
+        "nominal": [
+          12.158482963296745,
+          -0.30317043318655823
+        ],
+        "u": [
+          1.5999999999999996,
+          -0.30317043318655823
+        ],
+        "actual_acceleration": [
+          1.6969947881139738,
+          -0.2924246685943646
+        ],
+        "slack": 0.0,
+        "feasible": true,
+        "wall_s": 0.6607195420074277
+      },
+      {
+        "scenario": 2,
+        "variant": "forecast_soft_2",
+        "state": [
+          1.5589066383973607,
+          4.354280271604004,
+          -0.0002708486415444915,
+          -2.6005885874620658e-05
+        ],
+        "reference": [
+          2.669194982374032,
+          4.390575987252916,
+          0.99733996646069,
+          -0.08808489423236984
+        ],
+        "nominal": [
+          12.02829603625916,
+          -0.8492390672415412
+        ],
+        "u": [
+          1.6,
+          0.4033379162178757
+        ],
+        "actual_acceleration": [
+          1.7756067947706622,
+          0.4440858475738796
+        ],
+        "slack": 0.09636189573766113,
+        "feasible": null,
+        "wall_s": 0.6161954160197638
+      },
+      {
+        "scenario": 2,
+        "variant": "execution_hard_8",
+        "state": [
+          1.5589066383973607,
+          4.354280271604004,
+          -0.0002708486415444915,
+          -2.6005885874620658e-05
+        ],
+        "reference": [
+          2.669194982374032,
+          4.390575987252916,
+          0.99733996646069,
+          -0.08808489423236984
+        ],
+        "nominal": [
+          12.02829603625916,
+          -0.8492390672415412
+        ],
+        "u": [
+          -0.17582304252652636,
+          -0.041049842647674396
+        ],
+        "actual_acceleration": [
+          -0.00021624775586431833,
+          -0.00030191129167048136
+        ],
+        "slack": 0.0,
+        "feasible": true,
+        "wall_s": 0.6134789159987122
+      },
+      {
+        "scenario": 2,
+        "variant": "posterior_mean_only_hard",
+        "state": [
+          1.5589066383973607,
+          4.354280271604004,
+          -0.0002708486415444915,
+          -2.6005885874620658e-05
+        ],
+        "reference": [
+          2.669194982374032,
+          4.390575987252916,
+          0.99733996646069,
+          -0.08808489423236984
+        ],
+        "nominal": [
+          12.02829603625916,
+          -0.8492390672415412
+        ],
+        "u": [
+          1.5999999999999996,
+          -0.8492390672415412
+        ],
+        "actual_acceleration": [
+          1.7756067947706617,
+          -0.8084911358855372
+        ],
+        "slack": 0.0,
+        "feasible": true,
+        "wall_s": 0.688559542002622
+      },
+      {
+        "scenario": 2,
+        "variant": "known_wind_hard",
+        "state": [
+          1.5589066383973607,
+          4.354280271604004,
+          -0.0002708486415444915,
+          -2.6005885874620658e-05
+        ],
+        "reference": [
+          2.669194982374032,
+          4.390575987252916,
+          0.99733996646069,
+          -0.08808489423236984
+        ],
+        "nominal": [
+          12.010267830963526,
+          -0.8442881370165591
+        ],
+        "u": [
+          1.5999999999999996,
+          -0.8442881370165591
+        ],
+        "actual_acceleration": [
+          1.7756067947706617,
+          -0.8035402056605552
+        ],
+        "slack": 0.0,
+        "feasible": true,
+        "wall_s": 0.6958677090005949
+      }
+    ]
+  },
+  {
+    "experiment": "monitoring_active_sensing_300",
+    "summary": {
+      "completed": true,
+      "simulated_seconds": 300.0,
+      "planned_seconds": 300.0,
+      "contact": null,
+      "integrated_deficit": 65.9511972222705,
+      "min_clearance_m": 0.18562208578773332,
+      "infeasible_execution_steps": 12,
+      "max_execution_slack": 0.20349192731920307,
+      "max_control_component_m_s2": 1.6000000000000028,
+      "fallback_periods": 0,
+      "wall_seconds": 152.29073129198514,
+      "passage_crossings": [],
+      "final_region_clarity": [
+        0.020406734723429288,
+        0.560286330647971
+      ],
+      "final_whole_clarity": 0.3334149472426138,
+      "stop_reason": null,
+      "warm_plan_max_seconds": 0.929029332997743,
+      "rejected_planning_calls": [],
+      "total_wall_seconds": 152.29085175000364
+    },
+    "settings": {
+      "dt": 0.25,
+      "horizon": 15,
+      "commit": 5.0,
+      "worlds": 1,
+      "validation_worlds": 2,
+      "construction_worlds": 8,
+      "iterations": 2,
+      "proposals": 14,
+      "temperature": 0.06,
+      "optimism": 1.0,
+      "mixture": 0.0,
+      "archive_size": 8,
+      "latent_bound": 12.0,
+      "cosine_end": 0.15,
+      "umax": 1.6,
+      "speed_max": 3.1,
+      "backup_steps": 8,
+      "backup_dt": 0.15,
+      "backup_gain": 2.0,
+      "cbf_alpha": 1.0,
+      "safety_margin": 0.12,
+      "slack_weight": 15.0,
+      "violation_weight": 1.0,
+      "spline": "full",
+      "sensor_sigma": 0.5,
+      "sensor_R": 0.1,
+      "sensor_half_angle_degrees": 45.0,
+      "observation_std": 0.25,
+      "wind_strength": 3.1,
+      "prior_std": 1.8,
+      "seed": 8101,
+      "batch_size": 7,
+      "validation_batch_size": 4,
+      "chains": 1,
+      "environment_scale": 1.0,
+      "inspection_scale": 1.0,
+      "initialization": "modes",
+      "rrt_paths": 3,
+      "rrt_visits": 1,
+      "common_construction": false,
+      "rrt_margin": 0.65,
+      "guidance_sigma": 1.0,
+      "planning_clearance": 0.06,
+      "speed_penalty": 2.0,
+      "jerk_limit": 12.0,
+      "jerk_penalty": 0.0,
+      "tracking_kp": 4.411764705882352,
+      "tracking_kv": 7.352941176470588,
+      "execution_dt": 0.05,
+      "execution_margin": 0.55,
+      "execution_filter": "hard",
+      "penalty_aggregation": "mean",
+      "validate_initials": true,
+      "rrt_diversity": false,
+      "prediction_substeps": 1,
+      "observation_period": 5.0,
+      "prediction_filter": "hard",
+      "guidance_mode": "off",
+      "online_estimation": false,
+      "wind_support_nodes": 0,
+      "wind_relocate": false,
+      "terminate_predictions": true,
+      "geometry": "quarter",
+      "multimode": true,
+      "mode_count": 7,
+      "initialization_effort": null,
+      "optimism_anneal_seconds": null,
+      "detour_depth": 2.0,
+      "wind_at_start": false,
+      "initial_wind_observations": [],
+      "wind_inducing_count": 36,
+      "wind_kernel_lengths": []
+    },
+    "warm_planning": [
+      {
+        "t": 5.0,
+        "seconds": 0.9013252499862574,
+        "timing": {
+          "initialization": 0.014286208985140547,
+          "field_sampling": 0.01530333302798681,
+          "optimization_validation": 0.8710984160134103,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 10.0,
+        "seconds": 0.8911951250047423,
+        "timing": {
+          "initialization": 0.012201334000565112,
+          "field_sampling": 0.014618499990319833,
+          "optimization_validation": 0.8637603329843841,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 15.0,
+        "seconds": 0.8687440000066999,
+        "timing": {
+          "initialization": 0.010756041010608897,
+          "field_sampling": 0.01464366601430811,
+          "optimization_validation": 0.8427828330022749,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 20.0,
+        "seconds": 0.8806447080278303,
+        "timing": {
+          "initialization": 0.01107891701394692,
+          "field_sampling": 0.015171708015259355,
+          "optimization_validation": 0.8538275839819107,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 25.0,
+        "seconds": 0.8766735420213081,
+        "timing": {
+          "initialization": 0.013532042008591816,
+          "field_sampling": 0.015633291011909023,
+          "optimization_validation": 0.8469242500141263,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 30.0,
+        "seconds": 0.8871051669993903,
+        "timing": {
+          "initialization": 0.011503124987939373,
+          "field_sampling": 0.01695020799525082,
+          "optimization_validation": 0.8580918340012431,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 35.0,
+        "seconds": 0.8846150000172202,
+        "timing": {
+          "initialization": 0.010243583004921675,
+          "field_sampling": 0.016134625009726733,
+          "optimization_validation": 0.8576659160025883,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 40.0,
+        "seconds": 0.8720865419891197,
+        "timing": {
+          "initialization": 0.012614999985089526,
+          "field_sampling": 0.015004082990344614,
+          "optimization_validation": 0.8439321669866331,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 45.0,
+        "seconds": 0.8763869999966118,
+        "timing": {
+          "initialization": 0.011882249993504956,
+          "field_sampling": 0.014834041008725762,
+          "optimization_validation": 0.8491060830128845,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 50.0,
+        "seconds": 0.8738812920055352,
+        "timing": {
+          "initialization": 0.01134904200443998,
+          "field_sampling": 0.014751540991710499,
+          "optimization_validation": 0.8471013339876663,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 55.0,
+        "seconds": 0.8829941249859985,
+        "timing": {
+          "initialization": 0.010506999999051914,
+          "field_sampling": 0.014740207989234477,
+          "optimization_validation": 0.857068999990588,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 60.0,
+        "seconds": 0.8746184169722255,
+        "timing": {
+          "initialization": 0.012874374981038272,
+          "field_sampling": 0.01515562500571832,
+          "optimization_validation": 0.8460358750016894,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 65.0,
+        "seconds": 0.8856503749848343,
+        "timing": {
+          "initialization": 0.011110833002021536,
+          "field_sampling": 0.0155646670027636,
+          "optimization_validation": 0.8584409579925705,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 70.0,
+        "seconds": 0.8799346669984516,
+        "timing": {
+          "initialization": 0.011388750019250438,
+          "field_sampling": 0.015441333991475403,
+          "optimization_validation": 0.8524261669954285,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 75.0,
+        "seconds": 0.8649777919927146,
+        "timing": {
+          "initialization": 0.010849125013919547,
+          "field_sampling": 0.014763207989744842,
+          "optimization_validation": 0.838803458987968,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 80.0,
+        "seconds": 0.8767811249999795,
+        "timing": {
+          "initialization": 0.012649582989979535,
+          "field_sampling": 0.014668749994598329,
+          "optimization_validation": 0.8489201249903999,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 85.0,
+        "seconds": 0.8781099580228329,
+        "timing": {
+          "initialization": 0.011312250018818304,
+          "field_sampling": 0.014852457999950275,
+          "optimization_validation": 0.8513862919935491,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 90.0,
+        "seconds": 0.8791194579971489,
+        "timing": {
+          "initialization": 0.012047083000652492,
+          "field_sampling": 0.015005875000497326,
+          "optimization_validation": 0.8515044999949168,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 95.0,
+        "seconds": 0.8736071249877568,
+        "timing": {
+          "initialization": 0.010325416980776936,
+          "field_sampling": 0.014927333017112687,
+          "optimization_validation": 0.8477945410122629,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 100.0,
+        "seconds": 0.8931971249985509,
+        "timing": {
+          "initialization": 0.011832291987957433,
+          "field_sampling": 0.015203041984932497,
+          "optimization_validation": 0.8656394999998156,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 105.0,
+        "seconds": 0.8696247079933528,
+        "timing": {
+          "initialization": 0.01062058299430646,
+          "field_sampling": 0.01510591700207442,
+          "optimization_validation": 0.8433550840127282,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 110.0,
+        "seconds": 0.8706562090083025,
+        "timing": {
+          "initialization": 0.01255745900562033,
+          "field_sampling": 0.015055374999064952,
+          "optimization_validation": 0.8425152499985415,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 115.0,
+        "seconds": 0.9236013749905396,
+        "timing": {
+          "initialization": 0.016573125001741573,
+          "field_sampling": 0.023126374988351017,
+          "optimization_validation": 0.8827045419893693,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 120.0,
+        "seconds": 0.8958006250031758,
+        "timing": {
+          "initialization": 0.011245000001508743,
+          "field_sampling": 0.01522050000494346,
+          "optimization_validation": 0.8687994579959195,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 125.0,
+        "seconds": 0.8732156670012046,
+        "timing": {
+          "initialization": 0.011878707999130711,
+          "field_sampling": 0.015060917008668184,
+          "optimization_validation": 0.8457394169818144,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 130.0,
+        "seconds": 0.8773187499900814,
+        "timing": {
+          "initialization": 0.010973750002449378,
+          "field_sampling": 0.0146567499905359,
+          "optimization_validation": 0.851160666992655,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 135.0,
+        "seconds": 0.8670740840025246,
+        "timing": {
+          "initialization": 0.011374499998055398,
+          "field_sampling": 0.015215499995974824,
+          "optimization_validation": 0.8398433330003172,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 140.0,
+        "seconds": 0.8763617499789689,
+        "timing": {
+          "initialization": 0.012791583983926103,
+          "field_sampling": 0.01476537500275299,
+          "optimization_validation": 0.8482805000094231,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 145.0,
+        "seconds": 0.8709988750051707,
+        "timing": {
+          "initialization": 0.010870208003325388,
+          "field_sampling": 0.01478875000611879,
+          "optimization_validation": 0.8448088340228423,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 150.0,
+        "seconds": 0.8828477920033038,
+        "timing": {
+          "initialization": 0.011214459023904055,
+          "field_sampling": 0.015591041999869049,
+          "optimization_validation": 0.8555208749894518,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 155.0,
+        "seconds": 0.8698892089887522,
+        "timing": {
+          "initialization": 0.011731541977496818,
+          "field_sampling": 0.015162499999860302,
+          "optimization_validation": 0.8424282910127658,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 160.0,
+        "seconds": 0.8788262080051936,
+        "timing": {
+          "initialization": 0.01198508299421519,
+          "field_sampling": 0.015446999983396381,
+          "optimization_validation": 0.8508784169971477,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 165.0,
+        "seconds": 0.8777467499894556,
+        "timing": {
+          "initialization": 0.011909666995052248,
+          "field_sampling": 0.014900125010171905,
+          "optimization_validation": 0.8502633750031237,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 170.0,
+        "seconds": 0.8858961669902783,
+        "timing": {
+          "initialization": 0.011456582986284047,
+          "field_sampling": 0.015580375009449199,
+          "optimization_validation": 0.8582860000024084,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 175.0,
+        "seconds": 0.8790847079944797,
+        "timing": {
+          "initialization": 0.013211999990744516,
+          "field_sampling": 0.014946875016903505,
+          "optimization_validation": 0.8503240830032155,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 180.0,
+        "seconds": 0.8752630000235513,
+        "timing": {
+          "initialization": 0.01575641700765118,
+          "field_sampling": 0.015256916987709701,
+          "optimization_validation": 0.8436542080016807,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 185.0,
+        "seconds": 0.8764126669848338,
+        "timing": {
+          "initialization": 0.010829458973603323,
+          "field_sampling": 0.014734374999534339,
+          "optimization_validation": 0.8500779999885708,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 190.0,
+        "seconds": 0.8796796659880783,
+        "timing": {
+          "initialization": 0.011756749998312443,
+          "field_sampling": 0.015270500007318333,
+          "optimization_validation": 0.8520654999883845,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 195.0,
+        "seconds": 0.8724914579943288,
+        "timing": {
+          "initialization": 0.012613875005627051,
+          "field_sampling": 0.015016125020338222,
+          "optimization_validation": 0.8442589170008432,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 200.0,
+        "seconds": 0.8852147500147112,
+        "timing": {
+          "initialization": 0.011253083008341491,
+          "field_sampling": 0.014897374989232048,
+          "optimization_validation": 0.858509417012101,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 205.0,
+        "seconds": 0.864629874995444,
+        "timing": {
+          "initialization": 0.012366709008347243,
+          "field_sampling": 0.015211707999696955,
+          "optimization_validation": 0.8364761249977164,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 210.0,
+        "seconds": 0.8645419159729499,
+        "timing": {
+          "initialization": 0.011044957995181903,
+          "field_sampling": 0.015154082997469231,
+          "optimization_validation": 0.8377277919789776,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 215.0,
+        "seconds": 0.8641815829905681,
+        "timing": {
+          "initialization": 0.01271804198040627,
+          "field_sampling": 0.014643708011135459,
+          "optimization_validation": 0.8362554170016665,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 220.0,
+        "seconds": 0.8857131669938099,
+        "timing": {
+          "initialization": 0.011718582973117009,
+          "field_sampling": 0.01625300000887364,
+          "optimization_validation": 0.8571990409982391,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 225.0,
+        "seconds": 0.8939290420094039,
+        "timing": {
+          "initialization": 0.014805124985286966,
+          "field_sampling": 0.014820207987213507,
+          "optimization_validation": 0.8636796670034528,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 230.0,
+        "seconds": 0.9038662090024445,
+        "timing": {
+          "initialization": 0.010739499994087964,
+          "field_sampling": 0.014942625013645738,
+          "optimization_validation": 0.8776696670101956,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 235.0,
+        "seconds": 0.8859027089783922,
+        "timing": {
+          "initialization": 0.011909583990927786,
+          "field_sampling": 0.015198000008240342,
+          "optimization_validation": 0.8582832090032753,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 240.0,
+        "seconds": 0.8649236670171376,
+        "timing": {
+          "initialization": 0.011795708007412031,
+          "field_sampling": 0.014859874994726852,
+          "optimization_validation": 0.8377162920078263,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 245.0,
+        "seconds": 0.9164507910027169,
+        "timing": {
+          "initialization": 0.01237516599940136,
+          "field_sampling": 0.014741000020876527,
+          "optimization_validation": 0.888788750016829,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 250.0,
+        "seconds": 0.8941840420011431,
+        "timing": {
+          "initialization": 0.011381082993466407,
+          "field_sampling": 0.016080417000921443,
+          "optimization_validation": 0.8662132500030566,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 255.0,
+        "seconds": 0.8857653749873862,
+        "timing": {
+          "initialization": 0.013137666013790295,
+          "field_sampling": 0.01510891699581407,
+          "optimization_validation": 0.8569689159921836,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 260.0,
+        "seconds": 0.8821271669876296,
+        "timing": {
+          "initialization": 0.011571916984394193,
+          "field_sampling": 0.015590334020089358,
+          "optimization_validation": 0.8543443749949802,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 265.0,
+        "seconds": 0.8727345000079367,
+        "timing": {
+          "initialization": 0.012246166996192187,
+          "field_sampling": 0.015064334002090618,
+          "optimization_validation": 0.8448918749927543,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 270.0,
+        "seconds": 0.929029332997743,
+        "timing": {
+          "initialization": 0.010378124978160486,
+          "field_sampling": 0.018710792006459087,
+          "optimization_validation": 0.8990989169979002,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 275.0,
+        "seconds": 0.8831578750105109,
+        "timing": {
+          "initialization": 0.0117501660133712,
+          "field_sampling": 0.014736125012859702,
+          "optimization_validation": 0.8560761669941712,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 280.0,
+        "seconds": 0.8902547920006327,
+        "timing": {
+          "initialization": 0.010471625020727515,
+          "field_sampling": 0.015398250019643456,
+          "optimization_validation": 0.8638788749813102,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 285.0,
+        "seconds": 0.8801417920039967,
+        "timing": {
+          "initialization": 0.01812633400550112,
+          "field_sampling": 0.015273500001057982,
+          "optimization_validation": 0.8461182919854764,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 290.0,
+        "seconds": 0.8808857080002781,
+        "timing": {
+          "initialization": 0.010866374999750406,
+          "field_sampling": 0.01509583299048245,
+          "optimization_validation": 0.8543975419888739,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 295.0,
+        "seconds": 0.8724598340049852,
+        "timing": {
+          "initialization": 0.011872167000547051,
+          "field_sampling": 0.015185124997515231,
+          "optimization_validation": 0.8448917499918025,
+          "compilation_included": false
+        }
+      }
+    ]
+  },
+  {
+    "experiment": "monitoring_inducing_information_300",
+    "summary": {
+      "completed": false,
+      "simulated_seconds": 170.0,
+      "planned_seconds": 300.0,
+      "contact": null,
+      "integrated_deficit": 34.81856900542447,
+      "min_clearance_m": 0.13380344808662437,
+      "infeasible_execution_steps": 11,
+      "max_execution_slack": 0.5648945026800258,
+      "max_control_component_m_s2": 1.6000000000000014,
+      "fallback_periods": 0,
+      "wall_seconds": 99.34858375001932,
+      "passage_crossings": [],
+      "final_region_clarity": [
+        0.035291328888992377,
+        0.3342792253828225
+      ],
+      "final_whole_clarity": 0.31615976215186103,
+      "stop_reason": "Planning runtime budget exceeded",
+      "warm_plan_max_seconds": 1.0601969169802032,
+      "rejected_planning_calls": [],
+      "total_wall_seconds": 99.3486008339969
+    },
+    "settings": {
+      "dt": 0.25,
+      "horizon": 15,
+      "commit": 5.0,
+      "worlds": 1,
+      "validation_worlds": 2,
+      "construction_worlds": 8,
+      "iterations": 2,
+      "proposals": 14,
+      "temperature": 0.06,
+      "optimism": 1.0,
+      "mixture": 0.0,
+      "archive_size": 8,
+      "latent_bound": 12.0,
+      "cosine_end": 0.15,
+      "umax": 1.6,
+      "speed_max": 3.1,
+      "backup_steps": 8,
+      "backup_dt": 0.15,
+      "backup_gain": 2.0,
+      "cbf_alpha": 1.0,
+      "safety_margin": 0.12,
+      "slack_weight": 15.0,
+      "violation_weight": 1.0,
+      "spline": "full",
+      "sensor_sigma": 0.5,
+      "sensor_R": 0.1,
+      "sensor_half_angle_degrees": 45.0,
+      "observation_std": 0.25,
+      "wind_strength": 3.1,
+      "prior_std": 1.8,
+      "seed": 8101,
+      "batch_size": 7,
+      "validation_batch_size": 4,
+      "chains": 1,
+      "environment_scale": 1.0,
+      "inspection_scale": 1.0,
+      "initialization": "modes",
+      "rrt_paths": 3,
+      "rrt_visits": 1,
+      "common_construction": false,
+      "rrt_margin": 0.65,
+      "guidance_sigma": 1.0,
+      "planning_clearance": 0.06,
+      "speed_penalty": 2.0,
+      "jerk_limit": 12.0,
+      "jerk_penalty": 0.0,
+      "tracking_kp": 4.411764705882352,
+      "tracking_kv": 7.352941176470588,
+      "execution_dt": 0.05,
+      "execution_margin": 0.55,
+      "execution_filter": "hard",
+      "penalty_aggregation": "mean",
+      "validate_initials": true,
+      "rrt_diversity": false,
+      "prediction_substeps": 1,
+      "observation_period": 5.0,
+      "prediction_filter": "hard",
+      "guidance_mode": "off",
+      "online_estimation": false,
+      "wind_support_nodes": 0,
+      "wind_relocate": false,
+      "terminate_predictions": true,
+      "geometry": "quarter",
+      "multimode": true,
+      "mode_count": 7,
+      "initialization_effort": null,
+      "optimism_anneal_seconds": null,
+      "detour_depth": 2.0,
+      "wind_at_start": false,
+      "initial_wind_observations": [],
+      "wind_inducing_count": 36,
+      "wind_kernel_lengths": []
+    },
+    "warm_planning": [
+      {
+        "t": 5.0,
+        "seconds": 0.9006962910061702,
+        "timing": {
+          "initialization": 0.014078541018534452,
+          "field_sampling": 0.01640520800719969,
+          "optimization_validation": 0.8695878330036066,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 10.0,
+        "seconds": 0.8853490840119775,
+        "timing": {
+          "initialization": 0.012222624995047227,
+          "field_sampling": 0.01648870899225585,
+          "optimization_validation": 0.8560163749789353,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 15.0,
+        "seconds": 0.8891839999996591,
+        "timing": {
+          "initialization": 0.011906333005754277,
+          "field_sampling": 0.01688220800133422,
+          "optimization_validation": 0.8596982499875594,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 20.0,
+        "seconds": 0.943263624998508,
+        "timing": {
+          "initialization": 0.012495707982452586,
+          "field_sampling": 0.017043500003637746,
+          "optimization_validation": 0.9130931250110734,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 25.0,
+        "seconds": 0.9181873329798691,
+        "timing": {
+          "initialization": 0.0128107079945039,
+          "field_sampling": 0.015751667000586167,
+          "optimization_validation": 0.8890407500148285,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 30.0,
+        "seconds": 0.8865217920101713,
+        "timing": {
+          "initialization": 0.010920792003162205,
+          "field_sampling": 0.016277084010653198,
+          "optimization_validation": 0.8587674589944072,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 35.0,
+        "seconds": 0.9122415000165347,
+        "timing": {
+          "initialization": 0.013265457993838936,
+          "field_sampling": 0.015265791997080669,
+          "optimization_validation": 0.8831136250228155,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 40.0,
+        "seconds": 0.8867656660149805,
+        "timing": {
+          "initialization": 0.014260000025387853,
+          "field_sampling": 0.01627779199043289,
+          "optimization_validation": 0.8556851249886677,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 45.0,
+        "seconds": 0.9111985409981571,
+        "timing": {
+          "initialization": 0.01369150000391528,
+          "field_sampling": 0.015253457997459918,
+          "optimization_validation": 0.8817364159913268,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 50.0,
+        "seconds": 0.875544832990272,
+        "timing": {
+          "initialization": 0.01118599998881109,
+          "field_sampling": 0.01529304197174497,
+          "optimization_validation": 0.8484458340099081,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 55.0,
+        "seconds": 0.8722117909928784,
+        "timing": {
+          "initialization": 0.011264791013672948,
+          "field_sampling": 0.015339083009166643,
+          "optimization_validation": 0.8450872920220718,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 60.0,
+        "seconds": 0.872007541009225,
+        "timing": {
+          "initialization": 0.011140707996673882,
+          "field_sampling": 0.015521749999606982,
+          "optimization_validation": 0.8446952500089537,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 65.0,
+        "seconds": 0.8659225419978611,
+        "timing": {
+          "initialization": 0.010917917010374367,
+          "field_sampling": 0.016130916977999732,
+          "optimization_validation": 0.838295791996643,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 70.0,
+        "seconds": 0.8873391250090208,
+        "timing": {
+          "initialization": 0.011631667002802715,
+          "field_sampling": 0.0147298329975456,
+          "optimization_validation": 0.8604220419947524,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 75.0,
+        "seconds": 0.8785869579878636,
+        "timing": {
+          "initialization": 0.0114764999889303,
+          "field_sampling": 0.015448041987838224,
+          "optimization_validation": 0.8510780829819851,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 80.0,
+        "seconds": 0.8662328330101445,
+        "timing": {
+          "initialization": 0.011390833009500057,
+          "field_sampling": 0.014864500000840053,
+          "optimization_validation": 0.8394767080026213,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 85.0,
+        "seconds": 0.8942455419746693,
+        "timing": {
+          "initialization": 0.01240024997969158,
+          "field_sampling": 0.014680624997708946,
+          "optimization_validation": 0.8665509579877835,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 90.0,
+        "seconds": 0.8763238750107121,
+        "timing": {
+          "initialization": 0.013741208997089416,
+          "field_sampling": 0.014769749977858737,
+          "optimization_validation": 0.8472481250064448,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 95.0,
+        "seconds": 0.9448653750005178,
+        "timing": {
+          "initialization": 0.013399958988884464,
+          "field_sampling": 0.016252958012046292,
+          "optimization_validation": 0.9144362499937415,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 100.0,
+        "seconds": 0.8846294580143876,
+        "timing": {
+          "initialization": 0.011241500003961846,
+          "field_sampling": 0.01574841601541266,
+          "optimization_validation": 0.8570297089754604,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 105.0,
+        "seconds": 0.8923924999835435,
+        "timing": {
+          "initialization": 0.011432458006311208,
+          "field_sampling": 0.015395875001559034,
+          "optimization_validation": 0.8649865000043064,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 110.0,
+        "seconds": 0.8694635409920011,
+        "timing": {
+          "initialization": 0.011467207979876548,
+          "field_sampling": 0.014930750010535121,
+          "optimization_validation": 0.8425587080128025,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 115.0,
+        "seconds": 0.8782460000074934,
+        "timing": {
+          "initialization": 0.01201091700932011,
+          "field_sampling": 0.015729207982076332,
+          "optimization_validation": 0.8499815000104718,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 120.0,
+        "seconds": 0.867574459000025,
+        "timing": {
+          "initialization": 0.011383292003301904,
+          "field_sampling": 0.015188667020993307,
+          "optimization_validation": 0.8404565420059953,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 125.0,
+        "seconds": 0.8720528330013622,
+        "timing": {
+          "initialization": 0.010600542009342462,
+          "field_sampling": 0.015137000009417534,
+          "optimization_validation": 0.8457718749996275,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 130.0,
+        "seconds": 0.8748793749837205,
+        "timing": {
+          "initialization": 0.011401249998016283,
+          "field_sampling": 0.015036500000860542,
+          "optimization_validation": 0.8479098749812692,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 135.0,
+        "seconds": 0.8680736670212355,
+        "timing": {
+          "initialization": 0.011917042022105306,
+          "field_sampling": 0.014982916007284075,
+          "optimization_validation": 0.8406737079785671,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 140.0,
+        "seconds": 0.8733082920080051,
+        "timing": {
+          "initialization": 0.012073500023689121,
+          "field_sampling": 0.014699084014864638,
+          "optimization_validation": 0.8459942920017056,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 145.0,
+        "seconds": 0.8809240419941489,
+        "timing": {
+          "initialization": 0.011467667005490512,
+          "field_sampling": 0.015369166998425499,
+          "optimization_validation": 0.8535758329962846,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 150.0,
+        "seconds": 0.8799807920004241,
+        "timing": {
+          "initialization": 0.01175050000892952,
+          "field_sampling": 0.015634208015399054,
+          "optimization_validation": 0.8520424159942195,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 155.0,
+        "seconds": 0.8752022080007009,
+        "timing": {
+          "initialization": 0.011503957997774705,
+          "field_sampling": 0.014767374988878146,
+          "optimization_validation": 0.8483192920102738,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 160.0,
+        "seconds": 0.8853983749868348,
+        "timing": {
+          "initialization": 0.011315333977108821,
+          "field_sampling": 0.015231625002343208,
+          "optimization_validation": 0.8583374579902738,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 165.0,
+        "seconds": 0.8740670830011368,
+        "timing": {
+          "initialization": 0.011670083011267707,
+          "field_sampling": 0.015971000015269965,
+          "optimization_validation": 0.8459293750056531,
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 170.0,
+        "seconds": 1.0601969169802032,
+        "timing": {
+          "initialization": 0.011288207984762266,
+          "field_sampling": 0.014718666992848739,
+          "optimization_validation": 1.033671624987619,
+          "compilation_included": false
+        }
+      }
+    ]
+  },
+  {
+    "experiment": "monitoring_bayesian_launch_diagnostic",
+    "summary": {
+      "completed": false,
+      "simulated_seconds": 5.0,
+      "planned_seconds": 300.0,
+      "contact": null,
+      "integrated_deficit": 0.19116580978893047,
+      "min_clearance_m": 0.873548942434268,
+      "infeasible_execution_steps": 0,
+      "max_execution_slack": 0.0,
+      "max_control_component_m_s2": 0.10660037971926475,
+      "fallback_periods": 0,
+      "wall_seconds": 42.86111058399547,
+      "passage_crossings": [],
+      "final_region_clarity": [
+        0.46482412060302125,
+        0.6394183748914988
+      ],
+      "final_whole_clarity": 0.6268228507542994,
+      "stop_reason": "Planning runtime budget exceeded",
+      "warm_plan_max_seconds": 4.190206125000259,
+      "rejected_planning_calls": [],
+      "total_wall_seconds": 42.86111595897819
+    },
+    "settings": {
+      "dt": 0.25,
+      "horizon": 15,
+      "commit": 5.0,
+      "worlds": 4,
+      "validation_worlds": 8,
+      "construction_worlds": 2,
+      "iterations": 4,
+      "proposals": 28,
+      "temperature": 0.06,
+      "optimism": 1.0,
+      "mixture": 0.0,
+      "archive_size": 8,
+      "latent_bound": 12.0,
+      "cosine_end": 0.15,
+      "umax": 1.6,
+      "speed_max": 3.1,
+      "backup_steps": 8,
+      "backup_dt": 0.15,
+      "backup_gain": 2.0,
+      "cbf_alpha": 1.0,
+      "safety_margin": 0.06,
+      "slack_weight": 15.0,
+      "violation_weight": 1.0,
+      "spline": "full",
+      "sensor_sigma": 0.5,
+      "sensor_R": 0.1,
+      "sensor_half_angle_degrees": 45.0,
+      "observation_std": 0.25,
+      "wind_strength": 3.1,
+      "prior_std": 1.8,
+      "seed": 8101,
+      "batch_size": 7,
+      "validation_batch_size": 0,
+      "chains": 1,
+      "environment_scale": 1.0,
+      "inspection_scale": 1.0,
+      "initialization": "modes",
+      "rrt_paths": 3,
+      "rrt_visits": 1,
+      "common_construction": false,
+      "rrt_margin": 0.65,
+      "guidance_sigma": 1.0,
+      "planning_clearance": 0.06,
+      "speed_penalty": 2.0,
+      "jerk_limit": 12.0,
+      "jerk_penalty": 0.0,
+      "tracking_kp": 4.411764705882352,
+      "tracking_kv": 7.352941176470588,
+      "execution_dt": 0.05,
+      "execution_margin": 0.55,
+      "execution_filter": "hard",
+      "penalty_aggregation": "mean",
+      "validate_initials": true,
+      "rrt_diversity": false,
+      "prediction_substeps": 1,
+      "observation_period": 5.0,
+      "prediction_filter": "soft",
+      "guidance_mode": "off",
+      "online_estimation": false,
+      "wind_support_nodes": 0,
+      "wind_relocate": false,
+      "terminate_predictions": true,
+      "geometry": "quarter",
+      "multimode": true,
+      "mode_count": 7,
+      "initialization_effort": null,
+      "optimism_anneal_seconds": null,
+      "detour_depth": 2.0,
+      "wind_at_start": false,
+      "initial_wind_observations": [],
+      "wind_inducing_count": 36,
+      "wind_kernel_lengths": []
+    },
+    "warm_planning": [
+      {
+        "t": 5.0,
+        "seconds": 4.190206125000259,
+        "timing": {
+          "initialization": 0.012983416992938146,
+          "field_sampling": 0.020420042012119666,
+          "optimization_validation": 3.667098417005036,
+          "lookahead": {
+            "root_fields": 0.01482720801141113,
+            "prefix_rollouts": 0.02497770800255239,
+            "posterior_and_fields": 0.14318708301289007,
+            "continuation_geometry": 0.07400291701196693,
+            "continuation_rollouts": 0.2291501660074573,
+            "total": 0.4861539580160752
+          },
+          "compilation_included": false
+        }
+      }
+    ]
+  },
+  {
+    "experiment": "monitoring_bayesian_two_branches_diagnostic",
+    "summary": {
+      "completed": false,
+      "simulated_seconds": 45.0,
+      "planned_seconds": 300.0,
+      "contact": null,
+      "integrated_deficit": 6.041245304760305,
+      "min_clearance_m": 0.8719567212990263,
+      "infeasible_execution_steps": 0,
+      "max_execution_slack": 0.0,
+      "max_control_component_m_s2": 0.10660037971926475,
+      "fallback_periods": 0,
+      "wall_seconds": 51.430876832979266,
+      "passage_crossings": [],
+      "final_region_clarity": [
+        0.11694058154235208,
+        0.5517011435260682
+      ],
+      "final_whole_clarity": 0.3874595243347675,
+      "stop_reason": "Planning runtime budget exceeded",
+      "warm_plan_max_seconds": 1.1789365420117974,
+      "rejected_planning_calls": [],
+      "total_wall_seconds": 51.43088983299094
+    },
+    "settings": {
+      "dt": 0.25,
+      "horizon": 15,
+      "commit": 5.0,
+      "worlds": 1,
+      "validation_worlds": 2,
+      "construction_worlds": 2,
+      "iterations": 2,
+      "proposals": 14,
+      "temperature": 0.06,
+      "optimism": 1.0,
+      "mixture": 0.0,
+      "archive_size": 8,
+      "latent_bound": 12.0,
+      "cosine_end": 0.15,
+      "umax": 1.6,
+      "speed_max": 3.1,
+      "backup_steps": 8,
+      "backup_dt": 0.15,
+      "backup_gain": 2.0,
+      "cbf_alpha": 1.0,
+      "safety_margin": 0.06,
+      "slack_weight": 15.0,
+      "violation_weight": 1.0,
+      "spline": "full",
+      "sensor_sigma": 0.5,
+      "sensor_R": 0.1,
+      "sensor_half_angle_degrees": 45.0,
+      "observation_std": 0.25,
+      "wind_strength": 3.1,
+      "prior_std": 1.8,
+      "seed": 8101,
+      "batch_size": 7,
+      "validation_batch_size": 4,
+      "chains": 1,
+      "environment_scale": 1.0,
+      "inspection_scale": 1.0,
+      "initialization": "modes",
+      "rrt_paths": 3,
+      "rrt_visits": 1,
+      "common_construction": false,
+      "rrt_margin": 0.65,
+      "guidance_sigma": 1.0,
+      "planning_clearance": 0.06,
+      "speed_penalty": 2.0,
+      "jerk_limit": 12.0,
+      "jerk_penalty": 0.0,
+      "tracking_kp": 4.411764705882352,
+      "tracking_kv": 7.352941176470588,
+      "execution_dt": 0.05,
+      "execution_margin": 0.55,
+      "execution_filter": "hard",
+      "penalty_aggregation": "mean",
+      "validate_initials": true,
+      "rrt_diversity": false,
+      "prediction_substeps": 1,
+      "observation_period": 5.0,
+      "prediction_filter": "soft",
+      "guidance_mode": "off",
+      "online_estimation": false,
+      "wind_support_nodes": 0,
+      "wind_relocate": false,
+      "terminate_predictions": true,
+      "geometry": "quarter",
+      "multimode": true,
+      "mode_count": 7,
+      "initialization_effort": null,
+      "optimism_anneal_seconds": null,
+      "detour_depth": 2.0,
+      "wind_at_start": false,
+      "initial_wind_observations": [],
+      "wind_inducing_count": 36,
+      "wind_kernel_lengths": []
+    },
+    "warm_planning": [
+      {
+        "t": 5.0,
+        "seconds": 0.9241552079911344,
+        "timing": {
+          "initialization": 0.012922750000143424,
+          "field_sampling": 0.012430458009475842,
+          "optimization_validation": 0.3864722920116037,
+          "lookahead": {
+            "root_fields": 0.013716250017751008,
+            "prefix_rollouts": 0.02517325000371784,
+            "posterior_and_fields": 0.15354733300046064,
+            "continuation_geometry": 0.07301995900343172,
+            "continuation_rollouts": 0.24411716699250974,
+            "total": 0.5095822919975035
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 10.0,
+        "seconds": 0.874996958009433,
+        "timing": {
+          "initialization": 0.011787041003117338,
+          "field_sampling": 0.011072916007833555,
+          "optimization_validation": 0.392608875001315,
+          "lookahead": {
+            "root_fields": 0.013656334020197392,
+            "prefix_rollouts": 0.024521625018678606,
+            "posterior_and_fields": 0.11743166600354016,
+            "continuation_geometry": 0.07191624998813495,
+            "continuation_rollouts": 0.22936920801294036,
+            "total": 0.4569023340009153
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 15.0,
+        "seconds": 0.8682055419776589,
+        "timing": {
+          "initialization": 0.012498041993239895,
+          "field_sampling": 0.012133792013628408,
+          "optimization_validation": 0.38562670900137164,
+          "lookahead": {
+            "root_fields": 0.014453834010055289,
+            "prefix_rollouts": 0.024527665984351188,
+            "posterior_and_fields": 0.12112966598942876,
+            "continuation_geometry": 0.06786562499473803,
+            "continuation_rollouts": 0.22744720900664106,
+            "total": 0.45543095900211483
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 20.0,
+        "seconds": 0.8668465829978231,
+        "timing": {
+          "initialization": 0.012282625015359372,
+          "field_sampling": 0.012434417003532872,
+          "optimization_validation": 0.3864070409908891,
+          "lookahead": {
+            "root_fields": 0.014348500000778586,
+            "prefix_rollouts": 0.023722207988612354,
+            "posterior_and_fields": 0.11690200000884943,
+            "continuation_geometry": 0.0676657919830177,
+            "continuation_rollouts": 0.23070454198750667,
+            "total": 0.45335150000755675
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 25.0,
+        "seconds": 0.8689186659757979,
+        "timing": {
+          "initialization": 0.012139499973272905,
+          "field_sampling": 0.011335000017425045,
+          "optimization_validation": 0.38517758398666047,
+          "lookahead": {
+            "root_fields": 0.014678750012535602,
+            "prefix_rollouts": 0.024871125002391636,
+            "posterior_and_fields": 0.1141292089887429,
+            "continuation_geometry": 0.0746662089950405,
+            "continuation_rollouts": 0.22963741701096296,
+            "total": 0.45799087500199676
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 30.0,
+        "seconds": 0.8466782080067787,
+        "timing": {
+          "initialization": 0.012594792002346367,
+          "field_sampling": 0.011294875002931803,
+          "optimization_validation": 0.380724167014705,
+          "lookahead": {
+            "root_fields": 0.014227083011064678,
+            "prefix_rollouts": 0.024295125011121854,
+            "posterior_and_fields": 0.10287616599816829,
+            "continuation_geometry": 0.06980683299480006,
+            "continuation_rollouts": 0.2284035830234643,
+            "total": 0.43961537501309067
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 35.0,
+        "seconds": 0.8691588750225492,
+        "timing": {
+          "initialization": 0.012810250016627833,
+          "field_sampling": 0.011135750013636425,
+          "optimization_validation": 0.39497241599019617,
+          "lookahead": {
+            "root_fields": 0.01402120798593387,
+            "prefix_rollouts": 0.02390441601164639,
+            "posterior_and_fields": 0.11230179099948145,
+            "continuation_geometry": 0.06866245801211335,
+            "continuation_rollouts": 0.2291202920023352,
+            "total": 0.44801687498693354
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 40.0,
+        "seconds": 0.8802721250103787,
+        "timing": {
+          "initialization": 0.012193958013085648,
+          "field_sampling": 0.011234167002839968,
+          "optimization_validation": 0.3875944589963183,
+          "lookahead": {
+            "root_fields": 0.014114040997810662,
+            "prefix_rollouts": 0.023998708988074213,
+            "posterior_and_fields": 0.13138379200245254,
+            "continuation_geometry": 0.07065050001256168,
+            "continuation_rollouts": 0.22688345800270326,
+            "total": 0.4670338330033701
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 45.0,
+        "seconds": 1.1789365420117974,
+        "timing": {
+          "initialization": 0.013370125001529232,
+          "field_sampling": 0.012327625008765608,
+          "optimization_validation": 0.44390179100446403,
+          "lookahead": {
+            "root_fields": 0.01657845900626853,
+            "prefix_rollouts": 0.026309500011848286,
+            "posterior_and_fields": 0.18136445799609646,
+            "continuation_geometry": 0.08083550000446849,
+            "continuation_rollouts": 0.40163237499655224,
+            "total": 0.7067258339957334
+          },
+          "compilation_included": false
+        }
+      }
+    ]
+  },
+  {
+    "experiment": "monitoring_bayesian_two_conditional_diagnostic",
+    "summary": {
+      "completed": false,
+      "simulated_seconds": 75.0,
+      "planned_seconds": 300.0,
+      "contact": null,
+      "integrated_deficit": 11.195750690167394,
+      "min_clearance_m": 0.6401666378828867,
+      "infeasible_execution_steps": 0,
+      "max_execution_slack": 0.0,
+      "max_control_component_m_s2": 1.5772807971026022,
+      "fallback_periods": 0,
+      "wall_seconds": 71.05228145897854,
+      "passage_crossings": [],
+      "final_region_clarity": [
+        0.07489878542510167,
+        0.5630507979954203
+      ],
+      "final_whole_clarity": 0.33406672517297115,
+      "stop_reason": "Planning runtime budget exceeded",
+      "warm_plan_max_seconds": 1.1351673750032205,
+      "rejected_planning_calls": [],
+      "total_wall_seconds": 71.05229649998364
+    },
+    "settings": {
+      "dt": 0.25,
+      "horizon": 15,
+      "commit": 5.0,
+      "worlds": 1,
+      "validation_worlds": 2,
+      "construction_worlds": 2,
+      "iterations": 2,
+      "proposals": 14,
+      "temperature": 0.06,
+      "optimism": 1.0,
+      "mixture": 0.0,
+      "archive_size": 8,
+      "latent_bound": 12.0,
+      "cosine_end": 0.15,
+      "umax": 1.6,
+      "speed_max": 3.1,
+      "backup_steps": 8,
+      "backup_dt": 0.15,
+      "backup_gain": 2.0,
+      "cbf_alpha": 1.0,
+      "safety_margin": 0.06,
+      "slack_weight": 15.0,
+      "violation_weight": 1.0,
+      "spline": "full",
+      "sensor_sigma": 0.5,
+      "sensor_R": 0.1,
+      "sensor_half_angle_degrees": 45.0,
+      "observation_std": 0.25,
+      "wind_strength": 3.1,
+      "prior_std": 1.8,
+      "seed": 8101,
+      "batch_size": 7,
+      "validation_batch_size": 4,
+      "chains": 1,
+      "environment_scale": 1.0,
+      "inspection_scale": 1.0,
+      "initialization": "modes",
+      "rrt_paths": 3,
+      "rrt_visits": 1,
+      "common_construction": false,
+      "rrt_margin": 0.65,
+      "guidance_sigma": 1.0,
+      "planning_clearance": 0.06,
+      "speed_penalty": 2.0,
+      "jerk_limit": 12.0,
+      "jerk_penalty": 0.0,
+      "tracking_kp": 4.411764705882352,
+      "tracking_kv": 7.352941176470588,
+      "execution_dt": 0.05,
+      "execution_margin": 0.55,
+      "execution_filter": "hard",
+      "penalty_aggregation": "mean",
+      "validate_initials": true,
+      "rrt_diversity": false,
+      "prediction_substeps": 1,
+      "observation_period": 5.0,
+      "prediction_filter": "soft",
+      "guidance_mode": "off",
+      "online_estimation": false,
+      "wind_support_nodes": 0,
+      "wind_relocate": false,
+      "terminate_predictions": true,
+      "geometry": "quarter",
+      "multimode": true,
+      "mode_count": 7,
+      "initialization_effort": null,
+      "optimism_anneal_seconds": null,
+      "detour_depth": 2.0,
+      "wind_at_start": false,
+      "initial_wind_observations": [],
+      "wind_inducing_count": 36,
+      "wind_kernel_lengths": []
+    },
+    "warm_planning": [
+      {
+        "t": 5.0,
+        "seconds": 0.9934796669986099,
+        "timing": {
+          "initialization": 0.016244250000454485,
+          "field_sampling": 0.015614583011483774,
+          "optimization_validation": 0.5110456249967683,
+          "lookahead": {
+            "root_fields": 0.018833041976904497,
+            "prefix_rollouts": 0.01838937497814186,
+            "posterior_and_fields": 0.11156812499393709,
+            "continuation_geometry": 0.04626662499504164,
+            "continuation_rollouts": 0.25188812499982305,
+            "total": 0.446955708990572
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 10.0,
+        "seconds": 0.9651885420025792,
+        "timing": {
+          "initialization": 0.01654208399122581,
+          "field_sampling": 0.014013291016453877,
+          "optimization_validation": 0.5002706250234041,
+          "lookahead": {
+            "root_fields": 0.019121707999147475,
+            "prefix_rollouts": 0.017229292017873377,
+            "posterior_and_fields": 0.09549558299477212,
+            "continuation_geometry": 0.04766908401506953,
+            "continuation_rollouts": 0.25180837500374764,
+            "total": 0.4313350000011269
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 15.0,
+        "seconds": 0.9651575419993605,
+        "timing": {
+          "initialization": 0.01745366700924933,
+          "field_sampling": 0.015024667023681104,
+          "optimization_validation": 0.5150204590172507,
+          "lookahead": {
+            "root_fields": 0.019286708993604407,
+            "prefix_rollouts": 0.01762129200506024,
+            "posterior_and_fields": 0.0825720000138972,
+            "continuation_geometry": 0.043842374987434596,
+            "continuation_rollouts": 0.25062733300728723,
+            "total": 0.4139596250024624
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 20.0,
+        "seconds": 0.9385494999878574,
+        "timing": {
+          "initialization": 0.015516124985879287,
+          "field_sampling": 0.015591125003993511,
+          "optimization_validation": 0.4861863749974873,
+          "lookahead": {
+            "root_fields": 0.017547958996146917,
+            "prefix_rollouts": 0.01673887501237914,
+            "posterior_and_fields": 0.09857695901882835,
+            "continuation_geometry": 0.048253541986923665,
+            "continuation_rollouts": 0.2370419169892557,
+            "total": 0.4181686250085477
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 25.0,
+        "seconds": 0.9208319580066018,
+        "timing": {
+          "initialization": 0.02590208299807273,
+          "field_sampling": 0.015503582981182262,
+          "optimization_validation": 0.47375150001607835,
+          "lookahead": {
+            "root_fields": 0.018438208993757144,
+            "prefix_rollouts": 0.01596916702692397,
+            "posterior_and_fields": 0.08356579198152758,
+            "continuation_geometry": 0.04573387498385273,
+            "continuation_rollouts": 0.23866208299295977,
+            "total": 0.40237820899346843
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 30.0,
+        "seconds": 0.8599593750259373,
+        "timing": {
+          "initialization": 0.014115041005425155,
+          "field_sampling": 0.013538750004954636,
+          "optimization_validation": 0.4461352080106735,
+          "lookahead": {
+            "root_fields": 0.016711333009880036,
+            "prefix_rollouts": 0.016073209000751376,
+            "posterior_and_fields": 0.06417499997769482,
+            "continuation_geometry": 0.04288891699980013,
+            "continuation_rollouts": 0.24350333400070667,
+            "total": 0.38335995801026
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 35.0,
+        "seconds": 0.9182814999949187,
+        "timing": {
+          "initialization": 0.01528999998117797,
+          "field_sampling": 0.0140982499870006,
+          "optimization_validation": 0.4810387090255972,
+          "lookahead": {
+            "root_fields": 0.018685499991988763,
+            "prefix_rollouts": 0.016472040995722637,
+            "posterior_and_fields": 0.07701499998802319,
+            "continuation_geometry": 0.04370191600173712,
+            "continuation_rollouts": 0.2483689159853384,
+            "total": 0.4042508330021519
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 40.0,
+        "seconds": 0.9597563330025878,
+        "timing": {
+          "initialization": 0.015924875013297424,
+          "field_sampling": 0.015303624997613952,
+          "optimization_validation": 0.5180058749974705,
+          "lookahead": {
+            "root_fields": 0.018447583977831528,
+            "prefix_rollouts": 0.01707862498005852,
+            "posterior_and_fields": 0.08340808300999925,
+            "continuation_geometry": 0.04600249999202788,
+            "continuation_rollouts": 0.2425528749881778,
+            "total": 0.407495208986802
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 45.0,
+        "seconds": 0.9412654589978047,
+        "timing": {
+          "initialization": 0.016155249992152676,
+          "field_sampling": 0.01493620901601389,
+          "optimization_validation": 0.5037864169862587,
+          "lookahead": {
+            "root_fields": 0.01836341599118896,
+            "prefix_rollouts": 0.01688845900935121,
+            "posterior_and_fields": 0.08117045898688957,
+            "continuation_geometry": 0.04564645802020095,
+            "continuation_rollouts": 0.24140749999787658,
+            "total": 0.4034842500113882
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 50.0,
+        "seconds": 0.8771907500049565,
+        "timing": {
+          "initialization": 0.016154250013642013,
+          "field_sampling": 0.014964334026444703,
+          "optimization_validation": 0.46309820798342116,
+          "lookahead": {
+            "root_fields": 0.01790954198804684,
+            "prefix_rollouts": 0.01623883401043713,
+            "posterior_and_fields": 0.06976266700075939,
+            "continuation_geometry": 0.04692250001244247,
+            "continuation_rollouts": 0.22954150001169182,
+            "total": 0.38038041698746383
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 55.0,
+        "seconds": 0.8940965829824563,
+        "timing": {
+          "initialization": 0.01578345798770897,
+          "field_sampling": 0.014894082996761426,
+          "optimization_validation": 0.4660132919962052,
+          "lookahead": {
+            "root_fields": 0.019193749991245568,
+            "prefix_rollouts": 0.016741457977332175,
+            "posterior_and_fields": 0.07971208399976604,
+            "continuation_geometry": 0.043560124991927296,
+            "continuation_rollouts": 0.2351614579965826,
+            "total": 0.3943742499977816
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 60.0,
+        "seconds": 0.837039875012124,
+        "timing": {
+          "initialization": 0.013499791995855048,
+          "field_sampling": 0.013402625016169623,
+          "optimization_validation": 0.44381087500369176,
+          "lookahead": {
+            "root_fields": 0.015990624990081415,
+            "prefix_rollouts": 0.01528479199623689,
+            "posterior_and_fields": 0.06504433299414814,
+            "continuation_geometry": 0.041299874981632456,
+            "continuation_rollouts": 0.22612300000037067,
+            "total": 0.36376775000826456
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 65.0,
+        "seconds": 0.9013207079842687,
+        "timing": {
+          "initialization": 0.017429041996365413,
+          "field_sampling": 0.01445658301236108,
+          "optimization_validation": 0.4697135000023991,
+          "lookahead": {
+            "root_fields": 0.018239541997900233,
+            "prefix_rollouts": 0.016255166003247723,
+            "posterior_and_fields": 0.07936662499560043,
+            "continuation_geometry": 0.04655204099253751,
+            "continuation_rollouts": 0.23632433300372213,
+            "total": 0.3967426670133136
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 70.0,
+        "seconds": 0.9387078330037184,
+        "timing": {
+          "initialization": 0.01667412501410581,
+          "field_sampling": 0.014836959016975015,
+          "optimization_validation": 0.4723668329825159,
+          "lookahead": {
+            "root_fields": 0.018436209007631987,
+            "prefix_rollouts": 0.016938042012043297,
+            "posterior_and_fields": 0.09071616700384766,
+            "continuation_geometry": 0.04867491702316329,
+            "continuation_rollouts": 0.2570681670040358,
+            "total": 0.43183879199204966
+          },
+          "compilation_included": false
+        }
+      },
+      {
+        "t": 75.0,
+        "seconds": 1.1351673750032205,
+        "timing": {
+          "initialization": 0.017410958011168987,
+          "field_sampling": 0.019319500017445534,
+          "optimization_validation": 0.6344449169992004,
+          "lookahead": {
+            "root_fields": 0.020570874999975786,
+            "prefix_rollouts": 0.019372374983504415,
+            "posterior_and_fields": 0.1078357920050621,
+            "continuation_geometry": 0.048534292000113055,
+            "continuation_rollouts": 0.26405879098456353,
+            "total": 0.46038041697465815
+          },
+          "compilation_included": false
+        }
+      }
+    ]
+  }
+]
