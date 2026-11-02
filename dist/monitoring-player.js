@@ -1,8 +1,8 @@
 'use strict';
 // Recorded MBD missions only. Playback never integrates robot or clarity models.
-(async function monitoringComparison(){
-  const root=document.querySelector('#monitoring-review');if(!root)return;
-  const $=id=>root.querySelector('#'+id),colors={aware:'#147861',baseline:'#c46a35'};
+async function monitoringComparison(root){
+  const prefix=root.dataset.controlPrefix||'monitor-';
+  const $=id=>root.querySelector('#'+id.replace(/^monitor-/,prefix)),colors={aware:'#147861',baseline:'#c46a35'};
   let env,manifest,records=[],panels=[],time=0,duration=60,playing=false,previous=null,version=0;
   const dataDirectory=root.dataset.monitoringDirectory||'data/monitoring';
   const cache=new Map();
@@ -11,6 +11,7 @@
     clarity:{title:'Clarity q',unit:'dimensionless',max:1,stops:['#fff7ec','#fee8c8','#fdbb84','#fc8d59','#e34a33','#b30000','#7f0000'],low:'Low clarity',high:'High clarity',note:'Local target: 0.70 in A/B · 0.35 elsewhere'},
     deficit:{title:'Deficit below local target',unit:'dimensionless',max:.7,stops:['#fff7ec','#fee8c8','#fdbb84','#fc8d59','#e34a33','#b30000','#7f0000'],low:'Target met',high:'Large deficit',note:'max(target − q, 0) · targets are 0.70 in A/B and 0.35 elsewhere'},
     uncertainty:{title:'Wind-belief standard deviation σ',unit:'m/s',max:3,stops:['#f7fbff','#d6e6f4','#94c4df','#4a98c9','#1764ab','#08306b'],low:'Less uncertain',high:'More uncertain',note:'Posterior standard deviation per wind component; ≥3 m/s uses the darkest color'},
+    wind:{title:'Posterior mean wind speed |μw|',unit:'m/s',max:8,stops:['#f7fbff','#c6dbef','#6baed6','#2171b5','#08306b'],low:'0 m/s',high:'8 m/s',note:'Estimated air velocity, not the true field. Arrows show direction; color shows speed. Values ≥8 m/s use the darkest color.'},
     decay:{title:'Clarity process noise Q',unit:'s⁻¹',max:.16,stops:['#fcfbfd','#dadaeb','#bcbddc','#9e9ac8','#756bb1','#54278f'],low:'Slower decay',high:'Faster decay',note:'Q = 0.02 s⁻¹ in the background · 0.16 s⁻¹ in A/B'}
   };
   function colorAt(scale,value){
@@ -34,17 +35,19 @@
   function setPlaying(value){playing=value;$('monitor-play').textContent=value?'Ⅱ Pause monitoring':'▶ Play monitoring';$('monitor-play').setAttribute('aria-pressed',String(value));}
   function makePanel(record){
     const method=record.method,article=document.createElement('article');article.className='monitor-card';
+    const clipId=root.id+'-'+record.id+'-monitor-clip';
     const visited=env.regions.filter(region=>record.samples.some(s=>s[1]>=region.bounds[0][0]&&s[1]<=region.bounds[1][0]&&s[2]>=region.bounds[0][1]&&s[2]<=region.bounds[1][1])).map(region=>region.label).join(', ')||'none';
     const summary=record.summary,name=method==='aware'?'Proposed · disturbance-aware MBD':'Baseline · MBD + execution RPCBF';
     const regions=design.regions.map(r=>`<rect x="${r.x}" y="${r.y}" width="${r.width}" height="${r.height}" fill="none" stroke="${r.label==='A'?'#2563eb':'#b45309'}" stroke-width="2"/><text x="${r.x+18}" y="${r.y+28}" class="region-label monitor-region-label">Region ${r.label}</text>`).join('');
     const obstacles=design.obstacles.map(o=>`<circle cx="${o.center[0]}" cy="${o.center[1]}" r="${o.radius}" fill="#73828a"/>`).join('');
-    article.innerHTML=`<div class="robot-card-heading"><h4>${name}</h4><span class="outcome ${summary.contact?'collision':summary.infeasible_execution_steps||summary.min_clearance_m<(manifest.planner_settings?.safety_margin??.06)?'stopped':''}">${summary.contact?'Full run: contact':`${summary.simulated_seconds.toFixed(0)} s recorded${summary.infeasible_execution_steps?' · QP infeasibility':''}`}</span></div>
+    article.innerHTML=`<div class="robot-card-heading"><h4>${name}</h4><span class="outcome ${summary.contact?'collision':summary.infeasible_execution_steps||summary.min_clearance_m<(manifest.planner_settings?.safety_margin??.06)?'stopped':''}">${summary.contact?'Full run: contact':`${summary.simulated_seconds.toFixed(0)} s · no contact${summary.infeasible_execution_steps?' · QP infeasibility':''}`}</span></div>
     <p class="monitor-method">${method==='aware'?'Current wind belief + relaxed RPCBF inside planning.':'Still-air planning. Wind-aware RPCBF after optimization.'}</p>
     <div class="robot-map"><svg viewBox="-5 -5 810 472.5" role="img" aria-label="${name}, scenario ${record.scenario}, executed monitoring and clarity">
-    <defs><clipPath id="${record.id}-monitor-clip"><rect width="800" height="462.5"/></clipPath></defs><rect width="800" height="462.5" fill="#fafcf9"/><image class="monitor-heat" width="800" height="462.5"/>
-    ${regions}${obstacles}<g clip-path="url(#${record.id}-monitor-clip)"><g class="monitor-belief-arrows"></g><g class="monitor-seed-paths"></g><g class="monitor-forecasts"></g><polyline class="monitor-trace-halo" fill="none" stroke="white" stroke-width="6" stroke-opacity=".9"/><polyline class="monitor-trace" fill="none" stroke="${colors[method]}" stroke-width="3.2"/><circle class="monitor-dot" r="6.5" fill="${colors[method]}" stroke="white" stroke-width="2.2"/><path class="monitor-contact" d="M-8 -8L8 8M-8 8L8 -8" stroke="#a93136" stroke-width="3" display="none"/></g><rect width="800" height="462.5" fill="none" stroke="#85938d"/>${renderWindOpenings(record.scenario)}</svg></div>
+    <defs><clipPath id="${clipId}"><rect width="800" height="462.5"/></clipPath></defs><rect width="800" height="462.5" fill="#fafcf9"/><image class="monitor-heat" width="800" height="462.5"/>
+    ${regions}${obstacles}<g clip-path="url(#${clipId})"><g class="monitor-belief-arrows"></g><g class="monitor-seed-paths"></g><g class="monitor-forecasts"></g><polyline class="monitor-trace-halo" fill="none" stroke="white" stroke-width="6" stroke-opacity=".9"/><polyline class="monitor-trace" fill="none" stroke="${colors[method]}" stroke-width="3.2"/><circle class="monitor-dot" r="6.5" fill="${colors[method]}" stroke="white" stroke-width="2.2"/><path class="monitor-contact" d="M-8 -8L8 8M-8 8L8 -8" stroke="#a93136" stroke-width="3" display="none"/></g><rect width="800" height="462.5" fill="none" stroke="#85938d"/>${renderWindOpenings(record.scenario)}</svg></div>
     <div class="monitor-color-scale" aria-label="Map color scale"></div><p class="monitor-probe">Move over the map to inspect a cell.</p><div class="live-metrics"><div><span>Clarity · A</span><b data-metric="a">—</b></div><div><span>Clarity · B</span><b data-metric="b">—</b></div><div><span>Whole-space deficit</span><b data-metric="deficit">—</b></div><div><span>Accumulated cost</span><b data-metric="cost">—</b></div></div>
-    <p class="monitor-readout"></p><p class="monitor-plan-readout"></p><details class="monitor-decision"><summary>Inspect this planning decision</summary><div class="monitor-decision-content"></div></details><div class="monitor-region-chart"></div>
+    <p class="monitor-readout"></p><p class="monitor-plan-readout"></p><details class="monitor-decision"><summary>Inspect this planning decision</summary><div class="monitor-decision-content"></div></details>
+    <div class="monitor-wind-belief"><h5>Learned wind · speed and direction</h5><p class="monitor-wind-readout"></p><div class="robot-map"><svg viewBox="-5 -5 810 472.5" role="img" aria-label="${name}, scenario ${record.scenario}, posterior mean wind velocity"><rect width="800" height="462.5" fill="#f7fbff"/><image class="monitor-wind-heat" width="800" height="462.5"/>${regions}${obstacles}<g class="monitor-wind-vectors" clip-path="url(#${clipId})"></g><circle class="monitor-wind-dot" r="6.5" fill="${colors[method]}" stroke="white" stroke-width="2.2"/><rect width="800" height="462.5" fill="none" stroke="#85938d"/></svg></div><div class="monitor-color-scale">${scaleMarkup('wind')}</div><p class="monitor-probe monitor-wind-probe">Move over the wind map to inspect its estimated velocity and uncertainty.</p></div><div class="monitor-region-chart"></div>
     <div class="run-summary">${summary.completed?'Full mission':`Recorded ${summary.simulated_seconds.toFixed(0)} s`}: cost <b>${summary.integrated_deficit.toFixed(3)}</b> · clearance <b>${(Math.abs(summary.min_clearance_m)<1e-12?0:summary.min_clearance_m).toFixed(3)} m</b> · infeasible execution steps <b>${summary.infeasible_execution_steps}</b> · fallback periods <b>${summary.fallback_periods}</b> · regions visited <b>${visited}</b>${summary.min_clearance_m<(manifest.planner_settings?.safety_margin??.06)?'<br><strong class="run-warning">Physical safety margin breached.</strong>':''}${summary.contact?`<br>Contact at ${summary.contact.time_s.toFixed(2)} s; subsequent clarity decays without sensing.`:''}</div>`;
     const panel={article,record,lastHeat:'',lastBelief:-1,lastPlan:-1};
     article.querySelector('.robot-map svg').addEventListener('pointermove',event=>{
@@ -54,6 +57,14 @@
       if(x<0||x>=64||y<0||y>=37||n<0){readout.textContent='Obstacle or outside the environment';return;}
       const q=record.clarity_frames[nearest(record.clarity_frames,time)].q[n],bf=record.belief_frames[nearest(record.belief_frames,time)];
       readout.textContent=`(${((x+.5)*.125).toFixed(2)}, ${((y+.5)*.125).toFixed(2)}) m · q ${q.toFixed(3)} · target ${env.targets[n].toFixed(2)} · deficit ${Math.max(0,env.targets[n]-q).toFixed(3)} · Q ${env.process_noise[n].toFixed(2)} s⁻¹ · σ ${bf.std[cell].toFixed(2)} m/s`;
+    });
+    article.querySelector('.monitor-wind-belief svg').addEventListener('pointermove',event=>{
+      const svg=event.currentTarget,p=new DOMPoint(event.clientX,event.clientY).matrixTransform(svg.getScreenCTM().inverse());
+      const x=Math.floor(p.x/12.5),y=36-Math.floor(p.y/12.5),cell=y*64+x;
+      const readout=article.querySelector('.monitor-wind-probe');
+      if(x<0||x>=64||y<0||y>=37||!env.free_indices.includes(cell)){readout.textContent='Obstacle or outside the environment';return;}
+      const bf=record.belief_frames[nearest(record.belief_frames,time)],v=bf.mean[cell];
+      readout.textContent=`Estimated velocity (${v[0].toFixed(2)}, ${v[1].toFixed(2)}) m/s · speed ${Math.hypot(...v).toFixed(2)} m/s · per-component uncertainty σ ${bf.std[cell].toFixed(2)} m/s · x right, y up`;
     });
     return panel;
   }
@@ -78,6 +89,7 @@
     const {article,record}=panel,s=sample(record.samples,time),p=screen(s.slice(1,3));
     paint(panel);const points=line([...record.samples.filter(r=>r[0]<time).map(r=>r.slice(1,3)),s.slice(1,3)]);for(const selector of ['.monitor-trace','.monitor-trace-halo'])article.querySelector(selector).setAttribute('points',points);
     const dot=article.querySelector('.monitor-dot');dot.setAttribute('cx',p[0]);dot.setAttribute('cy',p[1]);
+    const windDot=article.querySelector('.monitor-wind-dot');windDot.setAttribute('cx',p[0]);windDot.setAttribute('cy',p[1]);
     const contact=article.querySelector('.monitor-contact');contact.setAttribute('transform',`translate(${p[0]} ${p[1]})`);contact.setAttribute('display',s[18]?'none':'');
     const metrics={a:s[15].toFixed(3),b:s[16].toFixed(3),deficit:s[13].toFixed(3),cost:s[14].toFixed(3)};
     for(const [key,value] of Object.entries(metrics))article.querySelector(`[data-metric="${key}"]`).textContent=value;
@@ -92,6 +104,12 @@
         arrows+=`<path d="M${x} ${y}L${xx} ${yy}M${xx-4*Math.cos(angle-.5)} ${yy-4*Math.sin(angle-.5)}L${xx} ${yy}L${xx-4*Math.cos(angle+.5)} ${yy-4*Math.sin(angle+.5)}" fill="none" stroke="#335d78" stroke-width="1.3"/>`;
       }
       article.querySelector('.monitor-belief-arrows').innerHTML=arrows;
+      article.querySelector('.monitor-wind-vectors').innerHTML=arrows;
+      const canvas=document.createElement('canvas');canvas.width=64;canvas.height=37;
+      const ctx=canvas.getContext('2d'),pixels=ctx.createImageData(64,37);
+      for(const cell of env.free_indices){const x=cell%64,y=Math.floor(cell/64),index=((36-y)*64+x)*4,rgb=colorAt(scales.wind,Math.hypot(...bf.mean[cell]));for(let c=0;c<3;c++)pixels.data[index+c]=rgb[c];pixels.data[index+3]=255;}
+      ctx.putImageData(pixels,0,0);article.querySelector('.monitor-wind-heat').setAttribute('href',canvas.toDataURL());
+      article.querySelector('.monitor-wind-readout').textContent=`Posterior at ${bf.t.toFixed(1)} s · ${bf.observations.toLocaleString()} wind measurements · fixed 0–8 m/s scale across every run`;
     }
     article.querySelector('.monitor-belief-arrows').style.display=$('monitor-belief').checked?'':'none';
     let pi=record.plans.length?nearest(record.plans,time):-1;
@@ -145,6 +163,8 @@
   }
   try{
     const response=await fetch(`${dataDirectory}/manifest.json`,{cache:'no-store'});if(!response.ok)throw Error('Monitoring missions are being computed. Existing simulations above remain available.');manifest=await response.json();root.querySelector('.review-badge').textContent=`${manifest.duration_s} s · computed clarity dynamics`;
+    const summaryTable=$('monitor-summary-table');
+    if(summaryTable&&manifest.runs?.length)summaryTable.innerHTML=`<table class="monitor-all-results"><caption>All ${manifest.duration_s} s runs · ${manifest.initial_wind_knowledge==='survey'?'with initial survey':'without initial survey'}</caption><thead><tr><th>Scenario / method</th><th>Contact</th><th>Minimum clearance</th><th>Infeasible steps</th><th>Deficit cost ↓</th><th>Crossings</th></tr></thead><tbody>${manifest.runs.map(r=>`<tr><th>Scenario ${r.scenario} · ${r.method==='aware'?'Proposed':'Baseline'}</th><td>${r.summary.contact?`At ${r.summary.contact.time_s.toFixed(2)} s`:'None'}</td><td>${r.summary.min_clearance_m.toFixed(3)} m</td><td>${r.summary.infeasible_execution_steps}</td><td>${r.summary.integrated_deficit.toFixed(3)}</td><td>${r.summary.passage_crossings.length}</td></tr>`).join('')}</tbody></table>`;
     const sourceLink=root.querySelector('a[download]');if(manifest.state==='computing'||manifest.source_available===false){sourceLink.removeAttribute('href');sourceLink.textContent=manifest.state==='computing'?'Source package follows the completed mission audit':'Archived pilot: records and audit in the manifest';}
     env=await(await fetch(`${dataDirectory}/environment.json`,{cache:'no-store'})).json();
     if(manifest.planner_settings?.multimode){
@@ -156,14 +176,17 @@
     }
 
     if(manifest.implementation==='legacy-mbd'){
-      const c=manifest.planner_settings,l=manifest.legacy_settings,r=manifest.runtime;
-      $('monitor-learning-details').textContent=manifest.initial_wind_knowledge==='survey'?`Pre-measured wind experiment: both methods receive the same 1,884 noisy spatial wind measurements (noise standard deviation 0.1 m/s). Full POAM uses 128 inducing points and retains posterior covariance and coherent field samples. It conditions on subsequent real local measurements every 5 s, with inducing relocation and fixed kernel parameters, as in the old implementation. This is not a cold-start exploration result.`:`Cold-start experiment: both methods start with the same zero-mean POAM prior and one noisy local observation. The posterior conditions on actual 5 Hz measurements every 5 s with inducing relocation and fixed kernel parameters. These runs test behavior with initially unknown passages.`;
+      const c=manifest.planner_settings,l=manifest.legacy_settings,r=manifest.runtime,e=manifest.execution_belief;
+      const update=e?.posterior_update_seconds??l.commit;
+      const learning=`The posterior conditions on actual 5 Hz local observations every ${update} s, with inducing-point relocation and fixed kernel parameters. The viewer records posterior maps every 5 s; speed colors and arrows show the learned mean, while the uncertainty layer shows posterior standard deviation.`;
+      $('monitor-learning-details').textContent=(manifest.initial_wind_knowledge==='survey'?`Both methods receive the same initial 1,884 noisy spatial wind measurements (noise standard deviation 0.1 m/s), followed by local observations during execution. Full POAM uses 128 inducing points, posterior covariance and coherent field samples. `:`Both methods start with a zero-mean POAM prior and one actual noisy local observation at B. ${manifest.prior_configuration?.startsWith('survey-matched')?'The kernel and 128 inducing locations match the surveyed experiment; geometry alone initializes them, without accessing survey measurements or wind values. ':''}`)+learning;
       $('monitor-budget').textContent=`The original quarter MBD optimizer uses its cosine schedule, seven geometric reverse chains, batched candidate evaluation and fresh-field validation. It optimizes ${2*l.horizon/l.dt} acceleration coordinates over ${l.horizon} s and replans every ${l.commit} s. ${l.iterations} levels × ${l.proposals} total proposals; ${l.worlds} search wind draws and ${l.validation_worlds} independent validation draws. No optimism, archive-mixture proposal or demonstration likelihood is active.`;
-      const filter=$('monitor-filter-details');if(filter)filter.textContent=`The proposed planner applies the original relaxed RPCBF inside each wind-dependent forecast, using ${l.construction_worlds} separate construction fields, full backup rollouts and spline extrema. Baseline planning uses still air and no planning filter. Both execute the original hard RPCBF with the current learned wind belief.`;
+      const filter=$('monitor-filter-details');if(filter)filter.textContent=`The proposed planner applies the original relaxed RPCBF inside each wind-dependent forecast, using ${l.construction_worlds} separate construction fields, full backup rollouts and spline extrema. Baseline planning uses still air and no planning filter. Both execute the original hard RPCBF with the current learned wind belief${e?`, ${e.construction_fields} coherent construction fields, a ${e.safety_margin_m.toFixed(2)} m barrier margin and posterior/field refresh every ${update} s`:''}.`;
       const belief=$('monitor-belief-numerics');if(belief)belief.textContent='The old implementation’s C1 wind-table interpolation at 0.2 m spacing is restored. Tables are sampled from the full current POAM posterior at each replan. No anticipated measurements, optimistic objective or information bonus is used.';
       const integration=$('monitor-integration-details');if(integration)integration.textContent=`Planning uses the old ${l.dt} s RK4 forecast step and 32-bit arithmetic. Executed robot dynamics and clarity retain 0.01 s RK4 with 64-bit arithmetic; execution RPCBF runs every 0.05 s. All 1,884 free-space clarity cells are retained. Warm planning has a 1 s runtime cutoff. First-call compilation is reported separately. A finite sampling budget and learned wind belief do not guarantee safety.`;
       $('monitor-initialization-details').innerHTML='<h3>Geometric warm starts</h3><p>The current circle geometry is searched online. Six clarity-guided paths include alternative passages; a hold completes the seven initial modes. Shifted previous controls remain an additional evaluated candidate. Paths initialize full acceleration sequences and do not constrain the final solution.</p>';
       const timing=$('monitor-runtime');if(timing)timing.textContent=`Measured warm planning: ${r.warm_min_s.toFixed(3)}–${r.warm_max_s.toFixed(3)} s across ${r.warm_calls} calls. Includes geometric initialization, wind sampling, MBD and final validation. First calls, including compilation: ${r.first_call_min_s.toFixed(2)}–${r.first_call_max_s.toFixed(2)} s. ${manifest.initial_wind_knowledge==='survey'?'Same measured wind map supplied to both methods.':'Initially unknown wind; no pre-mission survey.'}`;
+      if(timing&&r.rejected_calls?.length)timing.textContent+=` Runtime exceptions: ${r.rejected_calls.map(p=>`${p.id} at ${p.t.toFixed(0)} s took ${p.wall_seconds.toFixed(3)} s`).join('; ')}. The guard stopped before applying these plans; execution continued from saved checkpoints. These overruns are retained in the audit and are not included in the accepted-call range above.`;
     }
     $('monitor-scenario').addEventListener('change',()=>load());$('monitor-layer').addEventListener('change',draw);
     $('monitor-belief').addEventListener('change',draw);$('monitor-plans').addEventListener('change',draw);$('monitor-seeds').addEventListener('change',draw);
@@ -174,4 +197,5 @@
     setInterval(()=>{if(manifest.state==='computing'||!records.length||records.some(r=>!r.summary.completed))load(true);},30000);
     function frame(t){const dt=previous===null?0:Math.min(.1,(t-previous)/1000);previous=t;if(playing&&!document.hidden){time=Math.min(duration,time+dt*Number($('monitor-speed').value));draw();if(time>=duration)setPlaying(false);}requestAnimationFrame(frame);}requestAnimationFrame(frame);
   }catch(e){$('monitor-status').textContent=e.message;}
-})();
+}
+document.querySelectorAll('[data-monitoring-directory],#monitoring-review').forEach(root=>monitoringComparison(root));

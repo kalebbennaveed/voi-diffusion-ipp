@@ -1,0 +1,381 @@
+{
+  "all_eight_contact_free": true,
+  "matched_settings": true,
+  "matched_initial_state_clarity_noise": true,
+  "core_model_source_files_identical": 17,
+  "wind_sha256": {
+    "1": "b20832fbcbe5d29fdf2b532009144eae4d76f30e99fb8bd72ee3a9466521e53a",
+    "2": "b29a17da083f412d0a95e747851ac6a6b606d0f1070bee816f468a5fd854bbc0"
+  },
+  "settings": {
+    "settings": {
+      "scenario": "corridor",
+      "dt": 0.25,
+      "stage_steps": 12,
+      "future_steps": 32,
+      "mission_horizons": 5,
+      "knots": 3,
+      "branches": 2,
+      "worlds": 2,
+      "inner_samples": 2,
+      "backup_steps": 8,
+      "backup_dt": 0.15,
+      "backup_gain": 2.0,
+      "cbf_alpha": 1.0,
+      "umax": 1.6,
+      "linear_drag": 0.0,
+      "safety_margin": 0.12,
+      "diffusion_steps": 2,
+      "proposals": 14,
+      "temperature": 0.025,
+      "beta_min": 0.005,
+      "beta_max": 0.18,
+      "mbd_latent_bound": 8.0,
+      "diffusion_reference_steps": 0,
+      "candidate_chunk": 7,
+      "terminal_seconds": 0.0,
+      "sensor_sigma": 0.5,
+      "sensor_R": 0.1,
+      "clarity_decay": 0.16,
+      "clarity_decay_pattern": "uniform",
+      "initial_clarity": "cold",
+      "wind_std": 1.8,
+      "wind_length": 1.1,
+      "observation_std": 0.1,
+      "ig_weight": 0.025,
+      "measurements": true,
+      "shared_future": false,
+      "independent_cells": false,
+      "spline": "full",
+      "safety_filter": "rpcbf",
+      "shield_terminal_speed": 0.2,
+      "shield_substeps": 4,
+      "shield_latch": true,
+      "wind_backend": "poam",
+      "poam_train_steps": 10,
+      "hypothetical_relocation": false,
+      "budgeted_policy": "compact",
+      "budgeted_feedback_features": "probe",
+      "budgeted_update_steps": 0,
+      "poam_inducing_x": 6,
+      "poam_inducing_y": 4,
+      "poam_spectral_nodes": 32,
+      "poam_support_x": 0,
+      "poam_support_y": 0,
+      "grid_nx": 25,
+      "grid_ny": 19,
+      "whole_field": true,
+      "reject_collisions": true,
+      "warm_starts": 1,
+      "obstacle_radius": 0.79,
+      "control_representation": "acceleration",
+      "branch_rule": "crosswind",
+      "recourse_samples": 3,
+      "waypoint_x_limit": 2.25,
+      "waypoint_y_limit": 1.65,
+      "future_updates": false,
+      "require_feasible_candidates": false,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "methods": [
+        "proposed",
+        "passive",
+        "weighted_ig",
+        "heuristic",
+        "cem",
+        "mppi",
+        "oracle"
+      ],
+      "horizon_seconds": 15.0,
+      "commit_seconds": 5.0,
+      "mission_seconds": 300.0,
+      "execution_dt": 0.05,
+      "physics_dt": 0.01,
+      "slack_weight": 15.0,
+      "background_decay": 0.02,
+      "region_target": 0.7,
+      "background_target": 0.35,
+      "initial_q": 0.74,
+      "reference_tracking": true,
+      "multimode": true,
+      "tracking_kp": 4.411764705882352,
+      "tracking_kv": 7.352941176470588,
+      "legacy_safety_costs": true,
+      "planning_clearance": 0.06,
+      "violation_weight": 1.0,
+      "speed_max": 3.1,
+      "speed_penalty": 2.0,
+      "mode_count": 7,
+      "validation_worlds": 4
+    },
+    "legacy_settings": {
+      "dt": 0.25,
+      "horizon": 15.0,
+      "commit": 5.0,
+      "worlds": 2,
+      "validation_worlds": 4,
+      "construction_worlds": 2,
+      "iterations": 2,
+      "proposals": 14,
+      "temperature": 0.06,
+      "optimism": 1.0,
+      "mixture": 0.0,
+      "archive_size": 8,
+      "latent_bound": 12.0,
+      "cosine_end": 0.15,
+      "umax": 1.6,
+      "speed_max": 3.1,
+      "backup_steps": 8,
+      "backup_dt": 0.15,
+      "backup_gain": 2.0,
+      "cbf_alpha": 1.0,
+      "safety_margin": 0.06,
+      "slack_weight": 15.0,
+      "violation_weight": 1.0,
+      "spline": "full",
+      "sensor_sigma": 0.5,
+      "sensor_R": 0.1,
+      "sensor_half_angle_degrees": 45.0,
+      "observation_std": 0.25,
+      "wind_strength": 3.1,
+      "prior_std": 1.8,
+      "seed": 8101,
+      "batch_size": 7,
+      "validation_batch_size": 4,
+      "chains": 1,
+      "environment_scale": 1.0,
+      "inspection_scale": 1.0,
+      "initialization": "modes",
+      "rrt_paths": 3,
+      "rrt_visits": 1,
+      "common_construction": false,
+      "rrt_margin": 0.65,
+      "guidance_sigma": 1.0,
+      "planning_clearance": 0.06,
+      "speed_penalty": 2.0,
+      "jerk_limit": 12.0,
+      "jerk_penalty": 0.0,
+      "tracking_kp": 4.411764705882352,
+      "tracking_kv": 7.352941176470588,
+      "execution_dt": 0.05,
+      "execution_margin": 0.55,
+      "execution_filter": "hard",
+      "penalty_aggregation": "mean",
+      "validate_initials": true,
+      "rrt_diversity": false,
+      "prediction_substeps": 1,
+      "observation_period": 5.0,
+      "prediction_filter": "soft",
+      "guidance_mode": "off",
+      "online_estimation": false,
+      "wind_support_nodes": 0,
+      "wind_relocate": false,
+      "terminate_predictions": true,
+      "geometry": "quarter",
+      "multimode": true,
+      "mode_count": 7,
+      "initialization_effort": null,
+      "optimism_anneal_seconds": null,
+      "detour_depth": 2.0,
+      "wind_at_start": false,
+      "initial_wind_observations": [],
+      "wind_inducing_count": 36,
+      "wind_kernel_lengths": []
+    },
+    "execution_belief": {
+      "posterior_update_seconds": 0.2,
+      "construction_fields": 8,
+      "safety_margin_m": 0.12
+    },
+    "seed": 8101
+  },
+  "rows": [
+    {
+      "knowledge": "survey",
+      "id": "s1-aware",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.2003725892512045,
+      "infeasible_steps": 0,
+      "deficit_cost": 91.80757728285865,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.9535011249827221,
+      "rejected_calls": []
+    },
+    {
+      "knowledge": "survey",
+      "id": "s1-baseline",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.18476674535074467,
+      "infeasible_steps": 0,
+      "deficit_cost": 87.88051688755354,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.7175604579970241,
+      "rejected_calls": []
+    },
+    {
+      "knowledge": "survey",
+      "id": "s2-aware",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.20570695017327245,
+      "infeasible_steps": 0,
+      "deficit_cost": 91.77439727489207,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.9881166249979287,
+      "rejected_calls": [
+        {
+          "t": 25.0,
+          "wall_seconds": 1.0006263329996727,
+          "timing": {
+            "initialization": 0.01585904200328514,
+            "field_sampling": 0.018230834015412256,
+            "optimization_validation": 0.9654267920122948,
+            "compilation_included": false
+          },
+          "reason": "One-second guard stopped execution before this plan was applied"
+        }
+      ]
+    },
+    {
+      "knowledge": "survey",
+      "id": "s2-baseline",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.21471256174497322,
+      "infeasible_steps": 0,
+      "deficit_cost": 88.2320329023609,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.8717574999900535,
+      "rejected_calls": []
+    },
+    {
+      "knowledge": "no-survey",
+      "id": "s1-aware",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.33139497529309914,
+      "infeasible_steps": 1,
+      "deficit_cost": 64.28917146696843,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.9876867080165539,
+      "rejected_calls": [
+        {
+          "t": 5.0,
+          "wall_seconds": 2.184690916008549,
+          "timing": {
+            "initialization": 0.0544413750176318,
+            "field_sampling": 0.04824491697945632,
+            "optimization_validation": 2.077589791995706,
+            "compilation_included": false
+          },
+          "reason": "One-second guard stopped execution before this plan was applied"
+        },
+        {
+          "t": 280.0,
+          "wall_seconds": 1.0282324589788914,
+          "timing": {
+            "initialization": 0.018749291979474947,
+            "field_sampling": 0.018309999984921888,
+            "optimization_validation": 0.9900718330172822,
+            "compilation_included": false
+          },
+          "reason": "One-second guard stopped execution before this plan was applied"
+        }
+      ]
+    },
+    {
+      "knowledge": "no-survey",
+      "id": "s1-baseline",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.22562302502333997,
+      "infeasible_steps": 0,
+      "deficit_cost": 88.29815814359121,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.7205672500131186,
+      "rejected_calls": [
+        {
+          "t": 275.0,
+          "wall_seconds": 1.0518667500000447,
+          "timing": {
+            "initialization": 0.025028500007465482,
+            "field_sampling": 0.02694587502628565,
+            "optimization_validation": 0.9980737500009127,
+            "compilation_included": false
+          },
+          "reason": "One-second guard stopped execution before this plan was applied"
+        }
+      ]
+    },
+    {
+      "knowledge": "no-survey",
+      "id": "s2-aware",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.185320245296001,
+      "infeasible_steps": 9,
+      "deficit_cost": 63.54695440255469,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.83854116598377,
+      "rejected_calls": []
+    },
+    {
+      "knowledge": "no-survey",
+      "id": "s2-baseline",
+      "seconds": 300.0,
+      "contact": null,
+      "minimum_clearance_m": 0.2881250845659482,
+      "infeasible_steps": 7,
+      "deficit_cost": 88.90603528272139,
+      "regions_visited": [
+        "B"
+      ],
+      "crossings": 0,
+      "accepted_warm_plan_max_s": 0.9130305830040015,
+      "rejected_calls": [
+        {
+          "t": 180.0,
+          "wall_seconds": 2.2585214999853633,
+          "timing": {
+            "initialization": 0.03000533301383257,
+            "field_sampling": 0.029592250008136034,
+            "optimization_validation": 2.19689545899746,
+            "compilation_included": false
+          },
+          "reason": "One-second guard stopped execution before this plan was applied"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Collision-free execution is observed for these eight seeded simulations; it is not a safety guarantee.",
+    "The shared conservative execution filter can stall progress; Region A visits and crossing counts are reported.",
+    "The one-second planning target was not met by every attempt. Rejected timings and exact checkpoint continuations are retained."
+  ]
+}
