@@ -1,0 +1,108 @@
+{
+  "mask_weight_in_wind_above_1_m_s": 0.0,
+  "mask_weight_in_lower_right_box": 0.0,
+  "maximum_wind_on_mask_m_s": 0.19907535083222405,
+  "active_cells": 119,
+  "free_cells": 2926,
+  "paths": [
+    [
+      [
+        1.4,
+        4.15
+      ],
+      [
+        1.4375,
+        4.1875
+      ]
+    ],
+    [
+      [
+        1.4,
+        4.15
+      ],
+      [
+        2.1875,
+        5.0625
+      ]
+    ],
+    [
+      [
+        1.4,
+        4.15
+      ],
+      [
+        2.4375,
+        3.5625
+      ]
+    ],
+    [
+      [
+        1.4,
+        4.15
+      ],
+      [
+        0.8125,
+        5.1875
+      ]
+    ]
+  ],
+  "route_values": [
+    {
+      "path": [
+        [
+          1.4,
+          4.15
+        ],
+        [
+          1.4375,
+          4.1875
+        ]
+      ],
+      "endpoint_sensing_value": 23.021319859130372,
+      "length_m": 0.053033008588990876
+    },
+    {
+      "path": [
+        [
+          1.4,
+          4.15
+        ],
+        [
+          2.1875,
+          5.0625
+        ]
+      ],
+      "endpoint_sensing_value": 22.874480019246036,
+      "length_m": 1.205326719192767
+    },
+    {
+      "path": [
+        [
+          1.4,
+          4.15
+        ],
+        [
+          2.4375,
+          3.5625
+        ]
+      ],
+      "endpoint_sensing_value": 22.597513190574162,
+      "length_m": 1.1922929589660423
+    },
+    {
+      "path": [
+        [
+          1.4,
+          4.15
+        ],
+        [
+          0.8125,
+          5.1875
+        ]
+      ],
+      "endpoint_sensing_value": 22.54416805607326,
+      "length_m": 1.1922929589660416
+    }
+  ],
+  "definition": "Offline geometric-domain check only. True field is not supplied to the acquisition or planner."
+}

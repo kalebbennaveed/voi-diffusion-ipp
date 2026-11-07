@@ -217,7 +217,10 @@ def rollout(theta,x0,q0,mean_array,construction,physical,env,cfg,filter_on=True)
     return Rollout(jnp.r_[x0[None],xs],jnp.r_[q0[None],qs],us,reference,end[2],end[3],end[4],end[5],~end[7])
 
 
-def optimizer(env,cfg,method):
+def optimizer(env,cfg,method,rollout_fn=None):
+    # Alternate environments supply their geometry/sensing rollout while the
+    # original batched MBD, cosine schedule and validation remain unchanged.
+    predict=rollout if rollout_fn is None else rollout_fn
     blind=method in ('blind','blind_filter')
     optimistic=method in ('proposed','optimistic','fading')
     @jax.jit
@@ -225,7 +228,7 @@ def optimizer(env,cfg,method):
         if blind:mean=jnp.zeros_like(mean);construction=jnp.zeros_like(construction);worlds=jnp.zeros_like(worlds);validation=jnp.zeros_like(validation)
         def values(theta,bank):
             def one(field):
-                r=rollout(theta,x,q,mean,construction,field,env,cfg,not blind)
+                r=predict(theta,x,q,mean,construction,field,env,cfg,not blind)
                 return jnp.array([r.monitor,r.penalty])
             components=jax.vmap(one)(bank)
             return aggregate_costs(components[:,0],components[:,1],cfg.penalty_aggregation)
@@ -237,7 +240,7 @@ def optimizer(env,cfg,method):
             if demonstrations is None:raise ValueError('RRT guidance requires generated demonstrations')
             initials=(demonstrations if cfg.multimode or cfg.initialization=='modes' else jnp.concatenate((initials,demonstrations)))
             def guidance(theta,selected,selected_cost):
-                points=(rollout(theta,x,q,mean,construction,mean,env,cfg,not blind).x[:,:2]
+                points=(predict(theta,x,q,mean,construction,mean,env,cfg,not blind).x[:,:2]
                         if cfg.guidance_mode=='executed' else nominal_reference(theta,x,cfg)[0][:,:2])
                 reference=nominal_reference(selected,x,cfg)[0][:, :2]
                 # Peak-normalized Gaussian trajectory likelihood. Its full

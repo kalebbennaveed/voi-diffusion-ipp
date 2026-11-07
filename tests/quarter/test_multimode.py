@@ -73,6 +73,7 @@ def test_search_retains_both_route_modes_and_every_reverse_equation():
     evaluate = lambda theta: jnp.array([(jnp.abs(theta[0])-2.4)**2+theta[1]**2])
     result = search(evaluate, seeds, jnp.zeros(2), jax.random.PRNGKey(41), cfg, 1., 0., True)
     assert result.finalists.shape == (5, 2)
+    np.testing.assert_allclose(result.finalist_field_costs,jax.vmap(evaluate)(result.finalists),rtol=1e-6,atol=1e-7)
     assert float(result.finalists[0, 0]) < -2
     assert float(result.finalists[1, 0]) > 2
     assert np.all(np.asarray(jax.vmap(evaluate)(result.finalists[:2])) < .03)
@@ -209,3 +210,35 @@ def test_more_modes_than_proposals_is_rejected():
     with pytest.raises(ValueError, match='at least one proposal'):
         search(lambda theta: jnp.array([0.]), jnp.zeros((3, 2)), jnp.zeros(2),
                jax.random.PRNGKey(0), settings(proposals=2), 1., 0., True)
+
+
+@pytest.mark.parametrize('eta,rho', [(1., 0.), (.5, .4)])
+def test_cached_initial_fields_preserve_every_search_result_and_count_once(eta, rho):
+    cfg = settings(iterations=3, proposals=8, batch_size=4)
+    seeds = jnp.array([[-1., .3], [1., -.2]])
+    previous = jnp.array([.2, -.1])
+    def evaluate(theta):
+        return jnp.array([jnp.sum((theta-.2)**2), jnp.sum((theta+.3)**2)])
+    key = jax.random.PRNGKey(123)
+    initial = jnp.concatenate((seeds, previous[None]))
+    cached = jax.lax.map(evaluate, initial, batch_size=cfg.batch_size)
+    ordinary = search(evaluate, seeds, previous, key, cfg, eta, rho, True)
+    reused = search(evaluate, seeds, previous, key, cfg, eta, rho, True,
+                    initial_field_values=cached)
+    for name in ordinary._fields:
+        np.testing.assert_array_equal(getattr(reused, name), getattr(ordinary, name), err_msg=name)
+    assert int(reused.evaluations) == len(initial)+cfg.iterations*cfg.proposals+len(seeds)
+
+
+def test_cached_initial_fields_retain_parameter_validity_checks():
+    cfg = settings(iterations=1, proposals=4, latent_bound=.1)
+    seeds = jnp.array([[0., .01], [2., .02]])
+    previous = jnp.zeros(2)
+    evaluate = lambda theta: jnp.array([0.])
+    args = (evaluate, seeds, previous, jax.random.PRNGKey(3), cfg, 1., 0., True)
+    ordinary = search(*args)
+    reused = search(*args, initial_field_values=jnp.zeros((3, 1)))
+    for name in ordinary._fields:
+        np.testing.assert_array_equal(getattr(reused, name), getattr(ordinary, name), err_msg=name)
+    with pytest.raises(ValueError, match='Cached initial fields'):
+        search(*args, initial_field_values=jnp.zeros((2, 1)))

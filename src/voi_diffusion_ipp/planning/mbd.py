@@ -165,3 +165,24 @@ def optimize(objective, initial, key, cfg, algorithm="mbd"):
         history,
         initial,
     )
+
+
+def optimize_multistart(objective, initials, key, cfg):
+    """Independent ordinary MBD chains; no averaging across route modes.
+
+    ``proposals`` is the TOTAL per level, divided equally across starts. Each
+    chain uses exactly ``optimize`` above. Keep every evaluated seed incumbent;
+    select the lowest full expected cost across all chains at the end.
+    Histories retain [mode, level, ...] axes for equation-level replay.
+    """
+    from dataclasses import replace
+    if cfg.proposals % len(initials) or cfg.proposals < len(initials):
+        raise ValueError('Total proposals must be a positive multiple of seed count')
+    local=replace(cfg,proposals=cfg.proposals//len(initials))
+    results=jax.lax.map(lambda item:optimize(objective,item[0],item[1],local),
+                        (initials,jax.random.split(key,len(initials))))
+    winner=jnp.argmin(results.cost)
+    selected=jax.tree_util.tree_map(lambda a:a[winner],results)
+    # Trace remains [level, statistic]; full per-chain histories remain intact.
+    trace=selected.trace.at[:,0].set(jnp.min(results.trace[:,:,0],axis=0))
+    return selected._replace(evaluations=jnp.sum(results.evaluations),history=results.history,trace=trace)

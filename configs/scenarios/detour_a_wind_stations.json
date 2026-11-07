@@ -1,0 +1,32 @@
+{
+  "description": "Synthetic pre-mission wind-station observations in A, shared by every method. This benchmark explicitly starts with observed A and unobserved B; these are not real city measurements or an oracle field map.",
+  "physical_case": "compact_detour crosswind, wind strength 3.65 m/s",
+  "noise_std_mps": 0.25,
+  "sensor_noise_seed": 8310,
+  "observations": [
+    [
+      -1.5,
+      1.0,
+      -3.3343992485187446,
+      -0.4441768314469105
+    ],
+    [
+      -0.5,
+      1.0,
+      -3.5398355630764375,
+      -0.7538467820192675
+    ],
+    [
+      0.5,
+      1.0,
+      -3.731729208762312,
+      0.37069376958091393
+    ],
+    [
+      1.5,
+      1.0,
+      -3.5436651137169353,
+      0.19008904504265264
+    ]
+  ]
+}

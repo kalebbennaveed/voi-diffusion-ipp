@@ -31,6 +31,14 @@ def init_parameters(key, components=4, width=8, prior_std=0.55):
 
 
 def attention_weights(params, x):
+    # This wind model is w(x,y). A timestamp must never become a GP input.
+    if x.ndim not in (1, 2) or x.shape[-1] != 2:
+        raise ValueError("Spatial wind inputs must contain only (x, y), without time")
+    # Optional fixed geometry normalization for the attention network only.
+    # Kernel distances and lengthscales remain in physical meters. These two
+    # constants are not learned and introduce no temporal coordinate.
+    if "attention_offset" in params:
+        x = (x-jax.lax.stop_gradient(params["attention_offset"])) / jax.lax.stop_gradient(params["attention_scale"])
     z = jnp.tanh(x @ params["w1"] + params["b1"])
     z = jnp.tanh(z @ params["w2"] + params["b2"])
     w = jax.nn.softmax(z @ params["w3"] + params["b3"], axis=-1)
@@ -80,7 +88,9 @@ def variational_from_root(K, a, root, noise_std):
 
 def select_inducing(params, candidates, lengths, count):
     """Pivoted Cholesky; storage and work depend on M+new batch, not history."""
-    K = np.asarray(attentive_kernel(params, candidates, candidates, lengths), dtype=np.float64)
+    # JAX's NumPy view is read-only when it already has float64 dtype.
+    # Pivoting below modifies the diagonal; own that workspace in both precisions.
+    K = np.array(attentive_kernel(params, candidates, candidates, lengths), dtype=np.float64, copy=True)
     # The normalized attentive kernel has a constant diagonal analytically.
     # Restore it before pivoting; otherwise float32 normalization roundoff can
     # choose a different first pivot after an equivalent JIT transformation.
@@ -110,7 +120,7 @@ def select_inducing_jax(params, candidates, lengths, count):
     def pivot(j, state):
         residual, L, used, indices = state
         eligible = jnp.where(used, -jnp.inf, residual)
-        index = jnp.argmax(eligible >= eligible.max() - tolerance)
+        index = jnp.argmax(eligible >= eligible.max() - tolerance).astype(jnp.int32)
         column = (K[:, index] - L @ L[index]) / jnp.sqrt(jnp.maximum(residual[index], 1e-12))
         return (
             residual - column**2,
@@ -124,8 +134,8 @@ def select_inducing_jax(params, candidates, lengths, count):
         count,
         pivot,
         (
-            jnp.full(len(candidates), amplitude),
-            jnp.zeros((len(candidates), count)),
+            jnp.full(len(candidates), amplitude, dtype=K.dtype),
+            jnp.zeros((len(candidates), count), dtype=K.dtype),
             jnp.zeros(len(candidates), dtype=bool),
             jnp.zeros(count, dtype=jnp.int32),
         ),
@@ -158,8 +168,25 @@ def negative_elbo(params, bx, by, z, mean, covariance, lengths, noise_std, data_
 negative_elbo_gradient = jax.jit(jax.value_and_grad(negative_elbo))
 
 
+def spatial_observations(positions, measurements):
+    """Validate the static 2D vector-field contract, including under JIT.
+
+    Measurement noise is observation error, not temporal wind process noise.
+    Shape checks happen at tracing time and add no per-control-step work.
+    """
+    x, y = jnp.asarray(positions), jnp.asarray(measurements)
+    if x.ndim != 2 or x.shape[1] != 2 or y.shape != x.shape:
+        raise ValueError("Wind observations require (N, 2) positions and (N, 2) velocities; no time column")
+    return x, y
+
+
 class POAM:
-    """Online adapter with full prediction. Kernel adaptation only between plans."""
+    """Posterior over a fixed spatial wind field; updated by observations only.
+
+    No time coordinate, forgetting, temporal kernel, or wind process noise.
+    Kernel adaptation only between plans; spatially nonstationary AK weights
+    do not imply temporal variation of the underlying field.
+    """
 
     @classmethod
     def from_data(cls, positions, measurements, key, inducing_count, train_steps=10, **kwargs):
@@ -171,7 +198,8 @@ class POAM:
         choice deterministic; no physical field or unobserved value is accessed.
         This constructor requires at least M distinct initial locations.
         """
-        x = jnp.asarray(positions, jnp.float32)
+        # Do not round actual input locations when inference runs in float64.
+        x = jnp.asarray(positions)
         if len(np.unique(np.asarray(x), axis=0)) < inducing_count:
             raise ValueError("Data-supported POAM initialization needs M distinct locations")
         model = cls(x[:inducing_count], key, **kwargs)
@@ -191,6 +219,7 @@ class POAM:
         prior_std=0.55,
         spectral_count=32,
         prior_support=None,
+        attention_bounds=None,
     ):
         if noise_std <= 0 or prior_std <= 0:
             raise ValueError(
@@ -198,6 +227,12 @@ class POAM:
             )
         self.z = jnp.asarray(centers, jnp.float32)
         self.parameters = init_parameters(key, len(lengths), prior_std=prior_std)
+        if attention_bounds is not None:
+            bounds = np.asarray(attention_bounds)
+            if bounds.shape != (2, 2) or not np.all(np.isfinite(bounds)) or not np.all(bounds[1] > bounds[0]):
+                raise ValueError("Attention bounds require finite lower/upper spatial corners")
+            self.parameters["attention_offset"] = jnp.asarray(bounds.mean(axis=0))
+            self.parameters["attention_scale"] = jnp.asarray((bounds[1]-bounds[0])/2)
         self.lengths = jnp.asarray(lengths, jnp.float32)
         self.noise_std = float(noise_std)
         self.frequencies = spectral_nodes(spectral_count)
@@ -223,8 +258,7 @@ class POAM:
     def update(
         self, positions, measurements, key, train_steps=4, batch_size=32, relocate=True, lr=0.001
     ):
-        x = jnp.asarray(positions)
-        y = jnp.asarray(measurements)
+        x, y = spatial_observations(positions, measurements)
         old_z = self.z
         z = (
             select_inducing(self.parameters, jnp.concatenate((old_z, x)), self.lengths, len(old_z))

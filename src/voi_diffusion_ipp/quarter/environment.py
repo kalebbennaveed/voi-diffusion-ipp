@@ -217,7 +217,11 @@ class ExtendedTableBasis(NamedTuple):
         # violation costs finite instead of accidentally treating them as NaN.
         # Interior interpolation and its derivatives are exactly unchanged.
         upper=self.lower+self.spacing*jnp.array([field.shape[1]-2.001,field.shape[0]-2.001])
-        clipped=jnp.clip(jnp.atleast_2d(locations),self.lower+self.spacing,upper)
+        # Leave a sub-cell guard on BOTH ends. With e.g. lower=-1 and dx=.2,
+        # (-.8 - lower)/dx rounds below 1 in float64. The raw cubic cache then
+        # rejects floor(0.9999999999999998)==0 and returns NaN in a backup
+        # trajectory. Physical-workspace queries remain interior and unchanged.
+        clipped=jnp.clip(jnp.atleast_2d(locations),self.lower+1.001*self.spacing,upper)
         return TableBasis(self.lower,self.spacing).evaluate(clipped,field)
 
 TABLE_BASIS=ExtendedTableBasis(jnp.array([-45.,-35.]),jnp.array([1.,1.]))

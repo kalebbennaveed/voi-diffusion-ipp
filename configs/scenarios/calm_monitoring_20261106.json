@@ -1,0 +1,13 @@
+{
+  "revision": "calm-monitoring-upper-region-20261106",
+  "bounds": [[0,0],[8,6]], "depth": 2.0, "dx": 0.125,
+  "obstacle_height": 1.5, "obstacles": [[3.85,4.4,0.85]],
+  "regions": [
+    {"label":"A","bounds":[[0,2.8],[4,6]]},
+    {"label":"B","bounds":[[4,2.8],[8,6]]}
+  ],
+  "region_target": 0.7, "background_target": 0.0,
+  "wind_region": [[4.8,0],[8,2.8]],
+  "initial_state": [1.4,4.15,0,0], "initial_region_clarity": 0.35,
+  "design_note": "User sketch: monitoring task covers the upper band around one circular column; high airflow is driven in the lower-right area. A/B split the upper band for existing clarity displays only. Background clarity retains its real decay dynamics but has zero required target in this experiment. No wind support is supplied to the learner. Interior airflow is computed, never masked to match colored rectangles."
+}

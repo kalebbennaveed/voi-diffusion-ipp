@@ -79,9 +79,11 @@ class SearchResult(NamedTuple):
     mode_trace: jax.Array
     finalist_unique: jax.Array
     evaluation_counts: jax.Array
+    finalist_field_costs: jax.Array
 
 
-def search(evaluate, seeds, previous, key, cfg, eta, rho, cold, log_guidance=None):
+def search(evaluate, seeds, previous, key, cfg, eta, rho, cold, log_guidance=None,
+           *, initial_field_values=None):
     """Optimize every seed mode, returning at most ``2*modes+1`` finalists.
 
     Modes are forward-noised from their individual seeds on every call. Thus
@@ -96,6 +98,13 @@ def search(evaluate, seeds, previous, key, cfg, eta, rho, cold, log_guidance=Non
     must evaluate every retained finalist on the same fresh validation fields.
     ``evaluation_counts`` records initial/proposal/terminal training counts;
     ``evaluations`` is their sum, independent of the objective or mixture rho.
+    ``initial_field_values``, when supplied, must contain the exact outputs of
+    ``evaluate`` for ``concatenate((seeds, previous[None]))`` on these same
+    fields. This avoids recomputing forecasts already used by the caller to
+    set an objective budget. The initial evaluations are counted exactly once
+    in ``evaluations``, including when performed by the caller. All numerical
+    validity checks, score equations, RNG draws and reverse updates are shared
+    with the default uncached path.
     """
     del cold
     modes, dim = seeds.shape
@@ -116,15 +125,23 @@ def search(evaluate, seeds, previous, key, cfg, eta, rho, cold, log_guidance=Non
     membership = owners[None, :] == jnp.arange(modes)[:, None]
     alpha, abar = cosine_schedule(n, cfg.cosine_end)
 
-    def batch(parameters):
-        values = jax.lax.map(evaluate, parameters, batch_size=cfg.batch_size)
+    def summarize(parameters, values):
         valid = (jnp.all(jnp.isfinite(values), axis=1)
                  & jnp.all(jnp.isfinite(parameters), axis=1)
                  & jnp.all(jnp.abs(parameters) <= cfg.latent_bound, axis=1))
         return (jnp.where(valid, jnp.mean(values, axis=1), jnp.inf),
                 jnp.where(valid, lower_tail(values, eta), jnp.inf), values)
 
-    means0, opts0, initial_fields = batch(initial)
+    def batch(parameters):
+        values = jax.lax.map(evaluate, parameters, batch_size=cfg.batch_size)
+        return summarize(parameters, values)
+
+    if initial_field_values is None:
+        means0, opts0, initial_fields = batch(initial)
+    else:
+        if initial_field_values.ndim != 2 or initial_field_values.shape[0] != initial_count:
+            raise ValueError('Cached initial fields must have shape (mode_count+1, world_count)')
+        means0, opts0, initial_fields = summarize(initial, initial_field_values)
     parameters = jnp.zeros((size, dim), dtype=seeds.dtype).at[:initial_count].set(initial)
     means = jnp.full(size, jnp.inf).at[:initial_count].set(means0)
     opts = jnp.full(size, jnp.inf).at[:initial_count].set(opts0)
@@ -196,7 +213,7 @@ def search(evaluate, seeds, previous, key, cfg, eta, rho, cold, log_guidance=Non
 
     (finals, parameters, means, opts, key), logs = jax.lax.scan(
         iteration, (y, parameters, means, opts, key), jnp.arange(n))
-    fm, fo, _ = batch(finals)
+    fm, fo, terminal_fields = batch(finals)
     parameters = parameters.at[-modes:].set(finals)
     means = means.at[-modes:].set(fm)
     opts = opts.at[-modes:].set(fo)
@@ -214,4 +231,5 @@ def search(evaluate, seeds, previous, key, cfg, eta, rho, cold, log_guidance=Non
         finalists, indices, final, jnp.min(opts0),
         *logs[:11], jnp.sum(counts), logs[11], initial, initial_fields,
         proposal_modes, jnp.arange(modes), mode_leaders, finals, logs[12],
-        unique_rows_mask(finalists), counts)
+        unique_rows_mask(finalists), counts,
+        jnp.concatenate((initial_fields, logs[7].reshape(n*k,-1), terminal_fields))[indices])

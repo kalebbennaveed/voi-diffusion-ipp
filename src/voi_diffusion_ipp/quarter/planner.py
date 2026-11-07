@@ -155,7 +155,7 @@ def rollout(theta,x0,q0,mean_array,construction,physical,paths,env,cfg,filter_on
         reached=jnp.linalg.norm(ref[:2]-path[wp])<.38
         held=jnp.where(pause[wp]&reached,held+cfg.dt,held)
         advance=reached&((~pause[wp])|(held>=dwell));held=jnp.where(advance,0.,held)
-        wp=jnp.where(advance,jnp.where(wp==sizes[index]-1,loops[index],wp+1),wp)
+        wp=jnp.where(advance,jnp.where(wp==sizes[index]-1,loops[index].astype(wp.dtype),wp+1),wp)
         delta=path[wp]-ref[:2];distance=jnp.linalg.norm(delta)
         desired_speed=jnp.minimum(speed,jnp.minimum(.9*distance,jnp.sqrt(2*.7*jnp.maximum(distance-.25,0.)+.2**2)))
         vel=delta/jnp.maximum(distance,1e-6)*desired_speed

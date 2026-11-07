@@ -1,0 +1,35 @@
+Completed three-scenario comparison checkpoint — 2026-11-07
+
+Research source and recorded evidence are on main. The corresponding complete
+website is on branch demo-comparison-20261107 of the same private repository;
+it has a separate source history. Check out that branch into a sibling site
+folder rather than merging it into the research source.
+
+Source: scripts/airflow. Numerical summary, table, plots, integrity audit and
+raw recordings: output/final_comparison_20261106. Scenario 1/2 proposed records
+are preserved under output/path_mask_20261105; their retrospective stopping
+criterion audit is explicitly disclosed. All 15 declared outcomes, including
+three contact terminations, are retained. Do not compare a contact endpoint
+with a full-duration endpoint as evidence of superior monitoring.
+
+The complete demo snapshot retains the earlier 52 groups / 57 recordings.
+Serve its dist directory with: python3 -m http.server 8786 --directory dist
+Open /revised/final-results.html. Recordings are playback data; opening the
+page does not execute simulations. No Scenario 4 result is in this checkpoint.
+
+Runtime: Python 3.11–3.12; JAX 0.4.38, NumPy 2.4.6, SciPy 1.16.3.
+Install project and dev dependencies from pyproject.toml. Airflow generation
+uses the separate CFD environment and source in scripts/airflow; accepted
+stationary fields are already included in the demo and Scenario 3 data.
+
+Large derived in-memory GP profile pickle caches are not tracked. Observations,
+posterior arrays, source archives, protocols, exact execution checkpoints and
+prefix verification inputs are retained. Some original provenance references
+are absolute paths to the execution workspace and need relocation on another
+machine. Unrelated experiments elsewhere in the dirty working tree are not
+part of this checkpoint.
+
+Checks: final-integrity-audit.json validates all 15 outcomes and preservation;
+focused regression tests cover uncertainty stopping, checkpoint/profile loading,
+exact prefix replay and floating-point scenario geometry. Planning runtime tails
+are retained and disclosed; these are not isolated hardware benchmarks.

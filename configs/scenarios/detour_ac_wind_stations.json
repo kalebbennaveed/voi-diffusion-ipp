@@ -1,0 +1,56 @@
+{
+  "description": "Synthetic pre-mission fixed wind-station observations in A and C, shared by all three methods. B is unobserved. This is an explicit initial-information benchmark, not virgin-map exploration, real measurements or an oracle field map.",
+  "physical_case": "compact_detour crosswind, wind strength 3.65 m/s",
+  "noise_std_mps": 0.25,
+  "sensor_noise_seed": 8330,
+  "observations": [
+    [
+      -3.0,
+      1.0,
+      -2.6296619862443333,
+      -0.39613463543353306
+    ],
+    [
+      -1.0,
+      1.0,
+      -3.6580161422756583,
+      -0.26545605170507564
+    ],
+    [
+      1.0,
+      1.0,
+      -3.825449194019229,
+      0.30962301578483964
+    ],
+    [
+      3.0,
+      1.0,
+      -3.0001444259293137,
+      0.4087250454491342
+    ],
+    [
+      -3.0,
+      -3.6,
+      -3.55310728540565,
+      -0.033498416788079126
+    ],
+    [
+      -1.0,
+      -3.6,
+      -3.61264527759977,
+      -0.011721457926303802
+    ],
+    [
+      1.0,
+      -3.6,
+      -3.92787895599203,
+      -0.0933228229033708
+    ],
+    [
+      3.0,
+      -3.6,
+      -2.8307529411423835,
+      -0.12441987856316045
+    ]
+  ]
+}

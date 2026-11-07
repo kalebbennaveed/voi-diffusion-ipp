@@ -1,0 +1,16 @@
+scenario,method,total_recorded_time_s,learning_time_s,learning_completed,final_deficit,common_window_s,common_window_deficit,status,common_window_mean_deficit,contact_s,source
+1,Baseline 1 · MBD without RPCBF,4.4,0.0,True,0.0595382,532,,Contact,,4.391439933855574,output/final_comparison_20261106/unfiltered/s1-center-unfiltered.json.gz
+1,Baseline 2 · MBD + execution RPCBF,532.0,0.0,True,0.3661653,532,0.3661653,Completed,0.2931971296992481,,output/final_comparison_20261106/filtered-s1/s1-center-filtered.json.gz
+1,Baseline 3 · Disturbance-aware MBD,560.0,0.0,True,0.2479979,532,0.2798959,Completed,0.22397919060150376,,output/final_comparison_20261106/aware-s1-completed/s1-center-aware.json.gz
+1,Baseline 4 · Global learning → DA-MBD,399.2,240.0,True,0.1613358,532,,Contact,,399.0011053398381,output/final_comparison_20261106/global-s1/s1-center-global.json.gz
+1,Proposed · Candidate-path learning → DA-MBD,532.0,180.0,True,0.1460632,532,0.1460632,Completed,0.16556457518796994,,output/path_mask_20261105/safety-aware-proposed/s1-center-pathmask.json.gz
+2,Baseline 1 · MBD without RPCBF,15.8,0.0,True,0.1060966,560,,Contact,,15.61780429480496,output/final_comparison_20261106/unfiltered/s2-center-unfiltered.json.gz
+2,Baseline 2 · MBD + execution RPCBF,560.0,0.0,True,0.3668362,560,0.3668362,Completed,0.3005109176785714,,output/final_comparison_20261106/filtered-s2/s2-center-filtered.json.gz
+2,Baseline 3 · Disturbance-aware MBD,560.0,0.0,True,0.2670882,560,0.2670882,Completed,0.22092820071428573,,output/final_comparison_20261106/aware-s2-completed/s2-center-aware.json.gz
+2,Baseline 4 · Global learning → DA-MBD,670.0,370.0,True,0.1362239,560,0.1562614,Completed,0.18969785714285714,,output/final_comparison_20261106/global-s2-completed/s2-center-global.json.gz
+2,Proposed · Candidate-path learning → DA-MBD,560.0,200.0,True,0.1707307,560,0.1707307,Completed,0.17749831696428572,,output/path_mask_20261105/safety-aware-proposed-s2-recovered/s2-center-pathmask.json.gz
+3,Baseline 1 · MBD without RPCBF,600.0,0.0,True,0.1854889,514.0,0.1610439,Completed,0.18059000311284046,,output/final_comparison_20261106/unfiltered-s3/s3-center-unfiltered.json.gz
+3,Baseline 2 · MBD + execution RPCBF,600.0,0.0,True,0.1888873,514.0,0.179834,Completed,0.18010343424124514,,output/final_comparison_20261106/filtered-s3/s3-center-filtered.json.gz
+3,Baseline 3 · Disturbance-aware MBD,600.0,0.0,True,0.1899548,514.0,0.1839712,Completed,0.18607222509727625,,output/final_comparison_20261106/aware-s3-completed/s3-center-aware.json.gz
+3,Baseline 4 · Global learning → DA-MBD,514.0,214.0,True,0.1769546,514.0,0.1769546,Completed,0.22071205447470815,,output/final_comparison_20261106/global-s3/s3-center-global.json.gz
+3,Proposed · Candidate-path learning → DA-MBD,600.0,102.0,True,0.2020207,514.0,0.1885292,Completed,0.18941371964980544,,output/final_comparison_20261106/proposed-s3-completed/s3-center-pathmask.json.gz

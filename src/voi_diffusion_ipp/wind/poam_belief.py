@@ -11,6 +11,7 @@ from typing import NamedTuple
 
 import jax
 import jax.numpy as jnp
+import jax.scipy as jsp
 import numpy as np
 from scipy.special import ndtri
 from scipy.stats import qmc
@@ -68,13 +69,27 @@ class PosteriorBasis(NamedTuple):
     def kernel_centers(self, x):
         return self.cross(x, self.centers, self.center_weights)
 
+    def support_correction(self, residual):
+        """Apply the same regularized support covariance inverse to each draw.
+
+        An empty inverse selects its Cholesky factor representation. This avoids
+        forming a dense inverse after kernel fitting; no covariance is dropped.
+        """
+        if self.support_inverse.size:
+            return jnp.einsum('st,ntc->nsc',self.support_inverse,residual)
+        ns=len(self.support);n=len(residual)
+        rhs=residual.transpose(1,0,2).reshape(ns,-1)
+        solution=jsp.linalg.cho_solve((self.support_cholesky,True),rhs)
+        return solution.reshape(ns,n,2).transpose(1,0,2)
+
     def prior_features(self, locations):
         """Moments of the support-corrected prior sampler, residual retained."""
         x = jnp.atleast_2d(locations)
         phi = self.spectral_features(x)
         if not len(self.support):
             return phi
-        A = self.kernel_support(x) @ self.support_inverse
+        K=self.kernel_support(x)
+        A = K @ self.support_inverse if self.support_inverse.size else jsp.linalg.cho_solve((self.support_cholesky,True),K.T).T
         residual = phi - A @ self.spectral_features(self.support)
         return jnp.concatenate((residual, A @ self.support_cholesky), axis=1)
 
@@ -153,8 +168,10 @@ class POAMBelief(NamedTuple):
             select_inducing_jax,
             transport_statistic_root,
             variational_from_root,
+            spatial_observations,
         )
 
+        positions, measured_wind = spatial_observations(positions, measured_wind)
         z = self.basis.centers
         if relocate:
             z = select_inducing_jax(
@@ -199,7 +216,7 @@ class POAMBelief(NamedTuple):
                 "sf,nfc->nsc", self.basis.spectral_features(self.basis.support), prior_eps
             )
             vs = jnp.einsum("st,ntc->nsc", self.basis.support_cholesky, support_eps)
-            support_coeff = jnp.einsum("st,ntc->nsc", self.basis.support_inverse, vs - gs)
+            support_coeff = self.basis.support_correction(vs-gs)
             gz += jnp.einsum(
                 "ms,nsc->nmc", self.basis.kernel_support(self.basis.centers), support_coeff
             )

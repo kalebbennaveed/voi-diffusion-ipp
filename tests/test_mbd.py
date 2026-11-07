@@ -81,3 +81,23 @@ def test_recorded_diffusion_is_the_actual_score_and_reverse_update():
         expected = (h.noisy_before[i] + (1 - h.alphabar[i]) * s) / jnp.sqrt(h.alpha[i])
         np.testing.assert_allclose(h.noisy_after[i], expected, atol=2e-6)
     np.testing.assert_array_equal(h.noisy_before[1:], h.noisy_after[:-1])
+
+
+def test_multistart_is_exact_independent_mbd_and_preserves_modes():
+    from voi_diffusion_ipp.planning.mbd import optimize_multistart
+    cfg=replace(Config(),diffusion_steps=4,proposals=16,candidate_chunk=1)
+    starts=jnp.array([[-1.2,0.], [1.1,0.]])
+    def objective(v):
+        # Disconnected feasible basins. Averaging the two modes is infeasible.
+        return jnp.where(jnp.abs(v[0])>.6,jnp.minimum(jnp.sum((v-jnp.array([-1.,.2]))**2),.1+jnp.sum((v-jnp.array([1.,-.2]))**2)),jnp.inf)
+    key=jax.random.PRNGKey(8127)
+    result=optimize_multistart(objective,starts,key,cfg)
+    independent=[optimize(objective,start,k,replace(cfg,proposals=8)) for start,k in zip(starts,jax.random.split(key,2))]
+    winner=min(independent,key=lambda r:float(r.cost))
+    np.testing.assert_allclose(result.vector,winner.vector,atol=1e-7)
+    np.testing.assert_allclose(result.cost,winner.cost,atol=1e-7)
+    assert int(result.evaluations)==sum(int(r.evaluations) for r in independent)
+    for i,r in enumerate(independent):
+        np.testing.assert_allclose(result.history.candidates[i],r.history.candidates,atol=1e-7)
+        np.testing.assert_allclose(result.history.noisy_after[i],r.history.noisy_after,atol=1e-7)
+    assert abs(float(result.vector[0]))>.6
