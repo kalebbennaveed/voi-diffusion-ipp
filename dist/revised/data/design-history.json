@@ -1,0 +1,730 @@
+{
+  "first_environment": {
+    "revision": "five-column-cluster-v1",
+    "bounds": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        8.0,
+        6.0
+      ]
+    ],
+    "depth": 2.0,
+    "dx": 0.125,
+    "obstacle_height": 1.5,
+    "obstacles": [
+      [
+        2.34,
+        4.72,
+        0.98
+      ],
+      [
+        3.59,
+        4.45,
+        0.98
+      ],
+      [
+        2.8,
+        3.65,
+        0.98
+      ],
+      [
+        3.6,
+        2.6,
+        0.855
+      ],
+      [
+        5.355,
+        1.1625,
+        0.855
+      ]
+    ],
+    "regions": [
+      {
+        "label": "A",
+        "bounds": [
+          [
+            5.0,
+            2.45
+          ],
+          [
+            8.0,
+            4.7
+          ]
+        ]
+      },
+      {
+        "label": "B",
+        "bounds": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            2.9,
+            1.75
+          ]
+        ]
+      }
+    ],
+    "passage_obstacles": [
+      3,
+      4
+    ],
+    "central_target": [
+      4.4775,
+      1.88125,
+      0.75
+    ],
+    "central_inlet_x": [
+      6.0,
+      6.8
+    ],
+    "central_peak": [
+      36.0,
+      38.0
+    ],
+    "lower_peak": [
+      0.0,
+      18.0
+    ],
+    "floor_box": [
+      4.0,
+      4.9,
+      1.35,
+      2.25
+    ],
+    "south_outlet": [
+      false,
+      true
+    ],
+    "design_note": "Geometry follows the new five-circle sketch. Uppermost column leaves 0.30 m geometric wall gap, maintaining a physically open but longer, tighter upper bypass. No route costs or method-specific geometry are imposed."
+  },
+  "first_center_screen": [
+    {
+      "id": "s1-center-aware",
+      "case": {
+        "id": "center",
+        "label": "Center of B \u00b7 at rest",
+        "state": [
+          1.45,
+          0.875,
+          0.0,
+          0.0
+        ],
+        "seed": 8101
+      },
+      "scenario": 1,
+      "method": "aware",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 120.0,
+        "planned_seconds": 120,
+        "contact": null,
+        "integrated_deficit": 12.921149991808175,
+        "min_clearance_m": 0.06653655519535762,
+        "infeasible_execution_steps": 6,
+        "max_execution_slack": 0.20708858319497203,
+        "max_control_component_m_s2": 1.600000000000001,
+        "fallback_periods": 0,
+        "wall_seconds": 17.26854566700058,
+        "first_visit_s": {
+          "A": 19.35,
+          "B": 0.0
+        },
+        "passage_crossings": [
+          {
+            "time_s": 17.26654534164486,
+            "position_m": [
+              6.108239278650528,
+              0.5455305053788426
+            ],
+            "route": "lower",
+            "direction": "B-A",
+            "speed_m_s": 0.8881166878226054
+          },
+          {
+            "time_s": 24.652709704614654,
+            "position_m": [
+              4.634746791173711,
+              1.7524509901354934
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.9133320845239937
+          },
+          {
+            "time_s": 38.26543885875265,
+            "position_m": [
+              6.092116952518317,
+              0.558736114390268
+            ],
+            "route": "lower",
+            "direction": "B-A",
+            "speed_m_s": 0.881022240921067
+          },
+          {
+            "time_s": 54.65476603638052,
+            "position_m": [
+              4.634315509722252,
+              1.7528042477346237
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.9332283841869244
+          },
+          {
+            "time_s": 68.14660352216896,
+            "position_m": [
+              6.100407343736264,
+              0.5519455517829747
+            ],
+            "route": "lower",
+            "direction": "B-A",
+            "speed_m_s": 0.9619754106916432
+          },
+          {
+            "time_s": 79.88944892605514,
+            "position_m": [
+              4.635567422065456,
+              1.7517788209577816
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.7692063987950669
+          },
+          {
+            "time_s": 97.59130168718386,
+            "position_m": [
+              6.1695068895460565,
+              0.4953469209558667
+            ],
+            "route": "lower",
+            "direction": "B-A",
+            "speed_m_s": 0.9135848913483301
+          },
+          {
+            "time_s": 109.66852955410414,
+            "position_m": [
+              4.641594321319218,
+              1.7468422581787042
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.8943297712532879
+          },
+          {
+            "time_s": 119.58385534081245,
+            "position_m": [
+              1.0842224255937989,
+              4.6606440246204635
+            ],
+            "route": "upper",
+            "direction": "B-A",
+            "speed_m_s": 0.8602656713247131
+          }
+        ],
+        "first_transfer": {
+          "first_A_s": 19.35,
+          "route": "lower",
+          "attempted_crossings": [
+            {
+              "time_s": 17.26654534164486,
+              "position_m": [
+                6.108239278650528,
+                0.5455305053788426
+              ],
+              "route": "lower",
+              "direction": "B-A",
+              "speed_m_s": 0.8881166878226054
+            }
+          ]
+        },
+        "first_planned_route_to_A": "lower",
+        "final_region_clarity": [
+          0.2347701914311273,
+          0.4477769393546931
+        ],
+        "final_whole_clarity": 0.47259713074589976
+      }
+    },
+    {
+      "id": "s1-center-baseline",
+      "case": {
+        "id": "center",
+        "label": "Center of B \u00b7 at rest",
+        "state": [
+          1.45,
+          0.875,
+          0.0,
+          0.0
+        ],
+        "seed": 8101
+      },
+      "scenario": 1,
+      "method": "baseline",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 120.0,
+        "planned_seconds": 120,
+        "contact": null,
+        "integrated_deficit": 17.03367107000072,
+        "min_clearance_m": 0.04552891578262275,
+        "infeasible_execution_steps": 28,
+        "max_execution_slack": 0.7439758968457143,
+        "max_control_component_m_s2": 1.6000000000000025,
+        "fallback_periods": 0,
+        "wall_seconds": 7.062155249994248,
+        "first_visit_s": {
+          "A": 53.3,
+          "B": 0.0
+        },
+        "passage_crossings": [
+          {
+            "time_s": 4.588960660252241,
+            "position_m": [
+              4.3614541852437245,
+              1.9763017713459523
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.28900520235916116
+          },
+          {
+            "time_s": 5.057559087726116,
+            "position_m": [
+              4.376369106805327,
+              1.9640851333147258
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.3172781975227514
+          },
+          {
+            "time_s": 20.146101184871632,
+            "position_m": [
+              4.3569548526330975,
+              1.9799871221310104
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.35957233438587877
+          },
+          {
+            "time_s": 20.79334054351262,
+            "position_m": [
+              4.374789308974093,
+              1.9653791272648102
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.3664704202048192
+          },
+          {
+            "time_s": 52.13298671955059,
+            "position_m": [
+              4.654476481801703,
+              1.736290631002879
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.3811172893063109
+          },
+          {
+            "time_s": 59.819067655869944,
+            "position_m": [
+              4.634245252548658,
+              1.752861794564846
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.9379718573636597
+          },
+          {
+            "time_s": 72.3472630720829,
+            "position_m": [
+              4.362042409466672,
+              1.9758199637559315
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.1858776472547988
+          },
+          {
+            "time_s": 72.69523218794043,
+            "position_m": [
+              4.371485345618129,
+              1.9680853650563763
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.20032240826628547
+          },
+          {
+            "time_s": 92.35783378947215,
+            "position_m": [
+              4.65411630923599,
+              1.736585644144311
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.3012119476250982
+          },
+          {
+            "time_s": 99.37388129160216,
+            "position_m": [
+              4.63639933470731,
+              1.7510974110303377
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 1.0112620287081457
+          }
+        ],
+        "first_transfer": {
+          "first_A_s": 53.3,
+          "route": "central",
+          "attempted_crossings": [
+            {
+              "time_s": 4.588960660252241,
+              "position_m": [
+                4.3614541852437245,
+                1.9763017713459523
+              ],
+              "route": "central",
+              "direction": "B-A",
+              "speed_m_s": 0.28900520235916116
+            },
+            {
+              "time_s": 20.146101184871632,
+              "position_m": [
+                4.3569548526330975,
+                1.9799871221310104
+              ],
+              "route": "central",
+              "direction": "B-A",
+              "speed_m_s": 0.35957233438587877
+            },
+            {
+              "time_s": 52.13298671955059,
+              "position_m": [
+                4.654476481801703,
+                1.736290631002879
+              ],
+              "route": "central",
+              "direction": "B-A",
+              "speed_m_s": 0.3811172893063109
+            }
+          ]
+        },
+        "first_planned_route_to_A": "central",
+        "final_region_clarity": [
+          0.14064051013035994,
+          0.3206202825717635
+        ],
+        "final_whole_clarity": 0.3282093376499168
+      }
+    },
+    {
+      "id": "s2-center-aware",
+      "case": {
+        "id": "center",
+        "label": "Center of B \u00b7 at rest",
+        "state": [
+          1.45,
+          0.875,
+          0.0,
+          0.0
+        ],
+        "seed": 8101
+      },
+      "scenario": 2,
+      "method": "aware",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 120.0,
+        "planned_seconds": 120,
+        "contact": {
+          "time_s": 43.11616663075989,
+          "position_m": [
+            3.666934796401892,
+            1.2142748718186025e-19
+          ]
+        },
+        "integrated_deficit": 20.43463461348044,
+        "min_clearance_m": 0.0,
+        "infeasible_execution_steps": 38,
+        "max_execution_slack": 0.6229367843874916,
+        "max_control_component_m_s2": 1.6000000000000032,
+        "fallback_periods": 0,
+        "wall_seconds": 6.190907167008845,
+        "first_visit_s": {
+          "A": 6.75,
+          "B": 0.0
+        },
+        "passage_crossings": [
+          {
+            "time_s": 4.3159981845472375,
+            "position_m": [
+              4.388958520376745,
+              1.9537732917142043
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.9470207655750946
+          },
+          {
+            "time_s": 15.562038471900175,
+            "position_m": [
+              4.580956934284938,
+              1.79650963359852
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.21937813141036433
+          },
+          {
+            "time_s": 25.91813249481242,
+            "position_m": [
+              4.630003390115528,
+              1.7563362545350025
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.41911310437022115
+          },
+          {
+            "time_s": 34.99801173854381,
+            "position_m": [
+              4.557001530355455,
+              1.8161312251362016
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.6884324090293737
+          }
+        ],
+        "first_transfer": {
+          "first_A_s": 6.75,
+          "route": "central",
+          "attempted_crossings": [
+            {
+              "time_s": 4.3159981845472375,
+              "position_m": [
+                4.388958520376745,
+                1.9537732917142043
+              ],
+              "route": "central",
+              "direction": "B-A",
+              "speed_m_s": 0.9470207655750946
+            }
+          ]
+        },
+        "first_planned_route_to_A": "central",
+        "final_region_clarity": [
+          0.06079677329504478,
+          0.05050332462853968
+        ],
+        "final_whole_clarity": 0.212000036833053
+      }
+    },
+    {
+      "id": "s2-center-baseline",
+      "case": {
+        "id": "center",
+        "label": "Center of B \u00b7 at rest",
+        "state": [
+          1.45,
+          0.875,
+          0.0,
+          0.0
+        ],
+        "seed": 8101
+      },
+      "scenario": 2,
+      "method": "baseline",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 120.0,
+        "planned_seconds": 120,
+        "contact": {
+          "time_s": 59.233028212197446,
+          "position_m": [
+            3.631983676101915,
+            2.790006852120709e-20
+          ]
+        },
+        "integrated_deficit": 21.387763948753058,
+        "min_clearance_m": 0.0,
+        "infeasible_execution_steps": 24,
+        "max_execution_slack": 0.9853617004917559,
+        "max_control_component_m_s2": 1.600000000000001,
+        "fallback_periods": 0,
+        "wall_seconds": 5.0741818330134265,
+        "first_visit_s": {
+          "A": 6.75,
+          "B": 0.0
+        },
+        "passage_crossings": [
+          {
+            "time_s": 4.3159981845472375,
+            "position_m": [
+              4.388958520376745,
+              1.9537732917142043
+            ],
+            "route": "central",
+            "direction": "B-A",
+            "speed_m_s": 0.9470207655750946
+          },
+          {
+            "time_s": 15.562038471900175,
+            "position_m": [
+              4.580956934284938,
+              1.79650963359852
+            ],
+            "route": "central",
+            "direction": "A-B",
+            "speed_m_s": 0.21937813141036433
+          }
+        ],
+        "first_transfer": {
+          "first_A_s": 6.75,
+          "route": "central",
+          "attempted_crossings": [
+            {
+              "time_s": 4.3159981845472375,
+              "position_m": [
+                4.388958520376745,
+                1.9537732917142043
+              ],
+              "route": "central",
+              "direction": "B-A",
+              "speed_m_s": 0.9470207655750946
+            }
+          ]
+        },
+        "first_planned_route_to_A": "central",
+        "final_region_clarity": [
+          0.05249851065557395,
+          0.05208940429036903
+        ],
+        "final_whole_clarity": 0.21019852686852641
+      }
+    }
+  ],
+  "revised_environment": {
+    "revision": "five-column-cluster-v2",
+    "bounds": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        8.0,
+        6.0
+      ]
+    ],
+    "depth": 2.0,
+    "dx": 0.125,
+    "obstacle_height": 1.5,
+    "obstacles": [
+      [
+        2.34,
+        4.72,
+        0.98
+      ],
+      [
+        3.59,
+        4.45,
+        0.98
+      ],
+      [
+        2.8,
+        3.65,
+        0.98
+      ],
+      [
+        3.6,
+        2.6,
+        0.855
+      ],
+      [
+        5.355,
+        1.1625,
+        0.855
+      ]
+    ],
+    "regions": [
+      {
+        "label": "A",
+        "bounds": [
+          [
+            5.0,
+            2.45
+          ],
+          [
+            8.0,
+            4.7
+          ]
+        ]
+      },
+      {
+        "label": "B",
+        "bounds": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            2.9,
+            1.75
+          ]
+        ]
+      }
+    ],
+    "passage_obstacles": [
+      3,
+      4
+    ],
+    "central_target": [
+      4.4775,
+      1.88125,
+      0.75
+    ],
+    "central_inlet_x": [
+      6.0,
+      6.0
+    ],
+    "central_peak": [
+      36.0,
+      36.0
+    ],
+    "lower_peak": [
+      0.0,
+      18.0
+    ],
+    "floor_box": [
+      4.0,
+      4.9,
+      1.35,
+      2.25
+    ],
+    "south_outlet": [
+      false,
+      false
+    ],
+    "design_note": "Geometry follows the new five-circle sketch. Uppermost column leaves 0.30 m geometric wall gap, maintaining a physically open but longer, tighter upper bypass. No route costs or method-specific geometry are imposed.",
+    "lower_floor_box": [
+      null,
+      [
+        3.0,
+        4.45,
+        0.25,
+        1.35
+      ]
+    ]
+  },
+  "reason": "Scenario 2 initial north-inlet alignment weakened the middle, and its south pressure opening pulled the robot toward a boundary. Retain Scenario 1 physical field. In Scenario 2 use the same central inlet as Scenario 1, close south opening, and use an additional floor pressure outlet outside B; solve the full 3D airflow again. No interior field scaling, clipping or quiet-region masking."
+}

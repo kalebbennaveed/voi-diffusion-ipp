@@ -1,0 +1,11 @@
+{
+  "source": "output/path_mask_20261105/safety-aware-handoff/s1-handoff-calibration.json",
+  "source_sha256": "24c09220d80c72feca839497dcb111507f488df40c90629f72e495041fe306b1",
+  "selection": "Existing 10% monitoring-cost prediction error criterion at all three fixed states; no true contact, at least one displacement >= 0.5 m. RPCBF relaxation is logged. Position errors are reported but are not a task-cost accuracy condition.",
+  "selected_task_std_threshold_m_s": 1.1,
+  "domain_std_at_checkpoint_m_s": 1.095342350790638,
+  "max_cost_error": 0.004074028380515027,
+  "all_no_contact": true,
+  "status": "Calibration diagnostic only; fresh full comparison required with the same selection and handoff metric for both methods.",
+  "threshold_scope": "S1 calibration; S2 uses the same task precision as a transfer test and must independently pass online validation."
+}

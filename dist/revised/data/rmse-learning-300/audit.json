@@ -1,0 +1,20 @@
+[
+  {
+    "scenario": 1,
+    "finite_states_commands_slack": true,
+    "real_measurement_positions": true,
+    "maximum_rmse_recalculation_error_m_s": 1.2705711682770016e-07,
+    "gate_matches_measured_error": true,
+    "safety_success": false,
+    "learning_accuracy_success": false
+  },
+  {
+    "scenario": 2,
+    "finite_states_commands_slack": true,
+    "real_measurement_positions": true,
+    "maximum_rmse_recalculation_error_m_s": 1.804606624133953e-07,
+    "gate_matches_measured_error": true,
+    "safety_success": true,
+    "learning_accuracy_success": false
+  }
+]

@@ -1,0 +1,353 @@
+{
+  "runs": [
+    {
+      "id": "s1-center-aware",
+      "scenario": 1,
+      "method": "aware",
+      "case": "center",
+      "file": "s1-center-aware.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": null,
+        "stop_reason": null,
+        "integrated_deficit": 55.057666615502306,
+        "min_clearance_m": 0.3160692994982912,
+        "infeasible_execution_steps": 0,
+        "max_execution_slack": 0.0,
+        "max_control_component_m_s2": 1.6,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1501,
+        "protected_inducing": 65,
+        "capacity_saturated": false,
+        "wall_seconds": 126.26306008300162,
+        "warm_planning_median_s": 0.5744403330027126,
+        "warm_planning_max_s": 0.7547864580119494
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.018977208994328976,
+          "max_s": 0.024173042009351775
+        },
+        "field_sampling": {
+          "median_s": 0.02555374999064952,
+          "max_s": 0.0409336659940891
+        },
+        "optimization_validation": {
+          "median_s": 0.527581915986957,
+          "max_s": 0.7069383329944685
+        },
+        "mbd_search": {
+          "median_s": 0.3195629169931635,
+          "max_s": 0.40086875000270084
+        },
+        "execution_validation": {
+          "median_s": 0.20494950001011603,
+          "max_s": 0.32992579200072214
+        },
+        "actual_posterior_update": {
+          "median_s": 0.001544041995657608,
+          "max_s": 0.014985625020926818
+        },
+        "total": {
+          "median_s": 0.5744403330027126,
+          "max_s": 0.7547864580119494,
+          "p95_s": 0.7041186375048709,
+          "calls": 59
+        },
+        "startup_s": [
+          16.2371358340024
+        ]
+      },
+      "checks": {
+        "cold_performance_zero": true,
+        "full_safety_uncertainty_retained": true,
+        "actual_measurements_only": true,
+        "finite_and_actuator_limits": true,
+        "clarity_consistent": true,
+        "validation_failures": 1,
+        "validation_failures_after_initial": 0,
+        "forecast_contact_plans": 0,
+        "five_second_position_error_median_m": 0.0011624837897424222,
+        "five_second_position_error_max_m": 1.6040835042439328,
+        "mean_full_sigma_initial": 1.8,
+        "mean_full_sigma_final": 1.361329356204998
+      },
+      "sha256": "637a603d82ae50c5f3f786e0c05a6ee9423ee1c5ebc5f9a54b4430433a84b860"
+    },
+    {
+      "id": "s1-center-baseline",
+      "scenario": 1,
+      "method": "baseline",
+      "case": "center",
+      "file": "s1-center-baseline.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": null,
+        "stop_reason": null,
+        "integrated_deficit": 75.8738719467281,
+        "min_clearance_m": 0.20781980609781536,
+        "infeasible_execution_steps": 225,
+        "max_execution_slack": 2.6190058373173333,
+        "max_control_component_m_s2": 1.6000000000000014,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1501,
+        "protected_inducing": 24,
+        "capacity_saturated": false,
+        "wall_seconds": 91.49614425000618,
+        "warm_planning_median_s": 0.17200275100185536,
+        "warm_planning_max_s": 0.29383895901264623
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.019141583004966378,
+          "max_s": 0.043403167015640065
+        },
+        "field_sampling": {
+          "median_s": 0.02806058299029246,
+          "max_s": 0.061234124994371086
+        },
+        "optimization_validation": {
+          "median_s": 0.12228495799354278,
+          "max_s": 0.18525362500804476
+        },
+        "mbd_search": {
+          "median_s": 0.044412125018425286,
+          "max_s": 0.08608083298895508
+        },
+        "execution_validation": {
+          "median_s": 0.07597895798971877,
+          "max_s": 0.11120045799179934
+        },
+        "actual_posterior_update": {
+          "median_s": 0.0016445000073872507,
+          "max_s": 0.0034308750182390213
+        },
+        "total": {
+          "median_s": 0.17200275100185536,
+          "max_s": 0.29383895901264623,
+          "p95_s": 0.2075634046923369,
+          "calls": 59
+        },
+        "startup_s": [
+          3.5831032499845605
+        ]
+      },
+      "checks": {
+        "cold_performance_zero": true,
+        "full_safety_uncertainty_retained": true,
+        "actual_measurements_only": true,
+        "finite_and_actuator_limits": true,
+        "clarity_consistent": true,
+        "validation_failures": 0,
+        "validation_failures_after_initial": 0,
+        "forecast_contact_plans": 0,
+        "five_second_position_error_median_m": 3.741953592712247,
+        "five_second_position_error_max_m": 4.116691787277034,
+        "mean_full_sigma_initial": 1.8,
+        "mean_full_sigma_final": 1.4908329860228717
+      },
+      "sha256": "5fe0ae506eef311fd6a0282780db19a321ac02cb73e20156b1a7d50f960b7117"
+    },
+    {
+      "id": "s2-center-aware",
+      "scenario": 2,
+      "method": "aware",
+      "case": "center",
+      "file": "s2-center-aware.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": {
+          "time_s": 289.0269975466317,
+          "position_m": [
+            2.631064749785871,
+            2.312272600442949e-19
+          ]
+        },
+        "stop_reason": null,
+        "integrated_deficit": 57.29297533447161,
+        "min_clearance_m": 0.0,
+        "infeasible_execution_steps": 16,
+        "max_execution_slack": 1.8919836124147842,
+        "max_control_component_m_s2": 1.6000000000000014,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1446,
+        "protected_inducing": 73,
+        "capacity_saturated": false,
+        "wall_seconds": 111.25192862498807,
+        "warm_planning_median_s": 0.5796899370034225,
+        "warm_planning_max_s": 0.7145195410121232
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.020186916503007524,
+          "max_s": 0.028763625014107674
+        },
+        "field_sampling": {
+          "median_s": 0.02916410399484448,
+          "max_s": 0.05352966600912623
+        },
+        "optimization_validation": {
+          "median_s": 0.5272985835035797,
+          "max_s": 0.6482793329923879
+        },
+        "mbd_search": {
+          "median_s": 0.31941810400167014,
+          "max_s": 0.39989891700679436
+        },
+        "execution_validation": {
+          "median_s": 0.20404562501062173,
+          "max_s": 0.318107124970993
+        },
+        "actual_posterior_update": {
+          "median_s": 0.001645374984946102,
+          "max_s": 0.0027698339836206287
+        },
+        "total": {
+          "median_s": 0.5796899370034225,
+          "max_s": 0.7145195410121232,
+          "p95_s": 0.6737257205619244,
+          "calls": 60
+        },
+        "startup_s": []
+      },
+      "checks": {
+        "cold_performance_zero": true,
+        "full_safety_uncertainty_retained": true,
+        "actual_measurements_only": true,
+        "finite_and_actuator_limits": true,
+        "clarity_consistent": true,
+        "validation_failures": 2,
+        "validation_failures_after_initial": 1,
+        "forecast_contact_plans": 0,
+        "five_second_position_error_median_m": 0.0025659230119271107,
+        "five_second_position_error_max_m": 1.7811220543800448,
+        "mean_full_sigma_initial": 1.8,
+        "mean_full_sigma_final": 1.3745216899618806
+      },
+      "sha256": "d879fa913f488f828fea28166b2dd259bfe19205aff9fa56dd6324882e74150b"
+    },
+    {
+      "id": "s2-center-baseline",
+      "scenario": 2,
+      "method": "baseline",
+      "case": "center",
+      "file": "s2-center-baseline.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": null,
+        "stop_reason": null,
+        "integrated_deficit": 76.46919459983302,
+        "min_clearance_m": 0.24924672170822593,
+        "infeasible_execution_steps": 13,
+        "max_execution_slack": 1.3952033114122755,
+        "max_control_component_m_s2": 1.6000000000000025,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1501,
+        "protected_inducing": 23,
+        "capacity_saturated": false,
+        "wall_seconds": 91.95213575000525,
+        "warm_planning_median_s": 0.1663145830098074,
+        "warm_planning_max_s": 0.26262279201182537
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.018603125005029142,
+          "max_s": 0.02292124999803491
+        },
+        "field_sampling": {
+          "median_s": 0.026330708002205938,
+          "max_s": 0.04460725001990795
+        },
+        "optimization_validation": {
+          "median_s": 0.1190340000030119,
+          "max_s": 0.2155543749977369
+        },
+        "mbd_search": {
+          "median_s": 0.04300716699799523,
+          "max_s": 0.0651070419989992
+        },
+        "execution_validation": {
+          "median_s": 0.07363583301776089,
+          "max_s": 0.1692055830208119
+        },
+        "actual_posterior_update": {
+          "median_s": 0.0015624579973518848,
+          "max_s": 0.008000958012416959
+        },
+        "total": {
+          "median_s": 0.1663145830098074,
+          "max_s": 0.26262279201182537,
+          "p95_s": 0.20424138301168568,
+          "calls": 59
+        },
+        "startup_s": [
+          5.292950709001161
+        ]
+      },
+      "checks": {
+        "cold_performance_zero": true,
+        "full_safety_uncertainty_retained": true,
+        "actual_measurements_only": true,
+        "finite_and_actuator_limits": true,
+        "clarity_consistent": true,
+        "validation_failures": 0,
+        "validation_failures_after_initial": 0,
+        "forecast_contact_plans": 0,
+        "five_second_position_error_median_m": 3.9708536604669886,
+        "five_second_position_error_max_m": 4.381978925432169,
+        "mean_full_sigma_initial": 1.8,
+        "mean_full_sigma_final": 1.5465658576874206
+      },
+      "sha256": "ce448350f5c6a011802afba9e498af0b6ef7ee16b6a199de29130cb67659b32a"
+    }
+  ],
+  "first_plans_identical_across_hidden_scenarios": [
+    "center/aware",
+    "center/baseline"
+  ],
+  "caution": "No contact is not a proof of robust safety. Full posterior pointwise confidence disks and sampled finite backup values are retained; no true-wind coverage guarantee is asserted."
+}

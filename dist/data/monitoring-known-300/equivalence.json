@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "name": "One known field equals eight identical construction fields",
+      "control_error": 0.0
+    },
+    {
+      "name": "Compiled commit matches original scalar execution over 100 controls",
+      "errors": {
+        "state": 5.551115123125783e-17,
+        "clarity": 0.0,
+        "control": 1.9984014443252818e-15
+      }
+    },
+    {
+      "name": "Known-wind adapter equals original forecast for an exactly representable field",
+      "errors": {
+        "x": 0.0,
+        "q": 0.0,
+        "u": 2.7755575615628914e-17,
+        "monitor": 0.0,
+        "penalty": 0.0,
+        "max_slack": 0.0,
+        "min_clearance": 0.0
+      }
+    },
+    {
+      "name": "Baseline forecast is independent of supplied physical wind",
+      "passed": true
+    }
+  ],
+  "wall_seconds": 8.792036291997647
+}

@@ -1,0 +1,58 @@
+{
+  "initial_state_and_seeds_identical": true,
+  "initial_performance_fields_exact_zero": true,
+  "measurements_at_initial_plan": 0,
+  "first_plan": [
+    {
+      "method": "aware",
+      "initial_cost": 0.9936987161636353,
+      "seed_costs": [
+        1.030022382736206,
+        1.030369758605957,
+        1.0222681760787964,
+        1.0048843622207642,
+        1.0158708095550537,
+        1.1804817914962769,
+        1.2122554779052734,
+        1.030022382736206
+      ],
+      "forecast_xy_min": [
+        0.8390669822692871,
+        0.875
+      ],
+      "forecast_xy_max": [
+        1.4500000476837158,
+        1.113114595413208
+      ],
+      "forecasts_reach_A": false
+    },
+    {
+      "method": "baseline",
+      "initial_cost": 0.9360259771347046,
+      "seed_costs": [
+        0.9806666374206543,
+        0.9820573925971985,
+        0.9450356364250183,
+        0.9360259771347046,
+        1.0745185613632202,
+        1.0342658758163452,
+        1.0748165845870972,
+        0.9806666374206543
+      ],
+      "forecast_xy_min": [
+        1.4500000476837158,
+        0.875
+      ],
+      "forecast_xy_max": [
+        7.0635085105896,
+        3.3130369186401367
+      ],
+      "forecasts_reach_A": true
+    }
+  ],
+  "prior_sigma_m_s": 1.8,
+  "safety_radius_m_s": 5.4083269131959835,
+  "standstill_force_envelope_m_s2": 4.301470588235294,
+  "max_actuator_norm_m_s2": 2.2627416997969525,
+  "conclusion": "Zero performance wind does not remove conservatism introduced by full-uncertainty RPCBF inside the rollout. No exploration success established in the four declared 300-second runs. No new mission was run for this saved-data diagnosis."
+}

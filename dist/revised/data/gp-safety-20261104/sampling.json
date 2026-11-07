@@ -1,0 +1,26 @@
+[
+  {
+    "scenario": 1,
+    "results": [
+      {
+        "spacing_m": 0.125,
+        "support_points": 2607,
+        "relative_covariance_error": 0.013752440459224885,
+        "max_variance_error": 0.0002414174221306003,
+        "seconds": 2.25209262498538
+      }
+    ]
+  },
+  {
+    "scenario": 2,
+    "results": [
+      {
+        "spacing_m": 0.125,
+        "support_points": 2607,
+        "relative_covariance_error": 0.012805454434596922,
+        "max_variance_error": 0.0003625613289417219,
+        "seconds": 1.2388302499894053
+      }
+    ]
+  }
+]

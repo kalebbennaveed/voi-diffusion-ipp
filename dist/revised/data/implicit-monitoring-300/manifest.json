@@ -1,0 +1,307 @@
+{
+  "duration_s": 300,
+  "planning_horizon_s": 15,
+  "replan_s": 5,
+  "performance_fields": 2,
+  "safety_fields": 2,
+  "state": "complete",
+  "runs": [
+    {
+      "id": "s1-center-aware",
+      "scenario": 1,
+      "method": "aware",
+      "file": "s1-center-aware.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": null,
+        "stop_reason": null,
+        "integrated_deficit": 54.937770411541734,
+        "min_clearance_m": 0.20068335997296588,
+        "infeasible_execution_steps": 46,
+        "max_execution_slack": 1.6741570168626259,
+        "max_control_component_m_s2": 1.6000000000000014,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1500,
+        "protected_inducing": 111,
+        "capacity_saturated": false,
+        "wall_seconds": 84.31537695799489,
+        "warm_planning_median_s": 0.5551724990073126,
+        "warm_planning_max_s": 0.6504972499969881
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.017817000014474615,
+          "max_s": 0.021437999996123835
+        },
+        "field_sampling": {
+          "median_s": 0.0191087499842979,
+          "max_s": 0.029659417021321133
+        },
+        "optimization_validation": {
+          "median_s": 0.5156286249984987,
+          "max_s": 0.6036922500061337
+        },
+        "actual_posterior_update": {
+          "median_s": 0.001732999982777983,
+          "max_s": 0.005520000006072223
+        },
+        "total": {
+          "median_s": 0.5551724990073126,
+          "p95_s": 0.5725996008812216,
+          "max_s": 0.6504972499969881,
+          "calls": 59
+        },
+        "startup_s": [
+          14.369513290992472
+        ]
+      },
+      "belief": {
+        "id": "s1-center-aware",
+        "initial_performance_wind_exactly_zero": true,
+        "initial_safety_uncertainty_retained": true,
+        "no_future_observations": true,
+        "finite": true,
+        "actuator_limits": true,
+        "clarity_consistent": true,
+        "mean_full_sigma_before": 1.8,
+        "mean_full_sigma_after": 1.2580692672596354,
+        "observations": 1500,
+        "source_sha256": "ad474ca2bdad39fbf37a3240b796d2d15f6ae8c767fc4f3e93d538c763c0445e"
+      }
+    },
+    {
+      "id": "s1-center-baseline",
+      "scenario": 1,
+      "method": "baseline",
+      "file": "s1-center-baseline.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": null,
+        "stop_reason": null,
+        "integrated_deficit": 76.9692463559452,
+        "min_clearance_m": 0.2817325004705107,
+        "infeasible_execution_steps": 51,
+        "max_execution_slack": 3.349147594068202,
+        "max_control_component_m_s2": 1.6000000000000014,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1500,
+        "protected_inducing": 21,
+        "capacity_saturated": false,
+        "wall_seconds": 50.77014929099823,
+        "warm_planning_median_s": 0.1884362919954583,
+        "warm_planning_max_s": 0.35805108401109464
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.016973583988146856,
+          "max_s": 0.04607937502441928
+        },
+        "field_sampling": {
+          "median_s": 0.019083833001786843,
+          "max_s": 0.03690591600025073
+        },
+        "optimization_validation": {
+          "median_s": 0.14980645797913894,
+          "max_s": 0.2711815419897903
+        },
+        "actual_posterior_update": {
+          "median_s": 0.0017412920133210719,
+          "max_s": 0.0034972090215887874
+        },
+        "total": {
+          "median_s": 0.1884362919954583,
+          "p95_s": 0.1962126749160234,
+          "max_s": 0.35805108401109464,
+          "calls": 59
+        },
+        "startup_s": [
+          3.097404792002635
+        ]
+      },
+      "belief": {
+        "id": "s1-center-baseline",
+        "initial_performance_wind_exactly_zero": true,
+        "initial_safety_uncertainty_retained": true,
+        "no_future_observations": true,
+        "finite": true,
+        "actuator_limits": true,
+        "clarity_consistent": true,
+        "mean_full_sigma_before": 1.8,
+        "mean_full_sigma_after": 1.496776124523507,
+        "observations": 1500,
+        "source_sha256": "7fd7288863d69187782655ac90fd739b061929b6bbf7a4454ccb3007945571ea"
+      }
+    },
+    {
+      "id": "s2-center-aware",
+      "scenario": 2,
+      "method": "aware",
+      "file": "s2-center-aware.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": null,
+        "stop_reason": null,
+        "integrated_deficit": 55.79106523471191,
+        "min_clearance_m": 0.16823238173724525,
+        "infeasible_execution_steps": 68,
+        "max_execution_slack": 1.711394422159294,
+        "max_control_component_m_s2": 1.6000000000000034,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1500,
+        "protected_inducing": 112,
+        "capacity_saturated": false,
+        "wall_seconds": 67.73365195799852,
+        "warm_planning_median_s": 0.5533457915153122,
+        "warm_planning_max_s": 0.6236817079770844
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.017693312489427626,
+          "max_s": 0.024548624991439283
+        },
+        "field_sampling": {
+          "median_s": 0.01914933350053616,
+          "max_s": 0.07383116602431983
+        },
+        "optimization_validation": {
+          "median_s": 0.5139073955069762,
+          "max_s": 0.5837555000034627
+        },
+        "actual_posterior_update": {
+          "median_s": 0.0017140210111392662,
+          "max_s": 0.0021522500028368086
+        },
+        "total": {
+          "median_s": 0.5533457915153122,
+          "p95_s": 0.5747168892397895,
+          "max_s": 0.6236817079770844,
+          "calls": 60
+        },
+        "startup_s": []
+      },
+      "belief": {
+        "id": "s2-center-aware",
+        "initial_performance_wind_exactly_zero": true,
+        "initial_safety_uncertainty_retained": true,
+        "no_future_observations": true,
+        "finite": true,
+        "actuator_limits": true,
+        "clarity_consistent": true,
+        "mean_full_sigma_before": 1.8,
+        "mean_full_sigma_after": 1.2990677255400254,
+        "observations": 1500,
+        "source_sha256": "d2161d46c4dd5de58618e52f4648b29d1ec7ae735aeef1beb5f4ec1f4dbea2bc"
+      }
+    },
+    {
+      "id": "s2-center-baseline",
+      "scenario": 2,
+      "method": "baseline",
+      "file": "s2-center-baseline.json.gz",
+      "summary": {
+        "completed": true,
+        "simulated_seconds": 300.0,
+        "planned_seconds": 300,
+        "contact": null,
+        "stop_reason": null,
+        "integrated_deficit": 75.0766959976067,
+        "min_clearance_m": 0.19452476868587468,
+        "infeasible_execution_steps": 105,
+        "max_execution_slack": 3.609293981657336,
+        "max_control_component_m_s2": 1.6000000000000025,
+        "first_visit_s": {
+          "A": null,
+          "B": 0.0
+        },
+        "first_transfer": {
+          "first_A_s": null,
+          "route": null,
+          "attempted_crossings": []
+        },
+        "passage_crossings": [],
+        "actual_measurements": 1500,
+        "protected_inducing": 41,
+        "capacity_saturated": false,
+        "wall_seconds": 46.80184816598194,
+        "warm_planning_median_s": 0.18855399901804049,
+        "warm_planning_max_s": 0.2665664590022061
+      },
+      "timing": {
+        "initialization": {
+          "median_s": 0.0171734580071643,
+          "max_s": 0.019143084005918354
+        },
+        "field_sampling": {
+          "median_s": 0.019399833501665853,
+          "max_s": 0.026818207988981158
+        },
+        "optimization_validation": {
+          "median_s": 0.1496486459946027,
+          "max_s": 0.2272235419950448
+        },
+        "actual_posterior_update": {
+          "median_s": 0.0017407915147487074,
+          "max_s": 0.0021480419964063913
+        },
+        "total": {
+          "median_s": 0.18855399901804049,
+          "p95_s": 0.19513602741644717,
+          "max_s": 0.2665664590022061,
+          "calls": 60
+        },
+        "startup_s": []
+      },
+      "belief": {
+        "id": "s2-center-baseline",
+        "initial_performance_wind_exactly_zero": true,
+        "initial_safety_uncertainty_retained": true,
+        "no_future_observations": true,
+        "finite": true,
+        "actuator_limits": true,
+        "clarity_consistent": true,
+        "mean_full_sigma_before": 1.8,
+        "mean_full_sigma_after": 1.486157187632359,
+        "observations": 1500,
+        "source_sha256": "c9a35a41b88bbf8852a4f9d669a600abcd1f844008f97187bcb24a3c11e54410"
+      }
+    }
+  ],
+  "initial_wind": "zero in performance; uncertain in safety",
+  "method": "Measurement-supported POAM sampling; expected monitoring cost; no information reward or hypothetical updates",
+  "numerical_notes": "Existing C1 field cache at 0.2 m, 32-node POAM spectral residual, float64 inference and physics, float32 planning. Two antithetic performance fields per call; posterior frozen in each rollout.",
+  "safety_notes": "Full posterior plus a pointwise 3-sigma force bound; finite sampled backup horizon. Infeasibility is logged. No deterministic global safety guarantee.",
+  "hardware": "[CpuDevice(id=0)]"
+}

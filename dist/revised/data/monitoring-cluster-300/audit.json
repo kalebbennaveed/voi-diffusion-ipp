@@ -1,0 +1,668 @@
+{
+  "checks": [
+    {
+      "id": "s1-center-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.030773,
+        0.95491
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 19.35,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 15
+    },
+    {
+      "id": "s1-center-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.03172,
+        0.956789
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 53.3,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 249
+    },
+    {
+      "id": "s1-west-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.049531,
+        0.94724
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 20.05,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 26
+    },
+    {
+      "id": "s1-west-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.038224,
+        0.956973
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 35.75,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 1243
+    },
+    {
+      "id": "s1-east-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.050337,
+        0.947583
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 25.15,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 40
+    },
+    {
+      "id": "s1-east-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.021815,
+        0.957163
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 33.5,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 3095
+    },
+    {
+      "id": "s1-north-moving-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.059299,
+        0.953089
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 19.35,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 10
+    },
+    {
+      "id": "s1-north-moving-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.022345,
+        0.956926
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 52.55,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 610
+    },
+    {
+      "id": "s1-east-moving-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.053916,
+        0.954562
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 19.55,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 24
+    },
+    {
+      "id": "s1-east-moving-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.032053,
+        0.957083
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 28.75,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 1652
+    },
+    {
+      "id": "s1-a-deficit-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.032692,
+        0.947668
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 9.35,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 23
+    },
+    {
+      "id": "s1-a-deficit-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.030138,
+        0.957055
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "6cb33533ae18d6561c197a408df2bf04e0278b71415dd163e4db2e52fcfb3bed",
+      "first_visit_s": {
+        "A": 49.65,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 2392
+    },
+    {
+      "id": "s2-center-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.020715,
+        0.947019
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 105.65,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 5
+    },
+    {
+      "id": "s2-center-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.020263,
+        0.953349
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": null,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 109
+    },
+    {
+      "id": "s2-west-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.023483,
+        0.946945
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 112.2,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 3
+    },
+    {
+      "id": "s2-west-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.022207,
+        0.955412
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 223.55,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 88
+    },
+    {
+      "id": "s2-east-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.024181,
+        0.945792
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 112.7,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 4
+    },
+    {
+      "id": "s2-east-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.020263,
+        0.953117
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": null,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 97
+    },
+    {
+      "id": "s2-north-moving-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.025978,
+        0.9458
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 112.7,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 6
+    },
+    {
+      "id": "s2-north-moving-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.020263,
+        0.953874
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": null,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 113
+    },
+    {
+      "id": "s2-east-moving-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.028233,
+        0.947511
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 111.85,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 4
+    },
+    {
+      "id": "s2-east-moving-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.020263,
+        0.95314
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": null,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 123
+    },
+    {
+      "id": "s2-a-deficit-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.032684,
+        0.945487
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 94.65,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 4
+    },
+    {
+      "id": "s2-a-deficit-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.019663,
+        0.953477
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+      "first_visit_s": {
+        "A": 298.9,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 125
+    }
+  ],
+  "pairs": [
+    {
+      "scenario": 1,
+      "case": "center",
+      "baseline_plans_central": true,
+      "aware_first_route": "lower",
+      "baseline_first_route": "central",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 27.1365700231139
+    },
+    {
+      "scenario": 1,
+      "case": "west",
+      "baseline_plans_central": true,
+      "aware_first_route": "lower",
+      "baseline_first_route": "central",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 25.066249822860918
+    },
+    {
+      "scenario": 1,
+      "case": "east",
+      "baseline_plans_central": true,
+      "aware_first_route": "lower",
+      "baseline_first_route": "central",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 46.361637144899746
+    },
+    {
+      "scenario": 1,
+      "case": "north-moving",
+      "baseline_plans_central": true,
+      "aware_first_route": "lower",
+      "baseline_first_route": "central",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 34.44161573601891
+    },
+    {
+      "scenario": 1,
+      "case": "east-moving",
+      "baseline_plans_central": true,
+      "aware_first_route": "lower",
+      "baseline_first_route": "central",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 31.79818846316966
+    },
+    {
+      "scenario": 1,
+      "case": "a-deficit",
+      "baseline_plans_central": true,
+      "aware_first_route": "lower",
+      "baseline_first_route": "central",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 33.68618966099233
+    },
+    {
+      "scenario": 2,
+      "case": "center",
+      "baseline_plans_central": true,
+      "aware_first_route": "upper",
+      "baseline_first_route": null,
+      "both_visit_A": false,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 37.50695088877352
+    },
+    {
+      "scenario": 2,
+      "case": "west",
+      "baseline_plans_central": true,
+      "aware_first_route": "upper",
+      "baseline_first_route": "upper",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 25.849252056330037
+    },
+    {
+      "scenario": 2,
+      "case": "east",
+      "baseline_plans_central": true,
+      "aware_first_route": "upper",
+      "baseline_first_route": null,
+      "both_visit_A": false,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 33.47131624876681
+    },
+    {
+      "scenario": 2,
+      "case": "north-moving",
+      "baseline_plans_central": true,
+      "aware_first_route": "upper",
+      "baseline_first_route": null,
+      "both_visit_A": false,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 34.051103377326754
+    },
+    {
+      "scenario": 2,
+      "case": "east-moving",
+      "baseline_plans_central": true,
+      "aware_first_route": "upper",
+      "baseline_first_route": null,
+      "both_visit_A": false,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 34.687895261218316
+    },
+    {
+      "scenario": 2,
+      "case": "a-deficit",
+      "baseline_plans_central": true,
+      "aware_first_route": "upper",
+      "baseline_first_route": "upper",
+      "both_visit_A": true,
+      "both_no_contact": true,
+      "deficit_improvement_percent": 35.75149308301307
+    }
+  ],
+  "model": "Original physical double integrator plus quadratic air force; exact stored stationary wind known; full spline RPCBF; whole-environment clarity ODE.",
+  "limits": "Six declared conditions per scenario, with three seeds across the suite. This is a finite robustness check, not a guarantee over all initial conditions. Relaxed forecasting and hard execution have different control periods. No global safety guarantee is inferred from no contact.",
+  "wind_blind_initial_plan_equivalence": [
+    {
+      "case": "center",
+      "maximum_initial_control_parameter_difference": 0.0
+    },
+    {
+      "case": "west",
+      "maximum_initial_control_parameter_difference": 0.0
+    },
+    {
+      "case": "east",
+      "maximum_initial_control_parameter_difference": 0.0
+    },
+    {
+      "case": "north-moving",
+      "maximum_initial_control_parameter_difference": 0.0
+    },
+    {
+      "case": "east-moving",
+      "maximum_initial_control_parameter_difference": 0.0
+    },
+    {
+      "case": "a-deficit",
+      "maximum_initial_control_parameter_difference": 0.0
+    }
+  ],
+  "geometry_consistent_across_CFD_planner_execution_display": true,
+  "acceptance_checks": {
+    "all_12_baselines_first_plan_central": true,
+    "all_6_scenario1_aware_first_take_lower": true,
+    "all_6_scenario2_aware_first_take_upper": true,
+    "all_12_aware_reach_A": true,
+    "all_24_runs_without_contact": true,
+    "all_12_aware_have_lower_deficit": true,
+    "completed_mission_warm_plans_below_one_second": true
+  },
+  "acceptance_passed": true,
+  "earlier_budget_stop": {
+    "original_overrun_s": 1.496854833996622,
+    "original_module_breakdown_available": false,
+    "reconstructed_state_at_205_s": [
+      4.022293257136373,
+      1.4539259608368147,
+      -0.3460300729587107,
+      -0.5642790742479646
+    ],
+    "repeated_same_call": [
+      {
+        "compilation": true,
+        "total_s": 2.3692317079985514,
+        "geometry_s": 0.12625833300990053,
+        "mbd_and_forecast_s": 2.2429737499915063,
+        "process_cpu_s": 2.7267580000000002,
+        "cost": 3.3699843883514404
+      },
+      {
+        "compilation": false,
+        "total_s": 0.18734437500825152,
+        "geometry_s": 0.01985187499667518,
+        "mbd_and_forecast_s": 0.16749295900808647,
+        "process_cpu_s": 0.5627509999999996,
+        "cost": 3.3699843883514404
+      },
+      {
+        "compilation": false,
+        "total_s": 0.19767012499505654,
+        "geometry_s": 0.030053708993364125,
+        "mbd_and_forecast_s": 0.16761683399090543,
+        "process_cpu_s": 0.5667879999999998,
+        "cost": 3.3699843883514404
+      },
+      {
+        "compilation": false,
+        "total_s": 0.18787366600008681,
+        "geometry_s": 0.0193190410209354,
+        "mbd_and_forecast_s": 0.16855545798898675,
+        "process_cpu_s": 0.5614549999999996,
+        "cost": 3.3699843883514404
+      },
+      {
+        "compilation": false,
+        "total_s": 0.18691424999269657,
+        "geometry_s": 0.019183666008757427,
+        "mbd_and_forecast_s": 0.16773125002509914,
+        "process_cpu_s": 0.5636000000000001,
+        "cost": 3.3699843883514404
+      },
+      {
+        "compilation": false,
+        "total_s": 0.19005662499694154,
+        "geometry_s": 0.020360708003863692,
+        "mbd_and_forecast_s": 0.16969662500196137,
+        "process_cpu_s": 0.5662130000000003,
+        "cost": 3.3699843883514404
+      }
+    ],
+    "rerun_state_error": 0.0,
+    "rerun_same_call_s": 0.18584316701162606,
+    "rerun_same_call_timing": {
+      "initialization": 0.022809000016422942,
+      "field_sampling": 0.0,
+      "optimization_validation": 0.16303354100091383,
+      "compilation_included": false
+    }
+  },
+  "runtime_claim": "Completed missions met the measured warm-call limit. One earlier attempt exceeded it and was stopped; a hard real-time guarantee on this shared machine is not established.",
+  "current_model_source_hashes_verified_for_all_24_protocols": true,
+  "original_demo_preserved": "../web-preservation.json"
+}

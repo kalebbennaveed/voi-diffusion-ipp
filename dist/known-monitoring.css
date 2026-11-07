@@ -1,0 +1,24 @@
+.known-review{margin-top:36px;padding-top:28px;border-top:1px solid #c9d8cf;scroll-margin-top:85px}
+.known-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:12px 0;font-size:12px;color:#334155}
+.known-controls select{margin-left:8px;padding:7px;border:1px solid #cbd5e1;border-radius:5px;background:white}
+.known-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 22px}
+.known-map-card,.known-details{min-width:0;border:1px solid #d7dfda;border-radius:9px;background:white;overflow:hidden}
+.known-map-card .robot-map{margin-bottom:8px}
+.known-map-card .robot-card-heading{gap:8px}
+.known-map-card h4{margin:0;font-size:14px;color:#1e293b}
+.known-map-card .outcome{font-size:10px;white-space:nowrap}
+.known-pair>.robot-transport{grid-column:1/-1;margin:0;padding:12px 15px;box-sizing:border-box;background:#e8f0ed;border:1px solid #b7cbc1;border-radius:7px}
+.known-pair .robot-transport button:first-child{background:#24664c;color:white;min-width:130px}
+.known-details .live-metrics{border-top:0;padding:15px}
+.known-legend{padding:10px 15px;margin:9px 0;border:1px solid #e2e8f0;border-radius:7px;background:#f8fafc;font-size:11px;color:#475569}.known-legend p{margin:5px 0 0}
+.known-scale{height:11px;background:linear-gradient(to right,#fff7ec,#fee8c8,#fdbb84,#fc8d59,#e34a33,#b30000,#7f0000);border-radius:3px;margin:7px 0}
+.known-ticks{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.known-live,.known-decision,.known-summary{font-size:12px;padding:0 15px;line-height:1.7;color:#334155}
+.known-details details{margin:12px 15px;padding:0;background:none;border:0}
+.known-details summary{font-size:12px;padding:8px 0}
+.known-details details p{font-size:12px;line-height:1.7;color:#475569}
+.known-results{font-size:12px;line-height:1.8;color:#334155}
+.known-chart{padding:0 15px 10px}.known-chart svg{width:100%;display:block}.known-chart text{font:11px sans-serif;fill:#475569}
+.known-chart p{font-size:11px;color:#475569;margin:10px 0}
+.known-status{font-size:12px;color:#475569}
+@media(max-width:760px){.known-pair{gap:8px 10px}.known-map-card h4{font-size:12px;min-height:30px}.known-map-card .robot-card-heading{align-items:flex-start;flex-direction:column;padding:10px 10px 0}.known-map-card .monitor-method{margin:8px 10px 0;min-height:54px;font-size:10px;line-height:1.5}.known-map-card .robot-map{padding:8px 6px 0}.known-details .live-metrics{grid-template-columns:1fr 1fr;gap:8px;padding:10px}.known-live,.known-summary{padding:0 10px;font-size:11px}.known-details details{margin:10px}.known-chart{padding:0 8px 8px}}

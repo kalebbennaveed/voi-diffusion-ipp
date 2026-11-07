@@ -1,0 +1,437 @@
+{
+  "scope": "Only the first filtered waypoint command; does not establish trajectory safety.",
+  "checks": [
+    {
+      "scenario": 1,
+      "case": "center",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -0.09273033882239634,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.281858171141762
+    },
+    {
+      "scenario": 1,
+      "case": "west",
+      "belief": "no survey",
+      "state": [
+        0.8,
+        0.65,
+        0.0,
+        0.0
+      ],
+      "control": [
+        0.5324623709219557,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.7673048324547665
+    },
+    {
+      "scenario": 1,
+      "case": "east",
+      "belief": "no survey",
+      "state": [
+        2.35,
+        1.2,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        -1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.44459074983216285
+    },
+    {
+      "scenario": 1,
+      "case": "north-moving",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        1.3,
+        0.0,
+        0.3
+      ],
+      "control": [
+        -1.6,
+        -1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.6816404417319855
+    },
+    {
+      "scenario": 1,
+      "case": "east-moving",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        0.875,
+        0.35,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.3370636129256201
+    },
+    {
+      "scenario": 1,
+      "case": "a-deficit",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -0.09725752660765608,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.270794360064355
+    },
+    {
+      "scenario": 1,
+      "case": "center",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        1.3980771208034344
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.7415708401539124
+    },
+    {
+      "scenario": 1,
+      "case": "west",
+      "belief": "full-coverage learned GP",
+      "state": [
+        0.8,
+        0.65,
+        0.0,
+        0.0
+      ],
+      "control": [
+        0.5163649198070641,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.7494081746264187
+    },
+    {
+      "scenario": 1,
+      "case": "east",
+      "belief": "full-coverage learned GP",
+      "state": [
+        2.35,
+        1.2,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        -0.07667395044773902
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.102729233316775
+    },
+    {
+      "scenario": 1,
+      "case": "north-moving",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        1.3,
+        0.0,
+        0.3
+      ],
+      "control": [
+        -1.6,
+        -1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.738463129948573
+    },
+    {
+      "scenario": 1,
+      "case": "east-moving",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        0.875,
+        0.35,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        1.3995888740688975
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.3243668648596159
+    },
+    {
+      "scenario": 1,
+      "case": "a-deficit",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        1.3978965614009518
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.7234851855008966
+    },
+    {
+      "scenario": 2,
+      "case": "center",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        0.03776806608863962,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.1722206498412604
+    },
+    {
+      "scenario": 2,
+      "case": "west",
+      "belief": "no survey",
+      "state": [
+        0.8,
+        0.65,
+        0.0,
+        0.0
+      ],
+      "control": [
+        0.5315043393833436,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.8538438174049414
+    },
+    {
+      "scenario": 2,
+      "case": "east",
+      "belief": "no survey",
+      "state": [
+        2.35,
+        1.2,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        -1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.29423965897022386
+    },
+    {
+      "scenario": 2,
+      "case": "north-moving",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        1.3,
+        0.0,
+        0.3
+      ],
+      "control": [
+        -1.6,
+        -1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.6728385956369125
+    },
+    {
+      "scenario": 2,
+      "case": "east-moving",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        0.875,
+        0.35,
+        0.0
+      ],
+      "control": [
+        -1.6,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.2776645711775574
+    },
+    {
+      "scenario": 2,
+      "case": "a-deficit",
+      "belief": "no survey",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        0.015438449423177871,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.8614242454182388
+    },
+    {
+      "scenario": 2,
+      "case": "center",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        1.6,
+        -1.3683869387986602
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.20574619836365726
+    },
+    {
+      "scenario": 2,
+      "case": "west",
+      "belief": "full-coverage learned GP",
+      "state": [
+        0.8,
+        0.65,
+        0.0,
+        0.0
+      ],
+      "control": [
+        0.47561455339010256,
+        -1.4084417468351473
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": 0.0
+    },
+    {
+      "scenario": 2,
+      "case": "east",
+      "belief": "full-coverage learned GP",
+      "state": [
+        2.35,
+        1.2,
+        0.0,
+        0.0
+      ],
+      "control": [
+        -0.41379268280623444,
+        1.6
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.2898910544627835
+    },
+    {
+      "scenario": 2,
+      "case": "north-moving",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        1.3,
+        0.0,
+        0.3
+      ],
+      "control": [
+        -0.08379529149707389,
+        -0.2718643963020603
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -1.3297461331048843
+    },
+    {
+      "scenario": 2,
+      "case": "east-moving",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        0.875,
+        0.35,
+        0.0
+      ],
+      "control": [
+        -0.6277130428053758,
+        -1.365871600826528
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.20035007169308527
+    },
+    {
+      "scenario": 2,
+      "case": "a-deficit",
+      "belief": "full-coverage learned GP",
+      "state": [
+        1.45,
+        0.875,
+        0.0,
+        0.0
+      ],
+      "control": [
+        1.6,
+        -1.369250896129773
+      ],
+      "feasible": true,
+      "slack": 0.0,
+      "residual": -0.18854140041579348
+    }
+  ]
+}

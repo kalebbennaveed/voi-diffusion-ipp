@@ -51,10 +51,10 @@ class StationaryFlow {
       renderer.setSpeed(.25);return {record,renderer,image};
     }));
     button.disabled=false;document.querySelector('#restart-flow').disabled=false;document.querySelector('#flow-speed').disabled=false;
-    const meta=loaded[0].record.meta;document.querySelector('#wind-boundaries').textContent=loaded.map((item,i)=>`Scenario ${i+1}: ${item.record.meta.wind_source} ${item.record.meta.boundary_conditions}`).join('\n\n');
+    const meta=loaded[0].record.meta;if(document.querySelector('#wind-boundaries'))document.querySelector('#wind-boundaries').textContent=loaded.map((item,i)=>`Scenario ${i+1}: ${item.record.meta.wind_source} ${item.record.meta.boundary_conditions}`).join('\n\n');
     status.textContent='Wind is fixed in time · only the streamlets move · provisional CFD field, numerical validation incomplete';status.dataset.state='ready';
-    document.querySelector('#computation-grid').textContent=meta.grid.join(' × ')+' cells';
-    document.querySelector('#grid-spec').textContent=`The solver uses cubic cells of ${meta.dx_m} m. Physical time steps: ${loaded.map((item,i)=>`Scenario ${i+1}: ${item.record.meta.dt_s} s`).join('; ')}.`;
+    if(document.querySelector('#computation-grid'))document.querySelector('#computation-grid').textContent=meta.grid.join(' × ')+' cells';
+    if(document.querySelector('#grid-spec'))document.querySelector('#grid-spec').textContent=`The solver uses cubic cells of ${meta.dx_m} m. Physical time steps: ${loaded.map((item,i)=>`Scenario ${i+1}: ${item.record.meta.dt_s} s`).join('; ')}.`;
     let playing=true;
     button.addEventListener('click',()=>{playing=!playing;for(const item of loaded)playing?item.renderer.play():item.renderer.pause();button.textContent=playing?'Ⅱ Pause particles':'▶ Animate particles';button.setAttribute('aria-pressed',String(playing));});
     document.querySelector('#restart-flow').addEventListener('click',()=>{for(const item of loaded)item.renderer.restart();});
@@ -63,9 +63,9 @@ class StationaryFlow {
     document.querySelector('#heatmap').addEventListener('change',e=>{for(const item of loaded)item.image.style.display=e.target.checked?'':'none';});
     document.addEventListener('visibilitychange',()=>{for(const item of loaded)(document.hidden||!playing)?item.renderer.pause():item.renderer.play();});
     for(const item of loaded)item.renderer.play();
-    const response=await fetch('data/validation.json',{cache:'no-store'});if(response.ok){const v=await response.json();document.querySelector('#verification').textContent=v.summary;
+    const response=await fetch('data/validation.json',{cache:'no-store'});if(response.ok){const v=await response.json();if(document.querySelector('#verification'))document.querySelector('#verification').textContent=v.summary;
       for(const row of v.scenarios){const speeds=row.fixed_horizontal_mean_speeds_m_s;if(speeds)document.querySelector(`#map${row.scenario}`).closest('.scenario').querySelector('.scenario-heading p').textContent=`Horizontal wind in the measured passages: central ${speeds.central_passage.toFixed(2)} m/s · lower ${speeds.lower_bypass.toFixed(2)} m/s · upper ${speeds.upper_bypass.toFixed(2)} m/s.`;}
-      const s2=v.scenarios.find(s=>s.scenario===2);if(s2?.monitoring_regions){const before=s2.monitoring_regions_before,after=s2.monitoring_regions;document.querySelector('#shelter-wind-comparison').textContent=`Scenario 2, horizontal wind: A mean ${before.A.mean_m_s.toFixed(2)} → ${after.A.mean_m_s.toFixed(2)} m/s; B mean ${before.B.mean_m_s.toFixed(2)} → ${after.B.mean_m_s.toFixed(2)} m/s. Revised 95th percentiles: A ${after.A.p95_m_s.toFixed(2)}, B ${after.B.p95_m_s.toFixed(2)} m/s. Local maxima: A ${after.A.max_m_s.toFixed(2)}, B ${after.B.max_m_s.toFixed(2)} m/s. These are measurements of the computed horizontal slice.`;}
+      const s2=v.scenarios.find(s=>s.scenario===2);if(s2?.monitoring_regions){const before=s2.monitoring_regions_before,after=s2.monitoring_regions;if(document.querySelector('#shelter-wind-comparison'))document.querySelector('#shelter-wind-comparison').textContent=`Scenario 2, horizontal wind: A mean ${before.A.mean_m_s.toFixed(2)} → ${after.A.mean_m_s.toFixed(2)} m/s; B mean ${before.B.mean_m_s.toFixed(2)} → ${after.B.mean_m_s.toFixed(2)} m/s. Revised 95th percentiles: A ${after.A.p95_m_s.toFixed(2)}, B ${after.B.p95_m_s.toFixed(2)} m/s. Local maxima: A ${after.A.max_m_s.toFixed(2)}, B ${after.B.max_m_s.toFixed(2)} m/s. These are measurements of the computed horizontal slice.`;}
       const robot=await(await fetch('data/robot/manifest.json',{cache:'no-store'})).json(),returns=robot.cases.filter(c=>c.route==='central'&&c.direction==='B-A'),lower=robot.cases.find(c=>c.scenario===2&&c.route==='lower'&&c.direction==='B-A');
       const transits=returns.map(c=>c.rpcbf.central_transit),still=returns[0].still_air.central_transit;
       const timing=transits.every(t=>t?.duration_s)&&still?.duration_s?`RPCBF: ${transits.map(t=>t.duration_s.toFixed(2)).join(' / ')} s through the central throat<br>Still air: ${still.duration_s.toFixed(2)} s over the same 1.2 m`:'See the recorded central passage outcomes below.';

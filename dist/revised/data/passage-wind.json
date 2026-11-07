@@ -1,0 +1,81 @@
+{
+  "sampling": "Fixed CFD field, same bilinear cell-center interpolation as the robot; diagnostic point samples, not route averages.",
+  "scenarios": [
+    {
+      "scenario": 1,
+      "locations": {
+        "central_gap_center": {
+          "position_m": [
+            4.4775,
+            1.88125
+          ],
+          "velocity_m_s": [
+            -4.634075413703918,
+            -7.151029744148254
+          ],
+          "speed_m_s": 8.52126054886178
+        },
+        "lower_gap_center": {
+          "position_m": [
+            5.355,
+            0.15375
+          ],
+          "velocity_m_s": [
+            0.10675982303023344,
+            0.03158229642985365
+          ],
+          "speed_m_s": 0.11133328909733113
+        },
+        "upper_gap_center": {
+          "position_m": [
+            2.34,
+            5.85
+          ],
+          "velocity_m_s": [
+            0.48367942595481916,
+            -0.019860631955787314
+          ],
+          "speed_m_s": 0.48408700849502934
+        }
+      }
+    },
+    {
+      "scenario": 2,
+      "locations": {
+        "central_gap_center": {
+          "position_m": [
+            4.4775,
+            1.88125
+          ],
+          "velocity_m_s": [
+            -4.994180897712707,
+            -7.804540273666382
+          ],
+          "speed_m_s": 9.265672761454455
+        },
+        "lower_gap_center": {
+          "position_m": [
+            5.355,
+            0.15375
+          ],
+          "velocity_m_s": [
+            -4.812996683883668,
+            -0.11286081263423171
+          ],
+          "speed_m_s": 4.814319748635693
+        },
+        "upper_gap_center": {
+          "position_m": [
+            2.34,
+            5.85
+          ],
+          "velocity_m_s": [
+            0.3359626781940462,
+            0.024120134037453465
+          ],
+          "speed_m_s": 0.3368274068500082
+        }
+      }
+    }
+  ]
+}

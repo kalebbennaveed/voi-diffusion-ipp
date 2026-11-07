@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "id": "s1-center-aware",
+      "initial_performance_wind_exactly_zero": true,
+      "initial_safety_uncertainty_retained": true,
+      "no_future_observations": true,
+      "finite": true,
+      "actuator_limits": true,
+      "clarity_consistent": true,
+      "mean_full_sigma_before": 1.8,
+      "mean_full_sigma_after": 1.2580692672596354,
+      "observations": 1500,
+      "source_sha256": "ad474ca2bdad39fbf37a3240b796d2d15f6ae8c767fc4f3e93d538c763c0445e"
+    },
+    {
+      "id": "s1-center-baseline",
+      "initial_performance_wind_exactly_zero": true,
+      "initial_safety_uncertainty_retained": true,
+      "no_future_observations": true,
+      "finite": true,
+      "actuator_limits": true,
+      "clarity_consistent": true,
+      "mean_full_sigma_before": 1.8,
+      "mean_full_sigma_after": 1.496776124523507,
+      "observations": 1500,
+      "source_sha256": "7fd7288863d69187782655ac90fd739b061929b6bbf7a4454ccb3007945571ea"
+    },
+    {
+      "id": "s2-center-aware",
+      "initial_performance_wind_exactly_zero": true,
+      "initial_safety_uncertainty_retained": true,
+      "no_future_observations": true,
+      "finite": true,
+      "actuator_limits": true,
+      "clarity_consistent": true,
+      "mean_full_sigma_before": 1.8,
+      "mean_full_sigma_after": 1.2990677255400254,
+      "observations": 1500,
+      "source_sha256": "d2161d46c4dd5de58618e52f4648b29d1ec7ae735aeef1beb5f4ec1f4dbea2bc"
+    },
+    {
+      "id": "s2-center-baseline",
+      "initial_performance_wind_exactly_zero": true,
+      "initial_safety_uncertainty_retained": true,
+      "no_future_observations": true,
+      "finite": true,
+      "actuator_limits": true,
+      "clarity_consistent": true,
+      "mean_full_sigma_before": 1.8,
+      "mean_full_sigma_after": 1.486157187632359,
+      "observations": 1500,
+      "source_sha256": "c9a35a41b88bbf8852a4f9d669a600abcd1f844008f97187bcb24a3c11e54410"
+    }
+  ],
+  "first_plan_identical_across_hidden_scenarios": true,
+  "all_declared_runs_included": true
+}

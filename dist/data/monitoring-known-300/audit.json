@@ -1,0 +1,78 @@
+{
+  "checks": [
+    {
+      "id": "s1-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.052067,
+        0.949348
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "b20832fbcbe5d29fdf2b532009144eae4d76f30e99fb8bd72ee3a9466521e53a",
+      "first_visit_s": {
+        "A": 25.1,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 13
+    },
+    {
+      "id": "s1-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.038181,
+        0.954707
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "b20832fbcbe5d29fdf2b532009144eae4d76f30e99fb8bd72ee3a9466521e53a",
+      "first_visit_s": {
+        "A": 13.1,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 15
+    },
+    {
+      "id": "s2-aware",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.034021,
+        0.955218
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "b29a17da083f412d0a95e747851ac6a6b606d0f1070bee816f468a5fd854bbc0",
+      "first_visit_s": {
+        "A": 14.75,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 4
+    },
+    {
+      "id": "s2-baseline",
+      "seconds": 300,
+      "finite": true,
+      "actuator_bound": true,
+      "clarity_range": [
+        0.027967,
+        0.955993
+      ],
+      "clarity_deficit_consistent": true,
+      "unchanged_wind_sha256": "b29a17da083f412d0a95e747851ac6a6b606d0f1070bee816f468a5fd854bbc0",
+      "first_visit_s": {
+        "A": 17.5,
+        "B": 0.0
+      },
+      "contact": null,
+      "infeasible_execution_steps": 4
+    }
+  ],
+  "model": "Original physical double integrator plus quadratic air force; exact stored stationary wind known; full spline RPCBF; whole-environment clarity ODE.",
+  "limits": "One development seed per scenario. Relaxed forecasting and hard execution have different control periods. No global safety guarantee is inferred from no contact."
+}

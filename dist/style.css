@@ -29,3 +29,20 @@
 .monitor-all-results{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:12px;color:#334155}.monitor-all-results caption{text-align:left;padding:12px 0;font-weight:600;color:#1e293b}.monitor-all-results th,.monitor-all-results td{padding:10px 12px;text-align:left;border-bottom:1px solid #dce5e0;font-variant-numeric:tabular-nums;white-space:nowrap}.monitor-all-results thead{background:#edf3f0}.monitor-all-results tbody th{font-weight:500}
 
 .learning-callout{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin:17px 0;padding:21px 24px;background:#edf2f7;border:1px solid #ced9e5;border-radius:9px}.learning-callout h3{margin:0 0 8px;font-size:14px;color:#24415b}.learning-callout p{margin:0;font-size:12px;line-height:1.75;color:#52677a}@media(max-width:760px){.learning-callout{grid-template-columns:1fr;gap:18px;padding:18px}}
+
+/* One shared transport directly beneath each pair of trajectory maps. */
+.monitor-grid.with-inline-controls{row-gap:8px;align-items:start}
+.monitor-grid.with-inline-controls>.monitor-card{display:contents}
+.with-inline-controls .monitor-primary,.with-inline-controls .monitor-details{min-width:0;background:white;border:1px solid #d7dfda;border-radius:10px;overflow:hidden}
+.with-inline-controls .monitor-primary{grid-row:1}
+.with-inline-controls .monitor-details{grid-row:3}
+.with-inline-controls>.monitor-card:nth-of-type(1)>.monitor-primary,.with-inline-controls>.monitor-card:nth-of-type(1)>.monitor-details{grid-column:1}
+.with-inline-controls>.monitor-card:nth-of-type(2)>.monitor-primary,.with-inline-controls>.monitor-card:nth-of-type(2)>.monitor-details{grid-column:2}
+.monitor-grid.with-inline-controls>.robot-transport{grid-row:2;grid-column:1 / -1;margin:0;width:100%;box-sizing:border-box}
+@media(max-width:760px){
+.with-inline-controls>.monitor-card:nth-of-type(2)>.monitor-primary,.with-inline-controls>.monitor-card:nth-of-type(2)>.monitor-details{grid-column:1}
+.with-inline-controls>.monitor-card:nth-of-type(2)>.monitor-primary{grid-row:2}
+.monitor-grid.with-inline-controls>.robot-transport{grid-row:3}
+.with-inline-controls>.monitor-card:nth-of-type(1)>.monitor-details{grid-row:4}
+.with-inline-controls>.monitor-card:nth-of-type(2)>.monitor-details{grid-row:5}
+}

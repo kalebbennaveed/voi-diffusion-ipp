@@ -1,0 +1,56 @@
+[
+  {
+    "label": "Baseline 1: learn everywhere",
+    "scenario": 1,
+    "source": "output/task_learning_20261105/final_baseline/s1-center-baseline1.json.gz",
+    "recorded_s": 300.0,
+    "complete_300": true,
+    "contact": null,
+    "gate_time_s": null
+  },
+  {
+    "label": "Baseline 1: learn everywhere",
+    "scenario": 2,
+    "source": "output/task_learning_20261105/final_baseline/s2-center-baseline1.json.gz",
+    "recorded_s": 300.0,
+    "complete_300": true,
+    "contact": null,
+    "gate_time_s": null
+  },
+  {
+    "label": "Reference-weighted relearning + MBD",
+    "scenario": 1,
+    "source": "output/task_learning_20261105/final_targeted/s1-center-routeprecision.json.gz",
+    "recorded_s": 300.0,
+    "complete_300": true,
+    "contact": null,
+    "gate_time_s": 76.0
+  },
+  {
+    "label": "Reference-weighted relearning + MBD",
+    "scenario": 2,
+    "source": "output/task_learning_20261105/final_targeted/s2-center-routeprecision.json.gz",
+    "recorded_s": 300.0,
+    "complete_300": true,
+    "contact": null,
+    "gate_time_s": 82.0
+  },
+  {
+    "label": "Clarity-weighted relearning + MBD",
+    "scenario": 1,
+    "source": "output/task_learning_20261105/final_clarity/s1-center-routeprecision.json.gz",
+    "recorded_s": 300.0,
+    "complete_300": true,
+    "contact": null,
+    "gate_time_s": 76.0
+  },
+  {
+    "label": "Clarity-weighted relearning + MBD",
+    "scenario": 2,
+    "source": "output/task_learning_20261105/final_clarity/s2-center-routeprecision.json.gz",
+    "recorded_s": 300.0,
+    "complete_300": true,
+    "contact": null,
+    "gate_time_s": 82.0
+  }
+]

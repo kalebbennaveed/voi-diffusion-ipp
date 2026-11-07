@@ -1,0 +1,741 @@
+{
+  "cohorts": {
+    "final_baseline": {
+      "label": "Baseline 1: learn everywhere",
+      "runs": [
+        {
+          "id": "s1-center-baseline1",
+          "scenario": 1,
+          "method": "baseline1",
+          "source_snapshot_verified": true,
+          "complete_300": true,
+          "simulated_seconds": 300.0,
+          "contact": null,
+          "first_A_s": 55.6,
+          "return_B_s": 107.9,
+          "mbd_start_s": null,
+          "mbd_calls": 0,
+          "monitoring_seconds": 0.0,
+          "accepted_mbd_execution_seconds": 0.0,
+          "filtered_hold_fallback_seconds": 0.0,
+          "targeted_information_fallback_requests": 0,
+          "full_mission_monitoring_cost": 62.65380842506185,
+          "partial_monitoring_cost": null,
+          "whole_map_wind_rmse_m_s": 1.2446125632602423,
+          "task_wind_rmse_m_s": null,
+          "task_uncertainty_at_handoff": null,
+          "actual_task_error_at_handoff": null,
+          "handoff_kind": "whole-map RMSE",
+          "route_uncertainty_at_handoff": null,
+          "actual_route_error_at_handoff": null,
+          "final_route_uncertainty_m_s": null,
+          "final_route_error_m_s": null,
+          "infeasible_execution_steps": 0,
+          "minimum_clearance_m": 0.11229951296045082,
+          "warm_trajectory_request_s": null,
+          "warm_full_update_and_plan_s": null,
+          "warm_actual_decision_cycle_s": {
+            "count": 1500,
+            "median": 0.3278211040014867,
+            "p95": 0.38170909411564935,
+            "max": 3.8135403339983895
+          },
+          "warm_actual_decision_deadline_misses": 31,
+          "warm_mbd_module_s": {
+            "fields": null,
+            "geometry": null,
+            "optimization": null,
+            "posterior": null,
+            "safety_belief_refresh": null
+          },
+          "warm_mbd_search_s": null,
+          "warm_mbd_validation_s": null,
+          "warm_sensing_trajectory_request_s": {
+            "count": 1500,
+            "median": 0.0701490209903568,
+            "p95": 0.09725625627324916,
+            "max": 3.7238131249905564
+          },
+          "warm_sensing_update_and_plan_s": {
+            "count": 1500,
+            "median": 0.3278211040014867,
+            "p95": 0.38170909411564935,
+            "max": 3.8135403339983895
+          },
+          "sensing_hold_decisions": 0,
+          "sensing_unvalidated_decisions": 0,
+          "acquisition_s": null,
+          "kernel_training_s": {
+            "count": 30,
+            "median": 0.847184770507738,
+            "p95": 0.886091558705084,
+            "max": 0.898306707968004
+          },
+          "conditioning_s": {
+            "count": 1471,
+            "median": 0.11355604196432978,
+            "p95": 0.1289092704828363,
+            "max": 0.3887102090520784
+          },
+          "premeasurement_three_sigma_innovation_coverage": 0.9900066622251832,
+          "plans_improved_over_initial_training_cost": 0,
+          "finite_training_comparisons": 0
+        },
+        {
+          "id": "s2-center-baseline1",
+          "scenario": 2,
+          "method": "baseline1",
+          "source_snapshot_verified": true,
+          "complete_300": true,
+          "simulated_seconds": 300.0,
+          "contact": null,
+          "first_A_s": 91.75,
+          "return_B_s": null,
+          "mbd_start_s": null,
+          "mbd_calls": 0,
+          "monitoring_seconds": 0.0,
+          "accepted_mbd_execution_seconds": 0.0,
+          "filtered_hold_fallback_seconds": 0.0,
+          "targeted_information_fallback_requests": 0,
+          "full_mission_monitoring_cost": 58.09136374045545,
+          "partial_monitoring_cost": null,
+          "whole_map_wind_rmse_m_s": 2.0041904314484214,
+          "task_wind_rmse_m_s": null,
+          "task_uncertainty_at_handoff": null,
+          "actual_task_error_at_handoff": null,
+          "handoff_kind": "whole-map RMSE",
+          "route_uncertainty_at_handoff": null,
+          "actual_route_error_at_handoff": null,
+          "final_route_uncertainty_m_s": null,
+          "final_route_error_m_s": null,
+          "infeasible_execution_steps": 1,
+          "minimum_clearance_m": 0.11376527075360521,
+          "warm_trajectory_request_s": null,
+          "warm_full_update_and_plan_s": null,
+          "warm_actual_decision_cycle_s": {
+            "count": 1498,
+            "median": 0.34137641749111935,
+            "p95": 0.3761229151248699,
+            "max": 1.6041894180816598
+          },
+          "warm_actual_decision_deadline_misses": 29,
+          "warm_mbd_module_s": {
+            "fields": null,
+            "geometry": null,
+            "optimization": null,
+            "posterior": null,
+            "safety_belief_refresh": null
+          },
+          "warm_mbd_search_s": null,
+          "warm_mbd_validation_s": null,
+          "warm_sensing_trajectory_request_s": {
+            "count": 1498,
+            "median": 0.09421645800466649,
+            "p95": 0.10215339558490086,
+            "max": 0.33473933301866055
+          },
+          "warm_sensing_update_and_plan_s": {
+            "count": 1498,
+            "median": 0.34137641749111935,
+            "p95": 0.3761229151248699,
+            "max": 1.6041894180816598
+          },
+          "sensing_hold_decisions": 0,
+          "sensing_unvalidated_decisions": 0,
+          "acquisition_s": null,
+          "kernel_training_s": {
+            "count": 29,
+            "median": 0.8213794589973986,
+            "p95": 0.8583156422129832,
+            "max": 0.886649958032649
+          },
+          "conditioning_s": {
+            "count": 1470,
+            "median": 0.10926666646264493,
+            "p95": 0.12470008301606868,
+            "max": 0.1716219579684548
+          },
+          "premeasurement_three_sigma_innovation_coverage": 0.9860093271152565,
+          "plans_improved_over_initial_training_cost": 0,
+          "finite_training_comparisons": 0
+        }
+      ]
+    },
+    "final_targeted": {
+      "label": "Reference-weighted relearning + MBD",
+      "runs": [
+        {
+          "id": "s1-center-routeprecision",
+          "scenario": 1,
+          "method": "routeprecision",
+          "source_snapshot_verified": true,
+          "complete_300": true,
+          "simulated_seconds": 300.0,
+          "contact": null,
+          "first_A_s": 58.6,
+          "return_B_s": 144.8,
+          "mbd_start_s": 76.0,
+          "mbd_calls": 45,
+          "monitoring_seconds": 25.0,
+          "accepted_mbd_execution_seconds": 20.0,
+          "filtered_hold_fallback_seconds": 5.0,
+          "targeted_information_fallback_requests": 40,
+          "full_mission_monitoring_cost": 51.94173501361484,
+          "partial_monitoring_cost": null,
+          "whole_map_wind_rmse_m_s": 1.086995016382437,
+          "task_wind_rmse_m_s": 0.5296188597508653,
+          "task_uncertainty_at_handoff": 1.5755047957542894,
+          "actual_task_error_at_handoff": 1.0127160389900476,
+          "handoff_kind": "route uncertainty",
+          "route_uncertainty_at_handoff": 0.19530428056076807,
+          "actual_route_error_at_handoff": 0.08790475364180025,
+          "final_route_uncertainty_m_s": 0.09154469823914194,
+          "final_route_error_m_s": 0.08127398645158894,
+          "infeasible_execution_steps": 2,
+          "minimum_clearance_m": 0.10041011560609292,
+          "warm_trajectory_request_s": {
+            "count": 45,
+            "median": 0.7081032080459408,
+            "p95": 0.8288358500343747,
+            "max": 0.9423543339362368
+          },
+          "warm_full_update_and_plan_s": {
+            "count": 45,
+            "median": 0.9509772919700481,
+            "p95": 1.0928022326086648,
+            "max": 1.192353957972955
+          },
+          "warm_actual_decision_cycle_s": {
+            "count": 1380,
+            "median": 0.34401818746118806,
+            "p95": 0.9523241937189594,
+            "max": 3.4367595829535276
+          },
+          "warm_actual_decision_deadline_misses": 60,
+          "warm_mbd_module_s": {
+            "fields": {
+              "count": 45,
+              "median": 0.12944791599875316,
+              "p95": 0.14024926640558988,
+              "max": 0.14697020797757432
+            },
+            "geometry": {
+              "count": 45,
+              "median": 0.02139316697139293,
+              "p95": 0.02367200000444427,
+              "max": 0.026112416991963983
+            },
+            "optimization": {
+              "count": 45,
+              "median": 0.5606008340255357,
+              "p95": 0.676409425016027,
+              "max": 0.7978535000002012
+            },
+            "posterior": {
+              "count": 45,
+              "median": 0.10715133300982416,
+              "p95": 0.12289721659617499,
+              "max": 0.1286625000066124
+            },
+            "safety_belief_refresh": {
+              "count": 45,
+              "median": 0.13645708304829895,
+              "p95": 0.161635766364634,
+              "max": 0.1669147919747047
+            }
+          },
+          "warm_mbd_search_s": {
+            "count": 45,
+            "median": 0.3707721249666065,
+            "p95": 0.3873878499958664,
+            "max": 0.3939538749982603
+          },
+          "warm_mbd_validation_s": {
+            "count": 45,
+            "median": 0.13595904101384804,
+            "p95": 0.261135483183898,
+            "max": 0.3814507920178585
+          },
+          "warm_sensing_trajectory_request_s": {
+            "count": 1375,
+            "median": 0.09815745800733566,
+            "p95": 0.11009934179601258,
+            "max": 3.345653374970425
+          },
+          "warm_sensing_update_and_plan_s": {
+            "count": 1375,
+            "median": 0.3439700839808211,
+            "p95": 0.8931502539373454,
+            "max": 3.4367595829535276
+          },
+          "sensing_hold_decisions": 0,
+          "sensing_unvalidated_decisions": 0,
+          "acquisition_s": {
+            "count": 139,
+            "median": 0.0720085829962045,
+            "p95": 0.08643287947052158,
+            "max": 0.1437348750187084
+          },
+          "kernel_training_s": {
+            "count": 30,
+            "median": 0.8296419584949035,
+            "p95": 0.8963115890859626,
+            "max": 0.9189820419996977
+          },
+          "conditioning_s": {
+            "count": 1471,
+            "median": 0.10758979100501165,
+            "p95": 0.124817437492311,
+            "max": 0.1722663749824278
+          },
+          "premeasurement_three_sigma_innovation_coverage": 0.9900066622251832,
+          "plans_improved_over_initial_training_cost": 14,
+          "finite_training_comparisons": 45
+        },
+        {
+          "id": "s2-center-routeprecision",
+          "scenario": 2,
+          "method": "routeprecision",
+          "source_snapshot_verified": true,
+          "complete_300": true,
+          "simulated_seconds": 300.0,
+          "contact": null,
+          "first_A_s": 78.5,
+          "return_B_s": null,
+          "mbd_start_s": 82.0,
+          "mbd_calls": 44,
+          "monitoring_seconds": 75.0,
+          "accepted_mbd_execution_seconds": 65.0,
+          "filtered_hold_fallback_seconds": 10.0,
+          "targeted_information_fallback_requests": 29,
+          "full_mission_monitoring_cost": 54.46521894258231,
+          "partial_monitoring_cost": null,
+          "whole_map_wind_rmse_m_s": 2.1619605709962246,
+          "task_wind_rmse_m_s": 0.6910845584727244,
+          "task_uncertainty_at_handoff": 1.7357491364761874,
+          "actual_task_error_at_handoff": 1.522369697113123,
+          "handoff_kind": "route uncertainty",
+          "route_uncertainty_at_handoff": 0.18597626728922736,
+          "actual_route_error_at_handoff": 0.08150274411516281,
+          "final_route_uncertainty_m_s": 0.11588067750509708,
+          "final_route_error_m_s": 0.08082516147946972,
+          "infeasible_execution_steps": 0,
+          "minimum_clearance_m": 0.11796288301554725,
+          "warm_trajectory_request_s": {
+            "count": 43,
+            "median": 0.7956952919485047,
+            "p95": 0.9080984257045202,
+            "max": 1.4097798760049045
+          },
+          "warm_full_update_and_plan_s": {
+            "count": 43,
+            "median": 1.0477128319907933,
+            "p95": 1.2067338662862312,
+            "max": 1.664929918013513
+          },
+          "warm_actual_decision_cycle_s": {
+            "count": 1137,
+            "median": 0.33668916701572016,
+            "p95": 1.0189057841547766,
+            "max": 3.25437125103781
+          },
+          "warm_actual_decision_deadline_misses": 60,
+          "warm_mbd_module_s": {
+            "fields": {
+              "count": 43,
+              "median": 0.13143933401443064,
+              "p95": 0.15058244133833795,
+              "max": 0.18007237504934892
+            },
+            "geometry": {
+              "count": 43,
+              "median": 0.022484000015538186,
+              "p95": 0.02599857123568654,
+              "max": 0.0342056670342572
+            },
+            "optimization": {
+              "count": 43,
+              "median": 0.6450120829977095,
+              "p95": 0.743702899973141,
+              "max": 1.2537798340199515
+            },
+            "posterior": {
+              "count": 43,
+              "median": 0.10801133298082277,
+              "p95": 0.1248946211009752,
+              "max": 0.13304141600383446
+            },
+            "safety_belief_refresh": {
+              "count": 43,
+              "median": 0.138678457995411,
+              "p95": 0.1481362048245501,
+              "max": 0.19230083300499246
+            }
+          },
+          "warm_mbd_search_s": {
+            "count": 43,
+            "median": 0.3748516670311801,
+            "p95": 0.42351487079868094,
+            "max": 0.4443983749952167
+          },
+          "warm_mbd_validation_s": {
+            "count": 43,
+            "median": 0.23089133301982656,
+            "p95": 0.27855671219876965,
+            "max": 0.5025411249953322
+          },
+          "warm_sensing_trajectory_request_s": {
+            "count": 1122,
+            "median": 0.0935105420066975,
+            "p95": 0.10857491697533987,
+            "max": 1.4890816260012798
+          },
+          "warm_sensing_update_and_plan_s": {
+            "count": 1122,
+            "median": 0.33626570855267346,
+            "p95": 0.44414750210416987,
+            "max": 3.25437125103781
+          },
+          "sensing_hold_decisions": 0,
+          "sensing_unvalidated_decisions": 0,
+          "acquisition_s": {
+            "count": 113,
+            "median": 0.06677350000245497,
+            "p95": 0.09066632520407437,
+            "max": 1.6866049589589238
+          },
+          "kernel_training_s": {
+            "count": 29,
+            "median": 0.8330394999939017,
+            "p95": 0.898464858205989,
+            "max": 1.0143679999746382
+          },
+          "conditioning_s": {
+            "count": 1470,
+            "median": 0.10752741651958786,
+            "p95": 0.12476143765961752,
+            "max": 0.27718116698088124
+          },
+          "premeasurement_three_sigma_innovation_coverage": 0.9853431045969354,
+          "plans_improved_over_initial_training_cost": 31,
+          "finite_training_comparisons": 44
+        }
+      ]
+    },
+    "final_clarity": {
+      "label": "Clarity-weighted relearning + MBD",
+      "runs": [
+        {
+          "id": "s1-center-routeprecision",
+          "scenario": 1,
+          "method": "routeprecision",
+          "source_snapshot_verified": true,
+          "complete_300": true,
+          "simulated_seconds": 300.0,
+          "contact": null,
+          "first_A_s": 58.6,
+          "return_B_s": 101.7,
+          "mbd_start_s": 76.0,
+          "mbd_calls": 45,
+          "monitoring_seconds": 15.0,
+          "accepted_mbd_execution_seconds": 15.0,
+          "filtered_hold_fallback_seconds": 0.0,
+          "targeted_information_fallback_requests": 42,
+          "full_mission_monitoring_cost": 51.82802617282451,
+          "partial_monitoring_cost": null,
+          "whole_map_wind_rmse_m_s": 1.0179998761443234,
+          "task_wind_rmse_m_s": 0.6821917319266351,
+          "task_uncertainty_at_handoff": 1.5755047957542894,
+          "actual_task_error_at_handoff": 1.0127160389900476,
+          "handoff_kind": "route uncertainty",
+          "route_uncertainty_at_handoff": 0.19530428056076807,
+          "actual_route_error_at_handoff": 0.08790475364180025,
+          "final_route_uncertainty_m_s": 0.09557053847924714,
+          "final_route_error_m_s": 0.08103608574009659,
+          "infeasible_execution_steps": 2,
+          "minimum_clearance_m": 0.09623972896963051,
+          "warm_trajectory_request_s": {
+            "count": 45,
+            "median": 0.7248582500615157,
+            "p95": 0.8518751339986921,
+            "max": 1.0184850000659935
+          },
+          "warm_full_update_and_plan_s": {
+            "count": 45,
+            "median": 0.9883527900092304,
+            "p95": 1.1202151012956165,
+            "max": 1.296734000032302
+          },
+          "warm_actual_decision_cycle_s": {
+            "count": 1428,
+            "median": 0.35191687499172986,
+            "p95": 0.9980081478192001,
+            "max": 3.7367398750502616
+          },
+          "warm_actual_decision_deadline_misses": 71,
+          "warm_mbd_module_s": {
+            "fields": {
+              "count": 45,
+              "median": 0.1343547499855049,
+              "p95": 0.15359330020146442,
+              "max": 0.1934512080042623
+            },
+            "geometry": {
+              "count": 45,
+              "median": 0.023066417023073882,
+              "p95": 0.028503633628133677,
+              "max": 0.031196791969705373
+            },
+            "optimization": {
+              "count": 45,
+              "median": 0.5619657080387697,
+              "p95": 0.696259716595523,
+              "max": 0.8718773750006221
+            },
+            "posterior": {
+              "count": 45,
+              "median": 0.11200287501560524,
+              "p95": 0.12732650816906244,
+              "max": 0.13155320903752
+            },
+            "safety_belief_refresh": {
+              "count": 45,
+              "median": 0.14105541701428592,
+              "p95": 0.16076927500544116,
+              "max": 0.17659308400470763
+            }
+          },
+          "warm_mbd_search_s": {
+            "count": 45,
+            "median": 0.3812299169949256,
+            "p95": 0.43029229941312225,
+            "max": 0.6829525420325808
+          },
+          "warm_mbd_validation_s": {
+            "count": 45,
+            "median": 0.13548237504437566,
+            "p95": 0.2608702084049582,
+            "max": 0.2709590840386227
+          },
+          "warm_sensing_trajectory_request_s": {
+            "count": 1425,
+            "median": 0.09562041703611612,
+            "p95": 0.10914388337405398,
+            "max": 3.647032458044123
+          },
+          "warm_sensing_update_and_plan_s": {
+            "count": 1425,
+            "median": 0.3518837080337107,
+            "p95": 0.7352998426067596,
+            "max": 3.7367398750502616
+          },
+          "sensing_hold_decisions": 0,
+          "sensing_unvalidated_decisions": 0,
+          "acquisition_s": {
+            "count": 142,
+            "median": 0.0684735830000136,
+            "p95": 0.08612671665323432,
+            "max": 0.10879962501348928
+          },
+          "kernel_training_s": {
+            "count": 30,
+            "median": 0.8821062085335143,
+            "p95": 0.9866069979325399,
+            "max": 1.1053530829958618
+          },
+          "conditioning_s": {
+            "count": 1471,
+            "median": 0.11216870899079368,
+            "p95": 0.13095652047195472,
+            "max": 0.49308420898159966
+          },
+          "premeasurement_three_sigma_innovation_coverage": 0.983344437041972,
+          "plans_improved_over_initial_training_cost": 16,
+          "finite_training_comparisons": 45
+        },
+        {
+          "id": "s2-center-routeprecision",
+          "scenario": 2,
+          "method": "routeprecision",
+          "source_snapshot_verified": true,
+          "complete_300": true,
+          "simulated_seconds": 300.0,
+          "contact": null,
+          "first_A_s": 78.5,
+          "return_B_s": 182.15,
+          "mbd_start_s": 82.0,
+          "mbd_calls": 44,
+          "monitoring_seconds": 35.0,
+          "accepted_mbd_execution_seconds": 5.0,
+          "filtered_hold_fallback_seconds": 30.0,
+          "targeted_information_fallback_requests": 37,
+          "full_mission_monitoring_cost": 54.55586332943734,
+          "partial_monitoring_cost": null,
+          "whole_map_wind_rmse_m_s": 2.119812162222374,
+          "task_wind_rmse_m_s": 1.8795861042431827,
+          "task_uncertainty_at_handoff": 1.7357491364761874,
+          "actual_task_error_at_handoff": 1.522369697113123,
+          "handoff_kind": "route uncertainty",
+          "route_uncertainty_at_handoff": 0.18597626728922736,
+          "actual_route_error_at_handoff": 0.08150274411516281,
+          "final_route_uncertainty_m_s": 0.09767260461840149,
+          "final_route_error_m_s": 0.07608801618499669,
+          "infeasible_execution_steps": 0,
+          "minimum_clearance_m": 0.10090559315986347,
+          "warm_trajectory_request_s": {
+            "count": 43,
+            "median": 0.7385652910452336,
+            "p95": 0.8925593000021763,
+            "max": 1.2321213329560123
+          },
+          "warm_full_update_and_plan_s": {
+            "count": 43,
+            "median": 1.0110294588957913,
+            "p95": 1.1809768755629193,
+            "max": 1.487811041995883
+          },
+          "warm_actual_decision_cycle_s": {
+            "count": 1329,
+            "median": 0.34812604199396446,
+            "p95": 1.0228114912286401,
+            "max": 2.0774604160687886
+          },
+          "warm_actual_decision_deadline_misses": 69,
+          "warm_mbd_module_s": {
+            "fields": {
+              "count": 43,
+              "median": 0.13703254098072648,
+              "p95": 0.1478827419516165,
+              "max": 0.16761962504824623
+            },
+            "geometry": {
+              "count": 43,
+              "median": 0.023777207999955863,
+              "p95": 0.027513862779596818,
+              "max": 0.03514154098229483
+            },
+            "optimization": {
+              "count": 43,
+              "median": 0.5736981249647215,
+              "p95": 0.7264368122210726,
+              "max": 1.074453999986872
+            },
+            "posterior": {
+              "count": 43,
+              "median": 0.1141462919767946,
+              "p95": 0.13209549136809073,
+              "max": 0.16244979103794321
+            },
+            "safety_belief_refresh": {
+              "count": 43,
+              "median": 0.14636829198570922,
+              "p95": 0.1610566329851281,
+              "max": 0.19762775005074218
+            }
+          },
+          "warm_mbd_search_s": {
+            "count": 43,
+            "median": 0.3837032919982448,
+            "p95": 0.41128665799624287,
+            "max": 0.4774748749914579
+          },
+          "warm_mbd_validation_s": {
+            "count": 43,
+            "median": 0.14000516704982147,
+            "p95": 0.28378911669715307,
+            "max": 0.4180324589833617
+          },
+          "warm_sensing_trajectory_request_s": {
+            "count": 1322,
+            "median": 0.09390379150863737,
+            "p95": 0.10748320982384031,
+            "max": 1.2939567079301924
+          },
+          "warm_sensing_update_and_plan_s": {
+            "count": 1322,
+            "median": 0.34806523003499024,
+            "p95": 0.5747020639624707,
+            "max": 2.0774604160687886
+          },
+          "sensing_hold_decisions": 0,
+          "sensing_unvalidated_decisions": 0,
+          "acquisition_s": {
+            "count": 131,
+            "median": 0.06292412499897182,
+            "p95": 0.08289477101061493,
+            "max": 0.13554945902433246
+          },
+          "kernel_training_s": {
+            "count": 29,
+            "median": 0.8733084170380607,
+            "p95": 0.9008957580197603,
+            "max": 0.9073603749857284
+          },
+          "conditioning_s": {
+            "count": 1470,
+            "median": 0.11219354151398875,
+            "p95": 0.13022781480394768,
+            "max": 0.3256636660080403
+          },
+          "premeasurement_three_sigma_innovation_coverage": 0.9846768820786143,
+          "plans_improved_over_initial_training_cost": 22,
+          "finite_training_comparisons": 44
+        }
+      ]
+    }
+  },
+  "contrasts": [
+    {
+      "scenario": 1,
+      "cohort": "final_targeted",
+      "complete_pair": true,
+      "monitoring_cost_reduction_percent": 17.09724225983703,
+      "contact_free": true,
+      "visits_A_and_returns_B": true,
+      "executes_mbd": true,
+      "all_warm_decision_cycles_within_one_second": false
+    },
+    {
+      "scenario": 1,
+      "cohort": "final_clarity",
+      "complete_pair": true,
+      "monitoring_cost_reduction_percent": 17.278729776156702,
+      "contact_free": true,
+      "visits_A_and_returns_B": true,
+      "executes_mbd": true,
+      "all_warm_decision_cycles_within_one_second": false
+    },
+    {
+      "scenario": 2,
+      "cohort": "final_targeted",
+      "complete_pair": true,
+      "monitoring_cost_reduction_percent": 6.242140938667363,
+      "contact_free": true,
+      "visits_A_and_returns_B": false,
+      "executes_mbd": true,
+      "all_warm_decision_cycles_within_one_second": false
+    },
+    {
+      "scenario": 2,
+      "cohort": "final_clarity",
+      "complete_pair": true,
+      "monitoring_cost_reduction_percent": 6.086103309287526,
+      "contact_free": true,
+      "visits_A_and_returns_B": true,
+      "executes_mbd": true,
+      "all_warm_decision_cycles_within_one_second": false
+    }
+  ],
+  "horizon_seconds": 15,
+  "mission_seconds": 300,
+  "initial_condition": "center",
+  "notes": [
+    "One recorded initial condition and noise seed per scenario; this is not a multi-seed robustness claim.",
+    "Baseline 1 switches only at whole-map true wind RMSE <= 0.20 m/s. No switch means no MBD execution.",
+    "Targeted variants use finite-route posterior precision <= 0.20 m/s, followed by per-trajectory model checks.",
+    "Acquisition weights and handoff criteria both differ; this is not an acquisition-only ablation.",
+    "Wind truth is used only for plant, sensors and reported diagnostics; only Baseline 1 has the authorized oracle RMSE gate.",
+    "No recorded contact does not establish robust safety. Infeasible commands and deadline misses remain failures.",
+    "Timing separates warm trajectory requests from POAM updates, startup compilation and whole-mission wall time."
+  ]
+}

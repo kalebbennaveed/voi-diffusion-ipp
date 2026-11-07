@@ -3,19 +3,32 @@
 async function monitoringComparison(root){
   const prefix=root.dataset.controlPrefix||'monitor-';
   const $=id=>root.querySelector('#'+id.replace(/^monitor-/,prefix)),colors={aware:'#147861',baseline:'#c46a35'};
-  let env,manifest,records=[],panels=[],time=0,duration=60,playing=false,previous=null,version=0;
+  let env,manifest,records=[],panels=[],time=0,duration=60,playing=false,previous=null,version=0,loadFailed=false;
   const dataDirectory=root.dataset.monitoringDirectory||'data/monitoring';
+  const methods=(root.dataset.methods||'aware,baseline').split(',').filter(method=>['aware','baseline'].includes(method));
+  const fixedScenarios=(root.dataset.scenarios||'').split(',').map(Number).filter(n=>n===1||n===2);
+  const methodManifests={},methodDirectories={baseline:root.dataset.baselineDirectory};
   const cache=new Map();
   const methodLabel=method=>manifest?.method_labels?.[method]||(method==='aware'?'Proposed':'Baseline');
   async function readRecord(id){
-    const filename=manifest.runs?.find(run=>run.id===id)?.file||`${id}.json`;
-    const response=await fetch(`${dataDirectory}/${filename}`,{cache:'no-store'});
-    if(!response.ok)throw Error('This mission has not finished its first planning period yet. Computation continues.');
-    if(!filename.endsWith('.gz'))return response.json();
-    const bytes=new Uint8Array(await response.arrayBuffer());
-    // Some hosts decode Content-Encoding themselves; inspect the actual bytes.
-    if(bytes[0]!==0x1f||bytes[1]!==0x8b)return JSON.parse(new TextDecoder().decode(bytes));
-    return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json();
+    const method=id.endsWith('-baseline')?'baseline':'aware',sourceManifest=methodManifests[method]||manifest,directory=methodDirectories[method]||dataDirectory;
+    const filename=sourceManifest.runs?.find(run=>run.id===id)?.file||`${id}.json`;
+    for(let attempt=0;attempt<3;attempt++){
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+      try{
+        const response=await fetch(`${directory}/${filename}`,{cache:'no-store',signal:controller.signal});
+        if(!response.ok){const error=Error(`HTTP ${response.status}`);error.retryable=response.status>=500||response.status===429;throw error;}
+        if(!filename.endsWith('.gz'))return await response.json();
+        const bytes=new Uint8Array(await response.arrayBuffer());
+        // Some hosts decode Content-Encoding themselves; inspect actual bytes.
+        if(bytes[0]!==0x1f||bytes[1]!==0x8b)return JSON.parse(new TextDecoder().decode(bytes));
+        return await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json();
+      }catch(error){
+        if(attempt===2||error.retryable===false||error instanceof SyntaxError)
+          throw Error(`Could not load ${filename}: ${error.name==='AbortError'?'request timed out':error.message}. The saved simulation has not changed.`);
+      }finally{clearTimeout(timeout);}
+      await new Promise(resolve=>setTimeout(resolve,attempt===0?400:1200));
+    }
   }
   // The same fixed scales apply to both methods and both scenarios.
   const scales={
@@ -45,21 +58,28 @@ async function monitoringComparison(root){
   }
   function setPlaying(value){playing=value;$('monitor-play').textContent=value?'Ⅱ Pause monitoring':'▶ Play monitoring';$('monitor-play').setAttribute('aria-pressed',String(value));}
   function makePanel(record){
-    const method=record.method,article=document.createElement('article');article.className='monitor-card';
+    const method=record.method,recordManifest=methodManifests[method]||manifest,article=document.createElement('article');article.className='monitor-card';
+    const executionMargin=recordManifest.execution_belief?.safety_margin_m??recordManifest.planner_settings?.safety_margin??.06;
+    const executionNote=root.dataset.baselineDirectory?(method==='baseline'?' Execution: 8 fields, 0.12 m margin, posterior refresh 0.2 s.':' Execution: 2 fields, 0.06 m margin, posterior refresh 5 s.'):'';
     const clipId=root.id+'-'+record.id+'-monitor-clip';
     const visited=env.regions.filter(region=>record.samples.some(s=>s[1]>=region.bounds[0][0]&&s[1]<=region.bounds[1][0]&&s[2]>=region.bounds[0][1]&&s[2]<=region.bounds[1][1])).map(region=>region.label).join(', ')||'none';
-    const summary=record.summary,name=manifest.method_labels?.[method]||(method==='aware'?'Proposed · disturbance-aware MBD':'Baseline · MBD + execution RPCBF');
+    const summary=record.summary,methodName=manifest.method_labels?.[method]||(method==='aware'?'Proposed · disturbance-aware MBD':'Baseline · MBD + execution RPCBF'),name=(fixedScenarios.length?`Scenario ${record.scenario} · `:'')+methodName;
     const regions=design.regions.map(r=>`<rect x="${r.x}" y="${r.y}" width="${r.width}" height="${r.height}" fill="none" stroke="${r.label==='A'?'#2563eb':'#b45309'}" stroke-width="2"/><text x="${r.x+18}" y="${r.y+28}" class="region-label monitor-region-label">Region ${r.label}</text>`).join('');
     const obstacles=design.obstacles.map(o=>`<circle cx="${o.center[0]}" cy="${o.center[1]}" r="${o.radius}" fill="#73828a"/>`).join('');
-    article.innerHTML=`<div class="robot-card-heading"><h4>${name}</h4><span class="outcome ${summary.contact?'collision':summary.infeasible_execution_steps||summary.min_clearance_m<(manifest.planner_settings?.safety_margin??.06)?'stopped':''}">${summary.contact?'Full run: contact':`${summary.simulated_seconds.toFixed(0)} s · no contact${summary.infeasible_execution_steps?' · QP infeasibility':''}`}</span></div>
-    <p class="monitor-method">${manifest.method_descriptions?.[method]||(method==='aware'?'Current wind belief + relaxed RPCBF inside planning.':'Still-air planning. Wind-aware RPCBF after optimization.')}</p>
+    article.innerHTML=`<div class="robot-card-heading"><h4>${name}</h4><span class="outcome ${summary.contact?'collision':summary.infeasible_execution_steps||summary.min_clearance_m<executionMargin?'stopped':''}">${summary.contact?'Full run: contact':`${summary.simulated_seconds.toFixed(0)} s · no contact${summary.infeasible_execution_steps?' · QP infeasibility':''}`}</span></div>
+    <p class="monitor-method">${manifest.method_descriptions?.[method]||(method==='aware'?'Current wind belief + relaxed RPCBF inside planning.':'Still-air planning. Wind-aware RPCBF after optimization.')}${executionNote}</p>
     <div class="robot-map"><svg viewBox="-5 -5 810 472.5" role="img" aria-label="${name}, scenario ${record.scenario}, executed monitoring and clarity">
     <defs><clipPath id="${clipId}"><rect width="800" height="462.5"/></clipPath></defs><rect width="800" height="462.5" fill="#fafcf9"/><image class="monitor-heat" width="800" height="462.5"/>
     ${regions}${obstacles}<g clip-path="url(#${clipId})"><g class="monitor-belief-arrows"></g><g class="monitor-seed-paths"></g><g class="monitor-forecasts"></g><polyline class="monitor-trace-halo" fill="none" stroke="white" stroke-width="6" stroke-opacity=".9"/><polyline class="monitor-trace" fill="none" stroke="${colors[method]}" stroke-width="3.2"/><circle class="monitor-dot" r="6.5" fill="${colors[method]}" stroke="white" stroke-width="2.2"/><path class="monitor-contact" d="M-8 -8L8 8M-8 8L8 -8" stroke="#a93136" stroke-width="3" display="none"/></g><rect width="800" height="462.5" fill="none" stroke="#85938d"/>${renderWindOpenings(record.scenario)}</svg></div>
     <div class="monitor-color-scale" aria-label="Map color scale"></div><p class="monitor-probe">Move over the map to inspect a cell.</p><div class="live-metrics"><div><span>Clarity · A</span><b data-metric="a">—</b></div><div><span>Clarity · B</span><b data-metric="b">—</b></div><div><span>Whole-space deficit</span><b data-metric="deficit">—</b></div><div><span>Accumulated cost</span><b data-metric="cost">—</b></div></div>
     <p class="monitor-readout"></p><p class="monitor-plan-readout"></p><details class="monitor-decision"><summary>Inspect this planning decision</summary><div class="monitor-decision-content"></div></details>
     <div class="monitor-wind-belief"><h5>Learned wind · speed and direction</h5><p class="monitor-wind-readout"></p><div class="robot-map"><svg viewBox="-5 -5 810 472.5" role="img" aria-label="${name}, scenario ${record.scenario}, posterior mean wind velocity"><rect width="800" height="462.5" fill="#f7fbff"/><image class="monitor-wind-heat" width="800" height="462.5"/>${regions}${obstacles}<g class="monitor-wind-vectors" clip-path="url(#${clipId})"></g><circle class="monitor-wind-dot" r="6.5" fill="${colors[method]}" stroke="white" stroke-width="2.2"/><rect width="800" height="462.5" fill="none" stroke="#85938d"/></svg></div><div class="monitor-color-scale">${scaleMarkup('wind')}</div><p class="monitor-probe monitor-wind-probe">Move over the wind map to inspect its estimated velocity and uncertainty.</p></div><div class="monitor-region-chart"></div>
-    <div class="run-summary">${summary.completed?'Full mission':`Recorded ${summary.simulated_seconds.toFixed(0)} s`}: cost <b>${summary.integrated_deficit.toFixed(3)}</b> · clearance <b>${(Math.abs(summary.min_clearance_m)<1e-12?0:summary.min_clearance_m).toFixed(3)} m</b> · infeasible execution steps <b>${summary.infeasible_execution_steps}</b> · fallback periods <b>${summary.fallback_periods}</b> · regions visited <b>${visited}</b>${summary.min_clearance_m<(manifest.planner_settings?.safety_margin??.06)?'<br><strong class="run-warning">Physical safety margin breached.</strong>':''}${summary.contact?`<br>Contact at ${summary.contact.time_s.toFixed(2)} s; subsequent clarity decays without sensing.`:''}</div>`;
+    <div class="run-summary">${summary.completed?'Full mission':`Recorded ${summary.simulated_seconds.toFixed(0)} s`}: cost <b>${summary.integrated_deficit.toFixed(3)}</b> · clearance <b>${(Math.abs(summary.min_clearance_m)<1e-12?0:summary.min_clearance_m).toFixed(3)} m</b> · infeasible execution steps <b>${summary.infeasible_execution_steps}</b> · fallback periods <b>${summary.fallback_periods}</b> · regions visited <b>${visited}</b>${summary.min_clearance_m<executionMargin?'<br><strong class="run-warning">Physical safety margin breached.</strong>':''}${summary.contact?`<br>Contact at ${summary.contact.time_s.toFixed(2)} s; subsequent clarity decays without sensing.`:''}</div>`;
+    // Keep the common playback row immediately after the trajectory maps.
+    const primary=document.createElement('div');primary.className='monitor-primary';
+    while(article.firstChild){const child=article.firstChild;primary.append(child);if(child.nodeType===1&&child.classList.contains('robot-map'))break;}
+    const details=document.createElement('div');details.className='monitor-details';details.append(...Array.from(article.childNodes));
+    article.append(primary,details);
     const panel={article,record,lastHeat:'',lastBelief:-1,lastPlan:-1};
     article.querySelector('.robot-map svg').addEventListener('pointermove',event=>{
       const svg=event.currentTarget,p=new DOMPoint(event.clientX,event.clientY).matrixTransform(svg.getScreenCTM().inverse());
@@ -74,7 +94,8 @@ async function monitoringComparison(root){
       const x=Math.floor(p.x/12.5),y=36-Math.floor(p.y/12.5),cell=y*64+x;
       const readout=article.querySelector('.monitor-wind-probe');
       if(x<0||x>=64||y<0||y>=37||!env.free_indices.includes(cell)){readout.textContent='Obstacle or outside the environment';return;}
-      const bf=record.belief_frames[nearest(record.belief_frames,time)],v=bf.mean[cell];
+      const bf=record.belief_frames[nearest(record.belief_frames,time)],v=bf.mean?.[cell];
+      if(!Array.isArray(v)){readout.textContent='Posterior mean velocity was not stored in this archived record. No wind map is reconstructed.';return;}
       readout.textContent=`Estimated velocity (${v[0].toFixed(2)}, ${v[1].toFixed(2)}) m/s · speed ${Math.hypot(...v).toFixed(2)} m/s · per-component uncertainty σ ${bf.std[cell].toFixed(2)} m/s · x right, y up`;
     });
     return panel;
@@ -107,8 +128,15 @@ async function monitoringComparison(root){
     const bi=nearest(record.belief_frames,time),bf=record.belief_frames[bi];
     if(panel.lastBelief!==bi){
       panel.lastBelief=bi;let arrows='';
+      const hasMean=Array.isArray(bf.mean)&&env.free_indices.every(cell=>Array.isArray(bf.mean[cell])&&bf.mean[cell].length>=2);
+      const windPanel=article.querySelector('.monitor-wind-belief');
+      windPanel.querySelector('.robot-map').hidden=!hasMean;
+      windPanel.querySelector('.monitor-color-scale').hidden=!hasMean;
+      windPanel.querySelector('.monitor-wind-probe').hidden=!hasMean;
+      if(hasMean){
       for(let j=2;j<37;j+=4)for(let i=2;i<64;i+=4){
         const n=j*64+i,v=bf.mean[n],x=(i+.5)*12.5,y=462.5-(j+.5)*12.5;
+        if(!Array.isArray(v))continue;
         if(design.obstacles.some(o=>Math.hypot(x-o.center[0],y-o.center[1])<=o.radius))continue;
         const len=Math.hypot(v[0],v[1]);if(len<.08)continue;
         const scale=Math.min(10,25/len),xx=x+scale*v[0],yy=y-scale*v[1],angle=Math.atan2(-v[1],v[0]);
@@ -121,6 +149,12 @@ async function monitoringComparison(root){
       for(const cell of env.free_indices){const x=cell%64,y=Math.floor(cell/64),index=((36-y)*64+x)*4,rgb=colorAt(scales.wind,Math.hypot(...bf.mean[cell]));for(let c=0;c<3;c++)pixels.data[index+c]=rgb[c];pixels.data[index+3]=255;}
       ctx.putImageData(pixels,0,0);article.querySelector('.monitor-wind-heat').setAttribute('href',canvas.toDataURL());
       article.querySelector('.monitor-wind-readout').textContent=`Posterior at ${bf.t.toFixed(1)} s · ${bf.observations.toLocaleString()} wind measurements · fixed 0–8 m/s scale across every run`;
+      }else{
+        article.querySelector('.monitor-belief-arrows').innerHTML='';
+        article.querySelector('.monitor-wind-vectors').innerHTML='';
+        article.querySelector('.monitor-wind-heat').removeAttribute('href');
+        article.querySelector('.monitor-wind-readout').textContent='Posterior mean velocity was not stored in this archived record. Its trajectory, clarity and saved uncertainty remain available; no wind map is reconstructed.';
+      }
     }
     article.querySelector('.monitor-belief-arrows').style.display=$('monitor-belief').checked?'':'none';
     let pi=record.plans.length?nearest(record.plans,time):-1;
@@ -162,29 +196,42 @@ async function monitoringComparison(root){
     for(const panel of panels)if(panel.scaleLayer!==layer){panel.article.querySelector('.monitor-color-scale').innerHTML=scaleMarkup(layer);panel.scaleLayer=layer;}
   }
   async function load(preserve=false){
-    const savedTime=time,savedPlaying=playing,generation=++version;if(!preserve)setPlaying(false);$('monitor-status').textContent='Loading computed MBD missions…';
+    const savedTime=time,savedPlaying=playing,generation=++version;loadFailed=false;if(!preserve)setPlaying(false);$('monitor-status').textContent='Loading computed MBD missions…';
     try{
-      const scenario=Number($('monitor-scenario').value);
-      const ids=['aware','baseline'].map(method=>`s${scenario}-${method}`);
+      const scenarios=fixedScenarios.length?fixedScenarios:[Number($('monitor-scenario').value)];
+      const scenarioLabel=scenarios.length>1?'Scenarios 1 and 2':`Scenario ${scenarios[0]}`;
+      const ids=scenarios.flatMap(scenario=>methods.map(method=>`s${scenario}-${method}`));
       const loaded=await Promise.all(ids.map(async id=>{if(manifest.state==='computing'||!cache.get(id)?.summary.completed)cache.set(id,await readRecord(id));return cache.get(id);}));
       if(generation!==version)return;records=loaded;$('monitor-seeds-label').hidden=!records.some(r=>r.plans.some(p=>p.initialization));duration=Math.min(...records.map(r=>r.summary.simulated_seconds));time=preserve?Math.min(savedTime,duration):0;
-      $('monitor-time').max=duration;panels=records.map(makePanel);$('monitor-panels').replaceChildren(...panels.map(p=>p.article));panels.forEach(chart);draw();
+      $('monitor-time').max=duration;panels=records.map(makePanel);const panelGrid=$('monitor-panels'),transport=root.querySelector('.robot-transport');panelGrid.classList.add('with-inline-controls');panelGrid.replaceChildren(...panels.map(p=>p.article),transport);panels.forEach(chart);draw();
       $('monitor-play').disabled=false;$('monitor-restart').disabled=false;
-      $('monitor-status').textContent=`Scenario ${scenario} · ${records.every(r=>r.summary.completed&&r.summary.simulated_seconds===manifest.duration_s)?`${duration.toFixed(0)} seconds completed`:`showing ${duration.toFixed(0)} of ${Math.max(manifest.duration_s,...records.map(r=>r.summary.planned_seconds))} seconds; computation continues`} · same initial state, clarity, wind field, noise stream and MBD budget · each method learns from its own executed measurements.`;
+      $('monitor-status').textContent=`${scenarioLabel} · ${records.every(r=>r.summary.completed&&r.summary.simulated_seconds===manifest.duration_s)?`${duration.toFixed(0)} seconds completed`:`showing ${duration.toFixed(0)} of ${Math.max(manifest.duration_s,...records.map(r=>r.summary.planned_seconds))} seconds; computation continues`} · ${methods.length===1?'preserved disturbance-aware recording; wind learned from actual measurements':(root.dataset.baselineDirectory?'same physical wind and initial survey; original proposed and revised-filter baseline recordings (different execution settings)':'within each scenario: same initial state, clarity, wind field, noise stream and MBD budget; each method learns from its own executed measurements')}.`;
       if(preserve)setPlaying(savedPlaying);
-      $('monitor-results').textContent=records.every(r=>r.summary.completed&&r.summary.simulated_seconds===manifest.duration_s)?records.map(r=>`${methodLabel(r.method)}: integrated whole-space deficit ${r.summary.integrated_deficit.toFixed(3)}; ${r.summary.contact?'contact':'no contact'}; ${r.summary.passage_crossings.length} passage crossings.`).join(' '):`Common computed prefix: ${duration.toFixed(0)} s. Accumulated cost at that same time: ${records.map(r=>`${methodLabel(r.method)} ${sample(r.samples,duration)[14].toFixed(3)}`).join(' · ')}. Full mission comparison is pending.`;
+      $('monitor-results').textContent=records.every(r=>r.summary.completed&&r.summary.simulated_seconds===manifest.duration_s)?records.map(r=>`${fixedScenarios.length>1?`Scenario ${r.scenario} · `:''}${methodLabel(r.method)}: integrated whole-space deficit ${r.summary.integrated_deficit.toFixed(3)}; ${r.summary.contact?'contact':'no contact'}; ${r.summary.passage_crossings.length} passage crossings.`).join(' '):`Common computed prefix: ${duration.toFixed(0)} s. Accumulated cost at that same time: ${records.map(r=>`${methodLabel(r.method)} ${sample(r.samples,duration)[14].toFixed(3)}`).join(' · ')}. Full mission comparison is pending.`;
       if(records.every(r=>r.summary.completed&&r.summary.simulated_seconds===manifest.duration_s)){
         const proposed=records.find(r=>r.method==='aware');
         const bypass=proposed?.summary.passage_crossings.some(c=>c.route==='upper'||c.route==='lower');
         if(!bypass)$('monitor-results').textContent+=' The proposed run has not demonstrated a bypass; passing the implementation audit does not establish the requested detour behavior.';
       }
-    }catch(e){$('monitor-status').textContent=e.message;}
+    }catch(e){
+      if(generation!==version)return;
+      loadFailed=true;setPlaying(false);$('monitor-play').disabled=true;$('monitor-restart').disabled=true;
+      const status=$('monitor-status');status.textContent=e.message+' ';
+      const retry=document.createElement('button');retry.type='button';retry.textContent='Retry loading';
+      retry.addEventListener('click',()=>load(preserve));status.append(retry);
+    }
   }
   try{
     const response=await fetch(`${dataDirectory}/manifest.json`,{cache:'no-store'});if(!response.ok)throw Error('Monitoring missions are being computed. Existing simulations above remain available.');manifest=await response.json();root.querySelector('.review-badge').textContent=`${manifest.duration_s} s · computed clarity dynamics`;
+    if(root.dataset.baselineDirectory){
+      const baselineResponse=await fetch(`${root.dataset.baselineDirectory}/manifest.json`,{cache:'no-store'});
+      if(!baselineResponse.ok)throw Error('Could not load the restored baseline manifest.');
+      methodManifests.baseline=await baselineResponse.json();
+    }
+    const displayedRuns=manifest.runs.map(run=>methodManifests[run.method]?.runs.find(other=>other.id===run.id)||run);
     const summaryTable=$('monitor-summary-table');
-    if(summaryTable&&manifest.runs?.length)summaryTable.innerHTML=`<table class="monitor-all-results"><caption>All ${manifest.duration_s} s runs · ${manifest.initial_wind_knowledge==='survey'?'with initial survey':'without initial survey'}</caption><thead><tr><th>Scenario / method</th><th>Contact</th><th>Minimum clearance</th><th>Infeasible steps</th><th>Deficit cost ↓</th><th>Crossings</th></tr></thead><tbody>${manifest.runs.map(r=>`<tr><th>Scenario ${r.scenario} · ${methodLabel(r.method)}</th><td>${r.summary.contact?`At ${r.summary.contact.time_s.toFixed(2)} s`:'None'}</td><td>${r.summary.min_clearance_m.toFixed(3)} m</td><td>${r.summary.infeasible_execution_steps}</td><td>${r.summary.integrated_deficit.toFixed(3)}</td><td>${r.summary.passage_crossings.length}</td></tr>`).join('')}</tbody></table>`;
-    const sourceLink=root.querySelector('a[download]');if(manifest.state==='computing'||manifest.source_available===false){sourceLink.removeAttribute('href');sourceLink.textContent=manifest.state==='computing'?'Source package follows the completed mission audit':'Archived pilot: records and audit in the manifest';}
+    if(summaryTable&&manifest.runs?.length)summaryTable.innerHTML=`<table class="monitor-all-results"><caption>All ${manifest.duration_s} s runs · ${manifest.initial_wind_knowledge==='survey'?'with initial survey':'without initial survey'}</caption><thead><tr><th>Scenario / method</th><th>Contact</th><th>Minimum clearance</th><th>Infeasible steps</th><th>Deficit cost ↓</th><th>Crossings</th></tr></thead><tbody>${displayedRuns.filter(r=>methods.includes(r.method)&&(!fixedScenarios.length||fixedScenarios.includes(r.scenario))).map(r=>`<tr><th>Scenario ${r.scenario} · ${methodLabel(r.method)}</th><td>${r.summary.contact?`At ${r.summary.contact.time_s.toFixed(2)} s`:'None'}</td><td>${r.summary.min_clearance_m.toFixed(3)} m</td><td>${r.summary.infeasible_execution_steps}</td><td>${r.summary.integrated_deficit.toFixed(3)}</td><td>${r.summary.passage_crossings.length}</td></tr>`).join('')}</tbody></table>`;
+    const sourceLink=root.querySelector('a[download]');if(sourceLink&&(manifest.state==='computing'||manifest.source_available===false)){sourceLink.removeAttribute('href');sourceLink.textContent=manifest.state==='computing'?'Source package follows the completed mission audit':'Archived pilot: records and audit in the manifest';}
     env=await(await fetch(`${dataDirectory}/environment.json`,{cache:'no-store'})).json();
     if(manifest.planner_settings?.multimode){
       const c=manifest.planner_settings;
@@ -236,13 +283,18 @@ async function monitoringComparison(root){
       const outcome=root.querySelector('[data-learning-outcome]');if(outcome)outcome.textContent=manifest.outcome;
       const temporal=root.querySelector('[data-learning-windows]');if(temporal)temporal.innerHTML=`<table class="monitor-all-results"><caption>Monitoring and exploration over five minutes</caption><thead><tr><th>Scenario / method</th><th>First 60 s deficit</th><th>Last 60 s deficit</th><th>Regions visited</th><th>Survey time</th></tr></thead><tbody>${manifest.runs.map(run=>`<tr><th>Scenario ${run.scenario} · ${methodLabel(run.method)}</th><td>${run.summary.first_60s_mean_deficit.toFixed(4)}</td><td>${run.summary.last_60s_mean_deficit.toFixed(4)}</td><td>${run.summary.regions_visited.join(', ')||'None'}</td><td>${run.summary.survey_time_s??run.summary.mode_time_s?.survey??0} s</td></tr>`).join('')}</tbody></table>`;
     }
-    $('monitor-scenario').addEventListener('change',()=>load());$('monitor-layer').addEventListener('change',draw);
+    if(root.dataset.baselineDirectory){
+      $('monitor-filter-details').textContent='The displayed proposed recordings use 2 construction fields, a 0.06 m margin and 5 s posterior refresh. The restored non-contact baseline recordings use 8 construction fields, a 0.12 m margin and 0.2 s refresh. Physical wind, initial survey, robot and planner definitions are retained. These are different execution-filter configurations, not a matched performance comparison.';
+      $('monitor-learning-details').textContent='Both recorded configurations receive the same initial 1,884 noisy wind measurements and assimilate actual local observations with full POAM. The proposed posterior refreshes every 5 s; the restored baseline posterior refreshes every 0.2 s.';
+      $('monitor-runtime').textContent='Timing is recorded separately in each original run manifest and planning-decision record. These displayed recordings use different execution-filter configurations.';
+    }
+    $('monitor-scenario')?.addEventListener('change',()=>load());$('monitor-layer').addEventListener('change',draw);
     $('monitor-belief').addEventListener('change',draw);$('monitor-plans').addEventListener('change',draw);$('monitor-seeds').addEventListener('change',draw);
     $('monitor-play').addEventListener('click',()=>{if(time>=duration)time=0;setPlaying(!playing);draw();});
     $('monitor-restart').addEventListener('click',()=>{time=0;setPlaying(true);draw();});
     $('monitor-time').addEventListener('input',e=>{time=Number(e.target.value);setPlaying(false);draw();});
     await load();
-    setInterval(()=>{if(manifest.state==='computing'||!records.length||records.some(r=>!r.summary.completed))load(true);},30000);
+    setInterval(()=>{if(!loadFailed&&(manifest.state==='computing'||!records.length||records.some(r=>!r.summary.completed)))load(true);},30000);
     function frame(t){const dt=previous===null?0:Math.min(.1,(t-previous)/1000);previous=t;if(playing&&!document.hidden){time=Math.min(duration,time+dt*Number($('monitor-speed').value));draw();if(time>=duration)setPlaying(false);}requestAnimationFrame(frame);}requestAnimationFrame(frame);
   }catch(e){$('monitor-status').textContent=e.message;}
 }

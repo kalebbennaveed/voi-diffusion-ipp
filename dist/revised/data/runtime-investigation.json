@@ -1,0 +1,68 @@
+{
+  "original_overrun_s": 1.496854833996622,
+  "original_module_breakdown_available": false,
+  "reconstructed_state_at_205_s": [
+    4.022293257136373,
+    1.4539259608368147,
+    -0.3460300729587107,
+    -0.5642790742479646
+  ],
+  "repeated_same_call": [
+    {
+      "compilation": true,
+      "total_s": 2.3692317079985514,
+      "geometry_s": 0.12625833300990053,
+      "mbd_and_forecast_s": 2.2429737499915063,
+      "process_cpu_s": 2.7267580000000002,
+      "cost": 3.3699843883514404
+    },
+    {
+      "compilation": false,
+      "total_s": 0.18734437500825152,
+      "geometry_s": 0.01985187499667518,
+      "mbd_and_forecast_s": 0.16749295900808647,
+      "process_cpu_s": 0.5627509999999996,
+      "cost": 3.3699843883514404
+    },
+    {
+      "compilation": false,
+      "total_s": 0.19767012499505654,
+      "geometry_s": 0.030053708993364125,
+      "mbd_and_forecast_s": 0.16761683399090543,
+      "process_cpu_s": 0.5667879999999998,
+      "cost": 3.3699843883514404
+    },
+    {
+      "compilation": false,
+      "total_s": 0.18787366600008681,
+      "geometry_s": 0.0193190410209354,
+      "mbd_and_forecast_s": 0.16855545798898675,
+      "process_cpu_s": 0.5614549999999996,
+      "cost": 3.3699843883514404
+    },
+    {
+      "compilation": false,
+      "total_s": 0.18691424999269657,
+      "geometry_s": 0.019183666008757427,
+      "mbd_and_forecast_s": 0.16773125002509914,
+      "process_cpu_s": 0.5636000000000001,
+      "cost": 3.3699843883514404
+    },
+    {
+      "compilation": false,
+      "total_s": 0.19005662499694154,
+      "geometry_s": 0.020360708003863692,
+      "mbd_and_forecast_s": 0.16969662500196137,
+      "process_cpu_s": 0.5662130000000003,
+      "cost": 3.3699843883514404
+    }
+  ],
+  "rerun_state_error": 0.0,
+  "rerun_same_call_s": 0.18584316701162606,
+  "rerun_same_call_timing": {
+    "initialization": 0.022809000016422942,
+    "field_sampling": 0.0,
+    "optimization_validation": 0.16303354100091383,
+    "compilation_included": false
+  }
+}

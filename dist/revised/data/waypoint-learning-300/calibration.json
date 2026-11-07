@@ -1,0 +1,38 @@
+[
+  {
+    "id": "s1-center-survey",
+    "time": 103.4,
+    "free_cells": 2361,
+    "fraction_inside_model_confidence_disk": 0.5196950444726811,
+    "rmse_vector": 2.2414642017483075,
+    "mean_model_std": 0.3173548115205421,
+    "note": "Offline grid diagnostic only; direct posterior prediction, not a global safety certificate."
+  },
+  {
+    "id": "s1-center-baseline1",
+    "time": 203.4,
+    "free_cells": 2361,
+    "fraction_inside_model_confidence_disk": 0.6569250317662008,
+    "rmse_vector": 2.5201097180430714,
+    "mean_model_std": 0.46116008470986875,
+    "note": "Offline grid diagnostic only; direct posterior prediction, not a global safety certificate."
+  },
+  {
+    "id": "s2-center-survey",
+    "time": 300.0,
+    "free_cells": 2361,
+    "fraction_inside_model_confidence_disk": 0.49682337992376113,
+    "rmse_vector": 4.338514390430424,
+    "mean_model_std": 0.2516411266412537,
+    "note": "Offline grid diagnostic only; direct posterior prediction, not a global safety certificate."
+  },
+  {
+    "id": "s2-center-baseline1",
+    "time": 186.2,
+    "free_cells": 2361,
+    "fraction_inside_model_confidence_disk": 0.6116052520118593,
+    "rmse_vector": 2.698161379800478,
+    "mean_model_std": 0.4574578907242693,
+    "note": "Offline grid diagnostic only; direct posterior prediction, not a global safety certificate."
+  }
+]

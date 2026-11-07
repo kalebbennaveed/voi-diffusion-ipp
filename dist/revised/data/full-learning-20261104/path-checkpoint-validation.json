@@ -1,0 +1,206 @@
+{
+  "scenario": 1,
+  "survey_seconds": 180.0,
+  "actual_measurements": 901,
+  "task_vector_std_m_s": 1.095342350790638,
+  "task_rmse_m_s": 1.1258198112421314,
+  "active_cells": 772,
+  "free_cells": 2361,
+  "selected_threshold_m_s": null,
+  "passed": false,
+  "cases": [
+    {
+      "state": "actual state",
+      "accepted": true,
+      "position_rmse_m": 0.0640852221433252,
+      "max_position_error_m": 0.17356465212416158,
+      "relative_monitoring_cost_error": 0.0004914707525613463,
+      "predicted_monitoring_cost": 2.6309149265289307,
+      "true_monitoring_cost": 2.629622543958299,
+      "contact": false,
+      "infeasible_steps": 8,
+      "minimum_clearance_m": 0.45473864534148095,
+      "displacement_m": 3.230952547372271,
+      "passed": true,
+      "selection": {
+        "leader_costs": [
+          3.31138277053833,
+          2.6378183364868164,
+          2.6601836681365967,
+          3.0654802322387695,
+          3.267258644104004,
+          3.1161317825317383,
+          3.019620418548584
+        ],
+        "costs": [
+          2.6309149265289307,
+          3.140122890472412
+        ],
+        "feasible": [
+          true,
+          true
+        ],
+        "safety_feasible": [
+          false,
+          false
+        ],
+        "contacts": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "slack": [
+          [
+            0.5683623552322388,
+            1.265807032585144
+          ],
+          [
+            0.8985381722450256,
+            2.576323986053467
+          ]
+        ],
+        "selected": 0,
+        "no_feasible": false
+      },
+      "candidate_reference_displacement_m": [
+        9.47653531880399,
+        3.279581991297716
+      ]
+    },
+    {
+      "state": "region A",
+      "accepted": true,
+      "position_rmse_m": 0.3187863591826075,
+      "max_position_error_m": 0.5524605339734852,
+      "relative_monitoring_cost_error": 0.0012372738302415711,
+      "predicted_monitoring_cost": 2.628096103668213,
+      "true_monitoring_cost": 2.631351806396426,
+      "contact": false,
+      "infeasible_steps": 0,
+      "minimum_clearance_m": 1.0474917640155699,
+      "displacement_m": 1.0784480430455543,
+      "passed": false,
+      "selection": {
+        "leader_costs": [
+          2.7263503074645996,
+          2.728651762008667,
+          2.7577314376831055,
+          2.907618284225464,
+          2.610146999359131,
+          2.964564085006714,
+          2.8890814781188965
+        ],
+        "costs": [
+          2.628096103668213,
+          2.725776195526123
+        ],
+        "feasible": [
+          true,
+          true
+        ],
+        "safety_feasible": [
+          false,
+          true
+        ],
+        "contacts": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "slack": [
+          [
+            0.9229893684387207,
+            0.40543270111083984
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "selected": 0,
+        "no_feasible": false
+      },
+      "candidate_reference_displacement_m": [
+        3.518941988955634,
+        0.0
+      ]
+    },
+    {
+      "state": "region B",
+      "accepted": true,
+      "position_rmse_m": 0.3555892138725604,
+      "max_position_error_m": 1.123839892505758,
+      "relative_monitoring_cost_error": 0.004074028380515027,
+      "predicted_monitoring_cost": 2.6524229049682617,
+      "true_monitoring_cost": 2.641660704287304,
+      "contact": false,
+      "infeasible_steps": 0,
+      "minimum_clearance_m": 0.4923489958983891,
+      "displacement_m": 2.0432708924681093,
+      "passed": false,
+      "selection": {
+        "leader_costs": [
+          2.696582794189453,
+          2.6883156299591064,
+          2.652101993560791,
+          2.921495199203491,
+          2.925292491912842,
+          2.885835647583008,
+          2.820044994354248
+        ],
+        "costs": [
+          2.6524229049682617,
+          2.6865737438201904
+        ],
+        "feasible": [
+          true,
+          true
+        ],
+        "safety_feasible": [
+          false,
+          false
+        ],
+        "contacts": [
+          [
+            false,
+            false
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "slack": [
+          [
+            1.828700065612793,
+            0.10143411159515381
+          ],
+          [
+            0.0,
+            0.12375259399414062
+          ]
+        ],
+        "selected": 0,
+        "no_feasible": false
+      },
+      "candidate_reference_displacement_m": [
+        5.515891111649428,
+        2.595780344017566
+      ]
+    }
+  ],
+  "wall_seconds": 118.77310779201798,
+  "compilation_included": true,
+  "allow_validation_slack": true,
+  "definition": "After the declared RMSE threshold, validate the original 15s MBD at the actual state and at rest in A and B, using current clarity. Fixed independent random seed; frozen learned posterior; true plant only AFTER optimization. All three selected forecasts must have position RMS error <= 0.25m, maximum position error <= 0.50m, monitoring-cost error <= 10%, no true contact; infeasible execution commands are measured and reported, not an automatic veto. At least one must travel >= 0.50m. Holds are reported and cannot alone pass. A failed check is retried no sooner than 20 simulated seconds. This is a simulation-only stopping diagnostic, not a safety proof or whole-map accuracy certificate."
+}

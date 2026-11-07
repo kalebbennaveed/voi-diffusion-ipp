@@ -1,0 +1,44 @@
+{
+  "note": "Module smoke/timing check, NOT a threshold-qualified monitoring mission.",
+  "runs": [
+    {
+      "compilation_included": true,
+      "fields_s": 0.5717187499976717,
+      "geometry_s": 0.022925292025320232,
+      "optimizer_s": 19.680245291994652,
+      "total_s": 20.274889334017644,
+      "search_s": 16.255736708990298,
+      "validation_s": 3.1889003339747433,
+      "search_evaluations": 43,
+      "leader_rescores": 7,
+      "no_feasible": true,
+      "finite_theta": true
+    },
+    {
+      "compilation_included": false,
+      "fields_s": 0.04350699999486096,
+      "geometry_s": 0.017988249979680404,
+      "optimizer_s": 0.7054010829888284,
+      "total_s": 0.7668963329633698,
+      "search_s": 0.38002070802031085,
+      "validation_s": 0.32439600001089275,
+      "search_evaluations": 43,
+      "leader_rescores": 7,
+      "no_feasible": true,
+      "finite_theta": true
+    },
+    {
+      "compilation_included": false,
+      "fields_s": 0.02351170900510624,
+      "geometry_s": 0.01735170799656771,
+      "optimizer_s": 0.6996275000274181,
+      "total_s": 0.7404909170290921,
+      "search_s": 0.3748536249913741,
+      "validation_s": 0.3238667919940781,
+      "search_evaluations": 43,
+      "leader_rescores": 7,
+      "no_feasible": true,
+      "finite_theta": true
+    }
+  ]
+}

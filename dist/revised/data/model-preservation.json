@@ -1,0 +1,30 @@
+{
+  "source_changes": [
+    "scripts/airflow/monitoring_routes.py"
+  ],
+  "physical_setting_changes": [],
+  "planner_setting_changes": [],
+  "unchanged_sources": [
+    "scripts/airflow/known_monitoring.py",
+    "scripts/airflow/legacy_monitoring.py",
+    "scripts/airflow/monitoring_mbd.py",
+    "scripts/airflow/robot_review.py",
+    "scripts/airflow/run_monitoring_mbd.py",
+    "src/voi_diffusion_ipp/clarity.py",
+    "src/voi_diffusion_ipp/planning/mbd.py",
+    "src/voi_diffusion_ipp/quadrotor/aerodynamics.py",
+    "src/voi_diffusion_ipp/quarter/continuous.py",
+    "src/voi_diffusion_ipp/quarter/diffusion.py",
+    "src/voi_diffusion_ipp/quarter/filter.py",
+    "src/voi_diffusion_ipp/quarter/mbd_core.py",
+    "src/voi_diffusion_ipp/quarter/multimode.py",
+    "src/voi_diffusion_ipp/safety/flow_policy_value.py",
+    "src/voi_diffusion_ipp/safety/qp.py",
+    "src/voi_diffusion_ipp/safety/rpcbf.py",
+    "src/voi_diffusion_ipp/safety/spline.py",
+    "src/voi_diffusion_ipp/wind/gp.py",
+    "src/voi_diffusion_ipp/wind/oracle.py",
+    "src/voi_diffusion_ipp/wind/poam.py",
+    "src/voi_diffusion_ipp/wind/poam_belief.py"
+  ]
+}

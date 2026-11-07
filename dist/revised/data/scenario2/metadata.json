@@ -1,0 +1,569 @@
+{
+  "scenario": 2,
+  "solver": "lbmpy 1.4.1 / D3Q19 MRT / Smagorinsky LES Cs=0.16",
+  "equations": "3D isothermal low-Mach filtered Navier-Stokes; molecular plus Smagorinsky subgrid viscosity",
+  "units": "m, s, m/s",
+  "domain_m": [
+    8.0,
+    6.0,
+    2.0
+  ],
+  "obstacles": [
+    [
+      2.34,
+      4.72,
+      0.98,
+      1.5
+    ],
+    [
+      3.59,
+      4.45,
+      0.98,
+      1.5
+    ],
+    [
+      2.8,
+      3.65,
+      0.98,
+      1.5
+    ],
+    [
+      3.6,
+      2.6,
+      0.855,
+      1.5
+    ],
+    [
+      5.355,
+      1.1625,
+      0.855,
+      1.5
+    ]
+  ],
+  "grid": [
+    64,
+    48,
+    16
+  ],
+  "dx_m": 0.125,
+  "dt_s": 0.00015625,
+  "density_kg_m3": 1.204,
+  "temperature_K": 293.15,
+  "dynamic_viscosity_Pa_s": 1.8134058821488238e-05,
+  "kinematic_viscosity_m2_s": 1.506151064907661e-05,
+  "wind_source": "Elevated north inlet centered at [6.0, 6.0, 1.75] m, peak 36 m/s, aimed toward [4.4775, 1.88125, 0.75] m, direction [-1.5225, -4.11875, -1.0] normalized. Compact sin-squared port profile. East lower inlet peak 18 m/s in Scenario 2. Full 3D CFD determines interior wind; no velocity masking, scaling, or route-dependent force.",
+  "boundary_conditions": "No-slip roof, floor and perimeter except the elevated north inlet, Scenario 2 east lower inlet, and floor pressure outlet x=4\u20134.9 m, y=1.35\u20132.25 m at z=0, outside B and below the robot plane. The south perimeter is closed. Same analytic circular-column boundaries and recorded stencil-junction fallback. Additional floor pressure opening x=[3.0, 4.45], y=[0.25, 1.35] below the lower passage.",
+  "initial_condition": "Air initially at rest; imposed inlets start at t=0",
+  "environment_revision": "five-column-cluster-v2",
+  "openings": {
+    "central_inlet": {
+      "side": "north",
+      "x_m": [
+        5.6,
+        6.4
+      ],
+      "z_m": [
+        1.5,
+        2.0
+      ],
+      "peak_m_s": 36.0,
+      "direction": [
+        -1.5225,
+        -4.11875,
+        -1.0
+      ]
+    },
+    "lower_inlet": {
+      "side": "east",
+      "y_m": [
+        0.35,
+        1.15
+      ],
+      "z_m": [
+        0.25,
+        1.25
+      ],
+      "peak_m_s": 18.0,
+      "direction": [
+        -1.0,
+        -0.6,
+        0.0
+      ]
+    },
+    "outlet": {
+      "side": "floor",
+      "x_m": [
+        4.0,
+        4.9
+      ],
+      "y_m": [
+        1.35,
+        2.25
+      ],
+      "z_m": 0.0
+    },
+    "lower_floor_outlet": {
+      "side": "floor",
+      "x_m": [
+        3.0,
+        4.45
+      ],
+      "y_m": [
+        0.25,
+        1.35
+      ],
+      "z_m": 0.0
+    }
+  },
+  "slice_height_m": 0.75,
+  "requested_slice_height_m": 0.75,
+  "slice_interpolation": "Linear interpolation between neighboring vertical CFD cell centers",
+  "data_dtype": "little-endian float32",
+  "diagnostics": [
+    {
+      "time_s": 1.0,
+      "max_speed_m_s": 29.672432425183324,
+      "max_lattice_mach": 0.06424270068071465,
+      "max_relative_density_change": 0.0007437994381608304,
+      "mean_speed_m_s": 1.0221228673772396,
+      "wall_seconds": 9.228161833016202
+    },
+    {
+      "time_s": 2.0,
+      "max_speed_m_s": 29.688220265589422,
+      "max_lattice_mach": 0.06427688235787107,
+      "max_relative_density_change": 0.0006884316396116308,
+      "mean_speed_m_s": 1.1270408749740326,
+      "wall_seconds": 19.014232208020985
+    },
+    {
+      "time_s": 3.0,
+      "max_speed_m_s": 29.695003472631907,
+      "max_lattice_mach": 0.06429156843191589,
+      "max_relative_density_change": 0.0006905665441013786,
+      "mean_speed_m_s": 1.251145992028094,
+      "wall_seconds": 31.810809040995082
+    },
+    {
+      "time_s": 4.0,
+      "max_speed_m_s": 29.6995254045194,
+      "max_lattice_mach": 0.06430135870163776,
+      "max_relative_density_change": 0.0006950128866112237,
+      "mean_speed_m_s": 1.3257295141662384,
+      "wall_seconds": 44.44408441599808
+    },
+    {
+      "time_s": 5.0,
+      "max_speed_m_s": 29.697335012691195,
+      "max_lattice_mach": 0.0642966163642191,
+      "max_relative_density_change": 0.0006929187260918956,
+      "mean_speed_m_s": 1.3588765963136162,
+      "wall_seconds": 59.16632150000078
+    },
+    {
+      "time_s": 6.0,
+      "max_speed_m_s": 29.690734088793068,
+      "max_lattice_mach": 0.06428232494475854,
+      "max_relative_density_change": 0.0006908441255017994,
+      "mean_speed_m_s": 1.3950898189108112,
+      "wall_seconds": 73.44034658299643
+    },
+    {
+      "time_s": 7.0,
+      "max_speed_m_s": 29.687468927372635,
+      "max_lattice_mach": 0.06427525566291464,
+      "max_relative_density_change": 0.0006880586866880867,
+      "mean_speed_m_s": 1.4032868717190448,
+      "wall_seconds": 87.23798212502152
+    },
+    {
+      "time_s": 8.0,
+      "max_speed_m_s": 29.686848510206428,
+      "max_lattice_mach": 0.06427391242034745,
+      "max_relative_density_change": 0.0006878991896179798,
+      "mean_speed_m_s": 1.4103248190385,
+      "wall_seconds": 100.99999645800563
+    },
+    {
+      "time_s": 9.0,
+      "max_speed_m_s": 29.6877422206285,
+      "max_lattice_mach": 0.06427584736017031,
+      "max_relative_density_change": 0.0006881261990022702,
+      "mean_speed_m_s": 1.4290579717664298,
+      "wall_seconds": 114.76042575002066
+    },
+    {
+      "time_s": 10.0,
+      "max_speed_m_s": 29.69381519464979,
+      "max_lattice_mach": 0.06428899573461772,
+      "max_relative_density_change": 0.0006882745377765342,
+      "mean_speed_m_s": 1.4496428382514648,
+      "wall_seconds": 128.9982012080145
+    },
+    {
+      "time_s": 11.0,
+      "max_speed_m_s": 29.69474945313146,
+      "max_lattice_mach": 0.06429101846356479,
+      "max_relative_density_change": 0.0006871312419817199,
+      "mean_speed_m_s": 1.4552367419578602,
+      "wall_seconds": 142.70875250000972
+    },
+    {
+      "time_s": 12.0,
+      "max_speed_m_s": 29.690802845209305,
+      "max_lattice_mach": 0.06428247380676637,
+      "max_relative_density_change": 0.0006878410278617908,
+      "mean_speed_m_s": 1.437943282645654,
+      "wall_seconds": 157.6249407910218
+    },
+    {
+      "time_s": 13.0,
+      "max_speed_m_s": 29.691304972284538,
+      "max_lattice_mach": 0.06428356094377406,
+      "max_relative_density_change": 0.0006891564612094836,
+      "mean_speed_m_s": 1.409140363735943,
+      "wall_seconds": 173.28952579101315
+    },
+    {
+      "time_s": 14.0,
+      "max_speed_m_s": 29.6943204299171,
+      "max_lattice_mach": 0.06429008960105864,
+      "max_relative_density_change": 0.000686271226123969,
+      "mean_speed_m_s": 1.4019675175289885,
+      "wall_seconds": 189.63528370801941
+    },
+    {
+      "time_s": 15.0,
+      "max_speed_m_s": 29.695671941765642,
+      "max_lattice_mach": 0.06429301571004455,
+      "max_relative_density_change": 0.0006868269800059945,
+      "mean_speed_m_s": 1.418434429877669,
+      "wall_seconds": 207.04176141601056
+    },
+    {
+      "time_s": 16.0,
+      "max_speed_m_s": 29.695333597276136,
+      "max_lattice_mach": 0.06429228317273668,
+      "max_relative_density_change": 0.0006877888679134303,
+      "mean_speed_m_s": 1.4131452903443364,
+      "wall_seconds": 223.9411739160132
+    },
+    {
+      "time_s": 17.0,
+      "max_speed_m_s": 29.696305472664974,
+      "max_lattice_mach": 0.0642943873446768,
+      "max_relative_density_change": 0.0006880559249365925,
+      "mean_speed_m_s": 1.397721021991324,
+      "wall_seconds": 239.70827475000988
+    },
+    {
+      "time_s": 18.0,
+      "max_speed_m_s": 29.699088035066204,
+      "max_lattice_mach": 0.06430041176899451,
+      "max_relative_density_change": 0.0006900376817290388,
+      "mean_speed_m_s": 1.3972076469852104,
+      "wall_seconds": 255.71208808300435
+    },
+    {
+      "time_s": 19.0,
+      "max_speed_m_s": 29.697316350513336,
+      "max_lattice_mach": 0.0642965759594188,
+      "max_relative_density_change": 0.0006882211420823348,
+      "mean_speed_m_s": 1.4203271404607531,
+      "wall_seconds": 272.23387020800146
+    },
+    {
+      "time_s": 20.0,
+      "max_speed_m_s": 29.69763498328764,
+      "max_lattice_mach": 0.06429726581961137,
+      "max_relative_density_change": 0.000689619215605286,
+      "mean_speed_m_s": 1.4339507939332905,
+      "wall_seconds": 288.3138115830079
+    },
+    {
+      "time_s": 21.0,
+      "max_speed_m_s": 29.698536187570475,
+      "max_lattice_mach": 0.0642992169841187,
+      "max_relative_density_change": 0.0006877214449720892,
+      "mean_speed_m_s": 1.447645276103345,
+      "wall_seconds": 304.00210199999856
+    },
+    {
+      "time_s": 22.0,
+      "max_speed_m_s": 29.693417426447375,
+      "max_lattice_mach": 0.06428813454119744,
+      "max_relative_density_change": 0.0006883933249705043,
+      "mean_speed_m_s": 1.450129360897562,
+      "wall_seconds": 314.7050793330127
+    },
+    {
+      "time_s": 23.0,
+      "max_speed_m_s": 29.69342571690545,
+      "max_lattice_mach": 0.06428815249056569,
+      "max_relative_density_change": 0.0006875671099704217,
+      "mean_speed_m_s": 1.4339247425009123,
+      "wall_seconds": 326.91897541601793
+    },
+    {
+      "time_s": 24.0,
+      "max_speed_m_s": 29.69765221058493,
+      "max_lattice_mach": 0.0642973031178041,
+      "max_relative_density_change": 0.0006880169504986933,
+      "mean_speed_m_s": 1.4194819431521635,
+      "wall_seconds": 343.12584104100824
+    },
+    {
+      "time_s": 25.0,
+      "max_speed_m_s": 29.701258685329375,
+      "max_lattice_mach": 0.06430511136467108,
+      "max_relative_density_change": 0.000686370847055251,
+      "mean_speed_m_s": 1.4158016445755368,
+      "wall_seconds": 358.8894004159956
+    },
+    {
+      "time_s": 26.0,
+      "max_speed_m_s": 29.700061681417086,
+      "max_lattice_mach": 0.06430251977517992,
+      "max_relative_density_change": 0.0006870702252282923,
+      "mean_speed_m_s": 1.4045198071446003,
+      "wall_seconds": 369.5259626659972
+    },
+    {
+      "time_s": 27.0,
+      "max_speed_m_s": 29.699139178922113,
+      "max_lattice_mach": 0.06430052249869066,
+      "max_relative_density_change": 0.0006886423209877535,
+      "mean_speed_m_s": 1.3955698832675434,
+      "wall_seconds": 381.0830081659951
+    },
+    {
+      "time_s": 28.0,
+      "max_speed_m_s": 29.700163352281436,
+      "max_lattice_mach": 0.0643027398990583,
+      "max_relative_density_change": 0.000688237851081408,
+      "mean_speed_m_s": 1.4134114672258582,
+      "wall_seconds": 393.45574408301036
+    },
+    {
+      "time_s": 29.0,
+      "max_speed_m_s": 29.698694151063812,
+      "max_lattice_mach": 0.06429955898511397,
+      "max_relative_density_change": 0.0006898072868729566,
+      "mean_speed_m_s": 1.4303360602284145,
+      "wall_seconds": 404.499118000007
+    },
+    {
+      "time_s": 30.0,
+      "max_speed_m_s": 29.699008480469466,
+      "max_lattice_mach": 0.0643002395282401,
+      "max_relative_density_change": 0.000687706796548726,
+      "mean_speed_m_s": 1.4302126688889039,
+      "wall_seconds": 415.9656859160168
+    },
+    {
+      "time_s": 31.0,
+      "max_speed_m_s": 29.698445400605276,
+      "max_lattice_mach": 0.06429902042457322,
+      "max_relative_density_change": 0.0006874239116185787,
+      "mean_speed_m_s": 1.4259096467918604,
+      "wall_seconds": 428.1178487500001
+    },
+    {
+      "time_s": 32.0,
+      "max_speed_m_s": 29.698347630483187,
+      "max_lattice_mach": 0.06429880874604958,
+      "max_relative_density_change": 0.0006875089250990563,
+      "mean_speed_m_s": 1.4084890735947517,
+      "wall_seconds": 440.199371374998
+    }
+  ],
+  "curved_boundary_checks": [
+    {
+      "links": 12907,
+      "min_q": 0.010812991197627575,
+      "max_q": 0.9961177535532917,
+      "unresolved": 0,
+      "junction_halfway_no_slip_links": 213
+    }
+  ],
+  "wall_seconds": 440.32034216600005,
+  "limitations": [
+    "LES models unresolved eddies; not DNS or an approximation-free or measured wind field.",
+    "Finite spatial/time discretization; near-wall turbulence is not wall-resolved at these grids.",
+    "Quiet zones and route impassability are design targets, not imposed solution properties.",
+    "A horizontal velocity slice is exported for animated streamlets; these are not three-dimensional particle trajectories.",
+    "Air velocity is not assigned directly to the robot additive-acceleration disturbance. Robot coupling remains separate."
+  ],
+  "regions": [
+    {
+      "label": "A",
+      "bounds": [
+        [
+          5.0,
+          2.45
+        ],
+        [
+          8.0,
+          4.7
+        ]
+      ]
+    },
+    {
+      "label": "B",
+      "bounds": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.9,
+          1.75
+        ]
+      ]
+    }
+  ],
+  "environment_spec": {
+    "revision": "five-column-cluster-v2",
+    "bounds": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        8.0,
+        6.0
+      ]
+    ],
+    "depth": 2.0,
+    "dx": 0.125,
+    "obstacle_height": 1.5,
+    "obstacles": [
+      [
+        2.34,
+        4.72,
+        0.98
+      ],
+      [
+        3.59,
+        4.45,
+        0.98
+      ],
+      [
+        2.8,
+        3.65,
+        0.98
+      ],
+      [
+        3.6,
+        2.6,
+        0.855
+      ],
+      [
+        5.355,
+        1.1625,
+        0.855
+      ]
+    ],
+    "regions": [
+      {
+        "label": "A",
+        "bounds": [
+          [
+            5.0,
+            2.45
+          ],
+          [
+            8.0,
+            4.7
+          ]
+        ]
+      },
+      {
+        "label": "B",
+        "bounds": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            2.9,
+            1.75
+          ]
+        ]
+      }
+    ],
+    "passage_obstacles": [
+      3,
+      4
+    ],
+    "central_target": [
+      4.4775,
+      1.88125,
+      0.75
+    ],
+    "central_inlet_x": [
+      6.0,
+      6.0
+    ],
+    "central_peak": [
+      36.0,
+      36.0
+    ],
+    "lower_peak": [
+      0.0,
+      18.0
+    ],
+    "floor_box": [
+      4.0,
+      4.9,
+      1.35,
+      2.25
+    ],
+    "south_outlet": [
+      false,
+      false
+    ],
+    "design_note": "Geometry follows the new five-circle sketch. Uppermost column leaves 0.30 m geometric wall gap, maintaining a physically open but longer, tighter upper bypass. No route costs or method-specific geometry are imposed.",
+    "lower_floor_box": [
+      null,
+      [
+        3.0,
+        4.45,
+        0.25,
+        1.35
+      ]
+    ]
+  },
+  "environment_spec_sha256": "508ec795cac6aba89a73c3971eeca94c452a9de4ecfa2f6f4bdd1f172693833a",
+  "time_dependence": "none",
+  "data_shape": [
+    48,
+    64,
+    3
+  ],
+  "data_file": "stationary-velocity.f32",
+  "data_axes": [
+    "y from south",
+    "x from west",
+    "u/v/w"
+  ],
+  "field_definition": "Fixed vector mean over 16\u201332 s from the full 3D CFD solve",
+  "averaging_interval_s": [
+    16.0,
+    32.0
+  ],
+  "velocity_sha256": "99cb5ff8101f8137de9e94999991a3f29d22e39ce0fb78ed3051ec3d2787a756",
+  "monitoring_region_metrics": {
+    "A": {
+      "mean_m_s": 0.7020462155342102,
+      "p95_m_s": 1.3866084814071655,
+      "max_m_s": 6.303898334503174
+    },
+    "B": {
+      "mean_m_s": 1.4238251447677612,
+      "p95_m_s": 3.327695369720459,
+      "max_m_s": 3.8924405574798584
+    }
+  },
+  "validation_status": "Provisional numerical environment; full-scene grid convergence and experimental accuracy not established."
+}

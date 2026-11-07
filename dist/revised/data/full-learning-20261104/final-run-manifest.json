@@ -1,0 +1,298 @@
+{
+  "recorded_inputs": [
+    {
+      "path": "output/task_learning_20261105/final_baseline/comparison.json",
+      "bytes": 4903,
+      "sha256": "8b40b3b062c8541cb6a425a21cee774bd2beaa25a2eb2dfc64b0eec52a2f7d2a"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/environment.json",
+      "bytes": 104144,
+      "sha256": "3f6e62165b9c99a9d6b97f425c20395e814ae6ba1fa0b0da34645c8acb9e77d3"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/executed-source.zip",
+      "bytes": 607196,
+      "sha256": "3f3877b3a014009b8be85133b157634bc3852c4d65eb047e23bf484c2ab9f602"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/numerical-audit.json",
+      "bytes": 4872,
+      "sha256": "2414e00a3bb8c24848765fcccf8499d4c49e2571c7f154c3217c74c9f4742d1e"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/s1-center-baseline1-posterior.npz",
+      "bytes": 9152306,
+      "sha256": "12c10bb746bef6dd541555ceb392d338d9ac467a01fc02b4e3800b200fad1d85"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/s1-center-baseline1-protocol.json",
+      "bytes": 33127,
+      "sha256": "99e0974657fd0f61012673891d017660125b27bd7e8ed4b1c3f5e2b30c7762e6"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/s1-center-baseline1.json.gz",
+      "bytes": 9031976,
+      "sha256": "658702645822ebcf1d6996c62bcf991c7270e31b9d5b4dd838e079a82d898b5b"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/s2-center-baseline1-posterior.npz",
+      "bytes": 9168294,
+      "sha256": "d0a6278655cfc73644daaf84c9eca65a1c1511b749d0e8dbe2ed5884707a9dda"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/s2-center-baseline1-protocol.json",
+      "bytes": 33127,
+      "sha256": "bdaee9337e680b0c663c4aea88ae0b96d1ed66d88f6d20bcfb4ed6504515f70e"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/s2-center-baseline1.json.gz",
+      "bytes": 9476239,
+      "sha256": "5dcdc1f6902ce2eaaabb391235fa4e918a4a1bd5db3bddd56b8f072e5c0c98e7"
+    },
+    {
+      "path": "output/task_learning_20261105/final_baseline/summary.json",
+      "bytes": 2360,
+      "sha256": "fa8a8c8e44119aa77bf98d5a24407a3f45a5cab94dfce0cd5d6cc6a161af7ae6"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/comparison.json",
+      "bytes": 7721,
+      "sha256": "135ee6e67e3b8783752c6ae76f1281ce78600b309a926b82c565916dfc310151"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/environment.json",
+      "bytes": 104144,
+      "sha256": "3f6e62165b9c99a9d6b97f425c20395e814ae6ba1fa0b0da34645c8acb9e77d3"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/executed-source.zip",
+      "bytes": 606550,
+      "sha256": "e4690115f2ce0e4aba0b49e10d0dc799d7a38102a90ee19519939c8c324cc836"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/numerical-audit.json",
+      "bytes": 5918,
+      "sha256": "2205f33e20e62d5cd3dad25077f9a1498cec25d6bbb6eed9d96262942d8333a4"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s1-center-routeprecision-handoff.npz",
+      "bytes": 9041703,
+      "sha256": "5ff0bc6f8812e42a0ac6d1f2f4ae83106708d37b4c655dc919e576b84bdb0d53"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s1-center-routeprecision-posterior.npz",
+      "bytes": 9169746,
+      "sha256": "d8362ca65ff72f434e9e5d8ad728e5e12bceec6c8cc2529622ec59d630ea0e61"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s1-center-routeprecision-protocol.json",
+      "bytes": 36895,
+      "sha256": "128257b0da4f0e4a75afa1d0749f1fd12519c1ae73b6aa6703c16dda64dc4fde"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s1-center-routeprecision.json.gz",
+      "bytes": 13142576,
+      "sha256": "f018777ffb62039bfb8a7b38264c23ef135dd9a1de9ac5c93dfe31464f79f941"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s2-center-routeprecision-handoff.npz",
+      "bytes": 9032725,
+      "sha256": "07d24751cf12f30cf01946914e3baf9a0470e90d42c4b607bacd5a3c18534cc3"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s2-center-routeprecision-posterior.npz",
+      "bytes": 9158051,
+      "sha256": "931d84932c2fe2a4ecbef8928bbc044f0f0b6d59646a19433667c3bc07a014b4"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s2-center-routeprecision-protocol.json",
+      "bytes": 36895,
+      "sha256": "642116c4444ddcb7d5c717100fca32d16bd979f0e30261ffb4579eef70692fa0"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/s2-center-routeprecision.json.gz",
+      "bytes": 12936686,
+      "sha256": "e3d9ec61331a14372832db2e7f361f9664fd66d1c8a7c129fca7e5fa6f126f4f"
+    },
+    {
+      "path": "output/task_learning_20261105/final_targeted/summary.json",
+      "bytes": 2498,
+      "sha256": "4472bf1ef112b52e02d6de0eb86796d76d4c88c3bbfe0b7286b3226cd7fe14ef"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/comparison.json",
+      "bytes": 7736,
+      "sha256": "78c6a4524cee102e713f512d0fa0ebd17290bcc74ab566a038d95295b98b1e9c"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/environment.json",
+      "bytes": 104144,
+      "sha256": "3f6e62165b9c99a9d6b97f425c20395e814ae6ba1fa0b0da34645c8acb9e77d3"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/executed-source.zip",
+      "bytes": 610297,
+      "sha256": "9bab39b1f6ac5b83b7e3ba9d73e110da3a10c1f4a06dbfffeeeca54e277ebaf0"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/numerical-audit.json",
+      "bytes": 5919,
+      "sha256": "c90df22e820892382ecf0f630665d0e40ee6cd049e93694685a16794209afb61"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s1-center-routeprecision-handoff.npz",
+      "bytes": 9041703,
+      "sha256": "5ff0bc6f8812e42a0ac6d1f2f4ae83106708d37b4c655dc919e576b84bdb0d53"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s1-center-routeprecision-posterior.npz",
+      "bytes": 9170813,
+      "sha256": "c71872ae2dba3c561fffdb44d1bf99a6a18e1bebdd401b8f905635ce4bc2da82"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s1-center-routeprecision-protocol.json",
+      "bytes": 36071,
+      "sha256": "c6a9462cdae4b399067d58c895474a068b132b0fc39047eb37d164c7e24f9108"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s1-center-routeprecision.json.gz",
+      "bytes": 13251355,
+      "sha256": "182f73f9cdf03c04b09aa43da80a96721e6ae805d8378cc40cf2c84238623b57"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s2-center-routeprecision-handoff.npz",
+      "bytes": 9032725,
+      "sha256": "07d24751cf12f30cf01946914e3baf9a0470e90d42c4b607bacd5a3c18534cc3"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s2-center-routeprecision-posterior.npz",
+      "bytes": 9170030,
+      "sha256": "7ecbb6aab7ce9df6937e5342f3f33bf3dfa92dce63eac10bb866a51e5cddcbfc"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s2-center-routeprecision-protocol.json",
+      "bytes": 36071,
+      "sha256": "e62353be544d525a6ad979e01a92451ceece7d0cb433089538bc57aeb342f969"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/s2-center-routeprecision.json.gz",
+      "bytes": 13240913,
+      "sha256": "80ef2f317d6174072171617d4043f367cc2eacb26680211271eba74b3bc7abd9"
+    },
+    {
+      "path": "output/task_learning_20261105/final_clarity/summary.json",
+      "bytes": 2503,
+      "sha256": "722cf76865bc96a7ca31fefd33bf4a28060adc4db7204199e3f328aa503008bd"
+    }
+  ],
+  "numerical_audits_passed": true,
+  "shared_model_settings_verified": [
+    "settings",
+    "physical_settings",
+    "gp_profile",
+    "sensor_period_s",
+    "control_period_s",
+    "integration_period_s",
+    "noise_std_m_s",
+    "safety"
+  ],
+  "identical_model_source_files": [
+    "scripts/airflow/supported_poam.py",
+    "scripts/airflow/reachable_learning.py",
+    "scripts/airflow/wind_model_trust.py",
+    "scripts/airflow/monitoring_routes.py",
+    "scripts/airflow/task_wind_acquisition.py",
+    "scripts/airflow/cached_poam_fields.py",
+    "scripts/airflow/efficient_learning_monitoring.py",
+    "scripts/airflow/spatial_poam.py",
+    "scripts/airflow/full_learning_monitoring.py",
+    "scripts/airflow/uncertainty_waypoints.py",
+    "scripts/airflow/guarded_waypoints.py",
+    "src/voi_diffusion_ipp/clarity.py",
+    "src/voi_diffusion_ipp/config.py",
+    "src/voi_diffusion_ipp/__init__.py",
+    "src/voi_diffusion_ipp/environment.py",
+    "src/voi_diffusion_ipp/dynamics.py",
+    "src/voi_diffusion_ipp/experiments/scenarios.py",
+    "src/voi_diffusion_ipp/experiments/panda_contact.py",
+    "src/voi_diffusion_ipp/experiments/run.py",
+    "src/voi_diffusion_ipp/experiments/belief_adaptive.py",
+    "src/voi_diffusion_ipp/experiments/persistence.py",
+    "src/voi_diffusion_ipp/experiments/wind_cases.py",
+    "src/voi_diffusion_ipp/experiments/suite.py",
+    "src/voi_diffusion_ipp/experiments/checkpoint.py",
+    "src/voi_diffusion_ipp/experiments/winter_road.py",
+    "src/voi_diffusion_ipp/experiments/urban_airflow.py",
+    "src/voi_diffusion_ipp/experiments/spatial_disturbance.py",
+    "src/voi_diffusion_ipp/experiments/__init__.py",
+    "src/voi_diffusion_ipp/experiments/subsea_inspection.py",
+    "src/voi_diffusion_ipp/experiments/replay_budgeted.py",
+    "src/voi_diffusion_ipp/experiments/urban_quad.py",
+    "src/voi_diffusion_ipp/experiments/two_region.py",
+    "src/voi_diffusion_ipp/experiments/mountain_road.py",
+    "src/voi_diffusion_ipp/quadrotor/execution.py",
+    "src/voi_diffusion_ipp/quadrotor/controller.py",
+    "src/voi_diffusion_ipp/quadrotor/config.py",
+    "src/voi_diffusion_ipp/quadrotor/aerodynamics.py",
+    "src/voi_diffusion_ipp/quadrotor/__init__.py",
+    "src/voi_diffusion_ipp/quadrotor/types.py",
+    "src/voi_diffusion_ipp/quadrotor/reference.py",
+    "src/voi_diffusion_ipp/quadrotor/dynamics.py",
+    "src/voi_diffusion_ipp/planning/route_policy.py",
+    "src/voi_diffusion_ipp/planning/urban.py",
+    "src/voi_diffusion_ipp/planning/belief_adaptive.py",
+    "src/voi_diffusion_ipp/planning/mbd.py",
+    "src/voi_diffusion_ipp/planning/safe_mpd.py",
+    "src/voi_diffusion_ipp/planning/wind_blind.py",
+    "src/voi_diffusion_ipp/planning/learning_value.py",
+    "src/voi_diffusion_ipp/planning/belief_execution.py",
+    "src/voi_diffusion_ipp/planning/belief_schedule.py",
+    "src/voi_diffusion_ipp/planning/covariance.py",
+    "src/voi_diffusion_ipp/planning/__init__.py",
+    "src/voi_diffusion_ipp/planning/two_stage.py",
+    "src/voi_diffusion_ipp/planning/urban_cycle.py",
+    "src/voi_diffusion_ipp/planning/rollout.py",
+    "src/voi_diffusion_ipp/planning/sampling.py",
+    "src/voi_diffusion_ipp/planning/budgeted.py",
+    "src/voi_diffusion_ipp/planning/belief_rollout.py",
+    "src/voi_diffusion_ipp/planning/mpc.py",
+    "src/voi_diffusion_ipp/wind/poam.py",
+    "src/voi_diffusion_ipp/wind/gp.py",
+    "src/voi_diffusion_ipp/wind/cache.py",
+    "src/voi_diffusion_ipp/wind/__init__.py",
+    "src/voi_diffusion_ipp/wind/hypothetical.py",
+    "src/voi_diffusion_ipp/wind/covariance_forecast.py",
+    "src/voi_diffusion_ipp/wind/poam_belief.py",
+    "src/voi_diffusion_ipp/wind/oracle.py",
+    "src/voi_diffusion_ipp/wind/physical.py",
+    "src/voi_diffusion_ipp/safety/spline.py",
+    "src/voi_diffusion_ipp/safety/qp.py",
+    "src/voi_diffusion_ipp/safety/__init__.py",
+    "src/voi_diffusion_ipp/safety/rpcbf.py",
+    "src/voi_diffusion_ipp/safety/flow_policy_value.py",
+    "src/voi_diffusion_ipp/safety/mpd_shield.py",
+    "src/voi_diffusion_ipp/viz/__init__.py",
+    "src/voi_diffusion_ipp/viz/demo_data.py",
+    "src/voi_diffusion_ipp/viz/demo_server.py",
+    "src/voi_diffusion_ipp/viz/report.py",
+    "src/voi_diffusion_ipp/quarter/mbd_core.py",
+    "src/voi_diffusion_ipp/quarter/benchmark_environments.py",
+    "src/voi_diffusion_ipp/quarter/planner.py",
+    "src/voi_diffusion_ipp/quarter/diffusion.py",
+    "src/voi_diffusion_ipp/quarter/execution.py",
+    "src/voi_diffusion_ipp/quarter/sensing.py",
+    "src/voi_diffusion_ipp/quarter/multimode.py",
+    "src/voi_diffusion_ipp/quarter/__init__.py",
+    "src/voi_diffusion_ipp/quarter/modes.py",
+    "src/voi_diffusion_ipp/quarter/suite_engine.py",
+    "src/voi_diffusion_ipp/quarter/environment.py",
+    "src/voi_diffusion_ipp/quarter/filter.py",
+    "src/voi_diffusion_ipp/quarter/continuous.py",
+    "src/voi_diffusion_ipp/quarter/rrt.py",
+    "src/voi_diffusion_ipp/baselines/__init__.py",
+    "src/voi_diffusion_ipp/baselines/draft.py"
+  ],
+  "all_six_recordings_complete": true,
+  "all_six_recordings_contact_free": true
+}
