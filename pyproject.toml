@@ -1,13 +1,13 @@
 [project]
 name = "voi-diffusion-ipp"
 version = "0.1.0"
-description = "Sequential value-of-information planning with model-based diffusion and sampled RPCBF"
+description = "Disturbance-aware informative planning in spatiotemporal environments"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
-dependencies = ["jax==0.4.38", "numpy>=2,<3", "scipy>=1.12,<1.17", "matplotlib>=3.8,<4", "pyyaml>=6,<7"]
+dependencies = ["jax==0.4.38", "numpy>=2,<3", "scipy>=1.12,<1.17", "pyyaml>=6,<7"]
 
 [dependency-groups]
-dev = ["pytest>=8,<9", "ruff>=0.9", "pypdf>=5", "pypdfium2>=4"]
+dev = ["pytest>=8,<9"]
 
 [build-system]
 requires = ["hatchling"]

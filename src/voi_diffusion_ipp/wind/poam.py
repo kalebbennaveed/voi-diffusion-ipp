@@ -3,7 +3,7 @@
 Implements Sec. III-B AK, Sec. IV-B pivoted inducing selection, Eqs. 19-21
 transported UNWEIGHTED sufficient statistics, Eqs. 7-8 variational update and
 Eq. 10 minibatch variational EM kernel training. Independently reimplemented
-from the paper and MIT-licensed vendor reference; see docs/reference_mapping.md.
+from the paper and MIT-licensed vendor reference; see vendor/POAM-LICENSE.
 
 Full sparse-GP prediction and planning retain the conditional residual covariance.
 The continuous posterior sampler is separately validated against this covariance.

@@ -80,3 +80,23 @@ def write_recording(path, record):
     except BaseException:
         temporary.unlink(missing_ok=True)
         raise
+
+
+def write_json(path, value):
+    """Atomically write a JSON summary, including NumPy and JAX arrays."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + '.tmp')
+    def json_value(item):
+        if isinstance(item, (dict, list, tuple)):
+            if isinstance(item, dict):
+                return {key: json_value(val) for key, val in item.items()}
+            return [json_value(val) for val in item]
+        if hasattr(item, "__array__"):
+            return json_value(np.asarray(item).tolist())
+        if isinstance(item, float) and not np.isfinite(item):
+            return None
+        return item
+
+    temporary.write_text(json.dumps(json_value(value), separators=(',', ':'), allow_nan=False))
+    temporary.replace(path)

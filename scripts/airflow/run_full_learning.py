@@ -11,12 +11,11 @@ from guarded_waypoints import GuardedWaypointPolicy
 from spatial_poam import SpatialPOAM,SpatialPOAMSettings
 from cached_poam_fields import CachedFields
 from rmse_gate import wind_vector_rmse,ready_for_mbd
-from run_monitoring_mbd import write
 from task_wind_acquisition import TaskWindAcquisition,deficit_weights
 import efficient_learning_monitoring as efficient
 from information_paths import InformationPathPlanner
 from reachable_learning import ReachableLearning,measured_route_mask
-from recording_io import write_recording
+from recording_io import write_recording, write_json as write
 from mission_schedule import MissionSchedule,block_capacity
 from exact_poam_variance import ResolvedVarianceBasis
 from handoff_validation import HandoffValidator
@@ -29,6 +28,7 @@ from monitoring_resume import MonitoringResume
 
 
 def main():
+    jax.config.update('jax_compilation_cache_dir', str(im.m.physical.ROOT / '.cache/monitoring_mbd_jax'))
     p=argparse.ArgumentParser()
     p.add_argument('--require-completion',action='store_true',help='Stop the batch after saving any incomplete mission; do not spend compute on subsequent cases')
     p.add_argument('--output',type=Path,required=True)
@@ -119,8 +119,8 @@ def main():
     cfg=replace(im.settings(),iterations=a.mbd_iterations,proposals=a.mbd_proposals,safety_confidence=a.safety_confidence)
     pcfg=replace(im.legacy.physical_settings(cfg),mission_seconds=block_capacity(max_seconds,cfg.commit),
                                  safety_margin=cfg.safety_margin,inner_samples=cfg.construction_worlds)
-    specpath=a.environment_spec or im.m.physical.ROOT/'results/airflow/cluster_revision_20261103/v2/environment-spec.json'
-    site=a.wind_site or im.m.physical.SITE/'revised';env,grid,spec=ce.environment(pcfg,specpath)
+    specpath=a.environment_spec or im.m.physical.ROOT/'data/scenario1/geometry.json'
+    site=a.wind_site or im.m.physical.ROOT;env,grid,spec=ce.environment(pcfg,specpath)
     basis,points,shape=im.table_grid(env.bounds,a.cache_spacing)
     if a.exact_safety_variance:basis=ResolvedVarianceBasis(basis.lower,basis.spacing)
     _,extended,_=im.table_grid(env.bounds,.4)

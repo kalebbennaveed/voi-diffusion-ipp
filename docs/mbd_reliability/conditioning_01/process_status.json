@@ -1,7 +1,0 @@
-{
-  "diagnostic_complete": true,
-  "completed_states": 5,
-  "wrapper_exit_code": 1,
-  "wrapper_error": "time: sysctl kern.clockrate: Operation not permitted",
-  "explanation": "The Python diagnostic wrote all five outcomes and complete=true before /usr/bin/time -l failed to read host resource accounting. The scientific outputs and per-evaluator synchronized timings are present; peak memory is unavailable. No failed scientific run was discarded or repeated."
-}

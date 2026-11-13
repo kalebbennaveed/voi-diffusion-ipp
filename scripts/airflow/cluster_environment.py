@@ -6,7 +6,7 @@ import jax.numpy as jnp
 from voi_diffusion_ipp.environment import Environment
 from monitoring_routes import clearance
 
-DEFAULT_SPEC=Path(__file__).resolve().parents[2]/'results/airflow/cluster_revision_20261103/environment-spec.json'
+DEFAULT_SPEC=Path(__file__).resolve().parents[2]/'data/scenario1/geometry.json'
 CASES=[
     dict(id='center',label='Center of B · at rest',state=[1.45,.875,0.,0.],seed=8101),
     dict(id='west',label='West of B · at rest',state=[.80,.65,0.,0.],seed=8101),

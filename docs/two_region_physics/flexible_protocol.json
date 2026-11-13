@@ -1,9 +1,0 @@
-{
-  "status": "declared follow-up to test a timing-family artifact",
-  "base_case": "gamma=0.6, along acceleration=1.8, same geometry/field as first screen",
-  "solver": "Independent known-wind SLSQP over squared path speed at 40 and 80 intervals; this is a physics check, not the MBD planner",
-  "constraints": "Componentwise actuator bounds with 0.015 reserve, same in both directions; evaluate five collocation points per interval",
-  "validation": "Retain all success/failure outcomes. Independently check 20001 path points. Require opposite route preference with both resolutions; do not interpret local solutions as global optimality.",
-  "expanded_sweep": "After the corrected flexible-timing check reduced the gamma=0.6/amplitude=1.8 return advantage to 2.2 percent, apply the same check to ALL 12 originally declared drag/amplitude settings, at 40 and 80 intervals. Retain every result. No proposed-vs-baseline outcomes have been observed.",
-  "implementation_repairs": "Initial diagnostic output had a late-bound array shape error, retained in initial_diagnostic_error.log. Dense checking then exposed missing left-sided constraints at interval boundaries; both sides are now included. Pre-fix outputs are retained as failures, not evidence."
-}

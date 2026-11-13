@@ -1,0 +1,112 @@
+{
+  "revision": "five-column-cluster-v2",
+  "bounds": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      8.0,
+      6.0
+    ]
+  ],
+  "depth": 2.0,
+  "dx": 0.125,
+  "obstacle_height": 1.5,
+  "obstacles": [
+    [
+      2.34,
+      4.72,
+      0.98
+    ],
+    [
+      3.59,
+      4.45,
+      0.98
+    ],
+    [
+      2.8,
+      3.65,
+      0.98
+    ],
+    [
+      3.6,
+      2.6,
+      0.855
+    ],
+    [
+      5.355,
+      1.1625,
+      0.855
+    ]
+  ],
+  "regions": [
+    {
+      "label": "A",
+      "bounds": [
+        [
+          5.0,
+          2.45
+        ],
+        [
+          8.0,
+          4.7
+        ]
+      ]
+    },
+    {
+      "label": "B",
+      "bounds": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.9,
+          1.75
+        ]
+      ]
+    }
+  ],
+  "passage_obstacles": [
+    3,
+    4
+  ],
+  "central_target": [
+    4.4775,
+    1.88125,
+    0.75
+  ],
+  "central_inlet_x": [
+    6.0,
+    6.0
+  ],
+  "central_peak": [
+    36.0,
+    36.0
+  ],
+  "lower_peak": [
+    0.0,
+    18.0
+  ],
+  "floor_box": [
+    4.0,
+    4.9,
+    1.35,
+    2.25
+  ],
+  "south_outlet": [
+    false,
+    false
+  ],
+  "design_note": "Geometry follows the new five-circle sketch. Uppermost column leaves 0.30 m geometric wall gap, maintaining a physically open but longer, tighter upper bypass. No route costs or method-specific geometry are imposed.",
+  "lower_floor_box": [
+    null,
+    [
+      3.0,
+      4.45,
+      0.25,
+      1.35
+    ]
+  ]
+}

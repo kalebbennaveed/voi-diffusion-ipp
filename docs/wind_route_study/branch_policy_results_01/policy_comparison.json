@@ -1,8 +1,0 @@
-{
-  "label": "Development policy-class comparison; not a held-out validation",
-  "caveat": "24 versus 18 parameters changes MBD proposal draws; within each pair only anticipation differs.",
-  "cost_reduction_vs_compact_percent": {
-    "proposed": -2.2092348641102877,
-    "current_belief": 5.26476551194871
-  }
-}

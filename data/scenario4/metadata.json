@@ -1,0 +1,717 @@
+{
+  "scenario": 4,
+  "solver": "lbmpy 1.4.1 / D3Q19 MRT / Smagorinsky LES Cs=0.16",
+  "equations": "3D isothermal low-Mach filtered Navier-Stokes; molecular plus Smagorinsky subgrid viscosity",
+  "units": "m, s, m/s",
+  "domain_m": [
+    8.0,
+    6.0,
+    2.0
+  ],
+  "obstacles": [
+    [
+      1.15,
+      2.7,
+      0.6,
+      1.5
+    ],
+    [
+      2.75,
+      3.05,
+      0.68,
+      1.5
+    ],
+    [
+      3.55,
+      4.65,
+      0.65,
+      1.5
+    ],
+    [
+      3.9,
+      1.35,
+      0.55,
+      1.5
+    ],
+    [
+      5.35,
+      2.75,
+      0.75,
+      1.5
+    ],
+    [
+      6.85,
+      1.2,
+      0.6,
+      1.5
+    ],
+    [
+      6.65,
+      4.5,
+      0.8,
+      1.5
+    ],
+    [
+      4.95,
+      5.3,
+      0.45,
+      1.5
+    ]
+  ],
+  "grid": [
+    64,
+    48,
+    16
+  ],
+  "dx_m": 0.125,
+  "dt_s": 0.00020089285714285714,
+  "density_kg_m3": 1.204,
+  "temperature_K": 293.15,
+  "dynamic_viscosity_Pa_s": 1.8134058821488238e-05,
+  "kinematic_viscosity_m2_s": 1.506151064907661e-05,
+  "wind_source": "Two angled roof inlets with compact sin-squared profiles; physical floor pressure outlets.",
+  "boundary_conditions": "No-slip outer walls, floor and roof except the two declared roof velocity inlets and floor pressure outlets; unchanged analytic cylinder boundaries.",
+  "initial_condition": "Air initially at rest; imposed inlets start at t=0",
+  "environment_revision": "west-monitoring-connected-yard-cfd-v5-20261107",
+  "openings": {
+    "task_roof_inlet": {
+      "xy_bounds_m": [
+        [
+          1.15,
+          3.65
+        ],
+        [
+          1.65,
+          4.15
+        ]
+      ],
+      "z_m": 2.0,
+      "direction": [
+        0.35,
+        -0.7,
+        -1.0
+      ],
+      "peak_speed_m_s": 28.0
+    },
+    "task_floor_outlet": {
+      "xy_bounds_m": [
+        [
+          1.95,
+          2.05
+        ],
+        [
+          2.55,
+          2.65
+        ]
+      ],
+      "z_m": 0.0
+    },
+    "yard_roof_inlet": {
+      "xy_bounds_m": [
+        [
+          6.6,
+          3.05
+        ],
+        [
+          7.1,
+          3.55
+        ]
+      ],
+      "z_m": 2.0,
+      "direction": [
+        -0.5,
+        -0.8,
+        -1.0
+      ],
+      "peak_speed_m_s": 4.0
+    },
+    "yard_floor_outlet": {
+      "xy_bounds_m": [
+        [
+          5.6,
+          1.35
+        ],
+        [
+          6.2,
+          1.95
+        ]
+      ],
+      "z_m": 0.0
+    },
+    "note": "Physical boundary-condition proposal for a covered inspection yard. Inlet vectors must be normalized by the CFD setup. All other boundaries remain no-slip. Peak inlet speeds are not robot-plane wind speeds. These ports have not been simulated."
+  },
+  "slice_height_m": 0.75,
+  "requested_slice_height_m": 0.75,
+  "slice_interpolation": "Linear interpolation between neighboring vertical CFD cell centers",
+  "data_shape": [
+    48,
+    64,
+    3
+  ],
+  "data_file": "stationary-velocity.f32",
+  "data_dtype": "little-endian float32",
+  "data_axes": [
+    "y from south",
+    "x from west",
+    "u/v/w"
+  ],
+  "diagnostics": [
+    {
+      "time_s": 1.0004464285714285,
+      "max_speed_m_s": 21.81853980399203,
+      "max_lattice_mach": 0.060735245604875504,
+      "max_relative_density_change": 0.0012774219340130344,
+      "mean_speed_m_s": 0.2729872167459227,
+      "wall_seconds": 4.398133917013183
+    },
+    {
+      "time_s": 2.000892857142857,
+      "max_speed_m_s": 21.810545000949222,
+      "max_lattice_mach": 0.060712990846732665,
+      "max_relative_density_change": 0.0012690950970466464,
+      "mean_speed_m_s": 0.3430151149393765,
+      "wall_seconds": 8.86120441701496
+    },
+    {
+      "time_s": 3.0013392857142858,
+      "max_speed_m_s": 21.807687119179064,
+      "max_lattice_mach": 0.06070503549533062,
+      "max_relative_density_change": 0.0012708713845253072,
+      "mean_speed_m_s": 0.38083020729360134,
+      "wall_seconds": 13.33359641698189
+    },
+    {
+      "time_s": 4.001785714285714,
+      "max_speed_m_s": 21.80238215574755,
+      "max_lattice_mach": 0.060690268317516144,
+      "max_relative_density_change": 0.001272731827602902,
+      "mean_speed_m_s": 0.4002372930723944,
+      "wall_seconds": 17.719930708990432
+    },
+    {
+      "time_s": 5.002232142857142,
+      "max_speed_m_s": 21.793709017192185,
+      "max_lattice_mach": 0.06066612530863207,
+      "max_relative_density_change": 0.001276201281172673,
+      "mean_speed_m_s": 0.41338489824703084,
+      "wall_seconds": 22.383453083981294
+    },
+    {
+      "time_s": 6.0026785714285715,
+      "max_speed_m_s": 21.787975274967636,
+      "max_lattice_mach": 0.06065016455940818,
+      "max_relative_density_change": 0.0012780620804848652,
+      "mean_speed_m_s": 0.42207960033525194,
+      "wall_seconds": 26.887063042027876
+    },
+    {
+      "time_s": 7.003125,
+      "max_speed_m_s": 21.785128320779354,
+      "max_lattice_mach": 0.06064223962660312,
+      "max_relative_density_change": 0.0012777338300216101,
+      "mean_speed_m_s": 0.426634300621591,
+      "wall_seconds": 31.405807917006314
+    },
+    {
+      "time_s": 8.003571428571428,
+      "max_speed_m_s": 21.784269881998124,
+      "max_lattice_mach": 0.06063985003084267,
+      "max_relative_density_change": 0.0012779668633529084,
+      "mean_speed_m_s": 0.4299395695591357,
+      "wall_seconds": 35.843805624987
+    },
+    {
+      "time_s": 9.004017857142857,
+      "max_speed_m_s": 21.782165858005012,
+      "max_lattice_mach": 0.0606339931579663,
+      "max_relative_density_change": 0.0012795279307813434,
+      "mean_speed_m_s": 0.431481660257826,
+      "wall_seconds": 40.24741333402926
+    },
+    {
+      "time_s": 10.004464285714285,
+      "max_speed_m_s": 21.78018139132208,
+      "max_lattice_mach": 0.06062846909116507,
+      "max_relative_density_change": 0.001280655220890159,
+      "mean_speed_m_s": 0.4327998726655893,
+      "wall_seconds": 44.835191791993566
+    },
+    {
+      "time_s": 11.004910714285714,
+      "max_speed_m_s": 21.77838228422779,
+      "max_lattice_mach": 0.060623461001154316,
+      "max_relative_density_change": 0.0012795364987776559,
+      "mean_speed_m_s": 0.4343298381591135,
+      "wall_seconds": 49.27864675002638
+    },
+    {
+      "time_s": 12.005357142857143,
+      "max_speed_m_s": 21.777190092373537,
+      "max_lattice_mach": 0.060620142352623,
+      "max_relative_density_change": 0.0012778101505819262,
+      "mean_speed_m_s": 0.43538524917148747,
+      "wall_seconds": 53.80902020900976
+    },
+    {
+      "time_s": 13.00580357142857,
+      "max_speed_m_s": 21.778478733220062,
+      "max_lattice_mach": 0.06062372948168908,
+      "max_relative_density_change": 0.0012770766495038277,
+      "mean_speed_m_s": 0.4365087225720841,
+      "wall_seconds": 58.23726366698975
+    },
+    {
+      "time_s": 14.00625,
+      "max_speed_m_s": 21.779388341359038,
+      "max_lattice_mach": 0.06062626151519,
+      "max_relative_density_change": 0.0012772812369012954,
+      "mean_speed_m_s": 0.43807825643271736,
+      "wall_seconds": 62.7715477499878
+    },
+    {
+      "time_s": 15.006696428571429,
+      "max_speed_m_s": 21.779628861082273,
+      "max_lattice_mach": 0.060626931038659244,
+      "max_relative_density_change": 0.0012778150299883606,
+      "mean_speed_m_s": 0.43912653358424675,
+      "wall_seconds": 67.33589354198193
+    },
+    {
+      "time_s": 16.007142857142856,
+      "max_speed_m_s": 21.780583067778416,
+      "max_lattice_mach": 0.06062958721907135,
+      "max_relative_density_change": 0.0012780304437824963,
+      "mean_speed_m_s": 0.44015724281993335,
+      "wall_seconds": 71.87334187497618
+    },
+    {
+      "time_s": 17.007589285714285,
+      "max_speed_m_s": 21.78123366123377,
+      "max_lattice_mach": 0.060631398245549514,
+      "max_relative_density_change": 0.0012776303106436515,
+      "mean_speed_m_s": 0.441272617400476,
+      "wall_seconds": 76.37814512499608
+    },
+    {
+      "time_s": 18.008035714285715,
+      "max_speed_m_s": 21.78073486351609,
+      "max_lattice_mach": 0.06063000976574461,
+      "max_relative_density_change": 0.0012769881538081673,
+      "mean_speed_m_s": 0.44183375841932,
+      "wall_seconds": 80.82304979203036
+    },
+    {
+      "time_s": 19.008482142857144,
+      "max_speed_m_s": 21.780196545577624,
+      "max_lattice_mach": 0.06062851127535524,
+      "max_relative_density_change": 0.0012767794022352508,
+      "mean_speed_m_s": 0.4417096238649538,
+      "wall_seconds": 85.22775795898633
+    },
+    {
+      "time_s": 20.00892857142857,
+      "max_speed_m_s": 21.780836672220087,
+      "max_lattice_mach": 0.06063029316585741,
+      "max_relative_density_change": 0.001277202200157923,
+      "mean_speed_m_s": 0.4413516490751641,
+      "wall_seconds": 89.65044695901452
+    },
+    {
+      "time_s": 21.009375,
+      "max_speed_m_s": 21.78169593547038,
+      "max_lattice_mach": 0.06063268505665372,
+      "max_relative_density_change": 0.0012778089196971987,
+      "mean_speed_m_s": 0.44119463776959,
+      "wall_seconds": 94.04483825003263
+    },
+    {
+      "time_s": 22.009821428571428,
+      "max_speed_m_s": 21.78207834351636,
+      "max_lattice_mach": 0.0606337495479901,
+      "max_relative_density_change": 0.0012780806293504199,
+      "mean_speed_m_s": 0.44148556728572524,
+      "wall_seconds": 98.4944073340157
+    },
+    {
+      "time_s": 23.010267857142857,
+      "max_speed_m_s": 21.782018947813533,
+      "max_lattice_mach": 0.06063358421095877,
+      "max_relative_density_change": 0.001277907160481373,
+      "mean_speed_m_s": 0.44194550097158686,
+      "wall_seconds": 102.91258887498407
+    },
+    {
+      "time_s": 24.010714285714286,
+      "max_speed_m_s": 21.7819625943218,
+      "max_lattice_mach": 0.06063342734238774,
+      "max_relative_density_change": 0.001277571848704362,
+      "mean_speed_m_s": 0.44212031373522526,
+      "wall_seconds": 107.86285741702886
+    },
+    {
+      "time_s": 25.011160714285715,
+      "max_speed_m_s": 21.781865654488737,
+      "max_lattice_mach": 0.060633157495522505,
+      "max_relative_density_change": 0.0012774623271676333,
+      "mean_speed_m_s": 0.441972649518818,
+      "wall_seconds": 112.34695749997627
+    },
+    {
+      "time_s": 26.01160714285714,
+      "max_speed_m_s": 21.781483658042983,
+      "max_lattice_mach": 0.060632094149938365,
+      "max_relative_density_change": 0.0012777124312701726,
+      "mean_speed_m_s": 0.4418400521458432,
+      "wall_seconds": 116.76446808403125
+    },
+    {
+      "time_s": 27.01205357142857,
+      "max_speed_m_s": 21.780894098061232,
+      "max_lattice_mach": 0.060630453019477205,
+      "max_relative_density_change": 0.0012780665142386738,
+      "mean_speed_m_s": 0.4419756647463328,
+      "wall_seconds": 121.18996925000101
+    },
+    {
+      "time_s": 28.0125,
+      "max_speed_m_s": 21.780424867986415,
+      "max_lattice_mach": 0.06062914684573252,
+      "max_relative_density_change": 0.001278209278039899,
+      "mean_speed_m_s": 0.442376312523788,
+      "wall_seconds": 125.61318541702349
+    },
+    {
+      "time_s": 29.01294642857143,
+      "max_speed_m_s": 21.78011319279198,
+      "max_lattice_mach": 0.060628279250116456,
+      "max_relative_density_change": 0.0012781166355573248,
+      "mean_speed_m_s": 0.4428079516712128,
+      "wall_seconds": 130.18365066702245
+    },
+    {
+      "time_s": 30.013392857142858,
+      "max_speed_m_s": 21.779838905379215,
+      "max_lattice_mach": 0.060627515729114116,
+      "max_relative_density_change": 0.00127795594861424,
+      "mean_speed_m_s": 0.4431134437320445,
+      "wall_seconds": 134.61057320900727
+    },
+    {
+      "time_s": 31.013839285714287,
+      "max_speed_m_s": 21.77950384023458,
+      "max_lattice_mach": 0.06062658302399104,
+      "max_relative_density_change": 0.0012779003190135363,
+      "mean_speed_m_s": 0.4433609881846389,
+      "wall_seconds": 139.04520004201913
+    },
+    {
+      "time_s": 32.000022321428574,
+      "max_speed_m_s": 21.779653188847835,
+      "max_lattice_mach": 0.060626998758718874,
+      "max_relative_density_change": 0.0012779661420219135,
+      "mean_speed_m_s": 0.4431857998970323,
+      "wall_seconds": 143.88974883401534
+    }
+  ],
+  "curved_boundary_checks": [
+    {
+      "links": 19837,
+      "min_q": 0.010239186470404782,
+      "max_q": 0.9902908704439888,
+      "unresolved": 0,
+      "junction_halfway_no_slip_links": 156
+    }
+  ],
+  "wall_seconds": 143.94792395900004,
+  "velocity_sha256": "4f33658f2fcbefb39093b9b3de5d6ea07e901421f245031255818ab5bd19fea9",
+  "limitations": [
+    "LES models unresolved eddies; not DNS or an approximation-free or measured wind field.",
+    "Finite spatial/time discretization; near-wall turbulence is not wall-resolved at these grids.",
+    "Quiet zones and route impassability are design targets, not imposed solution properties.",
+    "A horizontal velocity slice is exported for animated streamlets; these are not three-dimensional particle trajectories.",
+    "Air velocity is not assigned directly to the robot additive-acceleration disturbance. Robot coupling remains separate."
+  ],
+  "environment_spec": {
+    "revision": "west-monitoring-connected-yard-cfd-v5-20261107",
+    "status": "Stronger physical passage-wind design under evaluation; retain all outcomes",
+    "bounds": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        8.0,
+        6.0
+      ]
+    ],
+    "depth": 2.0,
+    "dx": 0.125,
+    "obstacle_height": 1.5,
+    "obstacles": [
+      [
+        1.15,
+        2.7,
+        0.6
+      ],
+      [
+        2.75,
+        3.05,
+        0.68
+      ],
+      [
+        3.55,
+        4.65,
+        0.65
+      ],
+      [
+        3.9,
+        1.35,
+        0.55
+      ],
+      [
+        5.35,
+        2.75,
+        0.75
+      ],
+      [
+        6.85,
+        1.2,
+        0.6
+      ],
+      [
+        6.65,
+        4.5,
+        0.8
+      ],
+      [
+        4.95,
+        5.3,
+        0.45
+      ]
+    ],
+    "regions": [
+      {
+        "label": "A",
+        "bounds": [
+          [
+            0.4,
+            4.3
+          ],
+          [
+            2.5,
+            5.65
+          ]
+        ]
+      },
+      {
+        "label": "B",
+        "bounds": [
+          [
+            0.4,
+            0.35
+          ],
+          [
+            2.5,
+            1.55
+          ]
+        ]
+      }
+    ],
+    "region_target": 0.7,
+    "background_target": 0.0,
+    "initial_state": [
+      1.95,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "initial_region_clarity": 0.35,
+    "design_note": "Two monitoring bays in the west, separated by a staggered column cluster with multiple passages. The eastern yard contains reachable service aisles but no monitoring target. All free-space cells retain clarity dynamics. A zero background target is an explicit task definition, as in Scenario 3, not a method-specific cost or exclusion. All methods begin with the same spatial unknown-wind prior over the complete environment.",
+    "wind_design": {
+      "status": "Candidate physical boundary specification; regenerate CFD before any robot tests",
+      "task_passage": {
+        "center_m": [
+          1.95,
+          3.05
+        ],
+        "direction": [
+          0.35,
+          -0.94
+        ],
+        "intent": "Oppose B-to-A transit through the short diagonal gap; retain a physically traversable alternative around the western column."
+      },
+      "remote_yard": {
+        "center_m": [
+          6.4,
+          2.45
+        ],
+        "direction": [
+          -0.5,
+          -0.8
+        ],
+        "intent": "Spatially varying flow in the eastern service aisles, irrelevant to the short monitoring alternatives but included in global learning."
+      },
+      "boundary_proposal": {
+        "task_roof_inlet": {
+          "xy_bounds_m": [
+            [
+              1.15,
+              3.65
+            ],
+            [
+              1.65,
+              4.15
+            ]
+          ],
+          "z_m": 2.0,
+          "direction": [
+            0.35,
+            -0.7,
+            -1.0
+          ],
+          "peak_speed_m_s": 28.0
+        },
+        "task_floor_outlet": {
+          "xy_bounds_m": [
+            [
+              1.95,
+              2.05
+            ],
+            [
+              2.55,
+              2.65
+            ]
+          ],
+          "z_m": 0.0
+        },
+        "yard_roof_inlet": {
+          "xy_bounds_m": [
+            [
+              6.6,
+              3.05
+            ],
+            [
+              7.1,
+              3.55
+            ]
+          ],
+          "z_m": 2.0,
+          "direction": [
+            -0.5,
+            -0.8,
+            -1.0
+          ],
+          "peak_speed_m_s": 4.0
+        },
+        "yard_floor_outlet": {
+          "xy_bounds_m": [
+            [
+              5.6,
+              1.35
+            ],
+            [
+              6.2,
+              1.95
+            ]
+          ],
+          "z_m": 0.0
+        },
+        "note": "Physical boundary-condition proposal for a covered inspection yard. Inlet vectors must be normalized by the CFD setup. All other boundaries remain no-slip. Peak inlet speeds are not robot-plane wind speeds. These ports have not been simulated."
+      },
+      "acceptance_targets": "Test for collision of wind-unaware unfiltered MBD and substantial delay or stalling with the unchanged execution RPCBF. Preserve calm monitoring bays, a weaker-wind western alternative and connected eastern yard. Acceptance depends on actual CFD and recorded trials, never on assigned outcome labels.",
+      "generation": "Use the existing 3-D D3Q19 MRT / Smagorinsky solver and a frozen stationary vector mean. Configure physical boundary inlets/outlets and verify the resulting passage flow; never paint, mask or rescale interior velocities.",
+      "information": "Neither intended wind zone, true velocity nor support mask is supplied to POAM, acquisition, MBD or RPCBF."
+    },
+    "revision_reason": "v3 increased delay without collision; v4 repositioned inlet also did not give the required wind-sensitive narrow transit. Retain v3 physical ports and move the eastern column bordering the direct passage from (2.85,3.35,r=.65) to (2.75,3.05,r=.68). The minimum gap remains about .358 m, with the original western alternative and connected eastern yard. Regenerate full CFD around the revised obstacle; every planner/controller/estimator setting remains unchanged."
+  },
+  "environment_spec_sha256": "e828073538c0283b4e860497a8fd4b27638f835ab7fe8e8c7a6db24ed962c377",
+  "time_dependence": "none",
+  "regions": [
+    {
+      "label": "A",
+      "bounds": [
+        [
+          0.4,
+          4.3
+        ],
+        [
+          2.5,
+          5.65
+        ]
+      ]
+    },
+    {
+      "label": "B",
+      "bounds": [
+        [
+          0.4,
+          0.35
+        ],
+        [
+          2.5,
+          1.55
+        ]
+      ]
+    }
+  ],
+  "field_definition": "Frozen 16\u201332 s vector mean from the existing 3-D D3Q19 MRT/Smagorinsky CFD model",
+  "averaging_interval_s": [
+    16.0,
+    32.0
+  ],
+  "monitoring_region_metrics": {
+    "A": {
+      "cells": 187,
+      "mean_m_s": 0.43705829977989197,
+      "maximum_m_s": 0.8198001980781555,
+      "p95_m_s": 0.7663299441337585,
+      "mean_vector_m_s": [
+        -0.13329581916332245,
+        0.15810009837150574
+      ]
+    },
+    "B": {
+      "cells": 153,
+      "mean_m_s": 0.6270496845245361,
+      "maximum_m_s": 1.7823357582092285,
+      "p95_m_s": 1.2217127084732056,
+      "mean_vector_m_s": [
+        0.09870811551809311,
+        -0.478904128074646
+      ]
+    }
+  },
+  "central_passage_metrics": {
+    "cells": 23,
+    "mean_m_s": 2.2239487171173096,
+    "maximum_m_s": 6.481564998626709,
+    "p95_m_s": 5.798101425170898,
+    "mean_vector_m_s": [
+      0.825888991355896,
+      -2.008340358734131
+    ]
+  },
+  "western_bypass_metrics": {
+    "cells": 27,
+    "mean_m_s": 0.33837011456489563,
+    "maximum_m_s": 0.5779015421867371,
+    "p95_m_s": 0.48946070671081543,
+    "mean_vector_m_s": [
+      0.043405681848526,
+      -0.3140846788883209
+    ]
+  },
+  "eastern_yard_metrics": {
+    "cells": 843,
+    "mean_m_s": 0.1767529994249344,
+    "maximum_m_s": 1.0242652893066406,
+    "p95_m_s": 0.6031882762908936,
+    "mean_vector_m_s": [
+      0.05058299005031586,
+      0.02366197668015957
+    ]
+  },
+  "sampling_vector_relative_L2": 0.08956811618017056,
+  "prior_information": "Uniform unknown-wind prior; true wind and boundary support are never supplied to acquisition, MBD or RPCBF.",
+  "stationary_model_limit": "Numerical stationary mean-flow environment; full-scene grid convergence and experimental validation are not established."
+}

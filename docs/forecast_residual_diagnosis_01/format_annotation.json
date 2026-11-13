@@ -1,6 +1,0 @@
-{
-  "driver_at_execution_sha256": "465a3d1865fc30ec31a116a4b6705126209c226a03393bcf26a8cef9050b7ab9",
-  "retained_original": "driver_at_execution.py.txt",
-  "current_driver_sha256": "cf311cf5fcdec32bbe05d757f4f81b091605b6e506b9ae2f06ed5f6a900cd10f",
-  "change": "Sort imports after completed run; dense driver also binds immediately used kernel parameters in its lambda. Numerical operations and saved outcomes unchanged."
-}
